@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "700895752432",
+    "project_id": "online-tribes",
+    "storage_bucket": "online-tribes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700895752432:android:07dc8d1036e8452567d235",
+        "android_client_info": {
+          "package_name": "com.tribes_online"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700895752432-ku69v574ovi0uq488e09grashuhk25ks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz3uKf6vFBpzlLow8Ldd7ddpeMOc_cN3A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700895752432-ku69v574ovi0uq488e09grashuhk25ks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

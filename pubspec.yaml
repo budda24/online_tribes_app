@@ -1,0 +1,33 @@
+name: flutter_application_1
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  get: 4.6.1
+  font_awesome_flutter: ^9.2.0
+  flutter_screenutil: ^5.1.0
+  rflutter_alert:
+  get_storage:
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
+
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^1.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/welcome_screans/
+    - assets/images/authorization_screen/
+    - assets/images/authorization_screen/tribel_signs/
