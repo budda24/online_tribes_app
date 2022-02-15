@@ -48,26 +48,6 @@ class RegistrationUploadVideoView extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: [
-                        /* TextFormField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              filled: true,
-                              hintStyle: TextStyle(color: Colors.grey[800]),
-                              hintText: "Type in your text",
-                              fillColor: Colors.white70),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              filled: true,
-                              hintStyle: TextStyle(color: Colors.grey[800]),
-                              hintText: "Type in your text",
-                              fillColor: Colors.white70),
-                        ), */
                         TextFormField(
                           decoration: InputDecoration(
                             fillColor: Colors.blue,

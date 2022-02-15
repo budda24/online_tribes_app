@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'dart:ui';
 
 // Package imports:
@@ -10,6 +11,7 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/assets/networkIng_images.dart';
+import '../models/tribal_example.dart';
 
 class RegistrationView extends StatelessWidget {
   const RegistrationView({Key? key}) : super(key: key);
@@ -48,7 +50,7 @@ class RegistrationView extends StatelessWidget {
                               child: Container(
                                 height: screeanheight * 0.57,
                                 child: ListView.builder(
-                                    itemCount: TribeExamples
+                                    itemCount: TribeProfileExamples
                                         .listProfileDescriptionExamples.length,
                                     itemBuilder: (_, index) {
                                       return Container(
@@ -63,7 +65,7 @@ class RegistrationView extends StatelessWidget {
                                                 height: 80,
                                                 margin:
                                                     EdgeInsets.only(left: 20),
-                                                child: Image.asset(TribeExamples
+                                                child: Image.asset(TribeProfileExamples
                                                     .listProfileDescriptionExamples[
                                                         index]
                                                     .tribalSignPath)),
@@ -72,9 +74,9 @@ class RegistrationView extends StatelessWidget {
                                             ),
                                             Column(children: [
                                               Text(
-                                                  '${TribeExamples.listProfileDescriptionExamples[index].userName}', style: kMontserratBold,),
+                                                  '${TribeProfileExamples.listProfileDescriptionExamples[index].userName}', style: kMontserratBold,),
                                               Text(
-                                                  '${TribeExamples.listProfileDescriptionExamples[index].tribeName}',
+                                                  '${TribeProfileExamples.listProfileDescriptionExamples[index].tribeName}',
                                                 style: kMontserratBold ,),
                                             ])
                                           ],
@@ -93,6 +95,7 @@ class RegistrationView extends StatelessWidget {
                     minLine: 16,
                     height: screeanheight,
                     width: screeanwidth,
+                    hintText: '',
                   ),
                   SlimRoundedButton(
                     onPress: (){},
@@ -109,47 +112,9 @@ class RegistrationView extends StatelessWidget {
   }
 }
 
-class CustomTextField extends StatelessWidget {
-  CustomTextField(
-      {Key? key,
-      required this.maxline,
-      required this.minLine,
-      required this.height,
-      required this.width})
-      : super(key: key);
-  int minLine;
-  int maxline;
-  double height;
-  double width;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-          left: width * 0.1,
-          right: width * 0.1,
-          bottom: width * 0.05,
-          top: width * 0.05),
-      child: TextField(
-        style: kTextfieldStyle,
-        keyboardType: TextInputType.multiline,
-        minLines: minLine,
-        maxLines: maxline,
-        textAlign: TextAlign.center,
-        decoration: const InputDecoration(
-            hintStyle: kTextfieldStyle,
-            filled: true,
-            fillColor: Color(0xffCBFAE2),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            hintText: 'Describe Yourself',
-            contentPadding: EdgeInsets.all(15)),
-      ),
-    );
-  }
-}
 
-class TribeExamples {
+/* class TribeExamples {
   static List<TribeExamples> listProfileDescriptionExamples = [
     TribeExamples.profileDescription(
         description:
@@ -228,4 +193,4 @@ class TribeExamples {
         tribeName: tribeName,
         userName: userName));
   }
-}
+} */

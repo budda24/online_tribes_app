@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
@@ -12,6 +14,7 @@ import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../models/tribal_example.dart';
+import 'registration_aditional_view.dart';
 import 'registration_destription_hint_view_view.dart';
 
 class RegistrationView extends StatelessWidget {
@@ -118,13 +121,15 @@ class RegistrationView extends StatelessWidget {
               ),
               CustomTextField(
                 hintText: 'Describe yourself',
-                maxline: 50,
-                minLine: 16,
-                height: 781.h,
-                width: 392.w,
+                maxline: 18,
+                minLine: 2,
+                height: 400.h,
+                width: 400.w,
               ),
               SlimRoundedButton(
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => RegistrationAditionalView());
+                },
                 backgroundColour: kColorWhite,
                 title: 'Continue',
                 textColor: kTextColorDarkGrey,
@@ -139,47 +144,16 @@ class RegistrationView extends StatelessWidget {
   }
 }
 
-class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    Key? key,
-    required this.maxline,
-    required this.minLine,
-    required this.height,
-    required this.width,
-    required this.hintText,
-  }) : super(key: key);
-  int minLine;
-  int maxline;
-  double height;
-  double width;
-  final String hintText;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-          left: width * 0.1,
-          right: width * 0.1,
-          bottom: width * 0.05,
-          top: width * 0.05),
-      child: TextField(
-        style: kTextfieldStyle,
-        keyboardType: TextInputType.multiline,
-        minLines: minLine,
-        maxLines: maxline,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-            hintStyle: kTextfieldStyle,
-            filled: true,
-            fillColor: Color(0xffCBFAE2),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            hintText: hintText,
-            contentPadding: EdgeInsets.all(15)),
-      ),
-    );
-  }
-}
+
+
+
+
+
+
+
+
+
 
 /* class TribeProfileExamples {
   static List<TribeProfileExamples> listProfileDescriptionExamples = [
