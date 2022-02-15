@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 // Flutter imports:
 
 
@@ -58,6 +58,7 @@ class ThirdScreen extends StatelessWidget {
               SizedBox(height: screeanheight * 0.09),
               Center(
                 child: SlimRoundedButton(
+                  onPress: (){},
                   title: 'Continue',
                   backgroundColour: kColorBlue,
                   textColor: kColorWhite,
@@ -75,3 +76,4 @@ class ThirdScreen extends StatelessWidget {
   }
 }
 
+ */

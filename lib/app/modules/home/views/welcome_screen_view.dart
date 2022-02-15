@@ -1,4 +1,4 @@
-
+/*
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/modules/home/controllers/home_controller.dart';
 
@@ -78,3 +78,4 @@ class WelcomeView1 extends GetView<HomeController> {
         ])));
   }
 }
+ */

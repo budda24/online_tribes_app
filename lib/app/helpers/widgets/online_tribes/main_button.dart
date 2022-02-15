@@ -30,19 +30,19 @@ class SlimRoundedButton extends StatelessWidget {
     return TextButton(
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.only(
-            left: 61,
-            right: 61,
-            top: 8,
-            bottom: 8)),
+            left: 120.w,
+            right: 120.w,
+            top: 12.h,
+            bottom: 12.h)),
         backgroundColor: MaterialStateProperty.all<Color>(backgroundColour),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0.h)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0.r)),
         ),
       ),
       child: Text(
         title,
         style:
-        TextStyle(fontFamily: 'Montserrat', fontSize: 20, color: textColor),
+        TextStyle(fontFamily: 'Montserrat', fontSize: 24, color: textColor),
       ),
       onPressed: onPress,
     );

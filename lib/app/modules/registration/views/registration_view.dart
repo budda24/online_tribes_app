@@ -95,6 +95,7 @@ class RegistrationView extends StatelessWidget {
                     width: screeanwidth,
                   ),
                   SlimRoundedButton(
+                    onPress: (){},
                       backgroundColour: kColorWhite,
                       title: 'Continue',
                       textColor: kTextColorDarkGrey,
