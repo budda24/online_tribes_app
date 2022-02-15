@@ -31,7 +31,7 @@ fontFamily:'Montserrat',
 fontWeight: FontWeight.bold,
 );
 
-const kHeading = TextStyle(
+const headingStyle = TextStyle(
   fontFamily: 'Built Relationship',
   fontSize: 30.0,
 );

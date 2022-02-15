@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class RegistrationController extends GetxController {
   //TODO: Implement RegistrationController
+ final tribalNameController = TextEditingController();
 
   final count = 0.obs;
   @override

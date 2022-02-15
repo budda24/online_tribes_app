@@ -4,14 +4,14 @@ class MainCirclePhoto extends StatelessWidget {
    MainCirclePhoto(
       {required this.screeanwidth,
       required this.imagePathN,
-      required this.imagePathL,
+      /* required this.imagePathL, */
       required this.screeanheight});
 
   const MainCirclePhoto.networking({
     required this.screeanheight,
     required this.screeanwidth,
     required this.imagePathN
-  }):imagePathL='';
+  })/* :imagePathL='' */;
 
   /* const MainCirclePhoto.local({
     required this.screeanheight,
@@ -24,7 +24,7 @@ class MainCirclePhoto extends StatelessWidget {
   final double screeanheight;
   final double screeanwidth;
   final String imagePathN;
-  final String imagePathL;
+  /* final String imagePathL; */
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +39,7 @@ class MainCirclePhoto extends StatelessWidget {
         ),
         shape: BoxShape.circle,
         image:
-            DecorationImage(image: NetworkImage(imagePathN), fit: BoxFit.fill),
+            DecorationImage(image: NetworkImage(imagePathN), /* fit: BoxFit.fill */),
       ),
     );
   }

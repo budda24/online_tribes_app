@@ -21,7 +21,7 @@ class DescriotionExamplePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MainCirclePhoto(
-                  imagePathL: '',
+                  /* imagePathL: '', */
                   imagePathN: '',
                   /*imagePathL:'assets/images/authorization_screen/tribel_signs/Sign Business Tribe-01.png',*/
                     screeanheight: screeanheight / 1.6,

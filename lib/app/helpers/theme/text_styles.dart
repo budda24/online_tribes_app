@@ -14,9 +14,14 @@ TextStyle lightButtonTextStyle =
 // Headings
 
 //online-tribes
-TextStyle heading = TextStyle(
+TextStyle headingStyle = TextStyle(
   fontFamily: 'Built Relationship',
-  fontSize: 30.0,
+  fontSize: 20.0,
+);
+TextStyle headingBoldStyle = TextStyle(
+  fontFamily: montserrat,
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold
 );
 
 TextStyle longText = TextStyle(
@@ -38,7 +43,7 @@ TextStyle lable = TextStyle(
 
 TextStyle textfieldStyle = TextStyle(
   fontSize: 20.0,
-  fontFamily: 'Poppins',
+  fontFamily: poppins,
   color: AppColors.greyColor,
 );
 
