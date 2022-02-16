@@ -21,7 +21,6 @@ import '../controllers/login_controller.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../../registration/views/registration_desrription_view.dart';
 import '../../../helpers/widgets/online_tribes/form_field.dart';
-import 'to_delete.dart';
 
 class LoginView extends GetView<LoginController> {
   final _password = TextEditingController();

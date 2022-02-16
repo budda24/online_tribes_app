@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_bars.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
+import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,34 +49,15 @@ class RegistrationUploadVideoView extends StatelessWidget {
                   child: Form(
                     child: Column(
                       children: [
-                        TextFormField(
-                          decoration: InputDecoration(
-                            fillColor: Colors.blue,
-                            hintText: 'Enter a product name eg. pension',
-                            hintStyle: TextStyle(fontSize: 16),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(
-                                width: 0,
-                                style: BorderStyle.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                        /*  CustomFormField(
-                          lenght: 10,
-                          displayedText: 'Tribal Name',
-                          controler:
-                              controllerRegistration.tribalNameController,
-                          saved: () {},
-                        ),
-                        CustomFormField(
-                          lenght: 10,
-                          displayedText: 'Tribal Name',
-                          controler:
-                              controllerRegistration.tribalNameController,
-                          saved: () {},
-                        ), */
+                        verticalSpaceMediumTwo,
+                        CustomTextField(
+                  hintText: 'The Life Motto',
+                  maxline: 6,
+                  minLine: 1,
+                  height: 200.h,
+                  width: 500.w,
+                ),
+                        
                       ],
                     ),
                   ),
