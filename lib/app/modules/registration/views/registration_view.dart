@@ -5,7 +5,6 @@ import 'dart:ui';
 
 // Package imports:
 
-
 // Project imports:
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
@@ -26,85 +25,87 @@ class RegistrationView extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
-            child: Column(
-
-                children: [
-                  MainCirclePhoto.networking(
-                    /* imagePathL: '', */
-                    imagePathN: AssetsUrl.exampleProfilePhoto,
-                      screeanheight: screeanheight / 1.16,
-                      screeanwidth: screeanwidth),
-                  Text(
-                    'Cornelius',
-                    style: kName,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Dialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40)),
-                              elevation: 16,
-                              child: Container(
-                                height: screeanheight * 0.57,
-                                child: ListView.builder(
-                                    itemCount: TribeProfileExamples
-                                        .listProfileDescriptionExamples.length,
-                                    itemBuilder: (_, index) {
-                                      return Container(
-                                        margin: EdgeInsets.only(
-                                            bottom: 10, top: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                                width: 80,
-                                                height: 80,
-                                                margin:
-                                                    EdgeInsets.only(left: 20),
-                                                child: Image.asset(TribeProfileExamples
-                                                    .listProfileDescriptionExamples[
-                                                        index]
-                                                    .tribalSignPath)),
-                                            SizedBox(
-                                              width: screeanwidth *0.097,
-                                            ),
-                                            Column(children: [
-                                              Text(
-                                                  '${TribeProfileExamples.listProfileDescriptionExamples[index].userName}', style: kMontserratBold,),
-                                              Text(
-                                                  '${TribeProfileExamples.listProfileDescriptionExamples[index].tribeName}',
-                                                style: kMontserratBold ,),
-                                            ])
-                                          ],
+            child: Column(children: [
+              MainCirclePhoto.networking(
+                  /* imagePathL: '', */
+                  imagePathN: AssetsUrl.exampleProfilePhoto,
+                  screeanheight: screeanheight / 1.16,
+                  screeanwidth: screeanwidth),
+              Text(
+                'Cornelius',
+                style: kName,
+              ),
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40)),
+                          elevation: 16,
+                          child: Container(
+                            height: screeanheight * 0.57,
+                            child: ListView.builder(
+                                itemCount: TribeProfileExamples
+                                    .listProfileDescriptionExamples.length,
+                                itemBuilder: (_, index) {
+                                  return Container(
+                                    margin:
+                                        EdgeInsets.only(bottom: 10, top: 10),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                            width: 80,
+                                            height: 80,
+                                            margin: EdgeInsets.only(left: 20),
+                                            child: Image.asset(TribeProfileExamples
+                                                .listProfileDescriptionExamples[
+                                                    index]
+                                                .tribalSignPath)),
+                                        SizedBox(
+                                          width: screeanwidth * 0.097,
                                         ),
-                                      );
-                                    }),
-                              ),
-                            );
-                          });
-                    },
-                    child: Image.asset(
-                        'assets/images/authorization_screen/bulb_icon.png'),
-                  ),
-                  CustomTextField(
-                    maxline: 50,
-                    minLine: 16,
-                    height: screeanheight,
-                    width: screeanwidth,
-                    hintText: '',
-                  ),
-                  SlimRoundedButton(
-                    onPress: (){},
-                      backgroundColour: kColorWhite,
-                      title: 'Continue',
-                      textColor: kTextColorDarkGrey,
-                      /* screenWidth: screeanwidth,
-                      screenHeight: screeanheight */)
-                ]),
+                                        Column(children: [
+                                          Text(
+                                            '${TribeProfileExamples.listProfileDescriptionExamples[index].userName}',
+                                            style: kMontserratBold,
+                                          ),
+                                          Text(
+                                            '${TribeProfileExamples.listProfileDescriptionExamples[index].tribeName}',
+                                            style: kMontserratBold,
+                                          ),
+                                        ])
+                                      ],
+                                    ),
+                                  );
+                                }),
+                          ),
+                        );
+                      });
+                },
+                child: Image.asset(
+                    'assets/images/authorization_screen/bulb_icon.png'),
+              ),
+              CustomTextField(
+                onSave: () {},
+                maxline: 50,
+                minLine: 16,
+                height: screeanheight,
+                width: screeanwidth,
+                hintText: '',
+              ),
+              SlimRoundedButton(
+                onPress: () {},
+                backgroundColour: kColorWhite,
+                title: 'Continue',
+                textColor: kTextColorDarkGrey,
+                /* screenWidth: screeanwidth,
+                      screenHeight: screeanheight */
+              )
+            ]),
           ),
         ),
       ),

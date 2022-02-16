@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 
 class MainCirclePhoto extends StatelessWidget {
    MainCirclePhoto(
@@ -35,7 +36,7 @@ class MainCirclePhoto extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 5.0,
-          color: Color(0xffF4F9FD),
+          color: AppColors.facebookColor,
         ),
         shape: BoxShape.circle,
         image:
