@@ -19,7 +19,7 @@ class LoginController extends GetxController {
     if (!GetUtils.isEmail(emailController.text)) {
       Get.showSnackbar(GetSnackBar(
         title: 'Error',
-        message: 'Email is INvalid',
+        message: 'Email is Invalid',
       ));
       return false;
     } else {
