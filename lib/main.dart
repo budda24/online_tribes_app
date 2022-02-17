@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'app/helpers/theme/form_field_styles.dart';
+import 'app/modules/registration/views/registration_aditional_view.dart';
 import 'app/modules/registration/views/registration_user.dart';
 import 'app/routes/app_pages.dart';
 
