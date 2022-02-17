@@ -49,6 +49,7 @@ class RegistrationUploadVideoView extends StatelessWidget {
                       children: [
                         verticalSpaceMediumTwo,
                         CustomTextField(
+                          onSave: (){},
                           hintText: 'The Life Motto',
                           maxline: 6,
                           minLine: 1,
