@@ -27,13 +27,11 @@ class RegistrationUploadVideoView extends StatelessWidget {
         orientation: Orientation.portrait);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
+      appBar: AppBarBackArrow(
+        title: Text(
+          'Registration',
+          style: headingBoldStyle,
         ),
-        elevation: 0,
       ),
       backgroundColor: kMainColor,
       body: Center(
@@ -51,13 +49,12 @@ class RegistrationUploadVideoView extends StatelessWidget {
                       children: [
                         verticalSpaceMediumTwo,
                         CustomTextField(
-                  hintText: 'The Life Motto',
-                  maxline: 6,
-                  minLine: 1,
-                  height: 200.h,
-                  width: 500.w,
-                ),
-                        
+                          hintText: 'The Life Motto',
+                          maxline: 6,
+                          minLine: 1,
+                          height: 200.h,
+                          width: 500.w,
+                        ),
                       ],
                     ),
                   ),

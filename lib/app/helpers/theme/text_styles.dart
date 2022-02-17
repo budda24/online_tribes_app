@@ -18,6 +18,7 @@ TextStyle headingStyle = TextStyle(
   fontFamily: 'Built Relationship',
   fontSize: 20.0,
 );
+
 TextStyle headingBoldStyle = TextStyle(
   fontFamily: montserrat,
   fontSize: 20.0,

@@ -1,13 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/domain/models/user_model.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
 import 'package:get/get.dart';
 
 import '../../../helpers/controllers/global_controller.dart';
+import '../../../helpers/theme/alert_styles.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  GlobalController globalController = Get.find<GlobalController>();
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -16,11 +19,36 @@ class LoginController extends GetxController {
   RxString? email = ''.obs;
 
   bool validateSignupForm() {
+    /* isEmail valid */
     if (!GetUtils.isEmail(emailController.text)) {
-      Get.showSnackbar(GetSnackBar(
-        title: 'Error',
-        message: 'Email is Invalid',
-      ));
+      emailController.clear();
+      Get.showSnackbar(
+        snacbar('Email is Invalid'),
+      );
+      return false;
+    }
+    /* isLenght < 8 */
+    if (!GetUtils.isLengthGreaterThan(passwordController.text, 8)) {
+      Get.showSnackbar(
+        snacbar('Password should contain from 8 to 16 characters'),
+      );
+      passwordController.clear();
+      return false;
+    }
+
+/* minimum eight characters, at least one letter and one number */
+    RegExp regExp = RegExp(
+      r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$",
+      caseSensitive: false,
+      multiLine: false,
+    );
+    if (!regExp.hasMatch(passwordController.text)) {
+      Get.showSnackbar(
+        snacbar(
+            'Password should minimum eight characters, at least one letter and one number'),
+      );
+
+      passwordController.clear();
       return false;
     } else {
       return true;
@@ -33,6 +61,11 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'name': 'Temp',
       });
+      if (isRememberMe) {
+        cacheUserCredencial();
+      } else {
+        clearUserCredencial();
+      }
       await Auth().logInExistingUser(user, passwordController.text);
     }
   }
@@ -52,6 +85,27 @@ class LoginController extends GetxController {
     print('$password  :  $email');
   }
 
+  bool isRememberMe = false;
+  void toggleRememberMe(bool value) {
+    isRememberMe = value;
+  }
+
+  void cacheUserCredencial() {
+    globalController.box.write('isRememberMe', isRememberMe);
+
+    globalController.box.write('userCrendencial',
+        {'email': emailController.text, 'password': passwordController.text});
+  }
+
+  void clearUserCredencial() {
+    globalController.box.remove('isRememberMe');
+    globalController.box.remove('userCrendencial');
+  }
+
+  void clearIsRememberMe() {
+    globalController.box.remove('isRememberMe');
+  }
+
 /*   void onsaved(String ) {
     for
   } */
@@ -61,6 +115,22 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    if (globalController.box.read('userCrendencial') !=
+            null /*  &&
+        globalController.box.read('userCrendencial') */
+        ) {
+      emailController.text =
+          globalController.box.read('userCrendencial')['email'];
+      passwordController.text =
+          globalController.box.read('userCrendencial')['password'];
+    }
+    if (globalController.box.read('isRememberMe') !=
+            null /* &&
+        Get.find<GlobalController>().box.read('isWalkthroughDone') */
+        ) {
+      isRememberMe = globalController.box.read('isRememberMe');
+    }
+
     super.onInit();
   }
 

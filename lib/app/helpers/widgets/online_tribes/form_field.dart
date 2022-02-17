@@ -32,7 +32,7 @@ class CustomTextField extends StatelessWidget {
         context: context,
         minTextAdapt: true,
         orientation: Orientation.portrait);
-    final _padding = EdgeInsets.symmetric(vertical: 20.h, horizontal: 10.w);
+    final _padding = EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w);
     final _margin =
         EdgeInsets.only(left: 40.w, right: 40.w, bottom: 20.h, top: 20.h);
     return Stack(

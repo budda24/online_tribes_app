@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_bars.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
@@ -27,13 +28,11 @@ class DescriotionExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.primaryColor,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Get.back(),
+      appBar: AppBarBackArrow(
+        title: Text(
+          'Destription Examples',
+          style: headingBoldStyle,
         ),
-        elevation: 0,
       ),
       backgroundColor: kMainColor,
       body: LayoutBuilder(

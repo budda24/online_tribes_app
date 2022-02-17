@@ -21,11 +21,9 @@ import '../controllers/login_controller.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../../registration/views/registration_desrription_view.dart';
 import '../../../helpers/widgets/online_tribes/form_field.dart';
+import 'rest_password_view.dart';
 
 class LoginView extends GetView<LoginController> {
-  final _password = TextEditingController();
-  final _email = TextEditingController();
-
   final controller = Get.put(LoginController());
 
   @override
@@ -63,31 +61,6 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ],
               ),
-              /* Container(
-          margin: EdgeInsets.only(left: 41.w, right: 41.w),
-          child: Center(
-              child: CustomFormField(
-            controler: _email,
-            displayedText: 'Email',
-            lenght: 320,
-            saved: (value) {
-              controller.email = value;
-            },
-          )),
-          ),
-          Container(
-          margin: EdgeInsets.only(left: 41.w, right: 41.w),
-          child: Center(
-              child: CustomFormField(
-            controler: _password,
-            displayedText: 'Password',
-            lenght: 128,
-            saved: (value) {
-              controller.password = value;
-            },
-          )),
-          ),
-          */
               Form(
                 key: controller.formKey,
                 child: Column(
@@ -113,6 +86,7 @@ class LoginView extends GetView<LoginController> {
                             controller: controller.passwordController,
                             maxLength: 120,
                             keyboardType: TextInputType.text,
+                            obscuringCharacter: '*',
                             obscureText: true,
                             enableSuggestions: false,
                             autocorrect: false,
@@ -121,10 +95,6 @@ class LoginView extends GetView<LoginController> {
                               hintText: 'Password',
                             ),
                           ),
-                          /*  TextFormField(
-                            controller: controller.emailController,
-                            style: outlineInputTextFormFieldHintStyle,
-                          ), */
                         ],
                       ),
                     ),
@@ -135,7 +105,10 @@ class LoginView extends GetView<LoginController> {
                           width: 41.w,
                           height: 52.h,
                         ),
-                        CustomCheckbox(),
+                        CustomCheckbox(
+                          isChecked: controller.isRememberMe,
+                          callBack: controller.toggleRememberMe,
+                        ),
                         SizedBox(
                           width: 12.w,
                         ),
@@ -148,7 +121,9 @@ class LoginView extends GetView<LoginController> {
                             child: TextButton(
                               child: Text('Forgot Password?',
                                   style: kTextCheckBox),
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(RestPasswordView());
+                              },
                             ))
                       ],
                     ),

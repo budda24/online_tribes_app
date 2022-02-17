@@ -1,10 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter_application_1/domain/models/user_model.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
+import 'package:get/get.dart';
+import '../../../app/helpers/controllers/global_controller.dart';
 
 final auth = FirebaseAuth.instance;
 
 class Auth {
+  final globalController = Get.find<GlobalController>();
   Future<void> logInExistingUser(UserModel user, String password) async {
     try {
       final List userEmails =
@@ -40,5 +44,13 @@ class Auth {
     } on FirebaseAuthException catch (e) {
       print(e.message);
     }
+  }
+
+  Future<void> restPasswordEmail(String email) async {
+    final response = await auth.sendPasswordResetEmail(email: email);
+    return response;
+    /*  .then((value) => Get.back())
+        .catchError(
+            (onError) => globalController.showSnackbar(onError.toString())); */
   }
 }

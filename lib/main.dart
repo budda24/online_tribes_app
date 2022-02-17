@@ -30,7 +30,7 @@ void main() async {
   runApp(
     GetMaterialApp(
       title: "Application",
-      home: RegistrationUploadVideoView(),
+      home: defaultScreen,
       theme: ThemeData(
         inputDecorationTheme: outlineInputTextFormFieldStyle
       ),

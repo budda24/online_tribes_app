@@ -1,15 +1,31 @@
-/* // Flutter imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 // Project imports:
 import '../theme/text_styles.dart';
+import 'app_colors.dart';
 
 
-final AlertStyle defaultAlertStyle = AlertStyle(
+GetSnackBar snacbar (String message){return GetSnackBar(
+    duration: 3.seconds,
+    snackPosition: SnackPosition.TOP,
+    titleText: Text(
+      'Error',
+      style: headingStyle,
+    ),
+    messageText: Text(
+      message,
+      style: montserratBold,
+    ),
+    backgroundColor: AppColors.primaryColorWithOpacity40,
+  );}
+
+/* final AlertStyle defaultAlertStyle = AlertStyle(
   isCloseButton: false,
   titleStyle: headlineTwoDarkStyle,
   isButtonVisible: false,
@@ -39,5 +55,4 @@ final AlertStyle centeredAlertStyle = AlertStyle(
   ),
   buttonAreaPadding: EdgeInsets.only(bottom: 18.h),
   overlayColor: Colors.black45,
-);
- */
+); */
