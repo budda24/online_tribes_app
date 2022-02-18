@@ -19,10 +19,13 @@ class Auth {
         await auth
             .signInWithEmailAndPassword(
                 email: user.email ?? '', password: password)
-            .then((value) => print(value));
+            .then((value) {
+          print(value);
+        });
       }
     } on FirebaseAuthException catch (e) {
       print(e.message);
+      
     }
   }
 

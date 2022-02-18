@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/controllers/global_controler.dart';
 
 import 'package:get/get.dart';
 
-import '../../../helpers/controllers/global_controller.dart';
 /* import '../../../modules/authorization/views/login_view.dart'; */
 import '../../../modules/walkthrough/models/walkthrough_model.dart';
 import '../../../routes/app_pages.dart';

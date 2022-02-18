@@ -31,7 +31,7 @@ class RegistrationUploadVideoView extends GetView {
                     /* imagePathL: '', */
                     imagePathN:
                         'https://dsm01pap004files.storage.live.com/y4m8Gv2oQvIHsLDNWMzjGmwED5go2S5vTwmIUrRXMQlfNdXE8Ci9tFYqmOY9YGvH71OlN48CCzO_loiE1o_HOrvS0EqD9hV5DcJQ8Cp8F3C2mNnDBHksPpetGNWPQ6alGIrP9flcw5nXBgvplbF3vJ3sKNlB8BPnxWNrTNwc23WO2T8qP91vf8oWiP2Z8LpOpYs?width=240&height=135&cropmode=none',
-                    screeanheight: 673.h.h,
+                    screeanheight: 673.h,
                     screeanwidth: 392.w),
                 Text(
                   'Cornelius',

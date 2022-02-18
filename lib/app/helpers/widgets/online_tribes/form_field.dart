@@ -6,15 +6,15 @@ import '../../main_constants.dart';
 import '../../theme/text_styles.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    Key? key,
-    required this.maxline,
-    required this.minLine,
-    required this.height,
-    required this.width,
-    required this.hintText,
-    required this.onSave
-  }) : super(key: key);
+  CustomTextField(
+      {Key? key,
+      required this.maxline,
+      required this.minLine,
+      required this.height,
+      required this.width,
+      required this.hintText,
+      required this.onSave})
+      : super(key: key);
 
   final int minLine;
   final int maxline;
@@ -54,15 +54,14 @@ class CustomTextField extends StatelessWidget {
           margin: _margin,
           padding: _padding,
           child: TextFormField(
-            onSaved:(value) => onSave(value),
-             validator: (value) {
+            onSaved: (value) => onSave(value),
+            validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter some text';
               }
               return 'null';
             },
             style: kTextfieldStyle,
-
             keyboardType: TextInputType.multiline,
             minLines: minLine,
             maxLines: maxline,

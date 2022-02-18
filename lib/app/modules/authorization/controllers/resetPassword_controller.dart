@@ -5,7 +5,7 @@ import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart'
 import 'package:get/get.dart';
 
 class ResetPasswordController extends GetxController {
-  final globalController = Get.find<GlobalController>();
+  /* final globalController = Get.find<GlobalController>();
   TextEditingController emailController = TextEditingController();
 
   void reset() async {
@@ -13,8 +13,8 @@ class ResetPasswordController extends GetxController {
       Get.back();
     }).catchError((error) {
       Get.showSnackbar(
-        snacbar(error.toString()),
+        customSnackbar(error.toString()),
       );
     });
-  }
+  } */
 }

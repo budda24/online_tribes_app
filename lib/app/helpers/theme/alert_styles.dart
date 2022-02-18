@@ -11,7 +11,7 @@ import '../theme/text_styles.dart';
 import 'app_colors.dart';
 
 
-GetSnackBar snacbar (String message){return GetSnackBar(
+GetSnackBar customSnackbar (String message){return GetSnackBar(
     duration: 3.seconds,
     snackPosition: SnackPosition.TOP,
     titleText: Text(

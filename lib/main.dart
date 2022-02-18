@@ -1,13 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/controllers/global_controller.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/walkthrough/controllers/walkthrough_controller.dart';
 import 'package:flutter_application_1/app/modules/walkthrough/views/walkthrough_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'app/bindings/global_bindings.dart';
+import 'app/controllers/global_controler.dart';
 import 'app/helpers/theme/form_field_styles.dart';
 import 'app/modules/registration/views/registration_aditional_view.dart';
 import 'app/modules/registration/views/registration_user.dart';
@@ -31,11 +33,11 @@ void main() async {
   runApp(
     GetMaterialApp(
       title: "Application",
+      /* initialBinding: ControllersBinding(), */
       home: defaultScreen,
       theme: ThemeData(
         inputDecorationTheme: outlineInputTextFormFieldStyle
       ),
-      /* initialRoute: AppPages.INITIAL, */
       getPages: AppPages.routes,
     ),
   );

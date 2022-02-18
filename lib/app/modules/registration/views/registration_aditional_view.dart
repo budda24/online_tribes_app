@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_application_1/app/global_controler.dart';
+import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';

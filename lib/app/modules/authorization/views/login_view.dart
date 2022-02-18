@@ -136,8 +136,6 @@ class LoginView extends GetView<LoginController> {
                         title: 'LOGIN',
                         backgroundColour: kMainColor,
                         textColor: kColorWhite,
-                        /* screenWidth: screeanwidth,
-            screenHeight: screeanheight, */
                       ),
                     ),
                     Padding(

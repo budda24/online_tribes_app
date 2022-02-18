@@ -2,12 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
+import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:flutter_application_1/domain/models/user_model.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
 import 'package:get/get.dart';
 
-import '../../../helpers/controllers/global_controller.dart';
 import '../../../helpers/theme/alert_styles.dart';
+import '../../../controllers/global_controler.dart';
 
 class LoginController extends GetxController {
   GlobalController globalController = Get.find<GlobalController>();
@@ -23,14 +25,14 @@ class LoginController extends GetxController {
     if (!GetUtils.isEmail(emailController.text)) {
       emailController.clear();
       Get.showSnackbar(
-        snacbar('Email is Invalid'),
+        customSnackbar('Email is Invalid'),
       );
       return false;
     }
     /* isLenght < 8 */
     if (!GetUtils.isLengthGreaterThan(passwordController.text, 8)) {
       Get.showSnackbar(
-        snacbar('Password should contain from 8 to 16 characters'),
+        customSnackbar('Password should contain from 8 to 16 characters'),
       );
       passwordController.clear();
       return false;
@@ -44,8 +46,8 @@ class LoginController extends GetxController {
     );
     if (!regExp.hasMatch(passwordController.text)) {
       Get.showSnackbar(
-        snacbar(
-            'Password should minimum eight characters, at least one letter and one number'),
+        customSnackbar(
+            'Password should contain at least one letter and one number'),
       );
 
       passwordController.clear();
@@ -53,6 +55,11 @@ class LoginController extends GetxController {
     } else {
       return true;
     }
+  }
+
+  void saveForm() async {
+    formKey.currentState!.save();
+    print('$password  :  $email');
   }
 
   Future<void> performSignin() async {
@@ -66,7 +73,13 @@ class LoginController extends GetxController {
       } else {
         clearUserCredencial();
       }
-      await Auth().logInExistingUser(user, passwordController.text);
+      await Auth()
+          .logInExistingUser(user, passwordController.text)
+          .then((value) {
+        globalController.isUserLogged();
+      }).catchError((onError) {
+        Get.showSnackbar(customSnackbar(onError.toString()));
+      });
     }
   }
 
@@ -76,13 +89,14 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'name': 'Temp',
       });
-      await Auth().createUserToAuth(user, passwordController.text);
+      await Auth()
+          .createUserToAuth(user, passwordController.text)
+          .then((value) {
+        /* globalController.isUserLogged(); */
+      }).catchError((onError) {
+        Get.showSnackbar(customSnackbar(onError.toString()));
+      });
     }
-  }
-
-  void saveForm() async {
-    formKey.currentState!.save();
-    print('$password  :  $email');
   }
 
   bool isRememberMe = false;
@@ -102,10 +116,6 @@ class LoginController extends GetxController {
     globalController.box.remove('userCrendencial');
   }
 
-  void clearIsRememberMe() {
-    globalController.box.remove('isRememberMe');
-  }
-
 /*   void onsaved(String ) {
     for
   } */
@@ -115,7 +125,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    if (globalController.box.read('userCrendencial') !=
+    /* if (globalController.box.read('userCrendencial') !=
             null /*  &&
         globalController.box.read('userCrendencial') */
         ) {
@@ -129,7 +139,7 @@ class LoginController extends GetxController {
         Get.find<GlobalController>().box.read('isWalkthroughDone') */
         ) {
       isRememberMe = globalController.box.read('isRememberMe');
-    }
+    } */
 
     super.onInit();
   }
