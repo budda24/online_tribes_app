@@ -28,6 +28,7 @@ class AppColors {
   static Color blueColor = Color(0xff82ACEA);
   static Color blackColor = Colors.black;
   static Color greyColor = Color(0xff707070);
+  
 
 
 

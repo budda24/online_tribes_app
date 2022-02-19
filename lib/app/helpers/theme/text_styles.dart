@@ -18,17 +18,33 @@ TextStyle headingStyle = TextStyle(
   fontFamily: 'Built Relationship',
   fontSize: 20.0,
 );
-
+TextStyle headlineOneStyle = TextStyle(
+  color: AppColors.blackColor,
+  fontFamily: regular,
+);
 TextStyle headingBoldStyle = TextStyle(
   fontFamily: montserrat,
   fontSize: 20.0,
   fontWeight: FontWeight.bold
 );
 
-TextStyle longText = TextStyle(
+
+
+TextStyle longTextStyle = TextStyle(
   fontFamily: poppins,
   fontSize: 22.0,
 );
+TextStyle smallTextStyle = TextStyle(
+  fontFamily: poppins,
+  fontSize: 13.0,
+  fontWeight: FontWeight.w300
+);
+TextStyle boldSmallTextStyle = TextStyle(
+  fontFamily: poppins,
+  fontSize: 13.0,
+  fontWeight: FontWeight.bold
+);
+
 
 TextStyle montserratBold = TextStyle(
   fontSize: 18,
@@ -36,17 +52,24 @@ TextStyle montserratBold = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+
+
 TextStyle lable = TextStyle(
   fontFamily: 'Futura Bk BT',
   fontSize: 30.0,
   color: AppColors.whiteColor,
 );
-
+TextStyle textfieldLableStyle = TextStyle(
+  fontSize: 16.0,
+  fontFamily: poppins,
+  color: AppColors.blackColor,
+);
 TextStyle textfieldStyle = TextStyle(
   fontSize: 20.0,
   fontFamily: poppins,
   color: AppColors.greyColor,
 );
+
 
 TextStyle outlineInputTextFormFieldLabelStyle = TextStyle(
   fontFamily: futuraBkBT,
@@ -56,10 +79,7 @@ TextStyle outlineInputTextFormFieldLabelStyle = TextStyle(
 TextStyle outlineInputTextFormFieldHintStyle =
     TextStyle(color: AppColors.greyColor, fontSize: 16, fontFamily: montserrat);
 
-TextStyle headlineOneStyle = TextStyle(
-  color: AppColors.blackColor,
-  fontFamily: regular,
-);
+
 
 /* TextStyle headlineTwoStyle = TextStyle(
   color: AppColors.blackColor,
