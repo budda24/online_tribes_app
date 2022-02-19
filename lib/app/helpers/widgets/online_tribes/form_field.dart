@@ -12,16 +12,22 @@ class CustomTextField extends StatelessWidget {
       required this.minLine,
       required this.height,
       required this.width,
-      required this.hintText,
-      required this.onSave})
+      this.hintText,
+      required this.onSave,
+      this.controller,
+      this.color,
+      this.lableText})
       : super(key: key);
 
   final int minLine;
   final int maxline;
   final double height;
   final double width;
-  final String hintText;
+  String? hintText;
+  String? lableText;
   Function onSave;
+  TextEditingController? controller;
+  Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +47,7 @@ class CustomTextField extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.r),
-            color: AppColors.textFieldFill,
+            color: color ?? AppColors.textFieldFill,
           ),
           height: height.h,
           width: width.w,
@@ -54,6 +60,7 @@ class CustomTextField extends StatelessWidget {
           margin: _margin,
           padding: _padding,
           child: TextFormField(
+            controller: controller,
             onSaved: (value) => onSave(value),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -67,6 +74,7 @@ class CustomTextField extends StatelessWidget {
             maxLines: maxline,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
+              labelText:lableText ??'',
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
