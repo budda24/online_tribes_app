@@ -24,7 +24,6 @@ class WalkthroughController extends GetxController {
   }
 
   void continuButton() {
-    //! how to add to the value of obs
     pageController!.animateTo(currentPage.value.toInt() + 1,
         duration: const Duration(milliseconds: 500), curve: Curves.linear);
   }

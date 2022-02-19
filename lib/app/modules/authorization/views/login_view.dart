@@ -21,10 +21,11 @@ import '../controllers/login_controller.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../../registration/views/registration_desrription_view.dart';
 import '../../../helpers/widgets/online_tribes/form_field.dart';
+import '../../../helpers/widgets/online_tribes/login_services_Icon.dart';
 import 'rest_password_view.dart';
 
 class LoginView extends GetView<LoginController> {
-  final controller = Get.put(LoginController());
+  /* final controller = Get.put(LoginController()); */
 
   @override
   Widget build(BuildContext context) {
@@ -138,27 +139,9 @@ class LoginView extends GetView<LoginController> {
                         textColor: kColorWhite,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Container(
-                            margin:
-                                EdgeInsets.only(/*right: screeanwidth * 0.04*/),
-                            child: LoginIcons.socialButtonCircle(
-                                facebookColor, FontAwesomeIcons.facebookF,
-                                iconColor: Colors.white, onTap: () {}),
-                          ),
-                          Container(
-                            margin:
-                                EdgeInsets.only(/*right: screeanwidth * 0.04*/),
-                            child: LoginIcons.socialButtonCircle(
-                                googleColor, FontAwesomeIcons.googlePlusG,
-                                iconColor: Colors.white, onTap: () {}),
-                          ),
-                        ],
-                      ),
+                    LoginServicesIcons(
+                      onTapFaccebook: () {},
+                      onTapGoogle: () {},
                     ),
                     TextButton(
                       onPressed: () async {
@@ -176,3 +159,5 @@ class LoginView extends GetView<LoginController> {
     );
   }
 }
+
+

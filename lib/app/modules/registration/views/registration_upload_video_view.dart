@@ -10,16 +10,17 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
 class RegistrationUploadVideoView extends GetView {
+
   @override
   Widget build(BuildContext context) {
-    /*  ScreenUtil.init(
+     ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
         designSize: Size(411, 809),
         context: context,
         minTextAdapt: true,
-        orientation: Orientation.portrait); */
+        orientation: Orientation.portrait);
     return Scaffold(
       backgroundColor: kMainColor,
       body: SingleChildScrollView(

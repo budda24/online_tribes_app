@@ -16,12 +16,20 @@ import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import 'registration_desrription_view.dart';
 import 'registration_upload_video_view.dart';
 
-class RegistrationAditionalView extends GetView {
+class RegistrationAditionalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int _height = 5;
     final _formKey = GlobalKey<FormState>();
     final controller = Get.find<RegistrationController>();
+     ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(360, 690),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
 
     return Scaffold(
       backgroundColor: kMainColor,

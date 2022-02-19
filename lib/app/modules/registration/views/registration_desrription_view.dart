@@ -15,18 +15,24 @@ import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../models/tribal_example.dart';
-import 'registration_aditional_view.dart';
+import 'registration_aditional_info_view.dart';
 import 'registration_destription_hint_view_view.dart';
 
-class RegistrationView extends StatelessWidget {
-  const RegistrationView({Key? key}) : super(key: key);
+class RegistrationDescriptionView extends StatelessWidget {
+  const RegistrationDescriptionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /* final double screeanheight = MediaQuery.of(context).size.height;
-    final double screeanwidth = MediaQuery.of(context).size.width;
-    print('$screeanheight :: $screeanwidth'); */
     Get.find<RegistrationController>();
+
+     ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(360, 690),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
 
     return Scaffold(
       backgroundColor: kMainColor,

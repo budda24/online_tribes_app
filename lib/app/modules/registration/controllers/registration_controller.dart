@@ -11,19 +11,17 @@ class RegistrationController extends GetxController {
     this.range.value = range; //updating the value of Rx Variable.
   }
 
-  final count = 0.obs;
-
   final tribalNameController = TextEditingController();
-  static List<String> hobbies = [];
+  static List<String> hobbies = []; //list of given values hobbies
+
   static void addHobby(String value) {
-    hobbies.add(value);
+    hobbies.add(value); //add hobby given value
   }
 
-  static var hobbiesFieldsController = ScrollController();
-
   RxList<Widget> hobbiesFields = [
+    //list of hobby textField widgets
     CustomTextField(
-      
+      controller: RegistrationController._hobbyController1,
       height: 55,
       width: 500,
       hintText: 'Hobbies',
@@ -34,14 +32,32 @@ class RegistrationController extends GetxController {
       },
     ),
   ].obs;
-   int index = 1;
-  void addHobbyField() {
 
+
+
+  static final _hobbyController1 = TextEditingController();
+  static final _hobbyController2 = TextEditingController();
+  static final _hobbyController3 = TextEditingController();
+  static final _hobbyController4 = TextEditingController();
+  static final _hobbyController5 = TextEditingController();
+ // hobby textField controllers stored in a List for creating textFields with controllers
+  List<TextEditingController> hobbyControllers = [
+    _hobbyController1,
+    _hobbyController2,
+    _hobbyController3,
+    _hobbyController4,
+    _hobbyController5
+  ];
+//index for itterating true hobby controllers
+  int _index = 2;
+  //add new texFormField for hobbies TextFields
+  void addHobbyField() {
     hobbiesFields.add(
       CustomTextField(
+        controller: hobbyControllers[_index],
         height: 60,
         width: 500,
-        hintText: 'Hobbies $index',
+        hintText: 'Hobbies $_index',
         maxline: 1,
         minLine: 1,
         onSave: (value) {
@@ -49,7 +65,7 @@ class RegistrationController extends GetxController {
         },
       ),
     );
-    index++;
+    _index++;
   }
 
   @override
@@ -64,5 +80,4 @@ class RegistrationController extends GetxController {
 
   @override
   void onClose() {}
-  void increment() => count.value++;
 }

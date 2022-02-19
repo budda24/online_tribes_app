@@ -6,6 +6,7 @@ import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/authorization/controllers/resetPassword_controller.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:get/get.dart';
@@ -15,6 +16,14 @@ class RestPasswordView extends GetView {
   final controller = Get.put(ResetPasswordController());
 
   Widget build(BuildContext context) {
+     ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(360, 690),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
     return Scaffold(
       appBar: AppBarBackArrow(
         title: Text(
@@ -25,7 +34,7 @@ class RestPasswordView extends GetView {
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 300),
+            margin: EdgeInsets.only(top: 300.h),
             child: Column(
               children: [
                 TextField(
@@ -34,16 +43,16 @@ class RestPasswordView extends GetView {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     hintText: 'Enter a product name eg. pension',
-                    hintStyle: TextStyle(fontSize: 16),
+                    hintStyle: TextStyle(fontSize: 16.sp),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(8.r),
                       borderSide: BorderSide(
                         width: 0,
                         style: BorderStyle.none,
                       ),
                     ),
                     filled: true,
-                    contentPadding: EdgeInsets.all(16),
+                    contentPadding: EdgeInsets.all(16.r),
                     fillColor: AppColors.primaryColor,
                   ),
                 ),
