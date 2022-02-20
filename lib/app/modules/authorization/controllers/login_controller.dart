@@ -1,3 +1,4 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
@@ -14,56 +15,95 @@ import '../../../controllers/global_controler.dart';
 class LoginController extends GetxController {
   GlobalController globalController = Get.find<GlobalController>();
 
+  GlobalKey<FormState> formKey = GlobalKey();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> formKey = GlobalKey();
-  RxString? password = ''.obs;
-  RxString? email = ''.obs;
 
-  bool validateSignupForm() {
+  final signUpTribalNameController = TextEditingController();
+  final signUpemailController = TextEditingController();
+  final signUpPasswordController = TextEditingController();
+  final signUpPasswordConfirmController = TextEditingController();
+
+  bool validateSigninForm({
+    required TextEditingController email,
+    required TextEditingController password,
+  }) {
     /* isEmail valid */
-    if (!GetUtils.isEmail(emailController.text)) {
-      emailController.clear();
+    if (!GetUtils.isEmail(email.text)) {
+      email.clear();
       Get.showSnackbar(
         customSnackbar('Email is Invalid'),
       );
       return false;
     }
     /* isLenght < 8 */
-    if (!GetUtils.isLengthGreaterThan(passwordController.text, 8)) {
+    if (!GetUtils.isLengthGreaterThan(password.text, 8)) {
       Get.showSnackbar(
         customSnackbar('Password should contain from 8 to 16 characters'),
       );
-      passwordController.clear();
+      password.clear();
       return false;
     }
-
 /* minimum eight characters, at least one letter and one number */
-    RegExp regExp = RegExp(
+    RegExp regExpPassword = RegExp(
       r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$",
       caseSensitive: false,
       multiLine: false,
     );
-    if (!regExp.hasMatch(passwordController.text)) {
+    if (!regExpPassword.hasMatch(password.text)) {
       Get.showSnackbar(
         customSnackbar(
             'Password should contain at least one letter and one number'),
       );
 
-      passwordController.clear();
+      password.clear();
       return false;
     } else {
       return true;
     }
   }
 
-  void saveForm() async {
-    formKey.currentState!.save();
-    print('$password  :  $email');
+  bool validateSignupForm(
+      {required TextEditingController password,
+      required TextEditingController confirmPassword,
+      required TextEditingController tribalName,
+      required TextEditingController email}) {
+    RegExp regExpTribalName = RegExp(
+      // A-Za-z0-9_ all letters numbers and _
+      r"^[\w]{3,10}$",
+      caseSensitive: false,
+      multiLine: false,
+    );
+
+    if (!validateSigninForm(email: email, password: password)) {
+      return false;
+    } else if (password != confirmPassword)
+      return false;
+    else if (!regExpTribalName.hasMatch(tribalName.text)) {
+      Get.showSnackbar(customSnackbar(
+          'Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores'));
+      tribalName.clear();
+      return false;
+    } else if (password != confirmPassword) {
+      Get.showSnackbar(customSnackbar('Passwords must be identical'));
+      password.clear();
+      confirmPassword.clear();
+      return false;
+    } else {
+      return true;
+    }
   }
 
+  /* void saveForm() async {
+    formKey.currentState!.save();
+    //! does that mean that the controller got saved
+    print('$password  :  $email');
+  } */
+
   Future<void> performSignin() async {
-    if (validateSignupForm()) {
+    if (validateSigninForm(
+        email: emailController, password: passwordController)) {
       final UserModel user = UserModel.fromJson({
         'email': emailController.text,
         'name': 'Temp',
@@ -73,21 +113,29 @@ class LoginController extends GetxController {
       } else {
         clearUserCredencial();
       }
-      await Auth()
-          .logInExistingUser(user, passwordController.text)
-          .then((value) {
-        globalController.isUserLogged();
-      }).catchError((onError) {
-        Get.showSnackbar(customSnackbar(onError.toString()));
-      });
+
+      await Auth().logInExistingUser(user, passwordController.text).then(
+        (value) {
+          globalController.isUserLogged();
+        },
+      );
     }
   }
 
   Future<void> performSignup() async {
-    if (validateSignupForm()) {
+    if (validateSigninForm(
+          email: signUpemailController,
+          password: signUpPasswordController,
+        ) &&
+        validateSignupForm(
+            confirmPassword: signUpPasswordConfirmController,
+            email: signUpemailController,
+            password: signUpPasswordController,
+            tribalName: signUpTribalNameController)) {
       final UserModel user = UserModel.fromJson({
         'email': emailController.text,
-        'name': 'Temp',
+        'name': signUpTribalNameController,
+        //Todo how to put the id and time stamp
       });
       await Auth()
           .createUserToAuth(user, passwordController.text)

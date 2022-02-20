@@ -28,12 +28,11 @@ class AppColors {
   static Color blueColor = Color(0xff82ACEA);
   static Color blackColor = Colors.black;
   static Color greyColor = Color(0xff707070);
-  
+  static Color darkGreyColor = Color(0xff808080);
+  static Color darkOrangeColor = Color(0xffE5A238);
+  static Color errorRedColor = Color(0xffCD5D7D);
 
-
-
-
- /*  static Color? accentColor = const Color(0xFF312951);
+  /*  static Color? accentColor = const Color(0xFF312951);
   static Color? buttonColor = const Color(0xFF592AAE);
   static Color? bodyColorTwo = const Color(0xFFCABCFF);
   static Color lightGreyColor = const Color(0xFFE9EEF2);

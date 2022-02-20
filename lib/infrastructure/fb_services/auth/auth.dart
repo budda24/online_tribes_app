@@ -1,31 +1,33 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 
 import 'package:flutter_application_1/domain/models/user_model.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
 import 'package:get/get.dart';
-import '../../../app/helpers/controllers/global_controller.dart';
+import '../../../app/controllers/global_controler.dart';
 
 final auth = FirebaseAuth.instance;
 
 class Auth {
   final globalController = Get.find<GlobalController>();
+
   Future<void> logInExistingUser(UserModel user, String password) async {
     try {
       final List userEmails =
           await auth.fetchSignInMethodsForEmail(user.email ?? '');
       if (userEmails.isEmpty) {
-        print("we couldn't find currant email");
+        Get.showSnackbar(customSnackbar("we couldn't find currant email"));
       } else {
         await auth
             .signInWithEmailAndPassword(
                 email: user.email ?? '', password: password)
             .then((value) {
-          print(value);
+          /* print(value); */
         });
       }
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      
+    } on FirebaseAuthException catch (error) {
+      Get.showSnackbar(
+          customSnackbar("Sign in failed because ${error.message ?? ''}"));
     }
   }
 
@@ -42,18 +44,19 @@ class Auth {
           await Database().createUser(user);
         }
       } else {
-        print('Email Already Exists');
+         Get.showSnackbar(customSnackbar('Email Already Exists'));
       }
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
+    } on FirebaseAuthException catch (error) {
+      Get.showSnackbar(customSnackbar('Sign up failed because ${error.message }'));
     }
   }
 
   Future<void> restPasswordEmail(String email) async {
-    final response = await auth.sendPasswordResetEmail(email: email);
-    return response;
-    /*  .then((value) => Get.back())
-        .catchError(
-            (onError) => globalController.showSnackbar(onError.toString())); */
+try{
+await auth.sendPasswordResetEmail(email: email);
+} on FirebaseAuthException catch (error){
+   Get.showSnackbar(customSnackbar('Reseting password failed because ${error.message }'));
+}
+
   }
 }
