@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
 
@@ -25,7 +26,7 @@ import '../../../helpers/widgets/online_tribes/login_services_Icon.dart';
 import 'rest_password_view.dart';
 
 class LoginView extends GetView<LoginController> {
-  /* final controller = Get.put(LoginController()); */
+  final globalController = Get.find<GlobalController>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,122 +38,125 @@ class LoginView extends GetView<LoginController> {
         context: context,
         minTextAdapt: true,
         orientation: Orientation.portrait);
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Stack(
-                children: [
-                  GreenWaves1(screeanheight: 735.h),
-                  Center(
-                    child: Container(
-                      height: 350.h,
-                      width: 250.w,
-                      /*padding: EdgeInsets.all(screeanheight*01),
-                margin: EdgeInsets.only(top: screeanheight * 0.025),*/
-                      child: Center(
-                        child: Image.network(
-                          AssetsUrl.logo411x600,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Form(
-                key: controller.formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+    return GestureDetector(
+      onTap: globalController.unfoocuseNodes,
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Stack(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 41.w),
-                      child: Column(
-                        children: [
-                          TextFormField(
-                            controller: controller.emailController,
-                            maxLength: 320,
-                            autofillHints: [AutofillHints.email],
-                            keyboardType: TextInputType.emailAddress,
-                            enableSuggestions: true,
-                            style: outlineInputTextFormFieldHintStyle,
-                            decoration: InputDecoration(
-                              hintText: 'Email',
-                            ),
-                          ),
-                          horizontalSpaceTiny,
-                          TextFormField(
-                            controller: controller.passwordController,
-                            maxLength: 120,
-                            keyboardType: TextInputType.text,
-                            obscuringCharacter: '*',
-                            obscureText: true,
-                            enableSuggestions: false,
-                            autocorrect: false,
-                            style: outlineInputTextFormFieldHintStyle,
-                            decoration: InputDecoration(
-                              hintText: 'Password',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 41.w,
-                          height: 52.h,
-                        ),
-                        CustomCheckbox(
-                          isChecked: controller.isRememberMe,
-                          callBack: controller.toggleRememberMe,
-                        ),
-                        SizedBox(
-                          width: 12.w,
-                        ),
-                        Text(
-                          'Remember me',
-                          style: kTextCheckBox,
-                        ),
-                        Container(
-                            margin: EdgeInsets.only(left: 123),
-                            child: TextButton(
-                              child: Text('Forgot Password?',
-                                  style: kTextCheckBox),
-                              onPressed: () {
-                                Get.to(RestPasswordView());
-                              },
-                            ))
-                      ],
-                    ),
-                    /* SizedBox(
-                      height: 16.h,
-                    ), */
+                    GreenWaves1(screeanheight: 735.h),
                     Center(
-                      child: SlimRoundedButton(
-                        onPress: controller.performSignin,
-                        title: 'LOGIN',
-                        backgroundColour: kMainColor,
-                        textColor: kColorWhite,
+                      child: Container(
+                        height: 350.h,
+                        width: 250.w,
+                        /*padding: EdgeInsets.all(screeanheight*01),
+                  margin: EdgeInsets.only(top: screeanheight * 0.025),*/
+                        child: Center(
+                          child: Image.network(
+                            AssetsUrl.logo411x600,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
-                    ),
-                    LoginServicesIcons(
-                      onTapFaccebook: () {},
-                      onTapGoogle: () {},
-                    ),
-                    TextButton(
-                      onPressed: () async {
-                        Get.toNamed(Routes.REGISTRATION);
-                      },
-                      child: Text('SIGN UP'),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Form(
+                  key: controller.formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 41.w),
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: controller.emailController,
+                              maxLength: 320,
+                              autofillHints: [AutofillHints.email],
+                              keyboardType: TextInputType.emailAddress,
+                              enableSuggestions: true,
+                              style: outlineInputTextFormFieldHintStyle,
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                              ),
+                            ),
+                            horizontalSpaceTiny,
+                            TextFormField(
+                              controller: controller.passwordController,
+                              maxLength: 120,
+                              keyboardType: TextInputType.text,
+                              obscuringCharacter: '*',
+                              obscureText: true,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              style: outlineInputTextFormFieldHintStyle,
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 41.w,
+                            height: 52.h,
+                          ),
+                          CustomCheckbox(
+                            isChecked: controller.isRememberMe,
+                            callBack: controller.toggleRememberMe,
+                          ),
+                          SizedBox(
+                            width: 12.w,
+                          ),
+                          Text(
+                            'Remember me',
+                            style: kTextCheckBox,
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(left: 123),
+                              child: TextButton(
+                                child: Text('Forgot Password?',
+                                    style: kTextCheckBox),
+                                onPressed: () {
+                                  Get.to(RestPasswordView());
+                                },
+                              ))
+                        ],
+                      ),
+                      /* SizedBox(
+                        height: 16.h,
+                      ), */
+                      Center(
+                        child: SlimRoundedButton(
+                          onPress: controller.performSignin,
+                          title: 'LOGIN',
+                          backgroundColour: kMainColor,
+                          textColor: kColorWhite,
+                        ),
+                      ),
+                      LoginServicesIcons(
+                        onTapFaccebook: () {},
+                        onTapGoogle: () {},
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Get.toNamed(Routes.REGISTRATION);
+                        },
+                        child: Text('SIGN UP'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

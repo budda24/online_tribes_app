@@ -1,4 +1,4 @@
-// Package imports:
+/* // Package imports:
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ class GlobalController extends GetxController {
   final box = GetStorage();
 
   //custom snackBar
-  
+
 
   @override
   void onInit() async {
@@ -24,3 +24,4 @@ class GlobalController extends GetxController {
     super.onInit();
   }
 }
+ */

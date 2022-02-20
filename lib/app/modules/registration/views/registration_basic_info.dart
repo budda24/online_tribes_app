@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+/* import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,8 @@ import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_fie
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
+
+import 'registration_desrription_view.dart';
 
 class RegistrationBasicInfoView extends GetView<RegistrationController> {
   /* final controllerRegistration = Get.put(RegistrationController()); */
@@ -57,31 +58,37 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                       children: [
                         verticalSpaceLarge,
                         OneLineTextField(
-                          onsaved: (){},
-                          validator: (){},
+                          controller: controller.tribalNameController,
+                          onsaved: () {},
+                          validator: () {},
                           lable: 'Tribal Name?',
                         ),
                         OneLineTextField(
-                          onsaved: (){},
-                          validator: (){},
+                          controller: controller.emailController,
+                          onsaved: () {},
+                          validator: () {},
                           lable: 'Yor Email Adress',
                         ),
                         OneLineTextField(
-                          onsaved: (){},
-                          validator: (){},
+                          controller: controller.passwordController,
+                          onsaved: () {},
+                          validator: () {},
                           lable: 'Create Password',
                         ),
                         OneLineTextField(
-                          onsaved: (){},
-                          validator: (){},
+                          controller: controller.passwordConfirmController,
+                          onsaved: () {},
+                          validator: () {},
                           lable: 'Confirm Password',
                         ),
                         verticalSpaceLarge,
                         SlimRoundedButton(
                           backgroundColour: AppColors.primaryColor,
-                          title: 'Create ',
+                          title: 'Create',
                           textColor: AppColors.whiteColor,
-                          onPress: () {}, //creating account
+                          onPress: () {
+                            Get.to(RegistrationDescriptionView());
+                          }, //creating account
                         ),
                         verticalSpaceSmall,
                         Text('OR'),
@@ -119,7 +126,6 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                         topRight: Radius.circular(30)),
                     color: AppColors.whiteColor,
                   ),
-
                 ),
               ),
             ),
@@ -161,3 +167,4 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
     );
   }
 }
+ */
