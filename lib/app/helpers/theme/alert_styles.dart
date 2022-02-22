@@ -12,11 +12,12 @@ import 'app_colors.dart';
 
 
 GetSnackBar customSnackbar (String message){return GetSnackBar(
-    duration: 3.seconds,
+  icon:Icon(Icons.error, color: AppColors.errorRedColor, size: 35,),
+    duration: 4.seconds,
     snackPosition: SnackPosition.TOP,
     titleText: Text(
       'Error',
-      style: headingStyle,
+      style: headingBlackStyle,
     ),
     messageText: Text(
       message,
