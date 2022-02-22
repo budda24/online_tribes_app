@@ -1,18 +1,26 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainCirclePhoto extends StatelessWidget {
-   MainCirclePhoto(
+  MainCirclePhoto(
       {required this.screeanwidth,
       required this.imagePathN,
       /* required this.imagePathL, */
       required this.screeanheight});
 
-  const MainCirclePhoto.networking({
+  MainCirclePhoto.networking(
+      {required this.screeanheight,
+      required this.screeanwidth,
+      required this.imagePathN}) : file = null;
+
+   MainCirclePhoto.file({
     required this.screeanheight,
     required this.screeanwidth,
-    required this.imagePathN
-  })/* :imagePathL='' */;
+    required this.file
+  }) : imagePathN = '';
 
   /* const MainCirclePhoto.local({
     required this.screeanheight,
@@ -24,23 +32,25 @@ class MainCirclePhoto extends StatelessWidget {
 
   final double screeanheight;
   final double screeanwidth;
-  final String imagePathN;
+  String imagePathN;
+  File? file;
   /* final String imagePathL; */
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        top: screeanheight * 0.03, bottom: screeanheight * 0.0),
-      width: screeanwidth * 0.4,
-      height: screeanheight * 0.2,
+          top: 10.h, bottom: 0),
+      width: 140.w,
+      height: 70.h,
       decoration: BoxDecoration(
         border: Border.all(
           width: 5.0,
           color: AppColors.facebookColor,
         ),
         shape: BoxShape.circle,
-        image:
-            DecorationImage(image: NetworkImage(imagePathN), /* fit: BoxFit.fill */),
+        image: DecorationImage(
+          image: file == null ? NetworkImage(imagePathN) : FileImage(file!) as ImageProvider/* FileImage(file) */ /* fit: BoxFit.fill */
+        ),
       ),
     );
   }

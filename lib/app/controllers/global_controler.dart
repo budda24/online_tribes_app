@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 class GlobalController extends GetxController {
   String currentUserRole = '';
   final box = GetStorage();
+  /* List<CameraDescription>? camera; */
 
   User? user;
   void isUserLogged() {

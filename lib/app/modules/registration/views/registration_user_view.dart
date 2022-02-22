@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/controllers/camea_controller.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/modules/authorization/controllers/login_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
@@ -7,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/one_line_textField.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
@@ -22,6 +26,7 @@ import 'package:flutter_application_1/app/routes/app_pages.dart';
 
 class RegistrationBasicInfoView extends GetView<RegistrationController> {
   final globalController = Get.find<GlobalController>();
+  final cameraController = Get.put(CameraGetXController());
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
@@ -141,18 +146,26 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                 /* top: -10, */
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: Column(children: [
-                    Text(
-                      'Sign Up',
-                      style: headingBoldStyle,
-                    ),
-                    MainCirclePhoto.networking(
-                        /* imagePathL: '', */
-                        imagePathN:
-                            'https://dsm01pap004files.storage.live.com/y4m_NLYDjl1WsO0m3Cc0jMZWBlY2GWMN0WSGoBjemVm6bZGdnJhsNEE-ece4G0QPUyH65WapVziK2Nhfzu8VinUIqVGqoqKFCpMjyip8CgmQS5SZz-Mzq5cvAnQpIkgKeWAOztb9rapynbJpm7sTzM66euz784RbPFVyl5NraciSiy6qGxXYJrHybz3YT8gY2aN?width=57&height=57&cropmode=none',
-                        screeanheight: 300.h,
-                        screeanwidth: 250.w),
-                  ]),
+                  child: GetBuilder(
+                    init: cameraController,
+                    builder: (CameraGetXController cameraCon) =>
+                        Column(children: [
+                      Text(
+                        'Sign Up',
+                        style: headingBoldStyle,
+                      ),
+                      cameraCon.image == null
+                          ? MainCirclePhoto.networking(
+                              /* imagePathL: '', */
+                              imagePathN:
+                                  'https://dsm01pap004files.storage.live.com/y4m_NLYDjl1WsO0m3Cc0jMZWBlY2GWMN0WSGoBjemVm6bZGdnJhsNEE-ece4G0QPUyH65WapVziK2Nhfzu8VinUIqVGqoqKFCpMjyip8CgmQS5SZz-Mzq5cvAnQpIkgKeWAOztb9rapynbJpm7sTzM66euz784RbPFVyl5NraciSiy6qGxXYJrHybz3YT8gY2aN?width=57&height=57&cropmode=none',
+                              screeanheight: 300.h,
+                              screeanwidth: 250.w)
+                          : MainCirclePhoto.file(screeanheight: 300.h,
+                              screeanwidth: 250.w, file: cameraCon.image!),
+
+                    ]),
+                  ),
                 ),
               ),
               Positioned.fill(
@@ -165,7 +178,9 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                       Icons.add_a_photo,
                       color: AppColors.greyColor,
                     ),
-                    onPressed: () {}, //add profile photo
+                    onPressed: () async {
+                      await cameraController.getImageCamera();
+                    }, //add profile photo
                   ),
                 ),
               ),
