@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +17,8 @@ class CameraGetXController extends GetxController {
     update();
   } */
 
+ 
+
   Future<XFile?> getImageGallery() async {
     final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
     image = File(tmpImagePath!.path);
@@ -23,7 +26,11 @@ class CameraGetXController extends GetxController {
   }
 
   Future<XFile?> getImageCamera() async {
-    final tmpImagePath = await _picker.pickImage(source: ImageSource.camera, maxHeight: 100, maxWidth: 100,preferredCameraDevice: CameraDevice.front);
+    final tmpImagePath = await _picker.pickImage(
+        source: ImageSource.camera,
+        maxHeight: 100,
+        maxWidth: 100,
+        preferredCameraDevice: CameraDevice.front);
     image = File(tmpImagePath!.path);
     update();
   }

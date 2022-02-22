@@ -161,9 +161,10 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                                   'https://dsm01pap004files.storage.live.com/y4m_NLYDjl1WsO0m3Cc0jMZWBlY2GWMN0WSGoBjemVm6bZGdnJhsNEE-ece4G0QPUyH65WapVziK2Nhfzu8VinUIqVGqoqKFCpMjyip8CgmQS5SZz-Mzq5cvAnQpIkgKeWAOztb9rapynbJpm7sTzM66euz784RbPFVyl5NraciSiy6qGxXYJrHybz3YT8gY2aN?width=57&height=57&cropmode=none',
                               screeanheight: 300.h,
                               screeanwidth: 250.w)
-                          : MainCirclePhoto.file(screeanheight: 300.h,
-                              screeanwidth: 250.w, file: cameraCon.image!),
-
+                          : MainCirclePhoto.file(
+                              screeanheight: 300.h,
+                              screeanwidth: 250.w,
+                              file: cameraCon.image!),
                     ]),
                   ),
                 ),
@@ -179,7 +180,51 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                       color: AppColors.greyColor,
                     ),
                     onPressed: () async {
-                      await cameraController.getImageCamera();
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Card(
+                              color: AppColors.textFieldFill,
+                              child: Container(
+                                height: 100,
+                                color: AppColors.textFieldFill,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+
+                                      children: [
+                                        IconButton(
+                                          onPressed: () async {
+                                            await cameraController
+                                                .getImageGallery();
+                                          },
+                                          icon: Icon(Icons.photo_album,size: 50.h,),
+                                        ),
+                                        verticalSpaceTiny,
+                                        Text('   Gallery',style: headingBoldStyle, )
+                                      ],
+                                    ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        IconButton(
+                                            onPressed: () async {
+                                              await cameraController
+                                                  .getImageCamera();
+                                            },
+                                            icon: Icon(Icons.camera,size: 50.h,),),
+                                            verticalSpaceTiny,
+                                            Text('   Camera', style: headingBoldStyle,)
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
                     }, //add profile photo
                   ),
                 ),
