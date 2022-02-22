@@ -35,7 +35,7 @@ class RegistrationBasicInfoView extends StatelessWidget {
         minTextAdapt: true,
         orientation: Orientation.portrait);
     return GestureDetector(
-      onTap:globalController.unfoocuseNodes,
+      onTap:globalController.unFocuseNode,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBarBackArrow(

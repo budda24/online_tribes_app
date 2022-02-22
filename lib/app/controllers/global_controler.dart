@@ -25,6 +25,10 @@ class GlobalController extends GetxController {
     }
   }
 
+  void unFocuseNode() {
+    Get.focusScope!.unfocus();
+  }
+
   @override
   void onInit() async {
     /* if (box.read('isWalkthroughDone') == null ||

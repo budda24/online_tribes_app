@@ -1,9 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+import 'package:flutter_application_1/domain/models/user_model.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
 import 'package:get/get.dart';
 
 class RegistrationController extends GetxController {
   //TODO: Implement RegistrationController
+
+  Future<void> createUser() async {
+    final UserModel user = UserModel.fromJson(
+        {'eamil': 'emailController.text', 'name': 'nameController.text'});
+
+    await Auth().createUserToAuth(user, ' password');
+  }
 
   Rx<double> range = 5.0.obs; //again initialized it to a Rx<double>
 
@@ -11,7 +20,6 @@ class RegistrationController extends GetxController {
     this.range.value = range; //updating the value of Rx Variable.
   }
 
-  final tribalNameController = TextEditingController();
   static List<String> hobbies = []; //list of given values hobbies
 
   static void addHobby(String value) {
@@ -33,14 +41,12 @@ class RegistrationController extends GetxController {
     ),
   ].obs;
 
-
-
   static final _hobbyController1 = TextEditingController();
   static final _hobbyController2 = TextEditingController();
   static final _hobbyController3 = TextEditingController();
   static final _hobbyController4 = TextEditingController();
   static final _hobbyController5 = TextEditingController();
- // hobby textField controllers stored in a List for creating textFields with controllers
+  // hobby textField controllers stored in a List for creating textFields with controllers
   List<TextEditingController> hobbyControllers = [
     _hobbyController1,
     _hobbyController2,

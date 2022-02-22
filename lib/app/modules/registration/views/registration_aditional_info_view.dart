@@ -34,7 +34,7 @@ class RegistrationAditionalView extends StatelessWidget {
         orientation: Orientation.portrait);
 
     return GestureDetector(
-      onTap:globalController.unfoocuseNodes,
+      onTap:globalController.unFocuseNode,
       child: Scaffold(
         backgroundColor: kMainColor,
         body: SingleChildScrollView(

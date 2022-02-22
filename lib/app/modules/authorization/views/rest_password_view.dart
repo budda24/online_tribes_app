@@ -30,7 +30,7 @@ class RestPasswordView extends GetView {
         minTextAdapt: true,
         orientation: Orientation.portrait);
     return GestureDetector(
-      onTap:globalController.unfoocuseNodes,
+      onTap:globalController.unFocuseNode,
       child: Scaffold(
         appBar: AppBarBackArrow(
           title: Text(

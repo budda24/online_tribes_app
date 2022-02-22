@@ -7,11 +7,13 @@ class OneLineTextField extends StatelessWidget {
   final String lable;
   final Function onsaved;
   final Function? validator;
-   OneLineTextField({
+  final TextEditingController controller;
+  OneLineTextField({
     Key? key,
     required this.lable,
     required this.onsaved,
-    this.validator
+    this.validator,
+    required this.controller
   }) : super(key: key);
 
   @override
@@ -21,8 +23,8 @@ class OneLineTextField extends StatelessWidget {
       height: 50.h,
       width: 320.w,
       child: TextFormField(
-        validator:(text) => validator!(text),
-        onSaved:(text) => onsaved(text),
+        validator: (text) => validator!(text),
+        onSaved: (text) => onsaved(text),
         decoration: InputDecoration(
             label: Text(
               lable,

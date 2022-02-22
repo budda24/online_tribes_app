@@ -13,17 +13,13 @@ class Auth {
 
   Future<void> logInExistingUser(UserModel user, String password) async {
     try {
-      final List userEmails =
-          await auth.fetchSignInMethodsForEmail(user.email ?? '');
+      final List userEmails = await auth.fetchSignInMethodsForEmail(user.email);
       if (userEmails.isEmpty) {
         Get.showSnackbar(customSnackbar("we couldn't find currant email"));
       } else {
-        await auth
-            .signInWithEmailAndPassword(
-                email: user.email ?? '', password: password)
-            .then((value) {
-          /* print(value); */
-        });
+        final userData = await auth.signInWithEmailAndPassword(
+            email: user.email, password: password);
+        print(userData.user!.uid);
       }
     } on FirebaseAuthException catch (error) {
       Get.showSnackbar(
@@ -33,30 +29,30 @@ class Auth {
 
   Future<void> createUserToAuth(UserModel user, String password) async {
     try {
-      final List userEmails =
-          await auth.fetchSignInMethodsForEmail(user.email ?? '');
+      final List userEmails = await auth.fetchSignInMethodsForEmail(user.email);
       if (userEmails.isEmpty) {
         final userCredential = await auth.createUserWithEmailAndPassword(
-            email: user.email ?? '', password: password);
+            email: user.email, password: password);
         print(userCredential.user!.uid);
         if (userCredential.user != null) {
           user.id = userCredential.user!.uid;
           await Database().createUser(user);
         }
       } else {
-         Get.showSnackbar(customSnackbar('Email Already Exists'));
+        Get.showSnackbar(customSnackbar('Email Already Exists'));
       }
     } on FirebaseAuthException catch (error) {
-      Get.showSnackbar(customSnackbar('Sign up failed because ${error.message }'));
+      Get.showSnackbar(
+          customSnackbar('Sign up failed because ${error.message}'));
     }
   }
 
-  Future<void> restPasswordEmail(String email) async {
-try{
-await auth.sendPasswordResetEmail(email: email);
-} on FirebaseAuthException catch (error){
-   Get.showSnackbar(customSnackbar('Reseting password failed because ${error.message }'));
-}
-
+  Future<void> resetPasswordEmail(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (error) {
+      Get.showSnackbar(
+          customSnackbar('Reseting password failed because ${error.message}'));
+    }
   }
 }

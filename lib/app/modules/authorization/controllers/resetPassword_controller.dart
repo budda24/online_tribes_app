@@ -9,7 +9,7 @@ class ResetPasswordController extends GetxController {
   TextEditingController emailController = TextEditingController();
 
   void reset() async {
-    await Auth().restPasswordEmail(emailController.text).then((value) {
+    await Auth().resetPasswordEmail(emailController.text).then((value) {
       Get.back();
     }).catchError((error) {
       Get.showSnackbar(

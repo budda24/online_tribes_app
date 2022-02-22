@@ -39,7 +39,7 @@ class LoginView extends GetView<LoginController> {
         minTextAdapt: true,
         orientation: Orientation.portrait);
     return GestureDetector(
-      onTap: globalController.unfoocuseNodes,
+      onTap: globalController.unFocuseNode,
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
