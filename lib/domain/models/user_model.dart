@@ -23,10 +23,10 @@ class UserModel {
   dynamic createdAt;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json["id"],
-        tribalName: json["name"],
-        email: json["email"],
-        createdAt: json["createdAt"],
+        id: json["id"]??'',
+        tribalName: json["name"]??'',
+        email: json["email"]??'',
+        createdAt: json["createdAt"]??'',
       );
 
   Map<String, dynamic> toJson() => {

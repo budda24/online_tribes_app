@@ -8,12 +8,14 @@ class OneLineTextField extends StatelessWidget {
   final Function onsaved;
   final Function? validator;
   final TextEditingController controller;
+  final bool isOscure;
   OneLineTextField({
     Key? key,
     required this.lable,
     required this.onsaved,
     this.validator,
-    required this.controller
+    required this.controller,
+    this.isOscure = false,
   }) : super(key: key);
 
   @override
@@ -23,6 +25,8 @@ class OneLineTextField extends StatelessWidget {
       height: 50.h,
       width: 320.w,
       child: TextFormField(
+        obscureText: isOscure,
+        controller: controller,
         validator: (text) => validator!(text),
         onSaved: (text) => onsaved(text),
         decoration: InputDecoration(
@@ -30,6 +34,7 @@ class OneLineTextField extends StatelessWidget {
               lable,
               style: textfieldLableStyle,
             ),
+
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(width: 1, color: AppColors.primaryColor),
               borderRadius: BorderRadius.circular(40.r),

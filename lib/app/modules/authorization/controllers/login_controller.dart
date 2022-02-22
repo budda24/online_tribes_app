@@ -20,10 +20,7 @@ class LoginController extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  final signUpTribalNameController = TextEditingController();
-  final signUpemailController = TextEditingController();
-  final signUpPasswordController = TextEditingController();
-  final signUpPasswordConfirmController = TextEditingController();
+
 
   bool validateSigninForm({
     required TextEditingController email,
@@ -31,6 +28,7 @@ class LoginController extends GetxController {
   }) {
     /* isEmail valid */
     if (!GetUtils.isEmail(email.text)) {
+      print('email : ${email.text}');
       email.clear();
       Get.showSnackbar(
         customSnackbar('Email is Invalid'),
@@ -65,47 +63,7 @@ class LoginController extends GetxController {
     }
   }
 
-  bool validateSignupForm(
-      {required TextEditingController password,
-      required TextEditingController confirmPassword,
-      required TextEditingController tribalName,
-      required TextEditingController email}) {
-    RegExp regExpTribalName = RegExp(
-      // A-Za-z0-9_ all letters numbers and _
-      r"^[\w]{3,10}$",
-      caseSensitive: false,
-      multiLine: false,
-    );
-     String errorMessage = '';
 
-    if (!validateSigninForm(email: email, password: password)) {
-      return false;
-    }
-
-    if (password != confirmPassword) {
-      errorMessage += "The passwords don't match";
-      /* Get.showSnackbar(customSnackbar(errorMessage)); */
-      confirmPassword.clear();
-      /* return false; */
-    }
-
-    if (!regExpTribalName.hasMatch(tribalName.text)) {
-      errorMessage +=
-          '\n Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores';
-
-      /* Get.showSnackbar(customSnackbar(errorMessage)); */
-      tribalName.clear();
-      return false;
-    }
-
-    if (errorMessage.isEmpty && !validateSigninForm(email: email, password: password)) {
-      return true;
-    } else {
-      Get.showSnackbar(customSnackbar(errorMessage));
-      return false;
-    }
-    /*  Get.showSnackbar(customSnackbar('Passwords must be identical')); */
-  }
 
   /* void saveForm() async {
     formKey.currentState!.save();
@@ -134,30 +92,7 @@ class LoginController extends GetxController {
     }
   }
 
-  Future<void> performSignup() async {
-    if (validateSigninForm(
-          email: signUpemailController,
-          password: signUpPasswordController,
-        ) &&
-        validateSignupForm(
-            confirmPassword: signUpPasswordConfirmController,
-            email: signUpemailController,
-            password: signUpPasswordController,
-            tribalName: signUpTribalNameController)) {
-      final UserModel user = UserModel.fromJson({
-        'email': emailController.text,
-        'name': signUpTribalNameController,
-        //Todo how to put the id and time stamp
-      });
-      await Auth()
-          .createUserToAuth(user, passwordController.text)
-          .then((value) {
-        /* globalController.isUserLogged(); */
-      }).catchError((onError) {
-        Get.showSnackbar(customSnackbar(onError.toString()));
-      });
-    }
-  }
+
 
   bool isRememberMe = false;
   void toggleRememberMe(bool value) {

@@ -28,6 +28,7 @@ class Auth {
   }
 
   Future<void> createUserToAuth(UserModel user, String password) async {
+    print('uer email: ${user.email} || user password: ${password}');
     try {
       final List userEmails = await auth.fetchSignInMethodsForEmail(user.email);
       if (userEmails.isEmpty) {

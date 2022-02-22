@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/modules/authorization/controllers/login_controller.dart';
-import 'package:flutter_application_1/app/modules/authorization/controllers/signup_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,8 +20,7 @@ import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_but
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
 
-class RegistrationBasicInfoView extends StatelessWidget {
-  final controller = Get.find<LoginController>();
+class RegistrationBasicInfoView extends GetView<RegistrationController> {
   final globalController = Get.find<GlobalController>();
   @override
   Widget build(BuildContext context) {
@@ -35,7 +33,7 @@ class RegistrationBasicInfoView extends StatelessWidget {
         minTextAdapt: true,
         orientation: Orientation.portrait);
     return GestureDetector(
-      onTap:globalController.unFocuseNode,
+      onTap: globalController.unFocuseNode,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBarBackArrow(
@@ -59,6 +57,7 @@ class RegistrationBasicInfoView extends StatelessWidget {
                     height: 680.h,
                     /* margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom ), */
                     child: Form(
+                      /* key: controller.formKey, */
                       child: Column(
                         children: [
                           verticalSpaceLarge,
@@ -69,19 +68,22 @@ class RegistrationBasicInfoView extends StatelessWidget {
                             lable: 'Tribal Name?',
                           ),
                           OneLineTextField(
-                            controller: controller.signUpemailController,
+                            controller: controller.signUpEmailController,
                             onsaved: () {},
                             validator: () {},
                             lable: 'Yor Email Adress',
                           ),
                           OneLineTextField(
+                            isOscure: true,
                             controller: controller.signUpPasswordController,
                             onsaved: () {},
                             validator: () {},
                             lable: 'Create Password',
                           ),
                           OneLineTextField(
-                            controller: controller.signUpPasswordConfirmController,
+                            isOscure: true,
+                            controller:
+                                controller.signUpPasswordConfirmController,
                             onsaved: () {},
                             validator: () {},
                             lable: 'Confirm Password',
@@ -92,7 +94,8 @@ class RegistrationBasicInfoView extends StatelessWidget {
                             title: 'Create',
                             textColor: AppColors.whiteColor,
                             onPress: () {
-                              Get.to(RegistrationDescriptionView());
+                              controller.createUser();
+                              /* Get.to(RegistrationDescriptionView()); */
                             }, //creating account
                           ),
                           verticalSpaceSmall,

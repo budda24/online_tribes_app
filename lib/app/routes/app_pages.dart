@@ -11,7 +11,7 @@ import '../modules/profile/views/profile_view.dart';
 import '../modules/registration/bindings/registration_binding.dart';
 import '../modules/walkthrough/bindings/walkthrough_binding.dart';
 import '../modules/walkthrough/views/walkthrough_view.dart';
-import '../modules/authorization/views/registration_user_view.dart';
+import '../modules/registration/views/registration_user_view.dart';
 
 // Flutter imports:
 
