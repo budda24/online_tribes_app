@@ -29,18 +29,25 @@ void main() async {
 /*if visited set home to loginscree  */
   if (Get.find<GlobalController>().box.read('isWalkthroughDone') != null &&
       Get.find<GlobalController>().box.read('isWalkthroughDone')) {
-
     defaultScreen = Routes.LOGIN;
   } else {
     defaultScreen = Routes.WALKTHROUGH;
   }
+  if (FirebaseAuth.instance.currentUser == null) {
+    print('User is currently signed out!');
+    defaultScreen = Routes.LOGIN;
+  } else {
+    defaultScreen = Routes.HOME;
+    print('User is signed in!');
+  }
 
+  print(defaultScreen);
   runApp(
     GetMaterialApp(
       title: "Application",
       /* initialBinding: ControllersBinding(), */
-      //! is that ok 
-      initialRoute:auth.currentUser == null ? defaultScreen: Routes.HOME,
+      //! is that ok
+      initialRoute: defaultScreen,
       /* home: Routes.WALKTHROUGH, */
       /* theme: ThemeData(inputDecorationTheme: outlineInputTextFormFieldStyle),*/
       getPages: AppPages.routes,

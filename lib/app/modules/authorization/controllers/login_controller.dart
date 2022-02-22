@@ -1,6 +1,6 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
@@ -39,6 +39,7 @@ class LoginController extends GetxController {
     }
     /* isLenght < 8 */
     if (!GetUtils.isLengthGreaterThan(password.text, 8)) {
+
       Get.showSnackbar(
         customSnackbar('Password should contain from 8 to 16 characters'),
       );
@@ -75,24 +76,35 @@ class LoginController extends GetxController {
       caseSensitive: false,
       multiLine: false,
     );
+     String errorMessage = '';
 
     if (!validateSigninForm(email: email, password: password)) {
       return false;
-    } else if (password != confirmPassword)
-      return false;
-    else if (!regExpTribalName.hasMatch(tribalName.text)) {
-      Get.showSnackbar(customSnackbar(
-          'Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores'));
+    }
+
+    if (password != confirmPassword) {
+      errorMessage += "The passwords don't match";
+      /* Get.showSnackbar(customSnackbar(errorMessage)); */
+      confirmPassword.clear();
+      /* return false; */
+    }
+
+    if (!regExpTribalName.hasMatch(tribalName.text)) {
+      errorMessage +=
+          '\n Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores';
+
+      /* Get.showSnackbar(customSnackbar(errorMessage)); */
       tribalName.clear();
       return false;
-    } else if (password != confirmPassword) {
-      Get.showSnackbar(customSnackbar('Passwords must be identical'));
-      password.clear();
-      confirmPassword.clear();
-      return false;
-    } else {
-      return true;
     }
+
+    if (errorMessage.isEmpty && !validateSigninForm(email: email, password: password)) {
+      return true;
+    } else {
+      Get.showSnackbar(customSnackbar(errorMessage));
+      return false;
+    }
+    /*  Get.showSnackbar(customSnackbar('Passwords must be identical')); */
   }
 
   /* void saveForm() async {
