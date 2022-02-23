@@ -32,11 +32,6 @@ class GlobalController extends GetxController {
 
   @override
   void onInit() async {
-    /* if (box.read('isWalkthroughDone') == null ||
-        !box.read('isWalkthroughDone')) {
-    } else {
-      print('Already Visited');
-    } */
     super.onInit();
   }
 }

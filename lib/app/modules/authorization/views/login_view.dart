@@ -103,25 +103,11 @@ class LoginView extends GetView<LoginController> {
                         ),
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
+
                           Container(
-                            width: 41.w,
-                            height: 52.h,
-                          ),
-                          CustomCheckbox(
-                            isChecked: controller.isRememberMe,
-                            callBack: controller.toggleRememberMe,
-                          ),
-                          SizedBox(
-                            width: 12.w,
-                          ),
-                          Text(
-                            'Remember me',
-                            style: kTextCheckBox,
-                          ),
-                          Container(
-                              margin: EdgeInsets.only(left: 123),
+                              margin: EdgeInsets.only(right: 30.w),
                               child: TextButton(
                                 child: Text('Forgot Password?',
                                     style: kTextCheckBox),
@@ -131,9 +117,6 @@ class LoginView extends GetView<LoginController> {
                               ))
                         ],
                       ),
-                      /* SizedBox(
-                        height: 16.h,
-                      ), */
                       Center(
                         child: SlimRoundedButton(
                           onPress: controller.performSignin,

@@ -26,7 +26,7 @@ class LoginController extends GetxController {
     required TextEditingController email,
     required TextEditingController password,
   }) {
-    /* isEmail valid */
+
     if (!GetUtils.isEmail(email.text)) {
       print('email : ${email.text}');
       email.clear();
@@ -35,7 +35,7 @@ class LoginController extends GetxController {
       );
       return false;
     }
-    /* isLenght < 8 */
+
     if (!GetUtils.isLengthGreaterThan(password.text, 8)) {
 
       Get.showSnackbar(
@@ -64,13 +64,6 @@ class LoginController extends GetxController {
   }
 
 
-
-  /* void saveForm() async {
-    formKey.currentState!.save();
-    //! does that mean that the controller got saved
-    print('$password  :  $email');
-  } */
-
   Future<void> performSignin() async {
     if (validateSigninForm(
         email: emailController, password: passwordController)) {
@@ -78,11 +71,7 @@ class LoginController extends GetxController {
         'email': emailController.text,
         'name': 'Temp',
       });
-      if (isRememberMe) {
-        cacheUserCredencial();
-      } else {
-        clearUserCredencial();
-      }
+
 
       await Auth().logInExistingUser(user, passwordController.text).then(
         (value) {
@@ -94,7 +83,7 @@ class LoginController extends GetxController {
 
 
 
-  bool isRememberMe = false;
+/*   bool isRememberMe = false;
   void toggleRememberMe(bool value) {
     isRememberMe = value;
   }
@@ -109,7 +98,7 @@ class LoginController extends GetxController {
   void clearUserCredencial() {
     globalController.box.remove('isRememberMe');
     globalController.box.remove('userCrendencial');
-  }
+  } */
 
 /*   void onsaved(String ) {
     for
