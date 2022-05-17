@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../theme/app_colors.dart';
 
 class MainCirclePhoto extends StatelessWidget {
   MainCirclePhoto(

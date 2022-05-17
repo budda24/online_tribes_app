@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/helpers/main_constants.dart';
+
 import 'package:flutter_application_1/app/helpers/theme/app_bars.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
+
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/bacground_waves_thene.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/authorization/controllers/resetPassword_controller.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';

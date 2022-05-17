@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
+import '../../theme/app_colors.dart';
 import 'login_icons.dart';
 class LoginServicesIcons extends StatelessWidget {
   final void onTapFaccebook;

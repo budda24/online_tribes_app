@@ -99,7 +99,7 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                             title: 'Create',
                             textColor: AppColors.whiteColor,
                             onPress: () {
-                              controller.createUser();
+                              controller.performSignupUser();
                               /* Get.to(RegistrationDescriptionView()); */
                             }, //creating account
                           ),

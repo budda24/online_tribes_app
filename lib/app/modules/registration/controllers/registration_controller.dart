@@ -67,7 +67,7 @@ class RegistrationController extends GetxController {
     print(signUpEmailController.text);
   } */
 
-  Future<void> performSignup() async {
+/*   Future<void> performSignup() async {
     if (validateSignupForm(
         confirmPassword: signUpPasswordConfirmController,
         email: signUpEmailController,
@@ -85,23 +85,25 @@ class RegistrationController extends GetxController {
         Get.showSnackbar(customSnackbar(onError.toString()));
       });
     }
-  }
+  } */
 
-  Future<void> createUser() async {
+  Future<void> performSignupUser() async {
     if (validateSignupForm(
         password: signUpPasswordController,
         confirmPassword: signUpPasswordConfirmController,
         tribalName: signUpTribalNameController,
         email: signUpEmailController)) {
-      print('create user validation: ${signUpEmailController.text}');
+
       Map<String, Object> userModelJson = {
         'email': signUpEmailController.text,
         'name': signUpTribalNameController.text,
       };
+
       final UserModel user = UserModel.fromJson(userModelJson);
       await Auth().createUserToAuth(user, signUpPasswordController.text);
     }
   }
+
 
   Rx<double> range = 5.0.obs; //again initialized it to a Rx<double>
 
@@ -143,9 +145,10 @@ class RegistrationController extends GetxController {
     _hobbyController4,
     _hobbyController5
   ];
-//index for itterating true hobby controllers
-  int _index = 2;
-  //add new texFormField for hobbies TextFields
+  
+//controller index 0 alredy assign to text field
+  int _index = 1;
+
   void addHobbyField() {
     hobbiesFields.add(
       CustomTextField(
