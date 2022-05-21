@@ -15,7 +15,7 @@ class RegistrationController extends GetxController {
   /* GlobalKey<FormState> formKey = GlobalKey(); */
 
   final signUpTribalNameController = TextEditingController();
-  late final signUpEmailController = TextEditingController();
+  late final signUpPhoneController = TextEditingController();
   late final signUpPasswordController = TextEditingController();
   final signUpPasswordConfirmController = TextEditingController();
 
@@ -70,12 +70,12 @@ class RegistrationController extends GetxController {
   Future<void> performSignup() async {
     if (validateSignupForm(
         confirmPassword: signUpPasswordConfirmController,
-        email: signUpEmailController,
+        email: signUpPhoneController,
         password: signUpPasswordController,
         tribalName: signUpTribalNameController)) {
-      print(signUpEmailController.text);
+      print(signUpPhoneController.text);
       final UserModel user = UserModel.fromJson({
-        'email': signUpEmailController.text,
+        'email': signUpPhoneController.text,
         'name': signUpTribalNameController.text,
         //Todo how to put the id and time stamp
       });
@@ -92,10 +92,10 @@ class RegistrationController extends GetxController {
         password: signUpPasswordController,
         confirmPassword: signUpPasswordConfirmController,
         tribalName: signUpTribalNameController,
-        email: signUpEmailController)) {
-      print('create user validation: ${signUpEmailController.text}');
+        email: signUpPhoneController)) {
+      print('create user validation: ${signUpPhoneController.text}');
       Map<String, Object> userModelJson = {
-        'email': signUpEmailController.text,
+        'email': signUpPhoneController.text,
         'name': signUpTribalNameController.text,
       };
       final UserModel user = UserModel.fromJson(userModelJson);
@@ -161,16 +161,6 @@ class RegistrationController extends GetxController {
       ),
     );
     _index++;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

@@ -54,7 +54,7 @@ void main() async {
       title: "Application",
       /* initialBinding: ControllersBinding(), */
       //! is that ok
-      initialRoute: defaultScreen,
+      initialRoute: Routes.WALKTHROUGH,
       /* home: Routes.WALKTHROUGH, */
       /* theme: ThemeData(inputDecorationTheme: outlineInputTextFormFieldStyle),*/
       getPages: AppPages.routes,

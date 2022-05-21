@@ -17,10 +17,8 @@ class LoginController extends GetxController {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-
 
   bool validateSigninForm({
     required TextEditingController email,
@@ -37,7 +35,6 @@ class LoginController extends GetxController {
     }
     /* isLenght < 8 */
     if (!GetUtils.isLengthGreaterThan(password.text, 8)) {
-
       Get.showSnackbar(
         customSnackbar('Password should contain from 8 to 16 characters'),
       );
@@ -63,8 +60,6 @@ class LoginController extends GetxController {
     }
   }
 
-
-
   /* void saveForm() async {
     formKey.currentState!.save();
     //! does that mean that the controller got saved
@@ -73,9 +68,9 @@ class LoginController extends GetxController {
 
   Future<void> performSignin() async {
     if (validateSigninForm(
-        email: emailController, password: passwordController)) {
+        email: phoneController, password: passwordController)) {
       final UserModel user = UserModel.fromJson({
-        'email': emailController.text,
+        'email': phoneController.text,
         'name': 'Temp',
       });
       if (isRememberMe) {
@@ -92,8 +87,6 @@ class LoginController extends GetxController {
     }
   }
 
-
-
   bool isRememberMe = false;
   void toggleRememberMe(bool value) {
     isRememberMe = value;
@@ -103,7 +96,7 @@ class LoginController extends GetxController {
     globalController.box.write('isRememberMe', isRememberMe);
 
     globalController.box.write('userCrendencial',
-        {'email': emailController.text, 'password': passwordController.text});
+        {'email': phoneController.text, 'password': passwordController.text});
   }
 
   void clearUserCredencial() {
@@ -117,32 +110,6 @@ class LoginController extends GetxController {
 
   /* static Rx<TextEditingController> email = TextEditingController().obs;
   static Rx<TextEditingController> password = TextEditingController().obs; */
-
-  @override
-  void onInit() {
-    /* if (globalController.box.read('userCrendencial') !=
-            null /*  &&
-        globalController.box.read('userCrendencial') */
-        ) {
-      emailController.text =
-          globalController.box.read('userCrendencial')['email'];
-      passwordController.text =
-          globalController.box.read('userCrendencial')['password'];
-    }
-    if (globalController.box.read('isRememberMe') !=
-            null /* &&
-        Get.find<GlobalController>().box.read('isWalkthroughDone') */
-        ) {
-      isRememberMe = globalController.box.read('isRememberMe');
-    } */
-
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {}

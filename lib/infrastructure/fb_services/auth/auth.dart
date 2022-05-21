@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 
 import 'package:flutter_application_1/domain/models/user_model.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
@@ -10,6 +11,25 @@ final auth = FirebaseAuth.instance;
 
 class Auth {
   final globalController = Get.find<GlobalController>();
+
+  Future registerUser({
+    required String mobileNumber,
+  }) async {
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    _auth.verifyPhoneNumber(
+        phoneNumber: mobileNumber,
+        timeout: Duration(minutes: 30),
+        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) => Get.offNamed(Routes.HOME ),
+        verificationFailed: (FirebaseAuthException authExeption) {
+           Get.showSnackbar(customSnackbar(authExeption.message.toString()));
+        },
+         codeSent: (message, number)  {
+          Get.showSnackbar(customSnackbar('$message to $number'));
+        },
+        codeAutoRetrievalTimeout: (cosTam) {
+          print(cosTam);
+        });
+  }
 
   Future<void> logInExistingUser(UserModel user, String password) async {
     try {

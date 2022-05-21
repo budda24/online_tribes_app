@@ -6,10 +6,13 @@ import 'package:get/get.dart';
 
 class ResetPasswordController extends GetxController {
   final globalController = Get.find<GlobalController>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneResetTextEditingController =
+      TextEditingController();
 
   void reset() async {
-    await Auth().resetPasswordEmail(emailController.text).then((value) {
+    await Auth()
+        .resetPasswordEmail(phoneResetTextEditingController.text)
+        .then((value) {
       Get.back();
     }).catchError((error) {
       Get.showSnackbar(
