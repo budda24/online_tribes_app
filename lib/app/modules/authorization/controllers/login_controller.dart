@@ -1,116 +1,111 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
-import 'package:flutter_application_1/app/routes/app_pages.dart';
-import 'package:flutter_application_1/domain/models/user_model.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
+import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
-import '../../../helpers/theme/alert_styles.dart';
 import '../../../controllers/global_controler.dart';
+import '../../../helpers/theme/alert_styles.dart';
 
 class LoginController extends GetxController {
   GlobalController globalController = Get.find<GlobalController>();
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  final TextEditingController smsCodeController = TextEditingController();
 
-  bool validateSigninForm({
-    required TextEditingController email,
-    required TextEditingController password,
-  }) {
-    /* isEmail valid */
-    if (!GetUtils.isEmail(email.text)) {
-      print('email : ${email.text}');
-      email.clear();
-      Get.showSnackbar(
-        customSnackbar('Email is Invalid'),
-      );
-      return false;
-    }
-    /* isLenght < 8 */
-    if (!GetUtils.isLengthGreaterThan(password.text, 8)) {
-      Get.showSnackbar(
-        customSnackbar('Password should contain from 8 to 16 characters'),
-      );
-      password.clear();
-      return false;
-    }
-/* minimum eight characters, at least one letter and one number */
-    RegExp regExpPassword = RegExp(
-      r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$",
-      caseSensitive: false,
-      multiLine: false,
+  final _auth = FirebaseAuth.instance;
+
+  late String _verificationId;
+  bool isVeryficationScreen = false;
+
+
+
+
+  _verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
+    await _auth.signInWithCredential(phoneAuthCredential);
+    Get.showSnackbar(customSnackbar(
+        "Phone number automatically verified and user signed in: ${_auth.currentUser!.uid}"));
+    globalController.hideLoading();
+  }
+
+  _verificationFailed(FirebaseAuthException authException) {
+    Get.showSnackbar(
+      customSnackbar(
+          'Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}'),
     );
-    if (!regExpPassword.hasMatch(password.text)) {
+    globalController.hideLoading();
+  }
+
+  _codeSent(String verificationId, int? forceResendingToken) async {
+    _verificationId = verificationId;
+    isVeryficationScreen = true;
+    update();
+    globalController.hideLoading();
+  }
+
+  _codeAutoRetrievalTimeout(String verificationId) {
+    return null;
+  }
+
+  Future<void> verifyPhoneNumber() async {
+    globalController.showloading();
+    try {
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phoneController.text,
+          timeout: const Duration(seconds: 60),
+          verificationCompleted: _verificationCompleted,
+          verificationFailed: _verificationFailed,
+          codeSent: _codeSent,
+          codeAutoRetrievalTimeout: _codeAutoRetrievalTimeout);
+    } on FirebaseAuthException catch (e) {
+      globalController.hideLoading();
+      throw Get.showSnackbar(customSnackbar("Firebase Exeption: $e"));
+    } catch (e) {
+      globalController.hideLoading();
+      Get.showSnackbar(customSnackbar("Failed to Verify Phone Number: $e"));
+    }
+  }
+
+  Future<void> signInWithPhoneNumber() async {
+    globalController.showloading();
+
+    final AuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: _verificationId,
+      smsCode: smsCodeController.text,
+    );
+    try {
+      await _auth.signInWithCredential(credential).then((response) {
+        Get.to(() => const RegistrationDescriptionView());
+
+        User? _user = response.user;
+        Get.snackbar('Hello', 'Welcome back ${_user!.uid}');
+      });
+    } on FirebaseAuthException catch (e) {
+      globalController.hideLoading();
+      throw Get.showSnackbar(
+        customSnackbar(
+          "Firebase Exeption: " + e.toString(),
+        ),
+      );
+    } catch (e) {
+      globalController.hideLoading();
       Get.showSnackbar(
         customSnackbar(
-            'Password should contain at least one letter and one number'),
-      );
-
-      password.clear();
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /* void saveForm() async {
-    formKey.currentState!.save();
-    //! does that mean that the controller got saved
-    print('$password  :  $email');
-  } */
-
-  Future<void> performSignin() async {
-    if (validateSigninForm(
-        email: phoneController, password: passwordController)) {
-      final UserModel user = UserModel.fromJson({
-        'email': phoneController.text,
-        'name': 'Temp',
-      });
-      if (isRememberMe) {
-        cacheUserCredencial();
-      } else {
-        clearUserCredencial();
-      }
-
-      await Auth().logInExistingUser(user, passwordController.text).then(
-        (value) {
-          globalController.isUserLogged();
-        },
+          "Failed to verify SMS code " + e.toString(),
+        ),
       );
     }
   }
 
-  bool isRememberMe = false;
-  void toggleRememberMe(bool value) {
-    isRememberMe = value;
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+      Get.off(() => LoginView());
+    } on FirebaseException catch (e) {
+      Get.snackbar('Firebase Error', e.code.toString());
+    }
   }
-
-  void cacheUserCredencial() {
-    globalController.box.write('isRememberMe', isRememberMe);
-
-    globalController.box.write('userCrendencial',
-        {'email': phoneController.text, 'password': passwordController.text});
-  }
-
-  void clearUserCredencial() {
-    globalController.box.remove('isRememberMe');
-    globalController.box.remove('userCrendencial');
-  }
-
-/*   void onsaved(String ) {
-    for
-  } */
-
-  /* static Rx<TextEditingController> email = TextEditingController().obs;
-  static Rx<TextEditingController> password = TextEditingController().obs; */
-
-  @override
-  void onClose() {}
 }

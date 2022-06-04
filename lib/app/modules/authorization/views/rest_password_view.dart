@@ -55,9 +55,9 @@ class RestPasswordView extends GetView<ResetPasswordController> {
                 SlimRoundedButton(
                   title: 'Subbmit',
                   textColor: AppColors.whiteColor,
-                  onPress: () {
-                    controller.reset();
-                  },
+                  // onPress: () =>controller.reset(),
+                  onPress: () {},
+
                   backgroundColour: AppColors.primaryColor,
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [

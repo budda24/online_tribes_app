@@ -13,30 +13,30 @@ import 'package:flutter/material.dart';
 class GlobalController extends GetxController {
   String currentUserRole = '';
   final box = GetStorage();
+
+  bool isLoadingVisible = false;
   /* List<CameraDescription>? camera; */
 
-  User? user;
-  void isUserLogged() {
-    if (auth.currentUser != null) {
-      user = auth.currentUser;
-      Get.offAllNamed(Routes.HOME);
-    } else {
-      user = null;
-      Get.offAll(LoginView());
-    }
-  }
+  // User? user;
+  // void isUserLogged() {
+  //   if (auth.currentUser != null) {
+  //     user = auth.currentUser;
+  //     Get.offAllNamed(Routes.HOME);
+  //   } else {
+  //     user = null;
+  //     Get.offAll(LoginView());
+  //   }
+  // }
 
   void unFocuseNode() {
     Get.focusScope!.unfocus();
   }
 
-  @override
-  void onInit() async {
-    /* if (box.read('isWalkthroughDone') == null ||
-        !box.read('isWalkthroughDone')) {
-    } else {
-      print('Already Visited');
-    } */
-    super.onInit();
+  showloading() {
+    isLoadingVisible = true;
+  }
+
+  hideLoading() {
+    isLoadingVisible = false;
   }
 }

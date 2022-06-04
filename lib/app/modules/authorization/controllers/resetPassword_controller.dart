@@ -9,15 +9,15 @@ class ResetPasswordController extends GetxController {
   TextEditingController phoneResetTextEditingController =
       TextEditingController();
 
-  void reset() async {
-    await Auth()
-        .resetPasswordEmail(phoneResetTextEditingController.text)
-        .then((value) {
-      Get.back();
-    }).catchError((error) {
-      Get.showSnackbar(
-        customSnackbar(error.toString()),
-      );
-    });
-  }
+  // void reset() async {
+  //   await Auth()
+  //       .resetPasswordEmail(phoneResetTextEditingController.text)
+  //       .then((value) {
+  //     Get.back();
+  //   }).catchError((error) {
+  //     Get.showSnackbar(
+  //       customSnackbar(error.toString()),
+  //     );
+  //   });
+  // }
 }

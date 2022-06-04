@@ -88,7 +88,7 @@ class RegistrationAditionalView extends StatelessWidget {
                             child: Obx(() {
                               final tmpList =
                                   controller.hobbiesFields.reversed.toList();
-                              print(tmpList);
+                              /* print(tmpList); */
                               return Column(
                                 children: [
                                   ...tmpList,
@@ -101,7 +101,7 @@ class RegistrationAditionalView extends StatelessWidget {
                           left: 350.w,
                           child: GestureDetector(
                             onTap: () {
-                              print('add hobbies');
+                              /* print('add hobbies'); */
                               controller.addHobbyField();
                             },
                             child: CircleAvatar(

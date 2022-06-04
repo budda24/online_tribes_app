@@ -65,12 +65,19 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                               controller: controller.signUpPhoneController,
                               maxLenght: 50),
                           verticalSpaceMedium,
-                          CustomTextFormFieldShadow(
-                              hintText: 'Create Password',
-                              textInputType: TextInputType.text,
-                              isPassword: true,
-                              controller: controller.signUpPasswordController,
-                              maxLenght: 50),
+                          GetBuilder<RegistrationController>(
+                            builder: (value) {
+                              return Visibility(
+                                visible: value.isSMSCodeHere,
+                                child: CustomTextFormFieldShadow(
+                                    hintText: 'OtpCode',
+                                    textInputType: TextInputType.number,
+                                    isPassword: true,
+                                    controller: controller.smsCodeController,
+                                    maxLenght: 50),
+                              );
+                            },
+                          ),
                           verticalSpaceMedium,
                           CustomTextFormFieldShadow(
                               hintText: 'Confirm Password',
@@ -80,14 +87,28 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                                   controller.signUpPasswordConfirmController,
                               maxLenght: 50),
                           verticalSpaceLarge,
-                          SlimRoundedButton(
-                            backgroundColour: AppColors.primaryColor,
-                            title: 'Create',
-                            textColor: AppColors.whiteColor,
-                            onPress: () {
-                              controller.createUser();
-                              /* Get.to(RegistrationDescriptionView()); */
-                            }, //creating account
+                          GetBuilder<RegistrationController>(
+                            builder: (value) {
+                              return SlimRoundedButton(
+                                backgroundColour: AppColors.primaryColor,
+                                title: value.isSMSCodeHere
+                                    ? 'Verify SMS code'
+                                    : 'Register',
+                                textColor: AppColors.whiteColor,
+                                onPress: () {
+                                  if (!controller.isSMSCodeHere) {
+                                    controller.registerUserByPhone(
+                                        mobileNumber: controller
+                                            .signUpPhoneController.text);
+                                  } else {
+                                    controller.verifySMSCode();
+                                  }
+
+                                  // controller.createUser();
+                                  /* Get.to(RegistrationDescriptionView()); */
+                                }, //creating account
+                              );
+                            },
                           ),
                           verticalSpaceSmall,
                           Row(

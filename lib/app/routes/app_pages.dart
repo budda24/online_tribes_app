@@ -27,11 +27,12 @@ class AppPages {
   static const INITIAL = Routes.WALKTHROUGH;
 
   static final routes = [
-    GetPage(
+    //Todo Home screen implementation
+    /* GetPage(
       name: _Paths.HOME,
       page: () => HomeScreen(),
       binding: HomeBinding(),
-    ),
+    ), */
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),

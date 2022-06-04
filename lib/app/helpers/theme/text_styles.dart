@@ -67,9 +67,15 @@ TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
 );
 
 TextStyle smallBold = TextStyle(
-  fontSize: 16.sp,
+  fontSize: 18.sp,
   fontFamily: montserrat,
   fontWeight: FontWeight.bold,
+);
+TextStyle smallBoldGrey = TextStyle(
+  fontSize: 18.sp,
+  fontFamily: montserrat,
+  fontWeight: FontWeight.bold,
+  color: AppColors.greyColor
 );
 TextStyle smallTextStyle = TextStyle(
     fontFamily: poppins, fontSize: 13.0.sp, fontWeight: FontWeight.w300);
@@ -80,6 +86,18 @@ TextStyle longTextStyle = TextStyle(
 TextStyle boldSmallTextStyle = TextStyle(
   color: AppColors.actionColor,
     fontFamily: poppins, fontSize: 13.0.sp, fontWeight: FontWeight.bold);
+
+
+
+TextStyle lableWhite = TextStyle(
+  fontFamily: regular,
+  fontWeight: FontWeight.bold,
+  fontSize: 30.0.sp,
+  color: AppColors.whiteColor,
+);
+
+
+
 /*TextStyle textfieldStyle = TextStyle(
   fontSize: 20.0.sp,
   fontFamily: poppins,
@@ -95,11 +113,6 @@ TextStyle boldSmallTextStyle = TextStyle(
 
 
 
-TextStyle lable = TextStyle(
-  fontFamily: futuraBkBT,
-  fontSize: 30.0.sp,
-  color: AppColors.whiteColor,
-);
 
 */
 

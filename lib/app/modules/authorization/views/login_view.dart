@@ -1,44 +1,40 @@
 // Flutter imports:
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 // Package imports:
 import 'package:get/get.dart';
-import 'package:clay_containers/clay_containers.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 // Project imports:
 
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import '../../../helpers/main_constants.dart';
-import '../../../helpers/widgets/online_tribes/form_field_shadow.dart';
+import '../../../../infrastructure/fb_services/auth/auth.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
-import '../../../helpers/widgets/online_tribes/custom_Checkbox.dart';
-
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
+import '../../registration/widgets/custom_pin_put.dart';
 import '../controllers/login_controller.dart';
-import '../../../helpers/assets/networkIng_images.dart';
-
-import '../../../helpers/widgets/online_tribes/login_services_Icon.dart';
-import 'rest_password_view.dart';
 
 class LoginView extends GetView<LoginController> {
   final globalController = Get.find<GlobalController>();
+  late String number;
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LoginController());
     ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
-        designSize: const Size(411, 809),
+        designSize: const Size(360, 690),
         context: context,
         minTextAdapt: true,
         orientation: Orientation.portrait);
+
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
@@ -50,127 +46,136 @@ class LoginView extends GetView<LoginController> {
               children: [
                 Stack(
                   children: [
-                    GreenWaves1(screeanheight: 735.h),
+                    GreenWaves1(screeanheight: 635.h),
                     Center(
-                      child: SizedBox(
-                        height: 350.h,
-                        width: 250.w,
-                        /*padding: EdgeInsets.all(screeanheight*01),
-                  margin: EdgeInsets.only(top: screeanheight * 0.025),*/
-                        child: Center(
-                          child: Image.network(
-                            AssetsUrl.logo411x600,
+                      child: Column(
+                        children: [
+                          verticalSpaceMedium,
+                          Image.asset(
+                            'assets/images/authorization_screen/logo.png',
                             fit: BoxFit.fill,
                           ),
-                        ),
+                          Text('Welcome back, \n        fellas!',
+                              style: lableWhite)
+                        ],
                       ),
                     ),
                   ],
                 ),
-                Form(
-                  key: controller.formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 41.w),
-                        child: Column(
-                          children: [
-                            CustomTextFormFieldShadow(
-                              controller: controller.phoneController,
-                              textInputType: TextInputType.phone,
-                              hintText: 'Phone No.',
-                              maxLenght: 30,
-                            ),
-                            verticalSpaceMedium,
-                            CustomTextFormFieldShadow(
-                              textInputType: TextInputType.text,
-                              isPassword: true,
-                              controller: controller.passwordController,
-                              hintText: 'Password',
-                              maxLenght: 120,
-                            ),
-                          ],
-                        ),
-                      ),
-                      verticalSpaceTiny,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 41.w),
+                      child: Column(
                         children: [
-                          SizedBox(
-                            width: 41.w,
-                            height: 52.h,
+                          verticalSpaceSmall,
+                          phoneCustomWidget(),
+                          verticalSpaceLarge,
+                          GetBuilder<LoginController>(
+                            builder: (value) {
+                              return Visibility(
+                                visible: value.isVeryficationScreen,
+                                child: CustomPinPut(
+                                    smsPinCode: controller.smsCodeController),
+                              );
+                            },
                           ),
-                          CustomCheckbox(
-                            isChecked: controller.isRememberMe,
-                            callBack: controller.toggleRememberMe,
+                          GetBuilder<LoginController>(
+                            builder: (value) {
+                              return Column(
+                                children: [
+
+                                  
+                                  SizedBox(
+                                    height: value.isVeryficationScreen ? 60 : 0,
+                                  ),
+                                  SlimRoundedButton(
+                                    backgroundColour: AppColors.primaryColor,
+                                    title: value.isVeryficationScreen
+                                        ? 'Verify SMS code'
+                                        : 'Register',
+                                    textColor: AppColors.whiteColor,
+                                    onPress: () async {
+                                      if (!controller.isVeryficationScreen) {
+                                        controller.phoneController.text =
+                                            number;
+                                        await controller.verifyPhoneNumber();
+                                      } else {
+                                        await controller
+                                            .signInWithPhoneNumber();
+                                      }
+                                    }, //creating account
+                                  ),
+                                  Visibility(
+                                    visible: !value.isVeryficationScreen,
+                                    child: Column(
+                                      children: [
+                                        verticalSpaceMedium,
+                                        Text(' Or ', style: smallBoldGrey),
+                                        verticalSpaceTiny,
+                                        InkWell(
+                                          onTap: () async {
+                                            Auth().signInWithGoogle();
+                                          },
+                                          child: globalController
+                                                  .isLoadingVisible
+                                              ? const CircularProgressIndicator()
+                                              : SizedBox(
+                                                  height: 60,
+                                                  width: 250,
+                                                  child: Image.asset(
+                                                    'assets/images/authorization_screen/google_sign.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                            },
                           ),
-                          SizedBox(
-                            width: 12.w,
-                          ),
-                          const Text(
-                            'Remember me',
-                            style: kTextCheckBox,
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(left: 123),
-                              child: TextButton(
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: boldSmallTextStyle,
-                                ),
-                                onPressed: () {
-                                  Get.to(RestPasswordView());
-                                },
-                              ))
                         ],
                       ),
-                      /* SizedBox(
-                        height: 16.h,
-                      ), */
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Center(
-                            child: SlimRoundedButton(
-                              onPress: controller.performSignin,
-                              title: 'Login',
-                              backgroundColour: kMainColor,
-                              textColor: kColorWhite,
-                            ),
-                          ),
-                          Text(
-                            'OR',
-                            style: boldSmallTextStyle.copyWith(
-                                color: Colors.black),
-                          ),
-                          SizedBox(
-                            height: 80.h,
-                            width: 80.w,
-                            child: Image.asset(
-                                'assets/images/authorization_screen/google_icon.png'),
-                          )
-                        ],
-                      ),
-                      verticalSpaceMedium,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text('Don\'t have an account?'),
-                          SlimRoundedButton(
-                              backgroundColour: AppColors.actionColor,
-                              title: 'Sign Up',
-                              textColor: Colors.white,
-                              onPress: () {
-                                Get.toNamed(Routes.REGISTRATION);
-                              }),
-                        ],
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Neumorphic phoneCustomWidget() {
+    return Neumorphic(
+      style: NeumorphicStyle(
+          depth: 10,
+          shadowDarkColor: AppColors.primaryColor,
+          color: Colors.transparent,
+          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40))),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
+        child: InternationalPhoneNumberInput(
+          onInputChanged: (PhoneNumber value) {
+            number = value.phoneNumber!;
+          },
+          selectorConfig: const SelectorConfig(
+              setSelectorButtonAsPrefixIcon: true,
+              selectorType: PhoneInputSelectorType.DIALOG,
+              trailingSpace: true),
+          autoValidateMode: AutovalidateMode.disabled,
+          selectorTextStyle: const TextStyle(color: Colors.grey, fontSize: 16),
+          textFieldController: controller.phoneController,
+          formatInput: false,
+          textStyle: smallBold,
+          keyboardType: const TextInputType.numberWithOptions(
+              signed: true, decimal: true),
+          inputDecoration: const InputDecoration(
+            border: InputBorder.none,
+            hintText: 'Phone Number',
           ),
         ),
       ),
