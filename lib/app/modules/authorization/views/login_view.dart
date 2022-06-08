@@ -52,7 +52,7 @@ class LoginView extends GetView<LoginController> {
                         children: [
                           verticalSpaceMedium,
                           Image.asset(
-                            'assets/images/authorization_screen/logo.png',
+                            'assets/images/authorization_screen/online_tribes_logo.png',
                             fit: BoxFit.fill,
                           ),
                           Text('Welcome back, \n        fellas!',
@@ -69,7 +69,7 @@ class LoginView extends GetView<LoginController> {
                       child: Column(
                         children: [
                           verticalSpaceSmall,
-                          phoneCustomWidget(),
+                          phoneCustomInput(),
                           verticalSpaceLarge,
                           GetBuilder<LoginController>(
                             builder: (value) {
@@ -85,7 +85,7 @@ class LoginView extends GetView<LoginController> {
                               return Column(
                                 children: [
 
-                                  
+
                                   SizedBox(
                                     height: value.isVeryficationScreen ? 60 : 0,
                                   ),
@@ -149,7 +149,7 @@ class LoginView extends GetView<LoginController> {
     );
   }
 
-  Neumorphic phoneCustomWidget() {
+  Neumorphic phoneCustomInput() {
     return Neumorphic(
       style: NeumorphicStyle(
           depth: 10,

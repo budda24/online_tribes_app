@@ -35,7 +35,7 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
-        print(user!.phoneNumber);
+
 
         /* globalController.box.remove(user!.uid); */
         // await db.createUser(user!);
@@ -43,7 +43,7 @@ class Auth {
         globalController.hideLoading();
 
         // Get.offAndToNamed(Routes.PROFIL);
-        Get.off(() => const RegistrationDescriptionView());
+        Get.to(() => const RegistrationDescriptionView());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();

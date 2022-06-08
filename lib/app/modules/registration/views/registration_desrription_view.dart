@@ -21,6 +21,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(RegistrationController);
+
     ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
@@ -135,9 +137,9 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
               CustomTextField(
                 onSave: () {},
                 hintText: 'Describe yourself',
-                maxline: 18,
+                maxline: 10,
                 minLine: 2,
-                height: 400.h,
+                height: 200.h,
                 width: 400.w,
               ),
               SizedBox(
@@ -153,17 +155,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                 /* screenWidth: screeanwidth,
                       screenHeight: screeanheight */
               ),
-              SlimRoundedButton(
-                onPress: () {
-                  controller.logout();
-                  Get.to(LoginView());
-                },
-                backgroundColour: kColorWhite,
-                title: 'Logout',
-                textColor: kTextColorDarkGrey,
-                /* screenWidth: screeanwidth,
-                      screenHeight: screeanheight */
-              )
+
             ]),
           ),
         ),

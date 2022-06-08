@@ -17,7 +17,7 @@ class LoginController extends GetxController {
   final TextEditingController smsCodeController = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
-
+  late String number;
   late String _verificationId;
   bool isVeryficationScreen = false;
 

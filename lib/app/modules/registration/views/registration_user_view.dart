@@ -158,10 +158,7 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                     init: cameraController,
                     builder: (CameraGetXController cameraCon) =>
                         Column(children: [
-                      Text(
-                        'Sign Up',
-                        style: headingBlackStyle,
-                      ),
+
                       cameraCon.image == null
                           ? InkWell(
                               child: MainCirclePhoto.icon(
