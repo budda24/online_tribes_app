@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 
@@ -21,7 +21,7 @@ class DescriotionExamplePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MainCirclePhoto(
-                  imagePathL: '',
+                  /* imagePathL: '', */
                   imagePathN: '',
                   /*imagePathL:'assets/images/authorization_screen/tribel_signs/Sign Business Tribe-01.png',*/
                     screeanheight: screeanheight / 1.6,
@@ -39,3 +39,4 @@ class DescriotionExamplePage extends StatelessWidget {
     );
   }
 }
+ */

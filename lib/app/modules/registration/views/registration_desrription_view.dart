@@ -1,5 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'dart:ui';
@@ -12,16 +15,24 @@ import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../models/tribal_example.dart';
+import 'registration_aditional_info_view.dart';
 import 'registration_destription_hint_view_view.dart';
 
-class RegistrationView extends StatelessWidget {
-  const RegistrationView({Key? key}) : super(key: key);
+class RegistrationDescriptionView extends StatelessWidget {
+  const RegistrationDescriptionView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /* final double screeanheight = MediaQuery.of(context).size.height;
-    final double screeanwidth = MediaQuery.of(context).size.width;
-    print('$screeanheight :: $screeanwidth'); */
+    Get.find<RegistrationController>();
+
+     ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(360, 690),
+        context: context,
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
 
     return Scaffold(
       backgroundColor: kMainColor,
@@ -32,7 +43,7 @@ class RegistrationView extends StatelessWidget {
               MainCirclePhoto.networking(
                   /* imagePathL: '', */
                   imagePathN:
-                      'https://dsm01pap004files.storage.live.com/y4mSRmRba6CZt7pLPVH8rEZi5Prrp8uepLnPUxlFwcFmh9BvkfO214be-EdO0lNJXpkv0wprRH4wKVRsOEt3K9nBpLQoHtVi0H9UavgBqZ1JTlWgTqZ1Y7kZE1SBtbY3ZUTHVTpbmEFacDRkOI675QQFEJSMZBUPyXbW2HNfG0uUOp2vzTdTOKt12gp9EUf8V2P?width=1920&height=1080&cropmode=none',
+                      'https://dsm01pap004files.storage.live.com/y4m8Gv2oQvIHsLDNWMzjGmwED5go2S5vTwmIUrRXMQlfNdXE8Ci9tFYqmOY9YGvH71OlN48CCzO_loiE1o_HOrvS0EqD9hV5DcJQ8Cp8F3C2mNnDBHksPpetGNWPQ6alGIrP9flcw5nXBgvplbF3vJ3sKNlB8BPnxWNrTNwc23WO2T8qP91vf8oWiP2Z8LpOpYs?width=240&height=135&cropmode=none',
                   screeanheight: 673.h,
                   screeanwidth: 392.w),
               Text(
@@ -116,15 +127,24 @@ class RegistrationView extends StatelessWidget {
                 child: Image.asset(
                     'assets/images/authorization_screen/bulb_icon.png'),
               ),
+              SizedBox(
+                height: 15.h,
+              ),
               CustomTextField(
+                onSave: () {},
                 hintText: 'Describe yourself',
-                maxline: 50,
-                minLine: 16,
-                height: 781.h,
-                width: 392.w,
+                maxline: 18,
+                minLine: 2,
+                height: 400.h,
+                width: 400.w,
+              ),
+              SizedBox(
+                height: 25.h,
               ),
               SlimRoundedButton(
-                onPress: () {},
+                onPress: () {
+                  Get.to(() => RegistrationAditionalView());
+                },
                 backgroundColour: kColorWhite,
                 title: 'Continue',
                 textColor: kTextColorDarkGrey,
@@ -138,127 +158,3 @@ class RegistrationView extends StatelessWidget {
     );
   }
 }
-
-class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    Key? key,
-    required this.maxline,
-    required this.minLine,
-    required this.height,
-    required this.width,
-    required this.hintText,
-  }) : super(key: key);
-  int minLine;
-  int maxline;
-  double height;
-  double width;
-  final String hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(
-          left: width * 0.1,
-          right: width * 0.1,
-          bottom: width * 0.05,
-          top: width * 0.05),
-      child: TextField(
-        style: kTextfieldStyle,
-        keyboardType: TextInputType.multiline,
-        minLines: minLine,
-        maxLines: maxline,
-        textAlign: TextAlign.center,
-        decoration: InputDecoration(
-            hintStyle: kTextfieldStyle,
-            filled: true,
-            fillColor: Color(0xffCBFAE2),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15.0))),
-            hintText: hintText,
-            contentPadding: EdgeInsets.all(15)),
-      ),
-    );
-  }
-}
-
-/* class TribeProfileExamples {
-  static List<TribeProfileExamples> listProfileDescriptionExamples = [
-    TribeProfileExamples.profileDescription(
-        description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Writer Tribe-01.png',
-        tribeName: 'Writers Tribe',
-        userName: 'Aetios'),
-    TribeProfileExamples.profileDescription(
-        description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Musical Tribe-01.png',
-        tribeName: 'Musical Tribe',
-        userName: 'Hellena'),
-    TribeProfileExamples.profileDescription(
-        description:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Photography Tribe-01.png',
-        tribeName: 'Photographer Tribe',
-        userName: 'Achilles'),
-    TribeProfileExamples.profileDescription(
-        description:
-            " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Traveller Tribe-01.png',
-        tribeName: 'Traveller Tribe',
-        userName: 'Cornelius'),
-    TribeProfileExamples.profileDescription(
-        description:
-            " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Mothering Tribe-01.png',
-        tribeName: 'Mothering Tribe',
-        userName: 'Persephona'),
-    TribeProfileExamples.profileDescription(
-        description:
-            " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Illness Tribe-01.png',
-        tribeName: 'Illnes Tribe',
-        userName: 'Priam'),
-    TribeProfileExamples.profileDescription(
-        description:
-            " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Business Tribe-01.png',
-        tribeName: 'Business Tribe',
-        userName: 'Ajax'),
-    TribeProfileExamples.profileDescription(
-        description:
-            " It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        tribalSignPath:
-            'assets/images/authorization_screen/tribel_signs/Sign Artist Tribe-01.png',
-        tribeName: 'Artist Tribe',
-        userName: 'Lydhia'),
-  ];
-
-  TribeProfileExamples.profileDescription(
-      {required this.description,
-      required this.tribalSignPath,
-      required this.tribeName,
-      required this.userName});
-
-  String tribalSignPath;
-  String userName;
-  String tribeName;
-  String description;
-
-  void addProfileDescription(String description, String tribeName,
-      String userName, String tribalSignPath) {
-    listProfileDescriptionExamples.add(TribeProfileExamples.profileDescription(
-        description: description,
-        tribalSignPath: tribalSignPath,
-        tribeName: tribeName,
-        userName: userName));
-  }
-}
- */

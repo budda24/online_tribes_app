@@ -18,7 +18,9 @@ class AppColors {
   AppColors();
 
   // Global Colors
+
   static Color primaryColor = const Color(0xff8FFCBB);
+  static Color textFieldFill = const Color(0xffCBFAE2);
   static Color primaryColorWithOpacity40 = const Color(0xffD2FEE4);
   static Color googleColor = const Color(0xffDF4A32);
   static Color facebookColor = const Color(0xff39579A);
@@ -26,11 +28,11 @@ class AppColors {
   static Color blueColor = Color(0xff82ACEA);
   static Color blackColor = Colors.black;
   static Color greyColor = Color(0xff707070);
+  static Color darkGreyColor = Color(0xff808080);
+  static Color darkOrangeColor = Color(0xffE5A238);
+  static Color errorRedColor = Color(0xffCD5D7D);
 
-
-
-
- /*  static Color? accentColor = const Color(0xFF312951);
+  /*  static Color? accentColor = const Color(0xFF312951);
   static Color? buttonColor = const Color(0xFF592AAE);
   static Color? bodyColorTwo = const Color(0xFFCABCFF);
   static Color lightGreyColor = const Color(0xFFE9EEF2);

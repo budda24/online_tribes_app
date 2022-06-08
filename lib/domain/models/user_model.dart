@@ -11,27 +11,27 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 class UserModel {
   UserModel({
     this.id,
-    this.name,
-    this.email,
+    this.tribalName,
+    required this.email,
     this.createdAt,
   });
 
   String? id;
-  String? name;
-  String? email;
+  String? tribalName;
+  String email;
 
   dynamic createdAt;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        id: json["id"],
-        name: json["name"],
-        email: json["email"],
-        createdAt: json["createdAt"],
+        id: json["id"]??'',
+        tribalName: json["name"]??'',
+        email: json["email"]??'',
+        createdAt: json["createdAt"]??'',
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
+        "tribalName": tribalName,
         "email": email,
         "createdAt": createdAt,
       };

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/controllers/global_controler.dart';
 
 import 'package:get/get.dart';
 
-import '../../../helpers/controllers/global_controller.dart';
 /* import '../../../modules/authorization/views/login_view.dart'; */
 import '../../../modules/walkthrough/models/walkthrough_model.dart';
 import '../../../routes/app_pages.dart';
@@ -24,7 +24,6 @@ class WalkthroughController extends GetxController {
   }
 
   void continuButton() {
-    //! how to add to the value of obs
     pageController!.animateTo(currentPage.value.toInt() + 1,
         duration: const Duration(milliseconds: 500), curve: Curves.linear);
   }
