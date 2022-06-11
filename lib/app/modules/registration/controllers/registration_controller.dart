@@ -1,12 +1,11 @@
-import 'dart:io';
-import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
-import 'package:flutter_application_1/domain/models/user_model.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
+import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
+import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 import 'package:get/get.dart';
+
 import '../../authorization/controllers/login_controller.dart';
 
 class RegistrationController extends GetxController {
@@ -15,51 +14,52 @@ class RegistrationController extends GetxController {
   /* GlobalKey<FormState> formKey = GlobalKey(); */
 
   final signUpTribalNameController = TextEditingController();
-  late final signUpEmailController = TextEditingController();
-  late final signUpPasswordController = TextEditingController();
+  final signUpPhoneController = TextEditingController();
+  final smsCodeController = TextEditingController();
   final signUpPasswordConfirmController = TextEditingController();
 
-  bool validateSignupForm({
-    required TextEditingController password,
-    required TextEditingController confirmPassword,
-    required TextEditingController tribalName,
-    required TextEditingController email,
-  }) {
-    RegExp regExpTribalName = RegExp(
-      // A-Za-z0-9_ all letters numbers and _
-      r"^[\w]{3,10}$",
-      caseSensitive: false,
-      multiLine: false,
-    );
 
-    String errorMessage = '';
+  // bool validateSignupForm({
+  //   required TextEditingController password,
+  //   required TextEditingController confirmPassword,
+  //   required TextEditingController tribalName,
+  //   required TextEditingController email,
+  // }) {
+  //   RegExp regExpTribalName = RegExp(
+  //     // A-Za-z0-9_ all letters numbers and _
+  //     r"^[\w]{3,10}$",
+  //     caseSensitive: false,
+  //     multiLine: false,
+  //   );
 
-    if (!loginController.validateSigninForm(email: email, password: password)) {
-      return false;
-    }
+  //   String errorMessage = '';
 
-    if (password.text != confirmPassword.text) {
-      errorMessage += "The passwords don't match";
-      confirmPassword.clear();
-    }
+  //   if (!loginController.validateSigninForm(email: email, password: password)) {
+  //     return false;
+  //   }
 
-    if (!regExpTribalName.hasMatch(tribalName.text)) {
-      errorMessage +=
-          '\n Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores';
+  //   if (password.text != confirmPassword.text) {
+  //     errorMessage += "The passwords don't match";
+  //     confirmPassword.clear();
+  //   }
 
-      tribalName.clear();
-      return false;
-    }
+  //   if (!regExpTribalName.hasMatch(tribalName.text)) {
+  //     errorMessage +=
+  //         '\n Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores';
 
-    if (errorMessage.isEmpty &&
-        loginController.validateSigninForm(email: email, password: password)) {
-      return true;
-    } else {
-      Get.showSnackbar(customSnackbar(errorMessage));
+  //     tribalName.clear();
+  //     return false;
+  //   }
 
-      return false;
-    }
-  }
+  //   if (errorMessage.isEmpty &&
+  //       loginController.validateSigninForm(email: email, password: password)) {
+  //     return true;
+  //   } else {
+  //     Get.showSnackbar(customSnackbar(errorMessage));
+
+  //     return false;
+  //   }
+  // }
 
 /*   void displaycontroller() {
     /* formKey.currentState!.save(); */
@@ -67,43 +67,120 @@ class RegistrationController extends GetxController {
     print(signUpEmailController.text);
   } */
 
-/*   Future<void> performSignup() async {
-    if (validateSignupForm(
-        confirmPassword: signUpPasswordConfirmController,
-        email: signUpEmailController,
-        password: signUpPasswordController,
-        tribalName: signUpTribalNameController)) {
-      print(signUpEmailController.text);
-      final UserModel user = UserModel.fromJson({
-        'email': signUpEmailController.text,
-        'name': signUpTribalNameController.text,
-        //Todo how to put the id and time stamp
+  // Future<void> performSignup() async {
+  //   if (validateSignupForm(
+  //       confirmPassword: signUpPasswordConfirmController,
+  //       email: signUpPhoneController,
+  //       password: signUpPasswordController,
+  //       tribalName: signUpTribalNameController)) {
+  //     print(signUpPhoneController.text);
+  //     final UserModel user = UserModel.fromJson({
+  //       'email': signUpPhoneController.text,
+  //       'name': signUpTribalNameController.text,
+  //       //Todo how to put the id and time stamp
+  //     });
+  //     await Auth()
+  //         .createUserToAuth(user, loginController.passwordController.text)
+  //         .catchError((onError) {
+  //       Get.showSnackbar(customSnackbar(onError.toString()));
+  //     });
+  //   }
+  // }
+
+  final auth = FirebaseAuth.instance;
+  String verificationID = '';
+  bool isSMSCodeHere = false;
+  bool isLoadingVisible = false;
+
+  showloading() {
+    isLoadingVisible = true;
+  }
+
+  turnOffLoading() {
+    isLoadingVisible = false;
+  }
+
+  Future<void> registerUserByPhone({
+    required String mobileNumber,
+  }) async {
+    showloading();
+
+    await auth.verifyPhoneNumber(
+        phoneNumber: mobileNumber,
+        timeout: const Duration(seconds: 120),
+        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
+          turnOffLoading();
+          await auth
+              .signInWithCredential(phoneAuthCredential)
+              .then((response) => print(response.user!.uid));
+        },
+        verificationFailed: (FirebaseAuthException exception) async {
+          turnOffLoading();
+
+          Get.defaultDialog(actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('OK'),
+            )
+          ], title: 'Error', middleText: exception.message.toString());
+        },
+        codeSent: (String verificationID, int? resendToken) async {
+          turnOffLoading();
+          this.verificationID = verificationID;
+          isSMSCodeHere = true;
+
+/*           print(verificationID); */
+          update();
+        },
+        codeAutoRetrievalTimeout: (cosTam) async {
+/*           print(cosTam); */
+        });
+  }
+
+  Future<void> verifySMSCode() async {
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationID, smsCode: smsCodeController.text);
+
+    showloading();
+
+    try {
+      await auth.signInWithCredential(credential).then((response) {
+        if (response.user != null) {
+          Get.to(() =>  RegistrationDescriptionView());
+        }
       });
-      await Auth()
-          .createUserToAuth(user, loginController.passwordController.text)
-          .catchError((onError) {
-        Get.showSnackbar(customSnackbar(onError.toString()));
-      });
-    }
-  } */
 
-  Future<void> performSignupUser() async {
-    if (validateSignupForm(
-        password: signUpPasswordController,
-        confirmPassword: signUpPasswordConfirmController,
-        tribalName: signUpTribalNameController,
-        email: signUpEmailController)) {
+      turnOffLoading();
+    } on FirebaseException catch (e) {
+      turnOffLoading();
 
-      Map<String, Object> userModelJson = {
-        'email': signUpEmailController.text,
-        'name': signUpTribalNameController.text,
-      };
-
-      final UserModel user = UserModel.fromJson(userModelJson);
-      await Auth().createUserToAuth(user, signUpPasswordController.text);
+      Get.snackbar('Firebase Error', e.code.toString());
     }
   }
 
+  Future<void> logout() async {
+    try {
+      await auth.signOut();
+      Get.off(() => LoginView());
+    } on FirebaseException catch (e) {
+      Get.snackbar('Firebase Error', e.code.toString());
+    }
+  }
+  // Future<void> createUser() async {
+  //   if (validateSignupForm(
+  //       password: signUpPasswordController,
+  //       confirmPassword: signUpPasswordConfirmController,
+  //       tribalName: signUpTribalNameController,
+  //       email: signUpPhoneController)) {
+  //     print('create user validation: ${signUpPhoneController.text}');
+  //     Map<String, Object> userModelJson = {
+  //       'email': signUpPhoneController.text,
+  //       'name': signUpTribalNameController.text,
+  //     };
+  //     final UserModel user = UserModel.fromJson(userModelJson);
+  //     await Auth().createUserToAuth(user, signUpPasswordController.text);
+  //   }
+  // }
 
   Rx<double> range = 5.0.obs; //again initialized it to a Rx<double>
 
@@ -145,10 +222,9 @@ class RegistrationController extends GetxController {
     _hobbyController4,
     _hobbyController5
   ];
-  
-//controller index 0 alredy assign to text field
-  int _index = 1;
-
+//index for itterating true hobby controllers
+  int _index = 2;
+  //add new texFormField for hobbies TextFields
   void addHobbyField() {
     hobbiesFields.add(
       CustomTextField(
@@ -164,16 +240,6 @@ class RegistrationController extends GetxController {
       ),
     );
     _index++;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   @override

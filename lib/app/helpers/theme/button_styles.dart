@@ -1,4 +1,4 @@
-/* // Flutter imports:
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,7 +20,7 @@ TextButtonThemeData buttonStyle = TextButtonThemeData(
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
-        side: BorderSide(color: AppColors.primaryColor!),
+        side: BorderSide(color: AppColors.primaryColor),
       ),
     ),
   ),
@@ -38,7 +38,7 @@ TextButtonThemeData popupButtonStyle = TextButtonThemeData(
           bottomLeft: Radius.circular(10.r),
           bottomRight: Radius.circular(10.r),
         ),
-        side: BorderSide(color: AppColors.primaryColor!),
+        side: BorderSide(color: AppColors.primaryColor),
       ),
     ),
   ),
@@ -60,7 +60,7 @@ TextButtonThemeData whiteButtonStyle = TextButtonThemeData(
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
-        side: BorderSide(color: AppColors.lightGreyColor),
+        side: BorderSide(color: AppColors.greyColor),
       ),
     ),
   ),
@@ -79,7 +79,7 @@ TextButtonThemeData whiteButtonStyleTwo = TextButtonThemeData(
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.r),
-        side: BorderSide(color: AppColors.lightGreyColor),
+        side: BorderSide(color: AppColors.greyColor),
       ),
     ),
   ),
@@ -97,7 +97,7 @@ TextButtonThemeData transparentButtonStyle = TextButtonThemeData(
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(3),
-        side: BorderSide(color: AppColors.whiteColor!),
+        side: BorderSide(color: AppColors.whiteColor),
       ),
     ),
   ),
@@ -119,4 +119,3 @@ TextButtonThemeData dialogButtonStyle = TextButtonThemeData(
     ),
   ),
 );
- */

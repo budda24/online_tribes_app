@@ -13,15 +13,15 @@ import '../../../helpers/assets/networkIng_images.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
-import 'registration_desrription_view.dart';
+
 import 'registration_upload_video_view.dart';
 
-class RegistrationAditionalView extends StatelessWidget {
+class RegistrationAditionalView extends GetView<RegistrationController> {
   @override
   Widget build(BuildContext context) {
     int _height = 5;
     final _formKey = GlobalKey<FormState>();
-    final controller = Get.find<RegistrationController>();
+    final controller = Get.put(RegistrationController());
     final globalController = Get.find<GlobalController>();
 
      ScreenUtil.init(
@@ -88,7 +88,7 @@ class RegistrationAditionalView extends StatelessWidget {
                             child: Obx(() {
                               final tmpList =
                                   controller.hobbiesFields.reversed.toList();
-                              print(tmpList);
+                              /* print(tmpList); */
                               return Column(
                                 children: [
                                   ...tmpList,
@@ -101,7 +101,7 @@ class RegistrationAditionalView extends StatelessWidget {
                           left: 350.w,
                           child: GestureDetector(
                             onTap: () {
-                              print('add hobbies');
+                              /* print('add hobbies'); */
                               controller.addHobbyField();
                             },
                             child: CircleAvatar(

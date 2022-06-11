@@ -1,5 +1,5 @@
 // Dart imports:
-/* import 'dart:ui';
+import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class DialogTitleLabel extends Text {
       : super(
           data,
           style: TextStyle(
-            fontFamily: monropeSemiBold,
+            fontFamily: futuraBkBT,
             fontSize: 22.sp,
             fontFeatures: const [FontFeature.proportionalFigures()],
           ),
@@ -28,7 +28,7 @@ class DialogButtonLabel extends Text {
       : super(
           data,
           style: TextStyle(
-            fontFamily: monropeRegular,
+            fontFamily: poppins,
             fontSize: 14.sp,
             fontFeatures: const [FontFeature.proportionalFigures()],
           ),
@@ -40,7 +40,7 @@ class DialogButtonWhiteLabel extends Text {
       : super(
           data,
           style: TextStyle(
-            fontFamily: monropeRegular,
+            fontFamily: poppins,
             fontSize: 14.sp,
             color: AppColors.whiteColor,
             fontFeatures: const [FontFeature.proportionalFigures()],
@@ -53,10 +53,9 @@ class DialogMessageLabel extends Text {
       : super(
           data,
           style: TextStyle(
-            fontFamily: monropeRegular,
+            fontFamily: poppins,
             fontSize: 18.sp,
             fontFeatures: const [FontFeature.proportionalFigures()],
           ),
         );
 }
- */

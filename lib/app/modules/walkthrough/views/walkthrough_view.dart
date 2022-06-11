@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/row_progress_dott.dart';
-
+import 'package:flutter_application_1/app/helpers/widgets/registration_and_login/row_progress_dott.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 /* import 'package:flutter_application_1/app/helpers/main_constants.dart'; */
-import '../../../helpers/widgets/core/app_texts.dart';
+
 import '../../../helpers/widgets/online_tribes/main_button.dart';
+import '../../../helpers/widgets/registration_and_login/background_and_info.dart';
 import '../controllers/walkthrough_controller.dart';
-import '../../../helpers/widgets/online_tribes/bacground_waves_thene.dart';
+import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
 
 class WalkthroughView extends GetView<WalkthroughController> {
   @override
@@ -20,7 +21,7 @@ class WalkthroughView extends GetView<WalkthroughController> {
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
-        designSize: Size(411, 809),
+        designSize: const Size(411, 809),
         context: context,
         minTextAdapt: true,
         orientation: Orientation.portrait);
@@ -40,7 +41,7 @@ class WalkthroughView extends GetView<WalkthroughController> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Container(
+                            SizedBox(
                               height: 398.h,
                               child: Stack(
                                 children: [
@@ -51,8 +52,8 @@ class WalkthroughView extends GetView<WalkthroughController> {
                                     margin: EdgeInsets.only(top: 56.h),
                                     child: Center(
                                       child: Image.asset(
-                                        controller
-                                                .onBoardingList[index].imageName ??
+                                        controller.onBoardingList[index]
+                                                .imageName ??
                                             '',
                                         fit: BoxFit.fill,
                                       ),
@@ -61,27 +62,28 @@ class WalkthroughView extends GetView<WalkthroughController> {
                                 ],
                               ),
                             ),
-                           verticalSpaceExtraLarge,
+                            verticalSpaceExtraLarge,
                             Center(
-                              child: Container(
-                                height: 68.h,
-                                  child: HeadingTextLabel(
-                                controller.onBoardingList[index].title ?? '',
-                              )),
+                              child: SizedBox(
+                                  height: 68.h,
+                                  child: BackgroundAndInfo(
+                                    controller.onBoardingList[index].title ??
+                                        '',
+                                  )),
                             ),
                             verticalSpaceExtraLarge,
                             Center(
-                                child: /* TextButton(
+                              child: /* TextButton(
                               child: Text('Next'),
                               onPressed: controller.onTap,
                             ) */
-                                SlimRoundedButton(
+                                  SlimRoundedButton(
                                 onPress: controller.onTap,
                                 title: 'Continue',
                                 backgroundColour: AppColors.blueColor,
                                 textColor: AppColors.whiteColor,
                               ),
-                                ),
+                            ),
 
                             /* Center(
                                 child: RowProgressDots(
@@ -106,10 +108,14 @@ class WalkthroughView extends GetView<WalkthroughController> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-              child: Text('Skip'),
               onPressed: controller.onSkipPressed,
+              child: Text(
+                'Skip',
+                style: smallTextStyle.copyWith(
+                  color: AppColors.actionColor,
+                ),
+              ),
             ),
-
           ],
         ),
       ),
