@@ -1,59 +1,70 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
+import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
+import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 
-import 'package:flutter_application_1/domain/models/user_model.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../app/controllers/global_controler.dart';
+import '../../../app/routes/app_pages.dart';
 
 final auth = FirebaseAuth.instance;
+User? user;
 
 class Auth {
   final globalController = Get.find<GlobalController>();
 
-  Future<void> logInExistingUser(UserModel user, String password) async {
-    try {
-      final List userEmails = await auth.fetchSignInMethodsForEmail(user.email);
-      if (userEmails.isEmpty) {
-        Get.showSnackbar(customSnackbar("we couldn't find currant email"));
-      } else {
-        final userData = await auth.signInWithEmailAndPassword(
-            email: user.email, password: password);
-        print(userData.user!.uid);
-      }
-    } on FirebaseAuthException catch (error) {
-      Get.showSnackbar(
-          customSnackbar("Sign in failed because ${error.message ?? ''}"));
-    }
-  }
+  Future<User?> signInWithGoogle() async {
+    globalController.showloading();
 
-  Future<void> createUserToAuth(UserModel user, String password) async {
-    print('uer email: ${user.email} || user password: ${password}');
-    try {
-      final List userEmails = await auth.fetchSignInMethodsForEmail(user.email);
-      if (userEmails.isEmpty) {
-        final userCredential = await auth.createUserWithEmailAndPassword(
-            email: user.email, password: password);
-        print(userCredential.user!.uid);
-        if (userCredential.user != null) {
-          user.id = userCredential.user!.uid;
-          await Database().createUser(user);
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    final GoogleSignInAccount? googleSignInAccount =
+        await googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
+
+      try {
+        final UserCredential userCredential =
+            await auth.signInWithCredential(credential);
+        user = userCredential.user;
+
+
+        /* globalController.box.remove(user!.uid); */
+        // await db.createUser(user!);
+
+        globalController.hideLoading();
+
+        // Get.offAndToNamed(Routes.PROFIL);
+        Get.to(() =>  RegistrationDescriptionView());
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'account-exists-with-different-credential') {
+          await googleSignIn.signOut();
+
+          Get.showSnackbar(customSnackbar(
+              'Account already existed witch different Sign Up method '));
+
+          globalController.hideLoading(); //switch to false
+
+          Get.off(() => LoginView());
+        } else if (e.code == 'invalid-credential') {
+          Get.showSnackbar(customSnackbar(' Invalid a '));
+
+          globalController.hideLoading();
+
+          Get.offAllNamed(Routes.REGISTRATION);
         }
-      } else {
-        Get.showSnackbar(customSnackbar('Email Already Exists'));
+      } catch (e) {
+        Get.showSnackbar(customSnackbar('Error try siign in later'));
       }
-    } on FirebaseAuthException catch (error) {
-      Get.showSnackbar(
-          customSnackbar('Sign up failed because ${error.message}'));
     }
-  }
-
-  Future<void> resetPasswordEmail(String email) async {
-    try {
-      await auth.sendPasswordResetEmail(email: email);
-    } on FirebaseAuthException catch (error) {
-      Get.showSnackbar(
-          customSnackbar('Reseting password failed because ${error.message}'));
-    }
+    return null;
   }
 }

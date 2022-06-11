@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "731210814040-bricphns664diippgpb4e7u3u9ov99bg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tribes_online",
+            "certificate_hash": "029c99d79c7ebb67aaf5cf67bb767a3a0de6b88d"
+          }
+        },
+        {
           "client_id": "731210814040-81bkvujj9g7p117g63fmbvtq0h2f6ejb.apps.googleusercontent.com",
           "client_type": 3
         }

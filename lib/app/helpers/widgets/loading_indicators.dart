@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-/* // Project imports:
+// Project imports:
 import '../theme/app_colors.dart';
 import '../theme/font_sizes.dart';
 
@@ -11,7 +11,7 @@ Widget defaultLoadingIndicator = Center(
     height: circularProgressIndicatorInButtonSize,
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation<Color>(
-        AppColors.circularProgressIndicatorColor!,
+        AppColors.primaryColor,
       ),
     ),
   ),
@@ -23,9 +23,8 @@ Widget loadingIndicatorInsideButton = Center(
     height: circularProgressIndicatorInButtonSize,
     child: CircularProgressIndicator(
       valueColor: AlwaysStoppedAnimation(
-        AppColors.circularProgressIndicatorInButtonColor,
+        AppColors.primaryColor,
       ),
     ),
   ),
 );
- */
