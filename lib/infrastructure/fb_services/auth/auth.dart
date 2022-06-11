@@ -43,7 +43,7 @@ class Auth {
         globalController.hideLoading();
 
         // Get.offAndToNamed(Routes.PROFIL);
-        Get.to(() => const RegistrationDescriptionView());
+        Get.to(() =>  RegistrationDescriptionView());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();

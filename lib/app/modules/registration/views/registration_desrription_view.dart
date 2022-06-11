@@ -1,7 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
-import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,7 +8,11 @@ import 'package:get/get.dart';
 // Package imports:
 
 // Project imports:
+import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
+import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/theme/text_styles.dart';
+import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../models/tribal_example.dart';
@@ -17,8 +20,8 @@ import 'registration_aditional_info_view.dart';
 import 'registration_destription_hint_view_view.dart';
 
 class RegistrationDescriptionView extends GetView<RegistrationController> {
-  const RegistrationDescriptionView({Key? key}) : super(key: key);
-
+  RegistrationDescriptionView({Key? key}) : super(key: key);
+  final cameraController = Get.put(CameraGetXController());
   @override
   Widget build(BuildContext context) {
     Get.put(RegistrationController);
@@ -38,12 +41,91 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
         child: SingleChildScrollView(
           child: Center(
             child: Column(children: [
-              MainCirclePhoto.networking(
-                  /* imagePathL: '', */
-                  imagePathN:
-                      'https://dsm01pap004files.storage.live.com/y4m8Gv2oQvIHsLDNWMzjGmwED5go2S5vTwmIUrRXMQlfNdXE8Ci9tFYqmOY9YGvH71OlN48CCzO_loiE1o_HOrvS0EqD9hV5DcJQ8Cp8F3C2mNnDBHksPpetGNWPQ6alGIrP9flcw5nXBgvplbF3vJ3sKNlB8BPnxWNrTNwc23WO2T8qP91vf8oWiP2Z8LpOpYs?width=240&height=135&cropmode=none',
-                  screeanheight: 673.h,
-                  screeanwidth: 392.w),
+              Align(
+                alignment: Alignment.topCenter,
+                child: GetBuilder(
+                  init: cameraController,
+                  builder: (CameraGetXController cameraCon) =>
+                      Column(children: [
+                    cameraCon.image == null
+                        ? InkWell(
+                            child: MainCirclePhoto.icon(
+                                screeanheight: 300.h,
+                                screeanwidth: 250.w,
+                                icon: Icon(
+                                  Icons.add_a_photo_rounded,
+                                  size: 40,
+                                  color: AppColors.whiteColor,
+                                )),
+                            onTap: () async {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Card(
+                                      color: AppColors.textFieldFill,
+                                      child: Container(
+                                        height: 100,
+                                        color: AppColors.textFieldFill,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    await cameraController
+                                                        .getImageGallery();
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.photo_album,
+                                                    size: 50.h,
+                                                  ),
+                                                ),
+                                                verticalSpaceTiny,
+                                                Text(
+                                                  '   Gallery',
+                                                  style: headingBoldStyle,
+                                                )
+                                              ],
+                                            ),
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    await cameraController
+                                                        .getImageCamera();
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.camera,
+                                                    size: 50.h,
+                                                  ),
+                                                ),
+                                                verticalSpaceTiny,
+                                                Text(
+                                                  '   Camera',
+                                                  style: headingBoldStyle,
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
+                          )
+                        : MainCirclePhoto.file(
+                            screeanheight: 300.h,
+                            screeanwidth: 250.w,
+                            file: cameraCon.image!),
+                  ]),
+                ),
+              ),
               const Text(
                 'Cornelius',
                 style: kName,
@@ -155,7 +237,6 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                 /* screenWidth: screeanwidth,
                       screenHeight: screeanheight */
               ),
-
             ]),
           ),
         ),

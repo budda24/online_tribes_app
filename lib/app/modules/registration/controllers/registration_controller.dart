@@ -146,7 +146,7 @@ class RegistrationController extends GetxController {
     try {
       await auth.signInWithCredential(credential).then((response) {
         if (response.user != null) {
-          Get.to(() => const RegistrationDescriptionView());
+          Get.to(() =>  RegistrationDescriptionView());
         }
       });
 

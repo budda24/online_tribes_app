@@ -78,7 +78,7 @@ class LoginController extends GetxController {
     );
     try {
       await _auth.signInWithCredential(credential).then((response) {
-        Get.to(() => const RegistrationDescriptionView());
+        Get.to(() =>  RegistrationDescriptionView());
 
         User? _user = response.user;
         Get.snackbar('Hello', 'Welcome back ${_user!.uid}');
