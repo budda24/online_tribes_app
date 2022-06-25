@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../controllers/camea_controller.dart';
 import '../../../helpers/assets/networkIng_images.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../widgets/custom_photo_picker.dart';
 
 class RegistrationUploadVideoView extends GetView {
+  final cameraController = Get.find<CameraGetXController>();
 
   @override
   Widget build(BuildContext context) {
-     ScreenUtil.init(
+    ScreenUtil.init(
         BoxConstraints(
             maxWidth: MediaQuery.of(context).size.width,
             maxHeight: MediaQuery.of(context).size.height),
-        designSize: Size(411, 809),
+       designSize: const Size(360, 690),
         context: context,
         minTextAdapt: true,
         orientation: Orientation.portrait);
@@ -25,52 +29,73 @@ class RegistrationUploadVideoView extends GetView {
       backgroundColor: kMainColor,
       body: SingleChildScrollView(
         child: SafeArea(
-          child: Center(
-            child: Column(
-              children: [
-                MainCirclePhoto.networking(
-                    /* imagePathL: '', */
-                    imagePathN:
-                        'https://dsm01pap004files.storage.live.com/y4m8Gv2oQvIHsLDNWMzjGmwED5go2S5vTwmIUrRXMQlfNdXE8Ci9tFYqmOY9YGvH71OlN48CCzO_loiE1o_HOrvS0EqD9hV5DcJQ8Cp8F3C2mNnDBHksPpetGNWPQ6alGIrP9flcw5nXBgvplbF3vJ3sKNlB8BPnxWNrTNwc23WO2T8qP91vf8oWiP2Z8LpOpYs?width=240&height=135&cropmode=none',
-                    screeanheight: 673.h,
-                    screeanwidth: 392.w),
-                Text(
-                  'Cornelius',
-                  style: kName,
+          child: Column(
+            children: [
+              SizedBox(height: 10.h,),
+             GetBuilder(
+                          init: cameraController,
+                          builder: (CameraGetXController cameraCon) =>
+                              cameraCon.image == null
+                                  ? InkWell(
+                                      child: MainCirclePhoto.icon(
+                                          screeanheight: 300.h,
+                                          screeanwidth: 250.w,
+                                          icon: Icon(
+                                            Icons.add_a_photo_rounded,
+                                            size: 40,
+                                            color: AppColors.whiteColor,
+                                          )),
+                                      onTap: () async {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CustomPhotoPicker(
+                                                  cameraController:
+                                                      cameraController);
+                                            });
+                                      },
+                                    )
+                                  : MainCirclePhoto.file(
+                                      screeanheight: 300.h,
+                                      screeanwidth: 250.w,
+                                      file: cameraCon.image!),
+                        ),
+              const Text(
+                'Cornelius',
+                style: kName,
+              ),
+              SizedBox(
+                height: 40.h,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30)),
+                  color: AppColors.primaryColorWithOpacity40,
                 ),
-                SizedBox(
-                  height: 40.h,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
-                    color: AppColors.primaryColorWithOpacity40,
-                  ),
-                  width: double.infinity,
-                  height: 558.h,
+                width: double.infinity,
+                height: 444.h,
+                child: Padding(
+                 padding: const EdgeInsets.only(bottom: 30,left: 30,right: 30,top: 10),
                   child: Column(
                     children: [
-                      SizedBox(height: 30,),
+                      SizedBox(
+                        height: 40.h,
+                      ),
                       Text(
                         'Upload your video',
                         style: TextStyle(fontSize: 20.sp),
                       ),
-                      MainCirclePhoto.networking(
-                          /* imagePathL: '', */
-                          imagePathN:
-                              'https://dsm01pap004files.storage.live.com/y4mN1n5-qwfsbFUlvA6ydVtMe85BUIbCmFU_2hx56ov0z12HXdnnLs06nSBQnzH2jbGeVynA4nURa2Gc7FmVQIKMANb_OdmEZuDZ7syf6VGmgs5a_Dl8Ags9VZ3xoTTnIfOwx-rMlrshAGTajYSXR3z4OiYe9MQ4LeJyL9IftcnJHpdJXj2RzQeUc9prj7TeeTH?width=142&height=143&cropmode=none',
-                          screeanheight: 673.h,
-                          screeanwidth: 392.w),
-                     SizedBox(height: 25.h,),
-                      MainCirclePhoto.networking(
-                          /* imagePathL: '', */
-                          imagePathN:
-                              'https://dsm01pap004files.storage.live.com/y4mLJ2fKNEHobwfVz23jz1PNLX-ohpsdYyWmwOjMCFirQHqUe7NPC67yj0W8rspoGlOJZsUHjXpbLkhigoW4biCzvT_GHt-Jhn7f9Ex9RDrzqEipyKlef0XIHxrvEV4uDPKWM9SXoXSu3mdVikSS_q9Jm7odFlMYoihxtz7yeXjoH7Fls2ms1b5uCynA7OOpH0V?width=142&height=143&cropmode=none',
-                          screeanheight: 673.h,
-                          screeanwidth: 392.w),
-                     SizedBox(height: 65.h,),
+                     verticalSpaceMedium,
+                      Image.asset('assets/images/authorization_screen/add_photo.png',scale: 1.3 ,),
+                      SizedBox(
+                        height: 25.h,
+                      ),
+                     Image.asset('assets/images/authorization_screen/upload_video.png',scale: 1.3 ,),
+                      SizedBox(
+                        height: 45.h,
+                      ),
                       SlimRoundedButton(
                           backgroundColour: AppColors.primaryColor,
                           title: 'Continue',
@@ -78,9 +103,9 @@ class RegistrationUploadVideoView extends GetView {
                           onPress: () {})
                     ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

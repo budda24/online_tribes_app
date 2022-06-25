@@ -41,39 +41,41 @@ class DescriptionExamplePage extends StatelessWidget {
         ),
       ),
       backgroundColor: kMainColor,
-      body: LayoutBuilder(
-        builder: (_, boxConstrains) => SafeArea(
-          child: Column(
-              /* mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center, */
-              children: [
-                Row(children: [
-                  Container(
-                    width: 80.w,
-                    height: 80.h,
-                    margin: const EdgeInsets.only(left: 20),
-                    child: Image.asset(imageAssetPath),
-                  ),
-                  Text(
-                    title,
-                    style: kName,
-                  ),
-                ]),
-                verticalSpaceMedium,
-                RoundedContainer(
-                  height: 500.h,
-                  /* width: , */
-                  screanHeight: boxConstrains.maxHeight,
-                  screanWidth: boxConstrains.maxWidth,
-                  bcColor: AppColors.whiteColor,
-                  child: SingleChildScrollView(
-                    child: Text(
-                      description,
-                      style: longTextStyle,
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (_, boxConstrains) => SafeArea(
+            child: Column(
+                /* mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center, */
+                children: [
+                  Row(children: [
+                    Container(
+                      width: 80.w,
+                      height: 80.h,
+                      margin: const EdgeInsets.only(left: 20),
+                      child: Image.asset(imageAssetPath),
+                    ),
+                    Text(
+                      title,
+                      style: kName,
+                    ),
+                  ]),
+                  verticalSpaceMedium,
+                  RoundedContainer(
+                    height: 500.h,
+                    /* width: , */
+                    screanHeight: boxConstrains.maxHeight,
+                    screanWidth: boxConstrains.maxWidth,
+                    bcColor: AppColors.whiteColor,
+                    child: SingleChildScrollView(
+                      child: Text(
+                        description,
+                        style: longTextStyle,
+                      ),
                     ),
                   ),
-                ),
-              ]),
+                ]),
+          ),
         ),
       ),
     );

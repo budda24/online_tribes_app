@@ -36,10 +36,10 @@ class SlimRoundedButton extends StatelessWidget {
         depth:  -5,
         shape: NeumorphicShape.convex,
         lightSource: LightSource.bottomRight,
-        // intensity:45,
+       /*  intensity:45, */
         shadowDarkColor: Colors.black,
         color: AppColors.actionColor,
-       
+
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
       ),
       padding:

@@ -28,13 +28,7 @@ class MainCirclePhoto extends StatelessWidget {
       required this.icon})
       : imagePathN = '';
 
-  /* const MainCirclePhoto.local({
-    required this.screeanheight,
-    required this.screeanwidth,
-    required this.imagePathL,
-
-
-  }):imagePathN=''; */
+  
 
   final double screeanheight;
   final double screeanwidth;
@@ -46,8 +40,8 @@ class MainCirclePhoto extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10.h, bottom: 0),
-      width: 200.w,
-      height: 130.h,
+      width: 100.w,
+      height: 100.h,
       child: icon == null ? null : icon,
       decoration: BoxDecoration(
         color: Colors.grey,
@@ -57,9 +51,9 @@ class MainCirclePhoto extends StatelessWidget {
         ),
         shape: BoxShape.circle,
         image: DecorationImage(
-            fit: BoxFit.scaleDown,
+            fit: BoxFit.fill,
             image: file == null
-                ? NetworkImage(imagePathN)
+                ? NetworkImage(imagePathN , )
                 : FileImage(file!)
                     as ImageProvider /* FileImage(file) */ /* fit: BoxFit.fill */
             ),

@@ -7,8 +7,8 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
-  get: 4.6.1
-  font_awesome_flutter: ^9.2.0
+  get: ^4.6.5
+  font_awesome_flutter: ^10.1.0
   flutter_screenutil: ^5.1.0
   rflutter_alert:
   get_storage:
@@ -32,7 +32,7 @@ dependencies:
 
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

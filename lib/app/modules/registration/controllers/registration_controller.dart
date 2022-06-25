@@ -18,7 +18,6 @@ class RegistrationController extends GetxController {
   final smsCodeController = TextEditingController();
   final signUpPasswordConfirmController = TextEditingController();
 
-
   // bool validateSignupForm({
   //   required TextEditingController password,
   //   required TextEditingController confirmPassword,
@@ -87,6 +86,7 @@ class RegistrationController extends GetxController {
   //   }
   // }
 
+  RxDouble sliderValue = 1.0.obs;
   final auth = FirebaseAuth.instance;
   String verificationID = '';
   bool isSMSCodeHere = false;
@@ -146,7 +146,7 @@ class RegistrationController extends GetxController {
     try {
       await auth.signInWithCredential(credential).then((response) {
         if (response.user != null) {
-          Get.to(() =>  RegistrationDescriptionView());
+          Get.to(() => RegistrationDescriptionView());
         }
       });
 
@@ -196,16 +196,19 @@ class RegistrationController extends GetxController {
 
   RxList<Widget> hobbiesFields = [
     //list of hobby textField widgets
-    CustomTextField(
-      controller: RegistrationController._hobbyController1,
-      height: 55,
-      width: 500,
-      hintText: 'Hobbies',
-      maxline: 1,
-      minLine: 1,
-      onSave: (value) {
-        addHobby(value);
-      },
+    Container(
+      margin: const EdgeInsets.only(bottom: 5),
+      child: CustomTextField(
+        controller: RegistrationController._hobbyController1,
+        height: 45,
+        width: 500,
+        hintText: 'Hobbies',
+        maxline: 1,
+        minLine: 1,
+        onSave: (value) {
+          addHobby(value);
+        },
+      ),
     ),
   ].obs;
 
@@ -226,17 +229,23 @@ class RegistrationController extends GetxController {
   int _index = 2;
   //add new texFormField for hobbies TextFields
   void addHobbyField() {
+    if (hobbiesFields.length >= 4) {
+      return;
+    }
     hobbiesFields.add(
-      CustomTextField(
-        controller: hobbyControllers[_index],
-        height: 60,
-        width: 500,
-        hintText: 'Hobbies $_index',
-        maxline: 1,
-        minLine: 1,
-        onSave: (value) {
-          addHobby(value);
-        },
+      Container(
+        margin: const EdgeInsets.only(bottom: 5),
+        child: CustomTextField(
+          controller: hobbyControllers[_index],
+          height: 45,
+          width: 500,
+          hintText: 'Hobbies $_index',
+          maxline: 1,
+          minLine: 1,
+          onSave: (value) {
+            addHobby(value);
+          },
+        ),
       ),
     );
     _index++;

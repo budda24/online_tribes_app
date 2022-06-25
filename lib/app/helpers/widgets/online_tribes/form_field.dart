@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../main_constants.dart';
-import '../../theme/text_styles.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField(
@@ -16,7 +15,8 @@ class CustomTextField extends StatelessWidget {
       required this.onSave,
       this.controller,
       this.color,
-      this.lableText})
+      this.lableText,
+      })
       : super(key: key);
 
   final int minLine;
@@ -25,40 +25,34 @@ class CustomTextField extends StatelessWidget {
   final double width;
   String? hintText;
   String? lableText;
+
   Function onSave;
   TextEditingController? controller;
   Color? color;
 
   @override
   Widget build(BuildContext context) {
-    // ScreenUtil.init(
-    //     BoxConstraints(
-    //         maxWidth: MediaQuery.of(context).size.width,
-    //         maxHeight: MediaQuery.of(context).size.height),
-    //     designSize: Size(411, 809),
-    //     context: context,
-    //     minTextAdapt: true,
-    //     orientation: Orientation.portrait);
-    final _padding = EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w);
-    final _margin =
-        EdgeInsets.only(left: 40.w, right: 40.w, bottom: 5.h, top: 5.h);
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.r),
-            color: color ?? AppColors.textFieldFill,
-          ),
-          height: height.h,
-          width: width.w,
-          margin: _margin,
-          padding: _padding,
-        ),
-        Container(
-          height: height.h,
-          width: width.w,
-          margin: _margin,
-          padding: _padding,
+    return Neumorphic(
+      style: NeumorphicStyle(
+
+        surfaceIntensity: 0.9,
+        shadowLightColorEmboss: Colors.white,
+        shadowLightColor: AppColors.primaryColor,
+        depth: -5,
+        shape: NeumorphicShape.convex,
+        lightSource: LightSource.bottomRight,
+        intensity: 45,
+        shadowDarkColor: Colors.black,
+        color: AppColors.whiteColor,
+        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
+      ),
+      child: Container(
+        height: height.h,
+        width: width.w,
+        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+        margin: EdgeInsets.only(left: 40.w, right: 40.w, bottom: 5.h, top: 5.h),
+        child: Container(
+         margin: EdgeInsets.all(8),
           child: TextFormField(
             controller: controller,
             onSaved: (value) => onSave(value),
@@ -68,26 +62,25 @@ class CustomTextField extends StatelessWidget {
               }
               return 'null';
             },
-            style: kTextfieldStyle,
+            style: kHintStyle,
             keyboardType: TextInputType.multiline,
             minLines: minLine,
             maxLines: maxline,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
-              labelText:lableText ??'',
+              labelText: lableText ?? '',
               border: InputBorder.none,
               focusedBorder: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorBorder: InputBorder.none,
               disabledBorder: InputBorder.none,
-              hintStyle: kTextfieldStyle,
-              filled: true,
-              fillColor: AppColors.textFieldFill,
-              hintText: hintText, /* contentPadding: EdgeInsets.all(15) */
+              hintStyle: kHintStyle,
+              floatingLabelBehavior: FloatingLabelBehavior.always,
+              hintText: hintText,
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
