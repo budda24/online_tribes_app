@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -23,6 +24,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
   final cameraController = Get.put(CameraGetXController());
   @override
   Widget build(BuildContext context) {
+    print(auth.currentUser!.email);
     Get.put(RegistrationController);
 
     ScreenUtil.init(

@@ -14,7 +14,7 @@ class GlobalController extends GetxController {
   String currentUserRole = '';
   final box = GetStorage();
 
-  bool isLoadingVisible = false;
+  RxBool isLoadingVisible = false.obs;
   /* List<CameraDescription>? camera; */
 
   // User? user;
@@ -33,10 +33,10 @@ class GlobalController extends GetxController {
   }
 
   showloading() {
-    isLoadingVisible = true;
+    isLoadingVisible.value = true;
   }
 
   hideLoading() {
-    isLoadingVisible = false;
+    isLoadingVisible.value = false;
   }
 }
