@@ -28,11 +28,11 @@ class AppPages {
 
   static final routes = [
     //Todo Home screen implementation
-    /* GetPage(
+    GetPage(
       name: _Paths.HOME,
       page: () => HomeScreen(),
       binding: HomeBinding(),
-    ), */
+    ),
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginView(),

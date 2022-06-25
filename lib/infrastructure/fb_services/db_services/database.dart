@@ -9,9 +9,8 @@ class Database {
   Future<void> createUser(UserModel user) async {
     try {
       user.createdAt = FieldValue.serverTimestamp();
-      await db.collection('USERS').doc(user.id).set(user.toJson());
+      await db.collection('USERS').doc(user.userId).set(user.toJson());
     } on FirebaseException catch (e) {
-      // Todo what to do in case that the auth user is created but the firestore user not
       Get.showSnackbar(customSnackbar("Account can't be created because $e"));
     }
   }
