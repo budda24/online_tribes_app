@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "731210814040-o8ch2mnftdri0himtj5b7k1tuolsmrit.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tribes_online",
+            "certificate_hash": "bd94261c4139e8fbf296949b63f1a98086d8b60b"
+          }
+        },
+        {
           "client_id": "731210814040-81bkvujj9g7p117g63fmbvtq0h2f6ejb.apps.googleusercontent.com",
           "client_type": 3
         }
