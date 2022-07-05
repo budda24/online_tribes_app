@@ -24,15 +24,6 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
     final globalController = Get.find<GlobalController>();
     final cameraController = Get.find<CameraGetXController>();
 
-    ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: const Size(360, 690),
-        context: context,
-        minTextAdapt: true,
-        orientation: Orientation.portrait);
-
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
@@ -103,7 +94,6 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                             child: Obx(() {
                               final tmpList =
                                   controller.hobbiesFields.reversed.toList();
-                              /* print(tmpList); */
                               return Column(
                                 children: [
                                   ...tmpList,

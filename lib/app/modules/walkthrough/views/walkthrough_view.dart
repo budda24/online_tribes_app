@@ -17,14 +17,6 @@ import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.da
 class WalkthroughView extends GetView<WalkthroughController> {
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-        BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height),
-        designSize: const Size(411, 809),
-        context: context,
-        minTextAdapt: true,
-        orientation: Orientation.portrait);
     return Scaffold(
       body: SafeArea(
         child: Center(

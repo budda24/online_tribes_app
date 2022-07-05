@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
 
 import 'package:get/get.dart';
@@ -9,6 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
 import '../../../app/controllers/global_controler.dart';
 import '../../../app/routes/app_pages.dart';
+import '../models/user_model.dart';
 
 final auth = FirebaseAuth.instance;
 
@@ -46,10 +48,14 @@ class Auth {
             await auth.signInWithCredential(credential);
 
         // TODO create a user in Db
-
-        /* globalController.box.remove(user!.uid); */
-        /* var userDb = UserModel(userId:_uuid.v4(), email: user!.email,  );
-        await db.createUser(userDb); */
+        final user = auth.currentUser;
+        final userToSave = UserDB(userId: user!.uid, email: user.email);
+        try {
+          print('try to save user');
+          await UserDBServices().createUser(userToSave);
+        } catch (error) {
+          print(error);
+        }
 
         globalController.hideLoading();
         //TODO go to profile
@@ -164,6 +170,7 @@ class Auth {
       globalController.hideLoading();
       print(e.toString());
     }
+    return null;
   }
 
   Future<void> logout() async {
