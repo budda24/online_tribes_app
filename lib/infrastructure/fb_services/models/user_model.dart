@@ -1,20 +1,18 @@
 // To parse this JSON data, do
 //
-//     final user = userFromJson(jsonString);
+//     final userDb = userDbFromJson(jsonString);
 
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+UserDB userDbFromJson(String str) => UserDB.fromJson(json.decode(str));
 
-UserModel userFromJson(String str) => UserModel.fromJson(json.decode(str));
+String userDbToJson(UserDB data) => json.encode(data.toJson());
 
-String userToJson(UserModel data) => json.encode(data.toJson());
-
-class UserModel {
-  UserModel({
+class UserDB {
+  UserDB({
     required this.userId,
-    this.createdAt,
     this.email,
+    this.phoneNumber,
     this.name,
     this.requestedTribe,
     this.description,
@@ -24,13 +22,15 @@ class UserModel {
     this.hobbies,
     this.timeToInvest,
     this.attendedTribe,
-    this.userNotification,
+    this.profileNotification,
+    this.createdAt,
   });
 
   String userId;
-  FieldValue? createdAt;
   String? email;
+  String? phoneNumber;
   String? name;
+  dynamic? createdAt;
   String? requestedTribe;
   String? description;
   String? introVideoUrl;
@@ -39,11 +39,14 @@ class UserModel {
   Hobbies? hobbies;
   int? timeToInvest;
   AttendedTribe? attendedTribe;
-  UserNotification? userNotification;
+  ProfileNotification? profileNotification;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        userId: json["user_id"],
+  factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
+        userId: json["userId"],
+        email: json["email"],
+       phoneNumber: json["phone_number"],
         name: json["name"],
+        createdAt: json["createdAt"],
         requestedTribe: json["requested_tribe"],
         description: json["description"],
         introVideoUrl: json["intro_video_url"],
@@ -52,32 +55,36 @@ class UserModel {
         hobbies: Hobbies.fromJson(json["hobbies"]),
         timeToInvest: json["time_to_invest"],
         attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]),
-        userNotification: UserNotification.fromJson(json["user_notification"]),
+        profileNotification:
+            ProfileNotification.fromJson(json["profile_notification"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "user_id": userId,
+        "userId": userId,
+        "email": email,
         "name": name,
+        "phone_number": phoneNumber,
+        "createdAt": createdAt,
         "requested_tribe": requestedTribe,
         "description": description,
         "intro_video_url": introVideoUrl,
         "life_motto": lifeMotto,
         "profile_photo": profilePhoto,
-        "hobbies": hobbies!.toJson(),
+        "hobbies": hobbies?.toJson(),
         "time_to_invest": timeToInvest,
-        "attended_tribe": attendedTribe!.toJson(),
-        "user_notification": userNotification!.toJson(),
+        "attended_tribe": attendedTribe?.toJson(),
+        "profile_notification": profileNotification?.toJson(),
       };
 }
 
 class AttendedTribe {
   AttendedTribe({
-    required this.tribeId,
-    required this.role,
+    this.tribeId,
+    this.role,
   });
 
-  String tribeId;
-  String role;
+  String? tribeId;
+  String? role;
 
   factory AttendedTribe.fromJson(Map<String, dynamic> json) => AttendedTribe(
         tribeId: json["tribe_id"],
@@ -93,11 +100,11 @@ class AttendedTribe {
 class Hobbies {
   Hobbies({
     required this.hobby,
-    required this.hobby1,
+    this.hobby1,
   });
 
   String hobby;
-  String hobby1;
+  String? hobby1;
 
   factory Hobbies.fromJson(Map<String, dynamic> json) => Hobbies(
         hobby: json["hobby"],
@@ -110,8 +117,8 @@ class Hobbies {
       };
 }
 
-class UserNotification {
-  UserNotification({
+class ProfileNotification {
+  ProfileNotification({
     this.tribalRequest,
     this.acceptedRequest,
     this.rejectedRequest,
@@ -121,17 +128,17 @@ class UserNotification {
   Request? acceptedRequest;
   RejectedRequest? rejectedRequest;
 
-  factory UserNotification.fromJson(Map<String, dynamic> json) =>
-      UserNotification(
+  factory ProfileNotification.fromJson(Map<String, dynamic> json) =>
+      ProfileNotification(
         tribalRequest: Request.fromJson(json["tribal_request"]),
         acceptedRequest: Request.fromJson(json["accepted_request"]),
         rejectedRequest: RejectedRequest.fromJson(json["rejected_request"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "tribal_request": tribalRequest!.toJson(),
-        "accepted_request": acceptedRequest!.toJson(),
-        "rejected_request": rejectedRequest!.toJson(),
+        "tribal_request": tribalRequest?.toJson(),
+        "accepted_request": acceptedRequest?.toJson(),
+        "rejected_request": rejectedRequest?.toJson(),
       };
 }
 

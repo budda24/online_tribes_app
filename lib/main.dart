@@ -1,36 +1,29 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
-import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
-import 'package:flutter_application_1/app/modules/registration/views/registration_aditional_info_view.dart';
-import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
-import 'package:flutter_application_1/app/modules/walkthrough/controllers/walkthrough_controller.dart';
-import 'package:flutter_application_1/app/modules/walkthrough/views/walkthrough_view.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
-=======
+import 'package:flutter/services.dart';
+
 import 'dart:io';
->>>>>>> 825bbce4740ce96ecc6aa360df4612c314b90159
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'firebase_options.dart';
 
-import 'app/bindings/global_bindings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import 'app/modules/authorization/controllers/login_controller.dart';
+import 'package:cloud_functions/cloud_functions.dart';
+
+
+
 import 'app/controllers/global_controler.dart';
-/* import 'app/helpers/theme/form_field_styles.dart';
-import 'app/modules/authorization/controllers/login_controller.dart'; */
 import 'app/routes/app_pages.dart';
 import 'package:flutter_application_1/app/modules/walkthrough/controllers/walkthrough_controller.dart';
-/* import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
-import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 
-import 'package:flutter_application_1/app/modules/walkthrough/views/walkthrough_view.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart'; */
 
 /* List<CameraDescription> cameras = []; */
+
 /* Future _connectToFirebaseEmulator() async {
   final localHostString = GetPlatform.isAndroid ? '10.0.2.2' : 'localhost';
 
@@ -46,6 +39,17 @@ import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart'
 }
  */
 
+/* Future<void> _configureFirebaseStorage() async {
+  String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
+  int configPort = const int.fromEnvironment("STORAGE_EMU_PORT");
+  // Android emulator must be pointed to 10.0.2.2
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+  var host = configHost.isNotEmpty ? configHost : defaultHost;
+  var port = configPort != 0 ? configPort : 9199;
+  await FirebaseStorage.instance.useStorageEmulator(host, port);
+  debugPrint('Using Firebase Storage emulator on: $host:$port');
+} */
+
 Future<void> _configureFirebaseAuth() async {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
   int configPort = const int.fromEnvironment("AUTH_EMU_PORT");
@@ -58,16 +62,6 @@ Future<void> _configureFirebaseAuth() async {
   debugPrint('Using Firebase Auth emulator on: $host:$port');
 }
 
-/* Future<void> _configureFirebaseStorage() async {
-  String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
-  int configPort = const int.fromEnvironment("STORAGE_EMU_PORT");
-  // Android emulator must be pointed to 10.0.2.2
-  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
-  var host = configHost.isNotEmpty ? configHost : defaultHost;
-  var port = configPort != 0 ? configPort : 9199;
-  await FirebaseStorage.instance.useStorageEmulator(host, port);
-  debugPrint('Using Firebase Storage emulator on: $host:$port');
-} */
 
 void _configureFirebaseFirestore() {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
@@ -82,18 +76,31 @@ void _configureFirebaseFirestore() {
     sslEnabled: false,
     persistenceEnabled: false,
   );
+  /* FirebaseFirestore.instance.useFirestoreEmulator(host, port); */
   debugPrint('Using Firebase Firestore emulator on: $host:$port');
 }
+void _configureFirebaseFunction(){
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+  FirebaseFunctions functions = FirebaseFunctions.instance;
+        functions.useFunctionsEmulator(defaultHost, 5001);
+}
+
 
 bool connectToFirebaseEmulator = true;
 void main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   await Firebase.initializeApp();
   if (connectToFirebaseEmulator) {
-   await _configureFirebaseAuth();
-    /* await _connectToFirebaseEmulator(); */
+    await _configureFirebaseAuth();
+    _configureFirebaseFirestore();
+    /*  _connectToFirebaseEmulator(); */
   }
 
   /* try {
@@ -108,10 +115,6 @@ void main() async {
   Get.put(LoginController());
 
   var defaultScreen = Routes.LOGIN;
-<<<<<<< HEAD
-/*
-=======
->>>>>>> 825bbce4740ce96ecc6aa360df4612c314b90159
   /*if visited set home to loginscree  */
   if (Get.find<GlobalController>().box.read('isWalkthroughDone') != null &&
       Get.find<GlobalController>().box.read('isWalkthroughDone')) {
@@ -120,38 +123,45 @@ void main() async {
     defaultScreen = Routes.WALKTHROUGH;
   }
   if (FirebaseAuth.instance.currentUser == null) {
-    /* print(2); */
     defaultScreen = Routes.LOGIN;
   } else {
     defaultScreen = Routes.HOME; //Todo after login go to profile screen
-<<<<<<< HEAD
-    print(' 2 else');
-  } */
-
- */
-  runApp(
-    GetMaterialApp(
-      title: "Application",
-      /* initialBinding: ControllersBinding(), */
-      //! is that ok
-      /*   initialRoute: defaultScreen,
- */
-      /*   home: Routes.WALKTHROUGH, */
-      home: RegistrationDescriptionView(),
-=======
-    print(' 2 else $defaultScreen');
   }
 
-  runApp(
-    GetMaterialApp(
+  runApp(MyApp()
+      /* GetMaterialApp(
       title: "Application",
       initialBinding: ControllersBinding(),
       initialRoute: Routes.LOGIN,
 
       /* home: Routes.HOME, */
->>>>>>> 825bbce4740ce96ecc6aa360df4612c314b90159
       /* theme: ThemeData(inputDecorationTheme: outlineInputTextFormFieldStyle),*/
       // getPages: AppPages.routes,
-    ),
-  );
+    ), */
+      );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    Get.put(GlobalController());
+    return LayoutBuilder(
+      builder: (context, constraints) => MediaQuery(
+        data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+        child: ScreenUtilInit(
+          designSize: const Size(360,
+              690) /* ScreenSizes(constraints: constraints).getScreenSize() */,
+          minTextAdapt: true,
+          builder: (context, child) => GetMaterialApp(
+            title: "Application",
+            getPages: AppPages.routes,
+            initialRoute: Routes.LOGIN,
+            defaultTransition: Transition.fadeIn,
+            debugShowCheckedModeBanner: false,
+          ),
+        ),
+      ),
+    );
+  }
 }

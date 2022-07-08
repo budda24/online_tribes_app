@@ -18,7 +18,8 @@ Database db = Database();
 
 class Auth {
   final _uuid = const Uuid();
-  final globalController = Get.find<GlobalController>();
+  final _globalController = Get.find<GlobalController>();
+  final _userDbServices = UserDBServices();
 
   String errorMessage = '';
 
@@ -27,7 +28,7 @@ class Auth {
   }
 
   Future<User?> signInWithGoogle() async {
-    globalController.showloading();
+    _globalController.showloading();
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -47,17 +48,15 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
-        // TODO create a user in Db
         final user = auth.currentUser;
-        final userToSave = UserDB(userId: user!.uid, email: user.email);
-        try {
-          print('try to save user');
-          await UserDBServices().createUser(userToSave);
-        } catch (error) {
-          print(error);
-        }
+        final userToSave = UserDB(
+            userId: user!.uid,
+            email: user.email,
+            phoneNumber: user.phoneNumber);
 
-        globalController.hideLoading();
+          await _userDbServices.createUser(userToSave);
+
+        _globalController.hideLoading();
         //TODO go to profile
         // Get.offAndToNamed(Routes.PROFIL);
         Get.to(() => RegistrationDescriptionView());
@@ -67,24 +66,24 @@ class Auth {
           errorMessage =
               'Account already existed witch different Sign Up method ';
 
-          globalController.hideLoading();
+          _globalController.hideLoading();
 
           Get.off(() => LoginView());
         } else if (error.code == 'invalid-credential') {
           errorMessage =
               showErrror('Error while authorization. Please try again');
 
-          globalController.hideLoading();
+          _globalController.hideLoading();
 
           Get.offAllNamed(Routes.REGISTRATION);
         }
 
         showErrror(errorMessage);
-        globalController.hideLoading();
+        _globalController.hideLoading();
         Get.off(() => LoginView());
       } catch (e) {
         Get.showSnackbar(customSnackbar('Error try sign in later $e'));
-        globalController.hideLoading();
+        _globalController.hideLoading();
         Get.off(() => LoginView());
       }
     }
@@ -102,7 +101,7 @@ class Auth {
 
   _verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
     await auth.signInWithCredential(phoneAuthCredential);
-    globalController.hideLoading();
+    _globalController.hideLoading();
   }
 
   _verificationFailed(FirebaseAuthException error) {
@@ -114,18 +113,18 @@ class Auth {
 
   _codeSent(String verificationId, int? forceResendingToken) async {
     _verificationId = verificationId;
-    globalController.hideLoading();
+    _globalController.hideLoading();
   }
 
   _codeAutoRetrievalTimeout(String verificationId) {
     Get.offAll(() => LoginView());
-    globalController.hideLoading();
+    _globalController.hideLoading();
 
     return null;
   }
 
   Future<void> verifyPhoneNumber(String number) async {
-    globalController.showloading();
+    _globalController.showloading();
     try {
       await auth.verifyPhoneNumber(
           phoneNumber: number,
@@ -135,49 +134,59 @@ class Auth {
           codeSent: _codeSent,
           codeAutoRetrievalTimeout: _codeAutoRetrievalTimeout);
     } on FirebaseAuthException catch (error) {
-      globalController.hideLoading();
+      _globalController.hideLoading();
 
       showErrror(error.message!);
     } catch (error) {
-      globalController.hideLoading();
+      _globalController.hideLoading();
       print(error);
     }
   }
 
   Future<FirebaseAuthException?> signInWithPhoneNumber(String smsCode) async {
-    globalController.showloading();
+    _globalController.showloading();
 
     final AuthCredential credential = PhoneAuthProvider.credential(
       verificationId: _verificationId!,
       smsCode: smsCode,
     );
     try {
-      await auth.signInWithCredential(credential).then((response) {
+      await auth.signInWithCredential(credential).then((response) async {
         Get.to(() => RegistrationDescriptionView());
         // TODO create a user in Db
-        User? _user = response.user;
-        globalController.hideLoading();
+        User? user = response.user;
+
+        final userToSave =
+            UserDB(userId: user!.uid, phoneNumber: user.phoneNumber);
+        try {
+          print('try to save user phone Number');
+          await UserDBServices().createUser(userToSave);
+        } catch (error) {
+          print(error);
+        }
+
+        _globalController.hideLoading();
       });
       print(auth.currentUser);
     } on FirebaseAuthException catch (error) {
-      globalController.hideLoading();
+      _globalController.hideLoading();
       errorMessage = handlePhoneAuthError(error);
       print('signInWithCredential error');
       showErrror(errorMessage);
       return error;
     } catch (e) {
       /* print('catch after rethorw'); */
-      globalController.hideLoading();
+      _globalController.hideLoading();
       print(e.toString());
     }
     return null;
   }
 
   Future<void> logout() async {
-    globalController.showloading();
+    _globalController.showloading();
     try {
       await auth.signOut();
-      globalController.hideLoading();
+      _globalController.hideLoading();
       Get.off(() => LoginView());
     } on FirebaseException catch (error) {
       print(error);
