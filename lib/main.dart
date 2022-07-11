@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,12 +14,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'app/modules/authorization/controllers/login_controller.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
-
-
 import 'app/controllers/global_controler.dart';
 import 'app/routes/app_pages.dart';
 import 'package:flutter_application_1/app/modules/walkthrough/controllers/walkthrough_controller.dart';
-
 
 /* List<CameraDescription> cameras = []; */
 
@@ -62,7 +58,6 @@ Future<void> _configureFirebaseAuth() async {
   debugPrint('Using Firebase Auth emulator on: $host:$port');
 }
 
-
 void _configureFirebaseFirestore() {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
   int configPort = const int.fromEnvironment("DB_EMU_PORT");
@@ -79,12 +74,12 @@ void _configureFirebaseFirestore() {
   /* FirebaseFirestore.instance.useFirestoreEmulator(host, port); */
   debugPrint('Using Firebase Firestore emulator on: $host:$port');
 }
-void _configureFirebaseFunction(){
+
+void _configureFirebaseFunction() {
   var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
   FirebaseFunctions functions = FirebaseFunctions.instance;
-        functions.useFunctionsEmulator(defaultHost, 5001);
+  functions.useFunctionsEmulator(defaultHost, 5001);
 }
-
 
 bool connectToFirebaseEmulator = true;
 void main() async {
@@ -100,6 +95,7 @@ void main() async {
   if (connectToFirebaseEmulator) {
     await _configureFirebaseAuth();
     _configureFirebaseFirestore();
+    _configureFirebaseFunction();
     /*  _connectToFirebaseEmulator(); */
   }
 
