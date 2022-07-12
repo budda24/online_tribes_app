@@ -88,21 +88,18 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                         SizedBox(
                           height: 15.h,
                         ),
-                        Container(
-                          width: 300.w,
-                          height: 155,
-                          padding: EdgeInsets.all(5.h),
-                          child: SingleChildScrollView(
-                            child: Obx(() {
-                              final tmpList =
-                                  controller.hobbiesFields.reversed.toList();
-                              return Column(
-                                children: [
-                                  ...tmpList,
-                                ],
-                              );
-                            }),
-                          ),
+                        CustomTextField(
+                          controller: controller.hobbyController,
+                          validate: (value) => controller.userDBValidator(
+                              value: value, lenght: 50),
+                          hintText: 'Hobby',
+                          maxline: 2,
+                          minLine: 1,
+                          height: 60.h,
+                          width: 500.w,
+                        ),
+                        SizedBox(
+                          height: 15.h,
                         ),
                         Obx(() => Row(
                               children: [
@@ -157,9 +154,12 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                         verticalSpaceMedium,
                         SlimRoundedButton(
                           onPress: () {
+                            controller.closeKeyboard();
                             if (formKey.currentState!.validate()) {
                               controller.userDB.lifeMotto =
                                   controller.lifeMottoController.text;
+                              controller.userDB.hobby =
+                                  controller.hobbyController.text;
                               controller.userDB.timeToInvest =
                                   controller.sliderValue.value.toInt();
 
@@ -175,28 +175,6 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       ],
                     ),
                   ),
-                  Positioned(
-                    right: 24,
-                    bottom: 290,
-                    child: GestureDetector(
-                      onTap: () {
-                        controller.addHobbyField();
-                      },
-                      child: CircleAvatar(
-                        radius: 22.r,
-                        backgroundColor: AppColors.actionColor,
-                        child: CircleAvatar(
-                          radius: 20.r,
-                          backgroundColor: AppColors.whiteColor,
-                          child: NeumorphicIcon(
-                            Icons.add,
-                            style: NeumorphicStyle(
-                                color: AppColors.greyColor, intensity: 45),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

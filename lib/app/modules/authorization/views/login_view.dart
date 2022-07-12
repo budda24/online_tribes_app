@@ -13,7 +13,6 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 // Project imports:
 
-import '../../../../infrastructure/fb_services/auth/auth.dart';
 import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
@@ -113,11 +112,40 @@ class LoginView extends GetView<LoginController> {
                                         child: Column(
                                           children: [
                                             verticalSpaceMedium,
-                                            Text(' Or ', style: smallBoldGrey),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Expanded(
+                                                  child: Divider(
+                                                    thickness: 2,
+                                                    color: Colors.grey.shade500,
+                                                  ),
+                                                ),
+                                                const Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 15),
+                                                  child: Text(
+                                                    'OR',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    child: Divider(
+                                                  thickness: 2,
+                                                  color: Colors.grey.shade500,
+                                                )),
+                                              ],
+                                            ),
                                             verticalSpaceTiny,
                                             InkWell(
                                               onTap: () async {
-                                              await controller.signInWithGoogle();
+                                                await controller
+                                                    .signInWithGoogle();
                                               },
                                               child: /*  globalController
                                                         .isLoadingVisible.value

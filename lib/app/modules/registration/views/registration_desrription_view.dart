@@ -88,6 +88,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                       ),
                       SlimRoundedButton(
                         onPress: () {
+                          controller.closeKeyboard();
                           if (_formKey.currentState!.validate()) {
                             controller.userDB.description =
                                 controller.describeYourselfController.text;

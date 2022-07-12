@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/app/modules/home/views/home_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_aditional_info_view.dart';
-import 'package:flutter_application_1/app/modules/registration/views/registration_basic_info.dart';
+
+import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/authorization/bindings/login_binding.dart';
@@ -11,7 +12,7 @@ import '../modules/profile/views/profile_view.dart';
 import '../modules/registration/bindings/registration_binding.dart';
 import '../modules/walkthrough/bindings/walkthrough_binding.dart';
 import '../modules/walkthrough/views/walkthrough_view.dart';
-import '../modules/registration/views/registration_user_view.dart';
+
 
 // Flutter imports:
 
@@ -40,7 +41,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.REGISTRATION,
-      page: () => RegistrationBasicInfoView(),
+      page: () => RegistrationDescriptionView(),
       binding: RegistrationBinding(),
     ),
     GetPage(

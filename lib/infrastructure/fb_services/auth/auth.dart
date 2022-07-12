@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
 
 import 'package:get/get.dart';
@@ -10,7 +9,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
 import '../../../app/controllers/global_controler.dart';
 import '../../../app/routes/app_pages.dart';
-import '../models/user_model.dart';
 
 final User currentUser = auth.currentUser!;
 
@@ -21,18 +19,11 @@ Database db = Database();
 class Auth {
   final _uuid = const Uuid();
   final _globalController = Get.find<GlobalController>();
-  final _userDbServices = UserDBServices();
 
   String _errorMessage = '';
 
   showErrror(String message) {
     Get.showSnackbar(customSnackbar(message));
-  }
-
-  Future<void> saveNewUser(User? user) async {
-    final userToSave = UserDB(
-        userId: user!.uid, email: user.email, phoneNumber: user.phoneNumber);
-    await _userDbServices.createUser(userToSave);
   }
 
   Future<User?> signInWithGoogle() async {
@@ -54,11 +45,9 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-        final user = auth.currentUser;
 
-        if (userCredential.additionalUserInfo!.isNewUser) {
-          saveNewUser(user);
-
+//TODO !userCredential only for this production stage
+        if (!userCredential.additionalUserInfo!.isNewUser) {
           _globalController.hideLoading();
           Get.to(() => RegistrationDescriptionView());
         } else {
@@ -164,8 +153,6 @@ class Auth {
       User? user = userCredential.user;
 
       if (userCredential.additionalUserInfo!.isNewUser) {
-        await saveNewUser(user);
-
         _globalController.hideLoading();
 
         Get.to(() => RegistrationDescriptionView());

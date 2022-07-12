@@ -17,11 +17,12 @@ class CameraGetXController extends GetxController {
     update();
   } */
 
- 
+
 
   Future<XFile?> getImageGallery() async {
     final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
     image = File(tmpImagePath!.path);
+
     update();
   }
 
@@ -32,6 +33,7 @@ class CameraGetXController extends GetxController {
         maxWidth: 100,
         preferredCameraDevice: CameraDevice.front);
     image = File(tmpImagePath!.path);
+
     update();
   }
 }

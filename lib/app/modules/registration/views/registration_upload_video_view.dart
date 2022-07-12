@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../controllers/camea_controller.dart';
 
 import '../../../helpers/main_constants.dart';
@@ -106,15 +104,18 @@ class RegistrationUploadVideoView extends GetView {
                           title: 'Continue',
                           textColor: AppColors.whiteColor,
                           onPress: () async {
+                            registrationController.closeKeyboard();
+
                             registrationController.userDB.email =
                                 currentUser.email ?? 'email address not found';
                             registrationController.userDB.phoneNumber =
-                                currentUser.phoneNumber ?? 'phone number not found';
+                                currentUser.phoneNumber ??
+                                    'phone number not found';
 
                             registrationController.userDB.introVideoUrl =
                                 'Test test http';
-                            await UserDBServices()
-                                .createUser(registrationController.userDB);
+
+                            await registrationController.saveNewUser();
                           })
                     ],
                   ),
