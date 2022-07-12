@@ -23,6 +23,14 @@ class RegistrationController extends GetxController {
   );
 
   Future<void> saveNewUser() async {
+    userDB.description = describeYourselfController.text;
+    userDB.lifeMotto = lifeMottoController.text;
+    userDB.hobby = hobbyController.text;
+    userDB.timeToInvest = sliderValue.value.toInt();
+    userDB.email = currentUser.email;
+    userDB.phoneNumber = currentUser.phoneNumber;
+    userDB.introVideoUrl = 'Test test http';
+
     await UserDBServices().createUser(userDB);
   }
 

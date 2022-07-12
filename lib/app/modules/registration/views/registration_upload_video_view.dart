@@ -3,7 +3,6 @@ import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -105,15 +104,6 @@ class RegistrationUploadVideoView extends GetView {
                           textColor: AppColors.whiteColor,
                           onPress: () async {
                             registrationController.closeKeyboard();
-
-                            registrationController.userDB.email =
-                                currentUser.email ?? 'email address not found';
-                            registrationController.userDB.phoneNumber =
-                                currentUser.phoneNumber ??
-                                    'phone number not found';
-
-                            registrationController.userDB.introVideoUrl =
-                                'Test test http';
 
                             await registrationController.saveNewUser();
                           })

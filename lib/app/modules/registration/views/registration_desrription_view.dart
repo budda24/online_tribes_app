@@ -90,8 +90,6 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                         onPress: () {
                           controller.closeKeyboard();
                           if (_formKey.currentState!.validate()) {
-                            controller.userDB.description =
-                                controller.describeYourselfController.text;
                             Get.to(() => RegistrationAditionalView());
                           }
                         },

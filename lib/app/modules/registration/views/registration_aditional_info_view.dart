@@ -32,150 +32,143 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
           child: SingleChildScrollView(
             child: Form(
               key: formKey,
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 30, left: 30, right: 30, top: 10),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GetBuilder(
-                          init: cameraController,
-                          builder: (CameraGetXController cameraCon) =>
-                              cameraCon.image == null
-                                  ? InkWell(
-                                      child: MainCirclePhoto.icon(
-                                          screeanheight: 300.h,
-                                          screeanwidth: 250.w,
-                                          icon: Icon(
-                                            Icons.add_a_photo_rounded,
-                                            size: 40,
-                                            color: AppColors.whiteColor,
-                                          )),
-                                      onTap: () async {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CustomPhotoPicker(
-                                                  cameraController:
-                                                      cameraController);
-                                            });
-                                      },
-                                    )
-                                  : MainCirclePhoto.file(
+              child: Padding(
+                padding: const EdgeInsets.only(
+                    bottom: 30, left: 30, right: 30, top: 10),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GetBuilder(
+                      init: cameraController,
+                      builder: (CameraGetXController cameraCon) =>
+                          cameraCon.image == null
+                              ? InkWell(
+                                  child: MainCirclePhoto.icon(
                                       screeanheight: 300.h,
                                       screeanwidth: 250.w,
-                                      file: cameraCon.image!),
-                        ),
-                        const Text(
-                          'Cornelius',
-                          style: kName,
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        CustomTextField(
-                          controller: controller.lifeMottoController,
-                          validate: (value) => controller.userDBValidator(
-                              value: value, lenght: 200),
-                          hintText: 'The Life Motto',
-                          maxline: 6,
-                          minLine: 1,
-                          height: 130.h,
-                          width: 500.w,
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        CustomTextField(
-                          controller: controller.hobbyController,
-                          validate: (value) => controller.userDBValidator(
-                              value: value, lenght: 50),
-                          hintText: 'Hobby',
-                          maxline: 2,
-                          minLine: 1,
-                          height: 60.h,
-                          width: 500.w,
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        Obx(() => Row(
-                              children: [
-                                SizedBox(
-                                  height: 60,
-                                  width: 270,
-                                  child: NeumorphicSlider(
-                                    thumb: CircleAvatar(
-                                      radius: 26.r,
-                                      backgroundColor: AppColors.actionColor,
-                                      child: CircleAvatar(
-                                        radius: 24.r,
-                                        backgroundColor: AppColors.whiteColor,
-                                      ),
-                                    ),
-                                    height: 24,
-                                    min: 1,
-                                    max: 7,
-                                    value: controller.sliderValue.value,
-                                    onChanged: (value) {
-                                      controller.sliderValue.value = value;
-                                    },
-                                    style: SliderStyle(
-                                      accent: AppColors.actionColor,
-                                      variant: AppColors.whiteColor,
-                                      depth: 10,
-                                      lightSource: LightSource.topLeft,
-                                      border: NeumorphicBorder(
+                                      icon: Icon(
+                                        Icons.add_a_photo_rounded,
+                                        size: 40,
                                         color: AppColors.whiteColor,
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                NeumorphicBackground(
-                                  backendColor: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.circular(30),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10, horizontal: 20),
-                                  child: NeumorphicText(
-                                    controller.sliderValue.value
-                                        .toStringAsFixed(0),
-                                    textStyle: NeumorphicTextStyle(
-                                        fontSize: 34,
-                                        fontWeight: FontWeight.bold),
-                                    style: NeumorphicStyle(
-                                        color: AppColors.whiteColor),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        verticalSpaceMedium,
-                        SlimRoundedButton(
-                          onPress: () {
-                            controller.closeKeyboard();
-                            if (formKey.currentState!.validate()) {
-                              controller.userDB.lifeMotto =
-                                  controller.lifeMottoController.text;
-                              controller.userDB.hobby =
-                                  controller.hobbyController.text;
-                              controller.userDB.timeToInvest =
-                                  controller.sliderValue.value.toInt();
-
-                              Get.to(() => RegistrationUploadVideoView());
-                            }
-                          },
-                          backgroundColour: kColorWhite,
-                          title: 'Continue',
-                          textColor: kTextColorDarkGrey,
-                          /* screenWidth: screeanwidth,
-                                screenHeight: screeanheight */
-                        )
-                      ],
+                                      )),
+                                  onTap: () async {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomPhotoPicker(
+                                              cameraController:
+                                                  cameraController);
+                                        });
+                                  },
+                                )
+                              : MainCirclePhoto.file(
+                                  screeanheight: 300.h,
+                                  screeanwidth: 250.w,
+                                  file: cameraCon.image!),
                     ),
-                  ),
-                ],
+                    const Text(
+                      'Cornelius',
+                      style: kName,
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomTextField(
+                      controller: controller.lifeMottoController,
+                      validate: (value) =>
+                          controller.userDBValidator(value: value, lenght: 200),
+                      hintText: 'The Life Motto',
+                      maxline: 6,
+                      minLine: 1,
+                      height: 130.h,
+                      width: 500.w,
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomTextField(
+                      controller: controller.hobbyController,
+                      validate: (value) =>
+                          controller.userDBValidator(value: value, lenght: 50),
+                      hintText: 'Hobby',
+                      maxline: 2,
+                      minLine: 1,
+                      height: 60.h,
+                      width: 500.w,
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Obx(() => Stack(
+                          children: [
+                            const Positioned(
+                                top: 30,
+                                left: 60,
+                                child: Text(
+                                  'Time to invest',
+                                  style: kHintStyle,
+                                )),
+                            NeumorphicSlider(
+                              thumb: Padding(
+                                padding: const EdgeInsets.only(bottom: 30),
+                                child: Stack(
+                                  children: [
+                                    SizedBox(
+                                        height: 80,
+                                        width: 80,
+                                        child: Image.asset(
+                                          'assets/images/authorization_screen/Online Tribes Logo.png',
+                                        )),
+                                    Positioned(
+                                        right: 0,
+                                        top: 0,
+                                        child: CircleAvatar(
+                                          backgroundColor: AppColors.whiteColor,
+                                          radius: 15,
+                                          child: Text(controller.sliderValue
+                                              .toStringAsFixed(0)),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                              height: 24,
+                              min: 1,
+                              max: 7,
+                              value: controller.sliderValue.value,
+                              onChanged: (value) {
+                                controller.sliderValue.value = value;
+                              },
+                              style: const SliderStyle(
+                                disableDepth: true,
+                                accent: Colors.white10,
+                                variant: Colors.white10,
+                                depth: 10,
+                                lightSource: LightSource.topLeft,
+                              ),
+                            ),
+                          ],
+                        )),
+                    verticalSpaceMedium,
+                    SlimRoundedButton(
+                      onPress: () {
+                        controller.closeKeyboard();
+                        if (formKey.currentState!.validate()) {
+                          Get.to(() => RegistrationUploadVideoView());
+                        }
+                      },
+                      backgroundColour: kColorWhite,
+                      title: 'Continue',
+                      textColor: kTextColorDarkGrey,
+                      /* screenWidth: screeanwidth,
+                            screenHeight: screeanheight */
+                    ),
+                    Slider(value: 12.2, onChanged: (value) {},
+                    min: 1,max: 22.2,
+                    label: 'cycuszki ',
+                    
+                    )
+                  ],
+                ),
               ),
             ),
           ),
