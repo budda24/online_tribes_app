@@ -30,7 +30,7 @@ class UserDB {
   String? email;
   String? phoneNumber;
   String? name;
-  dynamic? createdAt;
+  dynamic createdAt;
   String? requestedTribe;
   String? description;
   String? introVideoUrl;

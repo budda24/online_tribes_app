@@ -12,6 +12,8 @@ import '../../../app/controllers/global_controler.dart';
 import '../../../app/routes/app_pages.dart';
 import '../models/user_model.dart';
 
+final User currentUser = auth.currentUser!;
+
 final auth = FirebaseAuth.instance;
 
 Database db = Database();
@@ -48,13 +50,13 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
-        final user = auth.currentUser;
-        final userToSave = UserDB(
-            userId: user!.uid,
-            email: user.email,
-            phoneNumber: user.phoneNumber);
+        // final user = auth.currentUser;
+        // final userToSave = UserDB(
+        //     userId: user!.uid,
+        //     email: user.email,
+        //     phoneNumber: user.phoneNumber);
 
-          await _userDbServices.createUser(userToSave);
+        // await _userDbServices.createUser(userToSave);
 
         _globalController.hideLoading();
         //TODO go to profile
@@ -154,16 +156,16 @@ class Auth {
       await auth.signInWithCredential(credential).then((response) async {
         Get.to(() => RegistrationDescriptionView());
         // TODO create a user in Db
-        User? user = response.user;
+        // User? user = response.user;
 
-        final userToSave =
-            UserDB(userId: user!.uid, phoneNumber: user.phoneNumber);
-        try {
-          print('try to save user phone Number');
-          await UserDBServices().createUser(userToSave);
-        } catch (error) {
-          print(error);
-        }
+        // final userToSave =
+        //     UserDB(userId: user!.uid, phoneNumber: user.phoneNumber);
+        // try {
+        //   print('try to save user phone Number');
+        //   await UserDBServices().createUser(userToSave);
+        // } catch (error) {
+        //   print(error);
+        // }
 
         _globalController.hideLoading();
       });

@@ -24,13 +24,14 @@ class LoginController extends GetxController {
 
   signInWithPhoneNumber() async {
     final error = await _auth.signInWithPhoneNumber(smsCodeController.text);
-    
+
     if (error != null) {
       smsCodeController.clear();
     }
   }
 
   logout() {
+    
     _auth.logout();
   }
 }

@@ -76,7 +76,9 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                           height: 15.h,
                         ),
                         CustomTextField(
-                          onSave: () {},
+                          controller: controller.lifeMottoController,
+                          validate: (value) => controller.userDBValidator(
+                              value: value, lenght: 200),
                           hintText: 'The Life Motto',
                           maxline: 6,
                           minLine: 1,
@@ -129,7 +131,9 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                                       depth: 10,
                                       lightSource: LightSource.topLeft,
                                       border: NeumorphicBorder(
-                                          color: AppColors.whiteColor,width: 1,),
+                                        color: AppColors.whiteColor,
+                                        width: 1,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -153,8 +157,14 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                         verticalSpaceMedium,
                         SlimRoundedButton(
                           onPress: () {
-                            formKey.currentState!.validate();
-                            Get.to(() => RegistrationUploadVideoView());
+                            if (formKey.currentState!.validate()) {
+                              controller.userDB.lifeMotto =
+                                  controller.lifeMottoController.text;
+                              controller.userDB.timeToInvest =
+                                  controller.sliderValue.value.toInt();
+
+                              Get.to(() => RegistrationUploadVideoView());
+                            }
                           },
                           backgroundColour: kColorWhite,
                           title: 'Continue',

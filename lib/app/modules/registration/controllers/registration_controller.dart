@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/models/user_model.dart';
 import 'package:get/get.dart';
 
 import '../../authorization/controllers/login_controller.dart';
@@ -217,6 +219,7 @@ class RegistrationController extends GetxController {
   static final _hobbyController3 = TextEditingController();
   static final _hobbyController4 = TextEditingController();
   static final _hobbyController5 = TextEditingController();
+  final _hobbyKey = GlobalKey<FormState>();
   // hobby textField controllers stored in a List for creating textFields with controllers
   List<TextEditingController> hobbyControllers = [
     _hobbyController1,
@@ -229,9 +232,6 @@ class RegistrationController extends GetxController {
   int _index = 2;
   //add new texFormField for hobbies TextFields
   void addHobbyField() {
-    if (hobbiesFields.length >= 4) {
-      return;
-    }
     hobbiesFields.add(
       Container(
         margin: const EdgeInsets.only(bottom: 5),
@@ -251,6 +251,25 @@ class RegistrationController extends GetxController {
     _index++;
   }
 
-  @override
-  void onClose() {}
+///////////////////////////////////////////////////
+
+  final TextEditingController describeYourselfController =
+      TextEditingController();
+
+  final TextEditingController lifeMottoController = TextEditingController();
+  final TextEditingController timeToInvestController = TextEditingController();
+
+  UserDB userDB = UserDB(userId: currentUser.uid,);
+
+
+
+  String? userDBValidator({required String value, required int lenght}) {
+    if (value.isEmpty) {
+      return 'write some text';
+    }
+    if (value.length > lenght) {
+      return 'Max message lenght = ${lenght.toString()} char';
+    }
+    return null;
+  }
 }

@@ -8,7 +8,7 @@ class UserDBServices {
   final _db = FirebaseFirestore.instance;
   Future<void> createUser(UserDB user) async {
     try {
-      print('try to create user db');
+   
       user.createdAt = FieldValue.serverTimestamp();
       await _db.collection('USERS').doc(user.userId).set(user.toJson());
     } on FirebaseException catch (e) {

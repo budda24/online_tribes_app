@@ -5,19 +5,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../main_constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField(
-      {Key? key,
-      required this.maxline,
-      required this.minLine,
-      required this.height,
-      required this.width,
-      this.hintText,
-      required this.onSave,
-      this.controller,
-      this.color,
-      this.lableText,
-      })
-      : super(key: key);
+  CustomTextField({
+    Key? key,
+    required this.maxline,
+    required this.minLine,
+    required this.height,
+    required this.width,
+    this.hintText,
+     this.onSave,
+    this.controller,
+    this.color,
+    this.lableText,
+    this.validate
+  }) : super(key: key);
 
   final int minLine;
   final int maxline;
@@ -26,15 +26,15 @@ class CustomTextField extends StatelessWidget {
   String? hintText;
   String? lableText;
 
-  Function onSave;
+  Function? onSave;
   TextEditingController? controller;
   Color? color;
+  FormFieldValidator? validate;
 
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
       style: NeumorphicStyle(
-
         surfaceIntensity: 0.9,
         shadowLightColorEmboss: Colors.white,
         shadowLightColor: AppColors.primaryColor,
@@ -52,16 +52,10 @@ class CustomTextField extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
         margin: EdgeInsets.only(left: 40.w, right: 40.w, bottom: 5.h, top: 5.h),
         child: Container(
-         margin: EdgeInsets.all(8),
+          margin: EdgeInsets.all(8),
           child: TextFormField(
+            validator: validate,
             controller: controller,
-            onSaved: (value) => onSave(value),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return 'null';
-            },
             style: kHintStyle,
             keyboardType: TextInputType.multiline,
             minLines: minLine,
