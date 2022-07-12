@@ -116,14 +116,6 @@ class RegistrationUploadVideoView extends GetView {
                           onPress: () async {
                             registrationController.closeKeyboard();
 
-                            registrationController.userDB.email =
-                                auth.currentUser!.email;
-                            registrationController.userDB.phoneNumber =
-                                currentUser.phoneNumber;
-
-                            registrationController.userDB.introVideoUrl =
-                                'Test test http';
-
                             await registrationController.saveNewUser();
                           })
                     ],
