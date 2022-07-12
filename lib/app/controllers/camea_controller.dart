@@ -7,7 +7,7 @@ class CameraController extends GetxController {
   final ImagePicker _picker = ImagePicker();
 
   File? profileIimage;
-  
+
   /* File? getimage() {
     image = _pickedImage;
     update();

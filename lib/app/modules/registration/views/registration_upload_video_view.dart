@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
+import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ import '../widgets/custom_photo_picker.dart';
 
 class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();
+  final registrationController = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +101,20 @@ class RegistrationUploadVideoView extends GetView {
                           backgroundColour: AppColors.primaryColor,
                           title: 'Continue',
                           textColor: AppColors.whiteColor,
-                          onPress: () {})
+                          onPress: () async {
+                            registrationController.closeKeyboard();
+
+                            registrationController.userDB.email =
+                                currentUser.email ?? 'email address not found';
+                            registrationController.userDB.phoneNumber =
+                                currentUser.phoneNumber ??
+                                    'phone number not found';
+
+                            registrationController.userDB.introVideoUrl =
+                                'Test test http';
+
+                            await registrationController.saveNewUser();
+                          })
                     ],
                   ),
                 ),

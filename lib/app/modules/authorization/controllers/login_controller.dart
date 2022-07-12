@@ -34,6 +34,7 @@ class LoginController extends GetxController {
   }
 
   logout() {
+
     _auth.logout();
   }
 }

@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
+import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
+import '../../../../infrastructure/fb_services/models/user_model.dart';
 import '../../authorization/controllers/login_controller.dart';
 import '../../../controllers/camea_controller.dart';
 
@@ -18,6 +20,7 @@ class RegistrationController extends GetxController {
   final loginController = Get.find<LoginController>();
   final cameraController = Get.put(CameraController());
 
+  /* GlobalKey<FormState> formKey = GlobalKey(); */
 
   final signUpTribalNameController = TextEditingController();
   final signUpPhoneController = TextEditingController();
@@ -78,89 +81,35 @@ class RegistrationController extends GetxController {
   }) async {
 
   }
-  // Future<void> createUser() async {
-  //   if (validateSignupForm(
-  //       password: signUpPasswordController,
-  //       confirmPassword: signUpPasswordConfirmController,
-  //       tribalName: signUpTribalNameController,
-  //       email: signUpPhoneController)) {
-  //     print('create user validation: ${signUpPhoneController.text}');
-  //     Map<String, Object> userModelJson = {
-  //       'email': signUpPhoneController.text,
-  //       'name': signUpTribalNameController.text,
-  //     };
-  //     final UserModel user = UserModel.fromJson(userModelJson);
-  //     await Auth().createUserToAuth(user, signUpPasswordController.text);
-  //   }
-  // }
 
-  Rx<double> range = 5.0.obs; //again initialized it to a Rx<double>
 
-  void setRange(double range) {
-    this.range.value = range; //updating the value of Rx Variable.
+  final TextEditingController describeYourselfController =
+      TextEditingController();
+
+  final TextEditingController lifeMottoController = TextEditingController();
+  final TextEditingController hobbyController = TextEditingController();
+  final TextEditingController timeToInvestController = TextEditingController();
+
+  UserDB userDB = UserDB(
+    userId: currentUser.uid,
+  );
+
+  Future<void> saveNewUser() async {
+    await UserDBServices().createUser(userDB);
   }
 
-  static List<String> hobbies = []; //list of given values hobbies
-
-  static void addHobby(String value) {
-    hobbies.add(value); //add hobby given value
-  }
-
-  RxList<Widget> hobbiesFields = [
-    //list of hobby textField widgets
-    Container(
-      margin: const EdgeInsets.only(bottom: 5),
-      child: CustomTextField(
-        controller: RegistrationController._hobbyController1,
-        height: 45,
-        width: 500,
-        hintText: 'Hobbies',
-        maxline: 1,
-        minLine: 1,
-        onSave: (value) {
-          addHobby(value);
-        },
-      ),
-    ),
-  ].obs;
-
-  static final _hobbyController1 = TextEditingController();
-  static final _hobbyController2 = TextEditingController();
-  static final _hobbyController3 = TextEditingController();
-  static final _hobbyController4 = TextEditingController();
-  static final _hobbyController5 = TextEditingController();
-  // hobby textField controllers stored in a List for creating textFields with controllers
-  List<TextEditingController> hobbyControllers = [
-    _hobbyController1,
-    _hobbyController2,
-    _hobbyController3,
-    _hobbyController4,
-    _hobbyController5
-  ];
-//index for itterating true hobby controllers
-  int _index = 2;
-  //add new texFormField for hobbies TextFields
-  void addHobbyField() {
-    if (hobbiesFields.length >= 4) {
-      return;
+  String? userDBValidator({required String value, required int lenght}) {
+    if (value.isEmpty) {
+      return 'write some text';
     }
-    hobbiesFields.add(
-      Container(
-        margin: const EdgeInsets.only(bottom: 5),
-        child: CustomTextField(
-          controller: hobbyControllers[_index],
-          height: 45,
-          width: 500,
-          hintText: 'Hobbies $_index',
-          maxline: 1,
-          minLine: 1,
-          onSave: (value) {
-            addHobby(value);
-          },
-        ),
-      ),
-    );
-    _index++;
+    if (value.length > lenght) {
+      return 'Max message lenght = ${lenght.toString()} char';
+    }
+    return null;
+  }
+
+  closeKeyboard() {
+    FocusManager.instance.primaryFocus?.unfocus();
   }
 
   @override
