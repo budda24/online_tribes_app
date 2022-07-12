@@ -25,8 +25,6 @@ class LoginView extends GetView<LoginController> {
   PhoneNumber? numberToAuth;
   final _formKey = GlobalKey<FormState>();
 
-
-
   @override
   Widget build(BuildContext context) {
     Get.put(LoginController());
@@ -68,7 +66,9 @@ class LoginView extends GetView<LoginController> {
                                   verticalSpaceSmall,
                                   Form(
                                     key: _formKey,
-                                    child: PhoneNumberInput(controller: controller,),
+                                    child: PhoneNumberInput(
+                                      controller: controller,
+                                    ),
                                   ),
                                   verticalSpaceLarge,
                                   Visibility(
@@ -117,7 +117,7 @@ class LoginView extends GetView<LoginController> {
                                             verticalSpaceTiny,
                                             InkWell(
                                               onTap: () async {
-                                                Auth().signInWithGoogle();
+                                              await controller.signInWithGoogle();
                                               },
                                               child: /*  globalController
                                                         .isLoadingVisible.value
@@ -149,4 +149,3 @@ class LoginView extends GetView<LoginController> {
     );
   }
 }
-

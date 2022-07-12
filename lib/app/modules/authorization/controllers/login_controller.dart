@@ -16,22 +16,24 @@ class LoginController extends GetxController {
   PhoneNumber? numberToVerify;
   RxBool isVeryficationScreen = false.obs;
   final _auth = Auth();
-  verifyPhoneNumber() async {
+  Future<void> verifyPhoneNumber() async {
     isVeryficationScreen.value = true;
-
     await _auth.verifyPhoneNumber(numberToVerify!.phoneNumber!);
   }
 
-  signInWithPhoneNumber() async {
+  Future<void> signInWithPhoneNumber() async {
     final error = await _auth.signInWithPhoneNumber(smsCodeController.text);
-
     if (error != null) {
       smsCodeController.clear();
     }
   }
 
+  Future<void> signInWithGoogle() async {
+    await Auth().signInWithGoogle();
+  }
+
   logout() {
-    
+
     _auth.logout();
   }
 }

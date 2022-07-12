@@ -23,17 +23,22 @@ class Auth {
   final _globalController = Get.find<GlobalController>();
   final _userDbServices = UserDBServices();
 
-  String errorMessage = '';
+  String _errorMessage = '';
 
   showErrror(String message) {
     Get.showSnackbar(customSnackbar(message));
+  }
+
+  Future<void> saveNewUser(User? user) async {
+    final userToSave = UserDB(
+        userId: user!.uid, email: user.email, phoneNumber: user.phoneNumber);
+    await _userDbServices.createUser(userToSave);
   }
 
   Future<User?> signInWithGoogle() async {
     _globalController.showloading();
 
     final GoogleSignIn googleSignIn = GoogleSignIn();
-
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
@@ -49,30 +54,30 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
+        final user = auth.currentUser;
 
-        // final user = auth.currentUser;
-        // final userToSave = UserDB(
-        //     userId: user!.uid,
-        //     email: user.email,
-        //     phoneNumber: user.phoneNumber);
+        if (userCredential.additionalUserInfo!.isNewUser) {
+          saveNewUser(user);
 
-        // await _userDbServices.createUser(userToSave);
-
-        _globalController.hideLoading();
-        //TODO go to profile
-        // Get.offAndToNamed(Routes.PROFIL);
-        Get.to(() => RegistrationDescriptionView());
+          _globalController.hideLoading();
+          Get.to(() => RegistrationDescriptionView());
+        } else {
+          _globalController.hideLoading();
+          //TODO go to profile
+          // Get.offAndToNamed(Routes.PROFIL);
+          print('go to user profile');
+        }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {
           await googleSignIn.signOut();
-          errorMessage =
+          _errorMessage =
               'Account already existed witch different Sign Up method ';
 
           _globalController.hideLoading();
 
           Get.off(() => LoginView());
         } else if (error.code == 'invalid-credential') {
-          errorMessage =
+          _errorMessage =
               showErrror('Error while authorization. Please try again');
 
           _globalController.hideLoading();
@@ -80,12 +85,14 @@ class Auth {
           Get.offAllNamed(Routes.REGISTRATION);
         }
 
-        showErrror(errorMessage);
+        showErrror(_errorMessage);
+
         _globalController.hideLoading();
         Get.off(() => LoginView());
       } catch (e) {
         Get.showSnackbar(customSnackbar('Error try sign in later $e'));
         _globalController.hideLoading();
+
         Get.off(() => LoginView());
       }
     }
@@ -107,8 +114,8 @@ class Auth {
   }
 
   _verificationFailed(FirebaseAuthException error) {
-    errorMessage = handlePhoneAuthError(error);
-    showErrror('Phone number verification failed because $errorMessage');
+    _errorMessage = handlePhoneAuthError(error);
+    showErrror('Phone number verification failed because $_errorMessage');
   }
 
   String? _verificationId;
@@ -153,32 +160,33 @@ class Auth {
       smsCode: smsCode,
     );
     try {
-      await auth.signInWithCredential(credential).then((response) async {
-        Get.to(() => RegistrationDescriptionView());
-        // TODO create a user in Db
-        // User? user = response.user;
+      var userCredential = await auth.signInWithCredential(credential);
+      User? user = userCredential.user;
 
-        // final userToSave =
-        //     UserDB(userId: user!.uid, phoneNumber: user.phoneNumber);
-        // try {
-        //   print('try to save user phone Number');
-        //   await UserDBServices().createUser(userToSave);
-        // } catch (error) {
-        //   print(error);
-        // }
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await saveNewUser(user);
 
         _globalController.hideLoading();
-      });
-      print(auth.currentUser);
+
+        Get.to(() => RegistrationDescriptionView());
+      } else {
+        //TODO otherwise go to profile
+        _globalController.hideLoading();
+
+        Get.offAndToNamed(Routes.LOGIN);
+
+        print('go to user profile');
+      }
     } on FirebaseAuthException catch (error) {
       _globalController.hideLoading();
-      errorMessage = handlePhoneAuthError(error);
-      print('signInWithCredential error');
-      showErrror(errorMessage);
+
+      _errorMessage = handlePhoneAuthError(error);
+
+      showErrror(_errorMessage);
       return error;
     } catch (e) {
-      /* print('catch after rethorw'); */
       _globalController.hideLoading();
+
       print(e.toString());
     }
     return null;
@@ -188,7 +196,9 @@ class Auth {
     _globalController.showloading();
     try {
       await auth.signOut();
+
       _globalController.hideLoading();
+
       Get.off(() => LoginView());
     } on FirebaseException catch (error) {
       print(error);
