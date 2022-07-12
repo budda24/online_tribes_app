@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 // Project imports:
-import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
@@ -44,7 +42,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                     GetBuilder(
                       init: cameraController,
                       builder: (CameraController cameraCon) =>
-                          cameraCon.profileIimage == null
+                          cameraCon.pickedFile == null
                               ? InkWell(
                                   child: MainCirclePhoto.icon(
                                       screeanheight: 300.h,
@@ -59,17 +57,18 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return CustomPhotoPicker(
-                                                  cameraController:
-                                                      cameraController);
+                                                type: PickedType.photo,
+                                              );
                                             })
-                                        .then((value) =>
-                                            controller.uploadProfilePicture());
+                                        .then((value) => controller.uploadFile(
+                                            directory: 'profile',
+                                            fileName: 'profile_photo'));
                                   },
                                 )
                               : MainCirclePhoto.file(
                                   screeanheight: 300.h,
                                   screeanwidth: 250.w,
-                                  file: cameraCon.profileIimage!),
+                                  file: cameraCon.pickedFile!),
                     ),
                     const Text(
                       'Cornelius',

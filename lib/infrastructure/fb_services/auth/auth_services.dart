@@ -4,7 +4,6 @@ import 'package:flutter_application_1/app/modules/authorization/views/login_view
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 
-
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
@@ -14,8 +13,6 @@ import '../../../app/routes/app_pages.dart';
 final User currentUser = auth.currentUser!;
 
 final auth = FirebaseAuth.instance;
-
-
 
 class Auth {
   final _uuid = const Uuid();
@@ -117,7 +114,9 @@ class Auth {
   }
 
   _codeAutoRetrievalTimeout(String verificationId) {
+   if(!phoneCodeSent){
     Get.offAll(() => LoginView());
+   }
     _globalController.hideLoading();
 
     return null;
@@ -143,6 +142,8 @@ class Auth {
     }
   }
 
+  bool phoneCodeSent = false;
+
   Future<FirebaseAuthException?> signInWithPhoneNumber(String smsCode) async {
     _globalController.showloading();
 
@@ -153,6 +154,7 @@ class Auth {
     try {
       var userCredential = await auth.signInWithCredential(credential);
       User? user = userCredential.user;
+      phoneCodeSent = true;
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         _globalController.hideLoading();

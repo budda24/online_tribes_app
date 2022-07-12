@@ -30,8 +30,8 @@ class RegistrationUploadVideoView extends GetView {
               ),
               GetBuilder(
                 init: cameraController,
-                builder: (CameraController cameraCon) =>
-                    cameraCon.profileIimage == null
+                builder: (CameraController builderCameraController) =>
+                    builderCameraController.pickedFile == null
                         ? InkWell(
                             child: MainCirclePhoto.icon(
                                 screeanheight: 300.h,
@@ -46,14 +46,15 @@ class RegistrationUploadVideoView extends GetView {
                                   context: context,
                                   builder: (BuildContext context) {
                                     return CustomPhotoPicker(
-                                        cameraController: cameraController);
+                                      type: PickedType.video,
+                                    );
                                   });
                             },
                           )
                         : MainCirclePhoto.file(
                             screeanheight: 300.h,
                             screeanwidth: 250.w,
-                            file: cameraCon.profileIimage!),
+                            file: builderCameraController.pickedFile!),
               ),
               const Text(
                 'Cornelius',
@@ -84,16 +85,26 @@ class RegistrationUploadVideoView extends GetView {
                         style: TextStyle(fontSize: 20.sp),
                       ),
                       verticalSpaceMedium,
-                      Image.asset(
-                        'assets/images/authorization_screen/add_photo.png',
-                        scale: 1.3,
+                      GestureDetector(
+                        onTap: ()async{
+                          await cameraController.getVideoCamera().then((value) => registrationController.uploadFile(fileName: 'profile_video', directory: 'profile'));
+                        },
+                        child: Image.asset(
+                          'assets/images/authorization_screen/add_photo.png',
+                          scale: 1.3,
+                        ),
                       ),
                       SizedBox(
                         height: 25.h,
                       ),
-                      Image.asset(
-                        'assets/images/authorization_screen/upload_video.png',
-                        scale: 1.3,
+                      GestureDetector(
+                        onTap: ()async {
+                          await cameraController.getFileGallery().then((value) => registrationController.uploadFile(fileName: 'profile_video', directory: 'profile'));
+                        },
+                        child: Image.asset(
+                          'assets/images/authorization_screen/upload_video.png',
+                          scale: 1.3,
+                        ),
                       ),
                       SizedBox(
                         height: 45.h,
@@ -108,8 +119,7 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.userDB.email =
                                 auth.currentUser!.email;
                             registrationController.userDB.phoneNumber =
-                                currentUser.phoneNumber ??
-                                    'phone number not found';
+                                currentUser.phoneNumber;
 
                             registrationController.userDB.introVideoUrl =
                                 'Test test http';

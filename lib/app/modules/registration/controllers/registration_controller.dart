@@ -34,21 +34,29 @@ class RegistrationController extends GetxController {
 
   io.File? profilePicture;
 
-  uploadProfilePicture() {
+  uploadFile({required String fileName, required String directory}) {
+    //TODO cloud function to resize photo to secure the end point
     const storage = UserCloudStorageServices();
     String userId = auth.currentUser!.uid;
-
-    var profilePhoto = cameraController.profileIimage!;
-    storage.uploadProfileImage(
+    var profilePhoto = cameraController.pickedFile!;
+    storage.uploadFile(
+        path: directory,
         userId: userId,
         imageToUpload: profilePhoto,
-        fileName: 'profile_picture${extension(profilePhoto.path)}');
+        fileName: '$fileName${extension(profilePhoto.path)}');
   }
 
-  //TODO fix the register moved to auth
-  Future<void> registerUserByPhone({
-    required String mobileNumber,
-  }) async {}
+  /* uploadProfileVideo() {
+    //TODO cloud function to resize photo to secure the end point
+    const storage = UserCloudStorageServices();
+    String userId = auth.currentUser!.uid;
+    var profilePhoto = cameraController.pickedFile!;
+    storage.uploadFile(
+        path: 'profile',
+        userId: userId,
+        imageToUpload: profilePhoto,
+        fileName: 'profile_video${extension(profilePhoto.path)}');
+  } */
 
   final TextEditingController describeYourselfController =
       TextEditingController();

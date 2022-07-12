@@ -6,28 +6,35 @@ import 'package:get/get.dart';
 class CameraController extends GetxController {
   final ImagePicker _picker = ImagePicker();
 
-  File? profileIimage;
+  File? pickedFile;
 
   /* File? getimage() {
     image = _pickedImage;
     update();
   } */
 
-  Future<File?> getImageGallery() async {
+  Future<void> getFileGallery() async {
     final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
-    profileIimage = File(tmpImagePath!.path);
+    pickedFile = File(tmpImagePath!.path);
     update();
-    return profileIimage;
   }
 
-  Future<File?> getImageCamera() async {
+  Future<void> getImageCamera() async {
     final tmpImagePath = await _picker.pickImage(
-        source: ImageSource.camera,
         maxHeight: 100,
         maxWidth: 100,
+        source: ImageSource.camera,
         preferredCameraDevice: CameraDevice.front);
-    profileIimage = File(tmpImagePath!.path);
+    pickedFile = File(tmpImagePath!.path);
     update();
-    return profileIimage;
+  }
+
+  Future<void> getVideoCamera() async {
+    final tmpImagePath = await _picker.pickVideo(
+        maxDuration: const Duration(minutes: 3),
+        source: ImageSource.camera,
+        preferredCameraDevice: CameraDevice.front);
+    pickedFile = File(tmpImagePath!.path);
+    update();
   }
 }

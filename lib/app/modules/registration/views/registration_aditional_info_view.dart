@@ -7,7 +7,6 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
@@ -44,7 +43,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                         GetBuilder(
                           init: cameraController,
                           builder: (CameraController cameraCon) =>
-                              cameraCon.profileIimage == null
+                              cameraCon.pickedFile == null
                                   ? InkWell(
                                       child: MainCirclePhoto.icon(
                                           screeanheight: 300.h,
@@ -56,20 +55,22 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                                           )),
                                       onTap: () async {
                                         showModalBottomSheet(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CustomPhotoPicker(
-                                                  cameraController:
-                                                      cameraController);
-                                            }).then((value) => controller.uploadProfilePicture());
-
-
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return CustomPhotoPicker(
+                                                    type: PickedType.photo,
+                                                  );
+                                                })
+                                            .then((value) =>
+                                                controller.uploadFile(
+                                                    directory: 'profile',
+                                                    fileName: 'profile_photo'));
                                       },
                                     )
                                   : MainCirclePhoto.file(
                                       screeanheight: 300.h,
                                       screeanwidth: 250.w,
-                                      file: cameraCon.profileIimage!),
+                                      file: cameraCon.pickedFile!),
                         ),
                         const Text(
                           'Cornelius',
