@@ -1,90 +1,28 @@
+import 'dart:io' as io;
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 
+import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
 import '../../authorization/controllers/login_controller.dart';
+import '../../../controllers/camea_controller.dart';
 
 class RegistrationController extends GetxController {
   final loginController = Get.find<LoginController>();
+  final cameraController = Get.put(CameraController());
 
-  /* GlobalKey<FormState> formKey = GlobalKey(); */
 
   final signUpTribalNameController = TextEditingController();
   final signUpPhoneController = TextEditingController();
   final smsCodeController = TextEditingController();
   final signUpPasswordConfirmController = TextEditingController();
-
-  // bool validateSignupForm({
-  //   required TextEditingController password,
-  //   required TextEditingController confirmPassword,
-  //   required TextEditingController tribalName,
-  //   required TextEditingController email,
-  // }) {
-  //   RegExp regExpTribalName = RegExp(
-  //     // A-Za-z0-9_ all letters numbers and _
-  //     r"^[\w]{3,10}$",
-  //     caseSensitive: false,
-  //     multiLine: false,
-  //   );
-
-  //   String errorMessage = '';
-
-  //   if (!loginController.validateSigninForm(email: email, password: password)) {
-  //     return false;
-  //   }
-
-  //   if (password.text != confirmPassword.text) {
-  //     errorMessage += "The passwords don't match";
-  //     confirmPassword.clear();
-  //   }
-
-  //   if (!regExpTribalName.hasMatch(tribalName.text)) {
-  //     errorMessage +=
-  //         '\n Tribal name should from 3 to 10 letters and can conntain letters, numbers, and underscores';
-
-  //     tribalName.clear();
-  //     return false;
-  //   }
-
-  //   if (errorMessage.isEmpty &&
-  //       loginController.validateSigninForm(email: email, password: password)) {
-  //     return true;
-  //   } else {
-  //     Get.showSnackbar(customSnackbar(errorMessage));
-
-  //     return false;
-  //   }
-  // }
-
-/*   void displaycontroller() {
-    /* formKey.currentState!.save(); */
-    print(signUpPasswordController.text);
-    print(signUpEmailController.text);
-  } */
-
-  // Future<void> performSignup() async {
-  //   if (validateSignupForm(
-  //       confirmPassword: signUpPasswordConfirmController,
-  //       email: signUpPhoneController,
-  //       password: signUpPasswordController,
-  //       tribalName: signUpTribalNameController)) {
-  //     print(signUpPhoneController.text);
-  //     final UserModel user = UserModel.fromJson({
-  //       'email': signUpPhoneController.text,
-  //       'name': signUpTribalNameController.text,
-  //       //Todo how to put the id and time stamp
-  //     });
-  //     await Auth()
-  //         .createUserToAuth(user, loginController.passwordController.text)
-  //         .catchError((onError) {
-  //       Get.showSnackbar(customSnackbar(onError.toString()));
-  //     });
-  //   }
-  // }
 
   RxDouble sliderValue = 1.0.obs;
   final auth = FirebaseAuth.instance;
@@ -92,49 +30,25 @@ class RegistrationController extends GetxController {
   bool isSMSCodeHere = false;
   bool isLoadingVisible = false;
 
+  io.File? profilePicture;
+
+  uploadProfilePicture() {
+    const storage = UserCloudStorageServices();
+    String userId = auth.currentUser!.uid;
+
+    var profilePhoto = cameraController.profileIimage!;
+    storage.uploadProfileImage(
+        userId: userId,
+        imageToUpload: profilePhoto,
+        fileName: 'profile_picture${extension(profilePhoto.path)}');
+  }
+
   showloading() {
     isLoadingVisible = true;
   }
 
   turnOffLoading() {
     isLoadingVisible = false;
-  }
-
-  Future<void> registerUserByPhone({
-    required String mobileNumber,
-  }) async {
-    showloading();
-
-    await auth.verifyPhoneNumber(
-        phoneNumber: mobileNumber,
-        timeout: const Duration(seconds: 120),
-        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-          turnOffLoading();
-          await auth
-              .signInWithCredential(phoneAuthCredential)
-              .then((response) => print(response.user!.uid));
-        },
-        verificationFailed: (FirebaseAuthException exception) async {
-          turnOffLoading();
-
-          Get.defaultDialog(actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text('OK'),
-            )
-          ], title: 'Error', middleText: exception.message.toString());
-        },
-        codeSent: (String verificationID, int? resendToken) async {
-          turnOffLoading();
-          this.verificationID = verificationID;
-          isSMSCodeHere = true;
-
-/*           print(verificationID); */
-          update();
-        },
-        codeAutoRetrievalTimeout: (cosTam) async {
-/*           print(cosTam); */
-        });
   }
 
   Future<void> verifySMSCode() async {
@@ -158,13 +72,11 @@ class RegistrationController extends GetxController {
     }
   }
 
-  Future<void> logout() async {
-    try {
-      await auth.signOut();
-      Get.off(() => LoginView());
-    } on FirebaseException catch (e) {
-      Get.snackbar('Firebase Error', e.code.toString());
-    }
+  //TODO fix the register moved to auth
+  Future<void> registerUserByPhone({
+    required String mobileNumber,
+  }) async {
+
   }
   // Future<void> createUser() async {
   //   if (validateSignupForm(

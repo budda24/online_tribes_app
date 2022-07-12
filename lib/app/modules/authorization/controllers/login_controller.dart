@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
+
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../controllers/global_controler.dart';
 
 class LoginController extends GetxController {

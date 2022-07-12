@@ -1,15 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
-import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 // Package imports:
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:path/path.dart';
 
 // Project imports:
+import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
@@ -18,13 +16,18 @@ import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../widgets/custom_photo_picker.dart';
 import '../widgets/tribe_examples_dialog.dart';
 import 'registration_aditional_info_view.dart';
+import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 
 class RegistrationDescriptionView extends GetView<RegistrationController> {
   RegistrationDescriptionView({Key? key}) : super(key: key);
-  final cameraController = Get.put(CameraGetXController());
+
+  @override
+  final controller = Get.put(RegistrationController());
+  final cameraController = Get.put(CameraController());
   @override
   Widget build(BuildContext context) {
-    print(auth.currentUser!.email);
     Get.put(RegistrationController);
 
     return Scaffold(
@@ -34,13 +37,14 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
           child: Stack(
             children: [
               Padding(
-               padding: const EdgeInsets.only(bottom: 30,left: 30,right: 30,top: 10),
+                padding: const EdgeInsets.only(
+                    bottom: 30, left: 30, right: 30, top: 10),
                 child: Column(
                   children: [
                     GetBuilder(
                       init: cameraController,
-                      builder: (CameraGetXController cameraCon) =>
-                          cameraCon.image == null
+                      builder: (CameraController cameraCon) =>
+                          cameraCon.profileIimage == null
                               ? InkWell(
                                   child: MainCirclePhoto.icon(
                                       screeanheight: 300.h,
@@ -52,18 +56,20 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                       )),
                                   onTap: () async {
                                     showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CustomPhotoPicker(
-                                              cameraController:
-                                                  cameraController);
-                                        });
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return CustomPhotoPicker(
+                                                  cameraController:
+                                                      cameraController);
+                                            })
+                                        .then((value) =>
+                                            controller.uploadProfilePicture());
                                   },
                                 )
                               : MainCirclePhoto.file(
                                   screeanheight: 300.h,
                                   screeanwidth: 250.w,
-                                  file: cameraCon.image!),
+                                  file: cameraCon.profileIimage!),
                     ),
                     const Text(
                       'Cornelius',

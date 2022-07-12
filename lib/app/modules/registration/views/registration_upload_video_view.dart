@@ -7,52 +7,51 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/camea_controller.dart';
-import '../../../helpers/assets/networkIng_images.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../widgets/custom_photo_picker.dart';
 
 class RegistrationUploadVideoView extends GetView {
-  final cameraController = Get.find<CameraGetXController>();
+  final cameraController = Get.find<CameraController>();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: kMainColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
-              SizedBox(height: 10.h,),
-             GetBuilder(
-                          init: cameraController,
-                          builder: (CameraGetXController cameraCon) =>
-                              cameraCon.image == null
-                                  ? InkWell(
-                                      child: MainCirclePhoto.icon(
-                                          screeanheight: 300.h,
-                                          screeanwidth: 250.w,
-                                          icon: Icon(
-                                            Icons.add_a_photo_rounded,
-                                            size: 40,
-                                            color: AppColors.whiteColor,
-                                          )),
-                                      onTap: () async {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return CustomPhotoPicker(
-                                                  cameraController:
-                                                      cameraController);
-                                            });
-                                      },
-                                    )
-                                  : MainCirclePhoto.file(
-                                      screeanheight: 300.h,
-                                      screeanwidth: 250.w,
-                                      file: cameraCon.image!),
-                        ),
+              SizedBox(
+                height: 10.h,
+              ),
+              GetBuilder(
+                init: cameraController,
+                builder: (CameraController cameraCon) =>
+                    cameraCon.profileIimage == null
+                        ? InkWell(
+                            child: MainCirclePhoto.icon(
+                                screeanheight: 300.h,
+                                screeanwidth: 250.w,
+                                icon: Icon(
+                                  Icons.add_a_photo_rounded,
+                                  size: 40,
+                                  color: AppColors.whiteColor,
+                                )),
+                            onTap: () async {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return CustomPhotoPicker(
+                                        cameraController: cameraController);
+                                  });
+                            },
+                          )
+                        : MainCirclePhoto.file(
+                            screeanheight: 300.h,
+                            screeanwidth: 250.w,
+                            file: cameraCon.profileIimage!),
+              ),
               const Text(
                 'Cornelius',
                 style: kName,
@@ -70,7 +69,8 @@ class RegistrationUploadVideoView extends GetView {
                 width: double.infinity,
                 height: 444.h,
                 child: Padding(
-                 padding: const EdgeInsets.only(bottom: 30,left: 30,right: 30,top: 10),
+                  padding: const EdgeInsets.only(
+                      bottom: 30, left: 30, right: 30, top: 10),
                   child: Column(
                     children: [
                       SizedBox(
@@ -80,12 +80,18 @@ class RegistrationUploadVideoView extends GetView {
                         'Upload your video',
                         style: TextStyle(fontSize: 20.sp),
                       ),
-                     verticalSpaceMedium,
-                      Image.asset('assets/images/authorization_screen/add_photo.png',scale: 1.3 ,),
+                      verticalSpaceMedium,
+                      Image.asset(
+                        'assets/images/authorization_screen/add_photo.png',
+                        scale: 1.3,
+                      ),
                       SizedBox(
                         height: 25.h,
                       ),
-                     Image.asset('assets/images/authorization_screen/upload_video.png',scale: 1.3 ,),
+                      Image.asset(
+                        'assets/images/authorization_screen/upload_video.png',
+                        scale: 1.3,
+                      ),
                       SizedBox(
                         height: 45.h,
                       ),

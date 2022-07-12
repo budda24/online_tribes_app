@@ -7,6 +7,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:path/path.dart';
 
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
@@ -22,7 +23,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
     final formKey = GlobalKey<FormState>();
     final controller = Get.put(RegistrationController());
     final globalController = Get.find<GlobalController>();
-    final cameraController = Get.find<CameraGetXController>();
+    final cameraController = Get.find<CameraController>();
 
     return GestureDetector(
       onTap: globalController.unFocuseNode,
@@ -42,8 +43,8 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       children: [
                         GetBuilder(
                           init: cameraController,
-                          builder: (CameraGetXController cameraCon) =>
-                              cameraCon.image == null
+                          builder: (CameraController cameraCon) =>
+                              cameraCon.profileIimage == null
                                   ? InkWell(
                                       child: MainCirclePhoto.icon(
                                           screeanheight: 300.h,
@@ -60,13 +61,15 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                                               return CustomPhotoPicker(
                                                   cameraController:
                                                       cameraController);
-                                            });
+                                            }).then((value) => controller.uploadProfilePicture());
+
+
                                       },
                                     )
                                   : MainCirclePhoto.file(
                                       screeanheight: 300.h,
                                       screeanwidth: 250.w,
-                                      file: cameraCon.image!),
+                                      file: cameraCon.profileIimage!),
                         ),
                         const Text(
                           'Cornelius',
@@ -129,7 +132,9 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                                       depth: 10,
                                       lightSource: LightSource.topLeft,
                                       border: NeumorphicBorder(
-                                          color: AppColors.whiteColor,width: 1,),
+                                        color: AppColors.whiteColor,
+                                        width: 1,
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -3,7 +3,7 @@ import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/db_services/database.dart';
+
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -14,7 +14,7 @@ import '../models/user_model.dart';
 
 final auth = FirebaseAuth.instance;
 
-Database db = Database();
+
 
 class Auth {
   final _uuid = const Uuid();
@@ -63,6 +63,7 @@ class Auth {
           _globalController.hideLoading();
           //TODO go to profile
           // Get.offAndToNamed(Routes.PROFIL);
+          Get.to(() => RegistrationDescriptionView());
           print('go to user profile');
         }
       } on FirebaseAuthException catch (error) {

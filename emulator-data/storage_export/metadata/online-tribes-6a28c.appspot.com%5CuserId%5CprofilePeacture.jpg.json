@@ -1,0 +1,20 @@
+{
+  "name": "userId/profilePeacture.jpg",
+  "bucket": "online-tribes-6a28c.appspot.com",
+  "contentType": "image/jpeg",
+  "metageneration": 1,
+  "generation": 1657618536188,
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "cacheControl": "public, max-age=3600",
+  "contentEncoding": "identity",
+  "downloadTokens": [
+    "48dc0123-e5dc-4321-8b02-f3e9d1f792b5"
+  ],
+  "etag": "Bq6cpqXgUOJFV0FksdVmdEMXHFk",
+  "timeCreated": "2022-07-12T09:35:36.187Z",
+  "updated": "2022-07-12T09:35:36.191Z",
+  "size": 78177,
+  "md5Hash": "UxKOumYsiOfmFrAHv5P+fw==",
+  "crc32c": "964436871"
+}

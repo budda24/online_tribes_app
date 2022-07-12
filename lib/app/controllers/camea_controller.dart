@@ -1,37 +1,33 @@
 import 'dart:io';
-import 'package:flutter/material.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:get/get.dart';
 
-import '../../main.dart';
-
-class CameraGetXController extends GetxController {
+class CameraController extends GetxController {
   final ImagePicker _picker = ImagePicker();
-  File? _pickedImage;
-  File? image;
+
+  File? profileIimage;
+  
   /* File? getimage() {
     image = _pickedImage;
     update();
   } */
 
- 
-
-  Future<XFile?> getImageGallery() async {
+  Future<File?> getImageGallery() async {
     final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
-    image = File(tmpImagePath!.path);
+    profileIimage = File(tmpImagePath!.path);
     update();
+    return profileIimage;
   }
 
-  Future<XFile?> getImageCamera() async {
+  Future<File?> getImageCamera() async {
     final tmpImagePath = await _picker.pickImage(
         source: ImageSource.camera,
         maxHeight: 100,
         maxWidth: 100,
         preferredCameraDevice: CameraDevice.front);
-    image = File(tmpImagePath!.path);
+    profileIimage = File(tmpImagePath!.path);
     update();
+    return profileIimage;
   }
 }

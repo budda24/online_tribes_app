@@ -18,7 +18,7 @@ import 'package:flutter_application_1/app/routes/app_pages.dart';
 
 class RegistrationBasicInfoView extends GetView<RegistrationController> {
   final globalController = Get.find<GlobalController>();
-  final cameraController = Get.put(CameraGetXController());
+  final cameraController = Get.put(CameraController());
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -156,10 +156,8 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                   alignment: Alignment.topCenter,
                   child: GetBuilder(
                     init: cameraController,
-                    builder: (CameraGetXController cameraCon) =>
-                        Column(children: [
-
-                      cameraCon.image == null
+                    builder: (CameraController cameraCon) => Column(children: [
+                      cameraCon.profileIimage == null
                           ? InkWell(
                               child: MainCirclePhoto.icon(
                                   screeanheight: 300.h,
@@ -234,7 +232,7 @@ class RegistrationBasicInfoView extends GetView<RegistrationController> {
                           : MainCirclePhoto.file(
                               screeanheight: 300.h,
                               screeanwidth: 250.w,
-                              file: cameraCon.image!),
+                              file: cameraCon.profileIimage!),
                     ]),
                   ),
                 ),

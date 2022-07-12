@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 
 import '../../../helpers/const.dart';
 import '../controllers/home_controller.dart';
-import '../../../../infrastructure/fb_services/auth/auth.dart';
 
 class HomeScreen extends GetView<HomeController> {
   var loginController = Get.put(LoginController());
@@ -16,7 +15,7 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     globalController.hideLoading();
-   
+
 
     return Obx(
       () => globalController.isLoadingVisible.value
