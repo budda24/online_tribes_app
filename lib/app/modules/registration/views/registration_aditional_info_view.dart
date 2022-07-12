@@ -13,7 +13,6 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
-import '../widgets/custom_photo_picker.dart';
 import 'registration_upload_video_view.dart';
 
 class RegistrationAditionalView extends GetView<RegistrationController> {
@@ -36,34 +35,12 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                 padding: const EdgeInsets.only(
                     bottom: 30, left: 30, right: 30, top: 10),
                 child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    GetBuilder(
-                      init: cameraController,
-                      builder: (CameraController cameraCon) =>
-                          cameraCon.pickedFile == null
-                              ? InkWell(
-                                  child: MainCirclePhoto.icon(
-                                      screeanheight: 300.h,
-                                      screeanwidth: 250.w,
-                                      icon: Icon(
-                                        Icons.add_a_photo_rounded,
-                                        size: 40,
-                                        color: AppColors.whiteColor,
-                                      )),
-                                  onTap: () async {
-                                    showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return CustomPhotoPicker(type: PickedType.photo,);
-                                        });
-                                  },
-                                )
-                              : MainCirclePhoto.file(
-                                  screeanheight: 300.h,
-                                  screeanwidth: 250.w,
-                                  file: cameraCon.pickedFile!),
-                    ),
+                    MainCirclePhoto.file(
+                        screeanheight: 300.h,
+                        screeanwidth: 250.w,
+                        file: cameraController.pickedFile!),
                     const Text(
                       'Cornelius',
                       style: kName,
@@ -74,7 +51,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                     CustomTextField(
                       controller: controller.lifeMottoController,
                       validate: (value) =>
-                          controller.userDBValidator(value: value, lenght: 200),
+                          controller.validateUser(value: value, lenght: 200),
                       hintText: 'The Life Motto',
                       maxline: 6,
                       minLine: 1,
@@ -85,23 +62,34 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       height: 15.h,
                     ),
                     CustomTextField(
-                      controller: controller.hobbyController,
+                      /* controller: controller.hobbyController, */
                       validate: (value) =>
-                          controller.userDBValidator(value: value, lenght: 50),
+                          controller.validateUser(value: value, lenght: 50),
                       hintText: 'Hobby',
-                      maxline: 2,
+                      maxline: 1,
                       minLine: 1,
-                      height: 60.h,
+                      height: 50.h,
                       width: 500.w,
                     ),
                     SizedBox(
                       height: 15.h,
                     ),
+                    CustomTextField(
+                      /* controller: controller.hobbyController, */
+                      validate: (value) =>
+                          controller.validateUser(value: value, lenght: 50),
+                      hintText: 'Hobby',
+                      maxline: 1,
+                      minLine: 1,
+                      height: 50.h,
+                      width: 500.w,
+                    ),
+                    verticalSpaceTiny,
                     Obx(() => Stack(
                           children: [
                             const Positioned(
-                                top: 30,
-                                left: 60,
+                                top: 65,
+                                left: 100,
                                 child: Text(
                                   'Time to invest',
                                   style: kHintStyle,
@@ -115,7 +103,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                                         height: 80,
                                         width: 80,
                                         child: Image.asset(
-                                          'assets/images/authorization_screen/Online Tribes Logo.png',
+                                          'assets/images/authorization_screen/logo50x50.png',
                                         )),
                                     Positioned(
                                         right: 0,
@@ -146,7 +134,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                             ),
                           ],
                         )),
-                    verticalSpaceMedium,
+                    verticalSpaceTiny,
                     SlimRoundedButton(
                       onPress: () {
                         controller.closeKeyboard();
@@ -160,13 +148,6 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       /* screenWidth: screeanwidth,
                             screenHeight: screeanheight */
                     ),
-                    Slider(
-                      value: 12.2,
-                      onChanged: (value) {},
-                      min: 1,
-                      max: 22.2,
-                      label: 'cycuszki ',
-                    )
                   ],
                 ),
               ),

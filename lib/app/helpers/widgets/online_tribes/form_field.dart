@@ -35,14 +35,14 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Neumorphic(
       style: NeumorphicStyle(
-        surfaceIntensity: 0.9,
-        shadowLightColorEmboss: Colors.white,
-        shadowLightColor: AppColors.primaryColor,
+        surfaceIntensity:0.0,
+        shadowLightColorEmboss: AppColors.actionColor.withOpacity(0.6),
+        shadowLightColor: AppColors.actionColor.withOpacity(0.6),
         depth: -5,
         shape: NeumorphicShape.convex,
         lightSource: LightSource.bottomRight,
-        intensity: 45,
-        shadowDarkColor: Colors.black,
+        intensity: 80,
+        shadowDarkColor: AppColors.actionColor,
         color: AppColors.whiteColor,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
       ),

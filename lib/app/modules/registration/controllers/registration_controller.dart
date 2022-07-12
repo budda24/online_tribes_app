@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
+import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
@@ -80,7 +81,15 @@ class RegistrationController extends GetxController {
     await UserDBServices().createUser(userDB);
   }
 
-  String? userDBValidator({required String value, required int lenght}) {
+  bool checkIfPhotoUpload() {
+    if (cameraController.pickedFile != null) {
+      return true;
+    }
+    Get.showSnackbar(customSnackbar('Please chose you profile photo'));
+    return false;
+  }
+
+  String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {
       return 'write some text';
     }

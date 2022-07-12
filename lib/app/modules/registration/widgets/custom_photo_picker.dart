@@ -1,77 +1,56 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/camea_controller.dart';
-import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/theme/text_styles.dart';
-import '../../../helpers/theme/ui_helpers.dart';
 
 enum PickedType { photo, video }
 
 class CustomPhotoPicker extends StatelessWidget {
   CustomPhotoPicker({Key? key, required this.type}) : super(key: key);
 
-  final CameraController cameraController = Get.find<CameraController>();
-
   PickedType type;
+
+  final CameraController cameraController = Get.find<CameraController>();
+  final registrationController = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
     /* if(type == CustomPhotoPicker){} */
-    return Card(
-      color: AppColors.textFieldFill,
-      child: Container(
-        height: 100,
-        color: AppColors.textFieldFill,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    if (type == PickedType.photo) {
-                      await cameraController.getFileGallery();
-                    } else {
-                      cameraController.getVideoCamera();
-                    }
-                  },
-                  icon: Icon(
-                    Icons.photo_album,
-                    size: 50.h,
-                  ),
+            InkWell(
+              child: GestureDetector(
+                onTap: () async {
+                  await cameraController.getImageCamera().then((value) {
+                    registrationController.uploadFile(
+                        fileName: 'profile_image', directory: 'profile');
+                  });
+                },
+                child: Image.asset(
+                  'assets/images/authorization_screen/add_photo.png',
+                  scale: 1.5,
                 ),
-                verticalSpaceTiny,
-                Text(
-                  '   Gallery',
-                  style: headingBoldStyle,
-                )
-              ],
+              ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  onPressed: () async {
-                    await cameraController.getFileGallery();
-                  },
-                  icon: Icon(
-                    Icons.camera,
-                    size: 50.h,
-                  ),
-                ),
-                verticalSpaceTiny,
-                Text(
-                  '   Camera',
-                  style: headingBoldStyle,
-                )
-              ],
+            GestureDetector(
+              onTap: () async {
+                await cameraController.getFileGallery().then((value) {
+                  registrationController.uploadFile(
+                      fileName: 'profile_image', directory: 'profile');
+                });
+              },
+              child: Image.asset(
+                'assets/images/authorization_screen/upload_video.png',
+                scale: 1.5,
+              ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }
