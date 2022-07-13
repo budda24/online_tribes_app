@@ -25,9 +25,14 @@ class CustomPhotoPicker extends StatelessWidget {
             InkWell(
               child: GestureDetector(
                 onTap: () async {
-                  await cameraController.getImageCamera().then((value) {
-                    registrationController.uploadFile(
-                        fileName: 'profile_image', directory: 'profile');
+                  await cameraController.getImageCamera().then((value) async {
+                    var ref = await registrationController.uploadFile(
+                        fileName: 'profileImage', directory: 'profile');
+                    Get.back();
+                    print('getImageCamera ref: $ref ');
+
+                    registrationController.userDB.profilePhoto =
+                        await ref!.getDownloadURL();
                   });
                 },
                 child: Image.asset(
@@ -38,9 +43,15 @@ class CustomPhotoPicker extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                await cameraController.getFileGallery().then((value) {
-                  registrationController.uploadFile(
-                      fileName: 'profile_image', directory: 'profile');
+                await cameraController.getFileGallery().then((value) async {
+                  var ref = await registrationController.uploadFile(
+                      fileName: 'profileImage', directory: 'profile');
+                  print('ref get file gallery');
+
+                  registrationController.userDB.profilePhoto =
+                      await ref!.getDownloadURL();
+
+                  Get.back();
                 });
               },
               child: Image.asset(

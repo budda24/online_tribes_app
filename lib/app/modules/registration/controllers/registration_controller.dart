@@ -1,6 +1,7 @@
 import 'dart:io' as io;
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
@@ -35,16 +36,18 @@ class RegistrationController extends GetxController {
 
   io.File? profilePicture;
 
-  uploadFile({required String fileName, required String directory}) {
+  Future<Reference?> uploadFile(
+      {required String fileName, required String directory}) async {
+    print('uploading file');
     //TODO cloud function to resize photo to secure the end point
     const storage = UserCloudStorageServices();
     String userId = auth.currentUser!.uid;
-    var profilePhoto = cameraController.pickedFile!;
-    storage.uploadFile(
+    var profileFile = cameraController.pickedFile!;
+    return await storage.uploadFile(
         path: directory,
         userId: userId,
-        imageToUpload: profilePhoto,
-        fileName: '$fileName${extension(profilePhoto.path)}');
+        imageToUpload: profileFile,
+        fileName: '$fileName${extension(profileFile.path)}');
   }
 
   /* uploadProfileVideo() {
@@ -72,11 +75,13 @@ class RegistrationController extends GetxController {
   Future<void> saveNewUser() async {
     userDB.description = describeYourselfController.text;
     userDB.lifeMotto = lifeMottoController.text;
-    userDB.hobby = hobbyController.text;
+/* userDB.hobbies = Hobbies(hobby: hobby1,hobby1: hobby2); */ //tu masz juz w modelu jak podac dwa hobby
+    /* userDB.hobby = hobbyController.text; */
     userDB.timeToInvest = sliderValue.value.toInt();
     userDB.email = currentUser.email;
     userDB.phoneNumber = currentUser.phoneNumber;
-    userDB.introVideoUrl = 'Test test http';
+    print(
+        'user photo : ${userDB.profilePhoto} user vide : ${userDB.introVideoUrl}');
 
     await UserDBServices().createUser(userDB);
   }
@@ -105,4 +110,9 @@ class RegistrationController extends GetxController {
 
   @override
   void onClose() {}
+  @override
+  void onInit() {
+    print('init registration controller');
+    super.onInit();
+  }
 }

@@ -19,7 +19,6 @@ class CameraController extends GetxController {
     final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
     pickedFile = File(tmpImagePath!.path);
     update();
-    Get.back();
   }
 
   Future<void> getImageCamera() async {
@@ -30,16 +29,13 @@ class CameraController extends GetxController {
         preferredCameraDevice: CameraDevice.front);
     pickedFile = File(tmpImagePath!.path);
     update();
-    Get.back();
   }
 
   Future<void> getVideoCamera() async {
     final tmpImagePath = await _picker.pickVideo(
-        maxDuration: const Duration(minutes: 3),
         source: ImageSource.camera,
         preferredCameraDevice: CameraDevice.front);
     pickedFile = File(tmpImagePath!.path);
     update();
-    Get.back();
   }
 }

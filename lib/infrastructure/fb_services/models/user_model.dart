@@ -19,7 +19,7 @@ class UserDB {
     this.introVideoUrl,
     this.lifeMotto,
     this.profilePhoto,
-    this.hobby,
+    /* this.hobby, */
     this.hobbies,
     this.timeToInvest,
     this.attendedTribe,
@@ -36,7 +36,7 @@ class UserDB {
   String? description;
   String? introVideoUrl;
   String? lifeMotto;
-  String? hobby;
+  /* String? hobby; */
   String? profilePhoto;
   Hobbies? hobbies;
   int? timeToInvest;
@@ -54,7 +54,7 @@ class UserDB {
         introVideoUrl: json["intro_video_url"],
         lifeMotto: json["life_motto"],
         profilePhoto: json["profile_photo"],
-        hobby: json["hobby"] ,
+        /* hobby: json["hobby"] , */
         hobbies: Hobbies.fromJson(json["hobbies"]),
         timeToInvest: json["time_to_invest"],
         attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]),
@@ -73,7 +73,7 @@ class UserDB {
         "intro_video_url": introVideoUrl,
         "life_motto": lifeMotto,
         "profile_photo": profilePhoto,
-        "hobby": hobby,
+        /* "hobby": hobby, */
         "hobbies": hobbies?.toJson(),
         "time_to_invest": timeToInvest,
         "attended_tribe": attendedTribe?.toJson(),

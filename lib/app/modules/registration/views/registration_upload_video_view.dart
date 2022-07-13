@@ -63,10 +63,20 @@ class RegistrationUploadVideoView extends GetView {
                       verticalSpaceMedium,
                       GestureDetector(
                         onTap: () async {
-                          await cameraController.getVideoCamera().then(
-                              (value) => registrationController.uploadFile(
-                                  fileName: 'profile_video',
-                                  directory: 'profile'));
+                          await cameraController
+                              .getVideoCamera()
+                              .then((value) async {
+                            var ref = await registrationController.uploadFile(
+                                fileName: 'profileVideo', directory: 'profile');
+
+                            registrationController.userDB.introVideoUrl =
+                                await ref!.getDownloadURL();
+
+                            print(
+                                'assigning video url get video camera:${registrationController.userDB.introVideoUrl}');
+
+                            /* var url = await ref!.getDownloadURL(); */
+                          });
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/add_photo.png',
@@ -78,10 +88,15 @@ class RegistrationUploadVideoView extends GetView {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await cameraController.getFileGallery().then(
-                              (value) => registrationController.uploadFile(
-                                  fileName: 'profile_video',
-                                  directory: 'profile'));
+                          await cameraController
+                              .getFileGallery()
+                              .then((value) async {
+                            var ref = await registrationController.uploadFile(
+                                fileName: 'profileVideo', directory: 'profile');
+                            print('ref getvide gallery : $ref');
+                            registrationController.userDB.introVideoUrl =
+                                await ref!.getDownloadURL();
+                          });
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/upload_video.png',
