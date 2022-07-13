@@ -3,7 +3,7 @@ import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
-import '../widgets/custom_photo_picker.dart';
 
 class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();
@@ -28,34 +27,10 @@ class RegistrationUploadVideoView extends GetView {
               SizedBox(
                 height: 10.h,
               ),
-              GetBuilder(
-                init: cameraController,
-                builder: (CameraController builderCameraController) =>
-                    builderCameraController.pickedFile == null
-                        ? InkWell(
-                            child: MainCirclePhoto.icon(
-                                screeanheight: 300.h,
-                                screeanwidth: 250.w,
-                                icon: Icon(
-                                  Icons.add_a_photo_rounded,
-                                  size: 40,
-                                  color: AppColors.whiteColor,
-                                )),
-                            onTap: () async {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return CustomPhotoPicker(
-                                      type: PickedType.video,
-                                    );
-                                  });
-                            },
-                          )
-                        : MainCirclePhoto.file(
-                            screeanheight: 300.h,
-                            screeanwidth: 250.w,
-                            file: builderCameraController.pickedFile!),
-              ),
+              MainCirclePhoto.file(
+                  screeanheight: 300.h,
+                  screeanwidth: 250.w,
+                  file: cameraController.pickedFile!),
               const Text(
                 'Cornelius',
                 style: kName,
@@ -63,15 +38,16 @@ class RegistrationUploadVideoView extends GetView {
               SizedBox(
                 height: 40.h,
               ),
+              verticalSpaceMedium,
               Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30)),
-                  color: AppColors.primaryColorWithOpacity40,
+                  color: AppColors.whiteColor,
                 ),
                 width: double.infinity,
-                height: 444.h,
+                height: 490.h,
                 child: Padding(
                   padding: const EdgeInsets.only(
                       bottom: 30, left: 30, right: 30, top: 10),
@@ -81,13 +57,16 @@ class RegistrationUploadVideoView extends GetView {
                         height: 40.h,
                       ),
                       Text(
-                        'Upload your video',
+                        'Upload your intro video',
                         style: TextStyle(fontSize: 20.sp),
                       ),
                       verticalSpaceMedium,
                       GestureDetector(
-                        onTap: ()async{
-                          await cameraController.getVideoCamera().then((value) => registrationController.uploadFile(fileName: 'profile_video', directory: 'profile'));
+                        onTap: () async {
+                          await cameraController.getVideoCamera().then(
+                              (value) => registrationController.uploadFile(
+                                  fileName: 'profile_video',
+                                  directory: 'profile'));
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/add_photo.png',
@@ -98,8 +77,11 @@ class RegistrationUploadVideoView extends GetView {
                         height: 25.h,
                       ),
                       GestureDetector(
-                        onTap: ()async {
-                          await cameraController.getFileGallery().then((value) => registrationController.uploadFile(fileName: 'profile_video', directory: 'profile'));
+                        onTap: () async {
+                          await cameraController.getFileGallery().then(
+                              (value) => registrationController.uploadFile(
+                                  fileName: 'profile_video',
+                                  directory: 'profile'));
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/upload_video.png',

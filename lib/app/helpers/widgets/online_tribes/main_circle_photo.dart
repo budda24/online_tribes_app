@@ -28,7 +28,7 @@ class MainCirclePhoto extends StatelessWidget {
       required this.icon})
       : imagePathN = '';
 
-  
+
 
   final double screeanheight;
   final double screeanwidth;
