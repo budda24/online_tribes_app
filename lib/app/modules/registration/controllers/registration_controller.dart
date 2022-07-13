@@ -1,7 +1,5 @@
 import 'dart:io' as io;
 
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -37,12 +35,14 @@ class RegistrationController extends GetxController {
   );
 
   Future<Reference?> uploadFile(
-      {required String fileName, required String directory}) async {
-    print('uploading file');
+      {required String fileName,
+      required String directory,
+      required io.File profileFile}) async {
     //TODO cloud function to resize photo to secure the end point
     const storage = UserCloudStorageServices();
+
     String userId = auth.currentUser!.uid;
-    var profileFile = cameraController.pickedFile!;
+
     return await storage.uploadFile(
         path: directory,
         userId: userId,
@@ -50,21 +50,18 @@ class RegistrationController extends GetxController {
         fileName: '$fileName${extension(profileFile.path)}');
   }
 
-  /* uploadProfileVideo() {
-    //TODO cloud function to resize photo to secure the end point
-    const storage = UserCloudStorageServices();
-    String userId = auth.currentUser!.uid;
-    var profilePhoto = cameraController.pickedFile!;
-    storage.uploadFile(
-        path: 'profile',
-        userId: userId,
-        imageToUpload: profilePhoto,
-        fileName: 'profile_video${extension(profilePhoto.path)}');
-  } */
-
-
-
   Future<void> saveNewUser() async {
+    var refPhoto = await uploadFile(
+        fileName: 'profileImage',
+        directory: 'profile',
+        profileFile: cameraController.pickedPhoto!);
+    var refVideo = await uploadFile(
+        fileName: 'profileVideo',
+        directory: 'profile',
+        profileFile: cameraController.pickedVideo!);
+
+    userDB.introVideoUrl = await refVideo!.getDownloadURL();
+    userDB.profilePhoto = await refVideo.getDownloadURL();
     userDB.description = describeYourselfController.text;
     userDB.lifeMotto = lifeMottoController.text;
 /* userDB.hobbies = Hobbies(hobby: hobby1,hobby1: hobby2); */ //tu masz juz w modelu jak podac dwa hobby
@@ -79,14 +76,12 @@ class RegistrationController extends GetxController {
   }
 
   bool checkIfPhotoUpload() {
-    if (cameraController.pickedFile != null) {
+    if (cameraController.pickedPhoto != null) {
       return true;
     }
     Get.showSnackbar(customSnackbar('Please chose you profile photo'));
     return false;
   }
-
-
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {
@@ -98,16 +93,10 @@ class RegistrationController extends GetxController {
     return null;
   }
 
-
   closeKeyboard() {
     globalController.unFocuseNode();
   }
 
   @override
   void onClose() {}
-  @override
-  void onInit() {
-    print('init registration controller');
-    super.onInit();
-  }
 }

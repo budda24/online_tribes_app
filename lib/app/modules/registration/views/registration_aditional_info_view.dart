@@ -40,7 +40,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                     MainCirclePhoto.file(
                         screeanheight: 300.h,
                         screeanwidth: 250.w,
-                        file: cameraController.pickedFile!),
+                        file: cameraController.pickedPhoto!),
                     const Text(
                       'Cornelius',
                       style: kName,

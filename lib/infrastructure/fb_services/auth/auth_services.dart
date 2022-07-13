@@ -53,7 +53,6 @@ class Auth {
           //TODO go to profile
           // Get.offAndToNamed(Routes.PROFIL);
           Get.to(() => RegistrationDescriptionView());
-          print('go to user profile');
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {
@@ -166,7 +165,7 @@ class Auth {
 
         Get.offAndToNamed(Routes.LOGIN);
 
-        print('go to user profile');
+
       }
     } on FirebaseAuthException catch (error) {
       _globalController.hideLoading();

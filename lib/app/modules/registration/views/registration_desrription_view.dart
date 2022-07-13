@@ -47,7 +47,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                       GetBuilder(
                         init: cameraController,
                         builder: (CameraController cameraCon) => cameraCon
-                                    .pickedFile ==
+                                    .pickedPhoto ==
                                 null
                             ? InkWell(
                                 child: MainCirclePhoto.icon(
@@ -63,16 +63,14 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                       context: context,
                                       backgroundColor: AppColors.transparent,
                                       builder: (BuildContext context) {
-                                        return CustomPhotoPicker(
-                                          type: PickedType.photo,
-                                        );
+                                        return CustomPhotoPicker();
                                       });
                                 },
                               )
                             : MainCirclePhoto.file(
                                 screeanheight: 300.h,
                                 screeanwidth: 250.w,
-                                file: cameraController.pickedFile!),
+                                file: cameraController.pickedPhoto!),
                       ),
                       const Text(
                         'Cornelius',
