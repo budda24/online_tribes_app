@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -21,20 +22,19 @@ class RegistrationController extends GetxController {
   final globalController = Get.find<GlobalController>();
   final cameraController = Get.put(CameraController());
 
-  /* GlobalKey<FormState> formKey = GlobalKey(); */
-
-  final signUpTribalNameController = TextEditingController();
-  final signUpPhoneController = TextEditingController();
-  final smsCodeController = TextEditingController();
-  final signUpPasswordConfirmController = TextEditingController();
-
-  RxDouble sliderValue = 1.0.obs;
-  final auth = FirebaseAuth.instance;
-  String verificationID = '';
-  bool isSMSCodeHere = false;
-  bool isLoadingVisible = false;
+  final TextEditingController describeYourselfController =
+      TextEditingController();
+  final TextEditingController lifeMottoController = TextEditingController();
+  final TextEditingController hobbyController = TextEditingController();
+  final TextEditingController timeToInvestController = TextEditingController();
 
   io.File? profilePicture;
+
+  RxDouble sliderValue = 1.0.obs;
+
+  UserDB userDB = UserDB(
+    userId: currentUser.uid,
+  );
 
   Future<Reference?> uploadFile(
       {required String fileName, required String directory}) async {
@@ -62,15 +62,7 @@ class RegistrationController extends GetxController {
         fileName: 'profile_video${extension(profilePhoto.path)}');
   } */
 
-  final TextEditingController describeYourselfController =
-      TextEditingController();
-  final TextEditingController lifeMottoController = TextEditingController();
-  final TextEditingController hobbyController = TextEditingController();
-  final TextEditingController timeToInvestController = TextEditingController();
 
-  UserDB userDB = UserDB(
-    userId: currentUser.uid,
-  );
 
   Future<void> saveNewUser() async {
     userDB.description = describeYourselfController.text;
@@ -94,6 +86,8 @@ class RegistrationController extends GetxController {
     return false;
   }
 
+
+
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {
       return 'write some text';
@@ -103,6 +97,7 @@ class RegistrationController extends GetxController {
     }
     return null;
   }
+
 
   closeKeyboard() {
     globalController.unFocuseNode();
