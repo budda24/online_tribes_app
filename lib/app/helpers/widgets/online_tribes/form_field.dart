@@ -19,30 +19,29 @@ class CustomTextField extends StatelessWidget {
     this.validate
   }) : super(key: key);
 
-  final int minLine;
-  final int maxline;
+  Color? color;
+  TextEditingController? controller;
   final double height;
-  final double width;
   String? hintText;
   String? lableText;
-
+  final int maxline;
+  final int minLine;
   Function? onSave;
-  TextEditingController? controller;
-  Color? color;
   FormFieldValidator? validate;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
       style: NeumorphicStyle(
         surfaceIntensity:0.0,
-        shadowLightColorEmboss: AppColors.actionColor.withOpacity(0.6),
-        shadowLightColor: AppColors.actionColor.withOpacity(0.6),
+        shadowLightColorEmboss: AppColors.darkGreyColor,
+        /* shadowLightColor: AppColors.darkGreyColor, */
         depth: -5,
         shape: NeumorphicShape.convex,
-        lightSource: LightSource.bottomRight,
-        intensity: 80,
-        shadowDarkColor: AppColors.actionColor,
+        lightSource: LightSource.topLeft,
+        intensity: 60,
+        /* shadowDarkColor: AppColors.darkGreyColor, */
         color: AppColors.whiteColor,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
       ),
