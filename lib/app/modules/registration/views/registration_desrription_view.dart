@@ -1,6 +1,6 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 // Package imports:
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,6 +13,7 @@ import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../widgets/custom_photo_picker.dart';
+import '../widgets/neumorphic_circle_background.dart';
 import '../widgets/tribe_examples_dialog.dart';
 import 'registration_aditional_info_view.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
@@ -20,112 +21,115 @@ import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_fie
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 
 class RegistrationDescriptionView extends GetView<RegistrationController> {
-  RegistrationDescriptionView({Key? key}) : super(key: key);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   final controller = Get.put(RegistrationController());
   final cameraController = Get.put(CameraController());
   final globalController = Get.find<GlobalController>();
 
+  RegistrationDescriptionView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Get.put(RegistrationController);
-
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
-        backgroundColor: kMainColor,
+        backgroundColor: AppColors.primaryColor,
         body: SafeArea(
           child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      bottom: 30, left: 30, right: 30, top: 10),
-                  child: Column(
-                    children: [
-                      GetBuilder(
-                        init: cameraController,
-                        builder: (CameraController cameraCon) => cameraCon
-                                    .pickedFile ==
-                                null
-                            ? InkWell(
-                                child: MainCirclePhoto.icon(
-                                    screeanheight: 300.h,
-                                    screeanwidth: 250.w,
-                                    icon: Icon(
-                                      Icons.add_a_photo_rounded,
-                                      size: 40,
-                                      color: AppColors.whiteColor,
-                                    )),
-                                onTap: () async {
-                                  showModalBottomSheet(
-                                      context: context,
-                                      backgroundColor: AppColors.transparent,
-                                      builder: (BuildContext context) {
-                                        return CustomPhotoPicker(
-                                          type: PickedType.photo,
-                                        );
-                                      });
-                                },
-                              )
-                            : MainCirclePhoto.file(
-                                screeanheight: 300.h,
-                                screeanwidth: 250.w,
-                                file: cameraController.pickedFile!),
-                      ),
-                      const Text(
-                        'Cornelius',
-                        style: kName,
-                      ),
-                      verticalSpaceMedium,
-                      CustomTextField(
-                        onSave: () {},
-                        hintText: 'Describe yourself',
-                        maxline: 10,
-                        minLine: 2,
-                        height: 300.h,
-                        width: 400.w,
-                      ),
-                      SizedBox(
-                        height: 25.h,
-                      ),
-                      SlimRoundedButton(
-                        onPress: () {
-                          if (controller.checkIfPhotoUpload()) {
-                            Get.to(() => RegistrationAditionalView());
-                          }
-                        },
-                        backgroundColour: kColorWhite,
-                        title: 'Continue',
-                        textColor: kTextColorDarkGrey,
-                        /* screenWidth: screeanwidth,
-                            screenHeight: screeanheight */
-                      ),
-                    ],
+            child: Form(
+              key: _formKey,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                         left: 30, right: 30, top: 10),
+                    child: Column(
+                      children: [
+                        GetBuilder(
+                          init: cameraController,
+                          builder: (CameraController cameraCon) =>
+                              cameraCon.pickedFile == null
+                                  ? InkWell(
+                                      child: NeumorphicCircleBackground(
+
+                                        child: MainCirclePhoto.icon(
+                                            screeanheight: 300.h,
+                                            screeanwidth: 250.w,
+                                            icon: Icon(
+                                              Icons.add_a_photo_rounded,
+                                              size: 40,
+                                              color: AppColors.whiteColor,
+                                            )),
+                                      ),
+                                      onTap: () async {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            backgroundColor:
+                                                AppColors.transparent,
+                                            builder: (BuildContext context) {
+                                              return CustomPhotoPicker(
+                                                type: PickedType.photo,
+                                              );
+                                            });
+                                      },
+                                    )
+                                  : NeumorphicCircleBackground(
+
+                                      child: MainCirclePhoto.file(
+                                        screeanheight: 10.h,
+                                        screeanwidth: 10.w,
+                                        file: cameraController.pickedFile!,
+                                      ),
+                                    ),
+                        ),
+
+                        verticalSpaceLarge,
+                        CustomTextField(
+                          controller: controller.describeYourselfController,
+                          validate: (value) => controller.validateUser(
+                              value: value, lenght: 1500),
+                          hintText: 'Describe yourself',
+                          maxline: 10,
+                          minLine: 2,
+                          height: 307.h,
+                          width: 400.w,
+                        ),
+                        verticalSpaceLarge,
+                        SlimRoundedButton(
+                          onPress: () {
+                            if (controller.checkIfPhotoUpload() &&
+                                _formKey.currentState!.validate()) {
+                              Get.to(() => RegistrationAditionalView());
+                            }
+                          },
+                          backgroundColour: kColorWhite,
+                          title: 'Continue',
+                          textColor: kTextColorDarkGrey,
+                          /* screenWidth: screeanwidth,
+                              screenHeight: screeanheight */
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
-                  top: 180,
-                  left: 20,
-                  child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const TribeExamplesDialog();
-                          });
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: AppColors.actionColor,
-                      radius: 25,
+                  Positioned(
+                    top: 220,
+                    left: 20,
+                    child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const TribeExamplesDialog();
+                            });
+                      },
                       child: Image.asset(
-                        'assets/images/authorization_screen/bulb_icon.png',
+                        'assets/images/authorization_screen/output-onlinepngtools.png',
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -133,3 +137,4 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
     );
   }
 }
+

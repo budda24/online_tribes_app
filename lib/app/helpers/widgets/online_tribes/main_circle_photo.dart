@@ -39,7 +39,7 @@ class MainCirclePhoto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 10.h, bottom: 0),
+     
       width: 100.w,
       height: 100.h,
       child: icon == null ? null : icon,

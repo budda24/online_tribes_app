@@ -3,6 +3,7 @@ import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
+import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -16,6 +17,8 @@ class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();
   final registrationController = Get.find<RegistrationController>();
 
+   RegistrationUploadVideoView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +30,13 @@ class RegistrationUploadVideoView extends GetView {
               SizedBox(
                 height: 10.h,
               ),
-              MainCirclePhoto.file(
-                  screeanheight: 300.h,
-                  screeanwidth: 250.w,
-                  file: cameraController.pickedFile!),
-              const Text(
-                'Cornelius',
-                style: kName,
+              NeumorphicCircleBackground(
+                child: MainCirclePhoto.file(
+                    screeanheight: 300.h,
+                    screeanwidth: 250.w,
+                    file: cameraController.pickedFile!),
               ),
+
               SizedBox(
                 height: 40.h,
               ),
@@ -47,10 +49,10 @@ class RegistrationUploadVideoView extends GetView {
                   color: AppColors.whiteColor,
                 ),
                 width: double.infinity,
-                height: 490.h,
+                height: 460.h,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      bottom: 30, left: 30, right: 30, top: 10),
+                      left: 30, right: 30, top: 10),
                   child: Column(
                     children: [
                       SizedBox(
@@ -60,7 +62,7 @@ class RegistrationUploadVideoView extends GetView {
                         'Upload your intro video',
                         style: TextStyle(fontSize: 20.sp),
                       ),
-                      verticalSpaceMedium,
+                      verticalSpaceLarge,
                       GestureDetector(
                         onTap: () async {
                           await cameraController
@@ -72,10 +74,7 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.userDB.introVideoUrl =
                                 await ref!.getDownloadURL();
 
-                            print(
-                                'assigning video url get video camera:${registrationController.userDB.introVideoUrl}');
 
-                            /* var url = await ref!.getDownloadURL(); */
                           });
                         },
                         child: Image.asset(
@@ -93,7 +92,9 @@ class RegistrationUploadVideoView extends GetView {
                               .then((value) async {
                             var ref = await registrationController.uploadFile(
                                 fileName: 'profileVideo', directory: 'profile');
-                            print('ref getvide gallery : $ref');
+
+
+
                             registrationController.userDB.introVideoUrl =
                                 await ref!.getDownloadURL();
                           });
@@ -113,7 +114,9 @@ class RegistrationUploadVideoView extends GetView {
                           onPress: () async {
                             registrationController.closeKeyboard();
 
-                            await registrationController.saveNewUser();
+                            if (registrationController.checkIfVideoUpload()) {
+                              await registrationController.saveNewUser();
+                            }
                           })
                     ],
                   ),

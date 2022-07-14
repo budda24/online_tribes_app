@@ -1,7 +1,5 @@
 import 'dart:io' as io;
 
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -25,7 +23,8 @@ class RegistrationController extends GetxController {
   final TextEditingController describeYourselfController =
       TextEditingController();
   final TextEditingController lifeMottoController = TextEditingController();
-  final TextEditingController hobbyController = TextEditingController();
+  final TextEditingController hobby1Controller = TextEditingController();
+  final TextEditingController hobby2Controller = TextEditingController();
   final TextEditingController timeToInvestController = TextEditingController();
 
   io.File? profilePicture;
@@ -50,34 +49,6 @@ class RegistrationController extends GetxController {
         fileName: '$fileName${extension(profileFile.path)}');
   }
 
-  /* uploadProfileVideo() {
-    //TODO cloud function to resize photo to secure the end point
-    const storage = UserCloudStorageServices();
-    String userId = auth.currentUser!.uid;
-    var profilePhoto = cameraController.pickedFile!;
-    storage.uploadFile(
-        path: 'profile',
-        userId: userId,
-        imageToUpload: profilePhoto,
-        fileName: 'profile_video${extension(profilePhoto.path)}');
-  } */
-
-
-
-  Future<void> saveNewUser() async {
-    userDB.description = describeYourselfController.text;
-    userDB.lifeMotto = lifeMottoController.text;
-/* userDB.hobbies = Hobbies(hobby: hobby1,hobby1: hobby2); */ //tu masz juz w modelu jak podac dwa hobby
-    /* userDB.hobby = hobbyController.text; */
-    userDB.timeToInvest = sliderValue.value.toInt();
-    userDB.email = currentUser.email;
-    userDB.phoneNumber = currentUser.phoneNumber;
-    print(
-        'user photo : ${userDB.profilePhoto} user vide : ${userDB.introVideoUrl}');
-
-    await UserDBServices().createUser(userDB);
-  }
-
   bool checkIfPhotoUpload() {
     if (cameraController.pickedFile != null) {
       return true;
@@ -86,7 +57,13 @@ class RegistrationController extends GetxController {
     return false;
   }
 
-
+   bool checkIfVideoUpload() {
+    if ( userDB.introVideoUrl != null) {
+      return true;
+    }
+    Get.showSnackbar(customSnackbar('Please add Your introduction video'));
+    return false;
+  }
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {
@@ -98,6 +75,21 @@ class RegistrationController extends GetxController {
     return null;
   }
 
+  Future<void> saveNewUser() async {
+    userDB.description = describeYourselfController.text;
+    userDB.lifeMotto = lifeMottoController.text;
+    userDB.hobbies =
+        Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
+
+    userDB.timeToInvest = sliderValue.value.toInt();
+    userDB.email = currentUser.email;
+    userDB.phoneNumber = currentUser.phoneNumber;
+
+    print(
+        'user photo : ${userDB.profilePhoto} user vide : ${userDB.introVideoUrl}');
+
+    await UserDBServices().createUser(userDB);
+  }
 
   closeKeyboard() {
     globalController.unFocuseNode();
