@@ -36,12 +36,14 @@ class RegistrationController extends GetxController {
   );
 
   Future<Reference?> uploadFile(
-      {required String fileName, required String directory}) async {
-    print('uploading file');
+      {required String fileName,
+      required String directory,
+      required io.File profileFile}) async {
     //TODO cloud function to resize photo to secure the end point
     const storage = UserCloudStorageServices();
+
     String userId = auth.currentUser!.uid;
-    var profileFile = cameraController.pickedFile!;
+
     return await storage.uploadFile(
         path: directory,
         userId: userId,
@@ -49,16 +51,41 @@ class RegistrationController extends GetxController {
         fileName: '$fileName${extension(profileFile.path)}');
   }
 
+  Future<void> saveNewUser() async {
+    var refPhoto = await uploadFile(
+        fileName: 'profileImage',
+        directory: 'profile',
+        profileFile: cameraController.pickedPhoto!);
+    var refVideo = await uploadFile(
+        fileName: 'profileVideo',
+        directory: 'profile',
+        profileFile: cameraController.pickedVideo!);
+
+    userDB.introVideoUrl = await refVideo!.getDownloadURL();
+    userDB.profilePhoto = await refVideo.getDownloadURL();
+    userDB.description = describeYourselfController.text;
+    userDB.lifeMotto = lifeMottoController.text;
+    userDB.hobbies =
+        Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
+    userDB.timeToInvest = sliderValue.value.toInt();
+    userDB.email = currentUser.email;
+    userDB.phoneNumber = currentUser.phoneNumber;
+    print(
+        'user photo : ${userDB.profilePhoto} user vide : ${userDB.introVideoUrl}');
+
+    await UserDBServices().createUser(userDB);
+  }
+
   bool checkIfPhotoUpload() {
-    if (cameraController.pickedFile != null) {
+    if (cameraController.pickedPhoto != null) {
       return true;
     }
     Get.showSnackbar(customSnackbar('Please chose you profile photo'));
     return false;
   }
 
-   bool checkIfVideoUpload() {
-    if ( userDB.introVideoUrl != null) {
+  bool checkIfVideoUpload() {
+    if (userDB.introVideoUrl != null) {
       return true;
     }
     Get.showSnackbar(customSnackbar('Please add Your introduction video'));
@@ -75,31 +102,10 @@ class RegistrationController extends GetxController {
     return null;
   }
 
-  Future<void> saveNewUser() async {
-    userDB.description = describeYourselfController.text;
-    userDB.lifeMotto = lifeMottoController.text;
-    userDB.hobbies =
-        Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
-
-    userDB.timeToInvest = sliderValue.value.toInt();
-    userDB.email = currentUser.email;
-    userDB.phoneNumber = currentUser.phoneNumber;
-
-    print(
-        'user photo : ${userDB.profilePhoto} user vide : ${userDB.introVideoUrl}');
-
-    await UserDBServices().createUser(userDB);
-  }
-
   closeKeyboard() {
     globalController.unFocuseNode();
   }
 
   @override
   void onClose() {}
-  @override
-  void onInit() {
-    print('init registration controller');
-    super.onInit();
-  }
 }

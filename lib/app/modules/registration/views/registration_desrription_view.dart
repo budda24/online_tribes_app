@@ -49,7 +49,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                         GetBuilder(
                           init: cameraController,
                           builder: (CameraController cameraCon) =>
-                              cameraCon.pickedFile == null
+                              cameraCon.pickedPhoto == null
                                   ? InkWell(
                                       child: NeumorphicCircleBackground(
 
@@ -63,15 +63,12 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                             )),
                                       ),
                                       onTap: () async {
-                                        showModalBottomSheet(
-                                            context: context,
-                                            backgroundColor:
-                                                AppColors.transparent,
-                                            builder: (BuildContext context) {
-                                              return CustomPhotoPicker(
-                                                type: PickedType.photo,
-                                              );
-                                            });
+                                       showModalBottomSheet(
+                                      context: context,
+                                      backgroundColor: AppColors.transparent,
+                                      builder: (BuildContext context) {
+                                        return CustomPhotoPicker();
+                                      });
                                       },
                                     )
                                   : NeumorphicCircleBackground(
@@ -79,7 +76,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                       child: MainCirclePhoto.file(
                                         screeanheight: 10.h,
                                         screeanwidth: 10.w,
-                                        file: cameraController.pickedFile!,
+                                        file: cameraController.pickedPhoto!,
                                       ),
                                     ),
                         ),

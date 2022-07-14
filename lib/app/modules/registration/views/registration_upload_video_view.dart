@@ -34,7 +34,7 @@ class RegistrationUploadVideoView extends GetView {
                 child: MainCirclePhoto.file(
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
-                    file: cameraController.pickedFile!),
+                    file: cameraController.pickedPhoto!),
               ),
 
               SizedBox(
@@ -65,17 +65,7 @@ class RegistrationUploadVideoView extends GetView {
                       verticalSpaceLarge,
                       GestureDetector(
                         onTap: () async {
-                          await cameraController
-                              .getVideoCamera()
-                              .then((value) async {
-                            var ref = await registrationController.uploadFile(
-                                fileName: 'profileVideo', directory: 'profile');
-
-                            registrationController.userDB.introVideoUrl =
-                                await ref!.getDownloadURL();
-
-
-                          });
+                          await cameraController.getVideoCamera();
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/add_photo.png',
@@ -87,17 +77,7 @@ class RegistrationUploadVideoView extends GetView {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await cameraController
-                              .getFileGallery()
-                              .then((value) async {
-                            var ref = await registrationController.uploadFile(
-                                fileName: 'profileVideo', directory: 'profile');
-
-
-
-                            registrationController.userDB.introVideoUrl =
-                                await ref!.getDownloadURL();
-                          });
+                          await cameraController.getFileGallery();
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/upload_video.png',

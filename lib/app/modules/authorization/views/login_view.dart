@@ -147,11 +147,7 @@ class LoginView extends GetView<LoginController> {
                                                 await controller
                                                     .signInWithGoogle();
                                               },
-                                              child: /*  globalController
-                                                        .isLoadingVisible.value
-                                                    ? const CircularProgressIndicator()
-                                                    : */
-                                                  SizedBox(
+                                              child: SizedBox(
                                                 height: 60,
                                                 width: 250,
                                                 child: Image.asset(

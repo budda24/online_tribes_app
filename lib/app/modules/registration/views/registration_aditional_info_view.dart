@@ -45,12 +45,13 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       child: MainCirclePhoto.file(
                           screeanheight: 300.h,
                           screeanwidth: 250.w,
-                          file: cameraController.pickedFile!),
+                          file: cameraController.pickedPhoto!),
                     ),
                     SizedBox(
                       height: 15.h,
                     ),
                     CustomTextField(
+                      textInputAction: TextInputAction.next,
                       controller: controller.lifeMottoController,
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 200),
@@ -64,9 +65,10 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       height: 15.h,
                     ),
                     CustomTextField(
-                      controller: controller.hobby1Controller,
+                       controller: controller.hobby1Controller,
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 50),
+                      textInputAction: TextInputAction.next,
                       hintText: 'Hobby 1',
                       maxline: 1,
                       minLine: 1,
@@ -78,8 +80,10 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                     ),
                     CustomTextField(
                       controller: controller.hobby2Controller,
+
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 50),
+                      textInputAction: TextInputAction.next,
                       hintText: 'Hobby 2',
                       maxline: 1,
                       minLine: 1,

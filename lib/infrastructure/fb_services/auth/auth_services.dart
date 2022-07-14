@@ -44,16 +44,15 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
-//TODO !userCredential only for this production stage
+//TODO !userCredential only developing processes
         if (!userCredential.additionalUserInfo!.isNewUser) {
           _globalController.hideLoading();
-          Get.to(() => RegistrationDescriptionView());
+          Get.offAllNamed(Routes.REGISTRATION);
         } else {
           _globalController.hideLoading();
           //TODO go to profile
           // Get.offAndToNamed(Routes.PROFIL);
-          Get.to(() => RegistrationDescriptionView());
-          print('go to user profile');
+          Get.offAllNamed(Routes.REGISTRATION);
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {
@@ -158,15 +157,15 @@ class Auth {
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         _globalController.hideLoading();
-
-        Get.to(() => RegistrationDescriptionView());
+        
+        Get.offAllNamed(Routes.REGISTRATION);
       } else {
         //TODO otherwise go to profile
         _globalController.hideLoading();
 
         Get.offAndToNamed(Routes.LOGIN);
 
-        print('go to user profile');
+
       }
     } on FirebaseAuthException catch (error) {
       _globalController.hideLoading();

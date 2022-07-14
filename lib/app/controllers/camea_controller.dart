@@ -1,24 +1,28 @@
 import 'dart:io';
 
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
+
+enum PickedType { photo, video }
 
 class CameraController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   /* final globalController = Get.find<GlobalController>(); */
 
-  File? pickedFile;
+  File? pickedPhoto;
+  File? pickedVideo;
 
-  /* File? getimage() {
-    image = _pickedImage;
-    update();
-  } */
+  PickedType pickedType = PickedType.photo;
 
   Future<void> getFileGallery() async {
     final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
-    pickedFile = File(tmpImagePath!.path);
-    update();
+
+    if (pickedType == PickedType.photo) {
+      pickedPhoto = File(tmpImagePath!.path);
+      update();
+    } else {
+      pickedVideo = File(tmpImagePath!.path);
+    }
   }
 
   Future<void> getImageCamera() async {
@@ -27,15 +31,14 @@ class CameraController extends GetxController {
         maxWidth: 100,
         source: ImageSource.camera,
         preferredCameraDevice: CameraDevice.front);
-    pickedFile = File(tmpImagePath!.path);
+    pickedPhoto = File(tmpImagePath!.path);
     update();
   }
 
   Future<void> getVideoCamera() async {
     final tmpImagePath = await _picker.pickVideo(
-        source: ImageSource.camera,
-        preferredCameraDevice: CameraDevice.front);
-    pickedFile = File(tmpImagePath!.path);
+        source: ImageSource.camera, preferredCameraDevice: CameraDevice.front);
+    pickedVideo = File(tmpImagePath!.path);
     update();
   }
 }
