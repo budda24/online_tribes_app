@@ -5,19 +5,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../main_constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  CustomTextField({
-    Key? key,
-    required this.maxline,
-    required this.minLine,
-    required this.height,
-    required this.width,
-    this.hintText,
-     this.onSave,
-    this.controller,
-    this.color,
-    this.lableText,
-    this.validate
-  }) : super(key: key);
+  CustomTextField(
+      {Key? key,
+      required this.maxline,
+      required this.minLine,
+      required this.height,
+      required this.width,
+      this.hintText,
+      this.onSave,
+      this.controller,
+      this.color,
+      this.lableText,
+      this.validate,
+      this.textInputAction})
+      : super(key: key);
 
   Color? color;
   TextEditingController? controller;
@@ -30,11 +31,13 @@ class CustomTextField extends StatelessWidget {
   FormFieldValidator? validate;
   final double width;
 
+  TextInputAction? textInputAction;
+
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
       style: NeumorphicStyle(
-        surfaceIntensity:0.0,
+        surfaceIntensity: 0.0,
         shadowLightColorEmboss: AppColors.darkGreyColor,
         /* shadowLightColor: AppColors.darkGreyColor, */
         depth: -5,
@@ -49,8 +52,13 @@ class CustomTextField extends StatelessWidget {
         height: height.h,
         width: width.w,
         padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
-        margin: EdgeInsets.only(left: 40.w, right: 40.w, bottom: 5.h, ),
+        margin: EdgeInsets.only(
+          left: 40.w,
+          right: 40.w,
+          bottom: 5.h,
+        ),
         child: TextFormField(
+          textInputAction: textInputAction,
           validator: validate,
           controller: controller,
           style: kHintStyle,

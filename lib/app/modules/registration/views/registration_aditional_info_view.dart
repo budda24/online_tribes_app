@@ -49,6 +49,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       height: 15.h,
                     ),
                     CustomTextField(
+                      textInputAction: TextInputAction.next,
                       controller: controller.lifeMottoController,
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 200),
@@ -62,7 +63,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       height: 15.h,
                     ),
                     CustomTextField(
-                      /* controller: controller.hobbyController, */
+                      textInputAction: TextInputAction.next,
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 50),
                       hintText: 'Hobby',
@@ -75,6 +76,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       height: 15.h,
                     ),
                     CustomTextField(
+                      textInputAction: TextInputAction.next,
                       /* controller: controller.hobbyController, */
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 50),
