@@ -110,7 +110,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                     ),
                   ),
                   Positioned(
-                    top: 220,
+                    top: 165,
                     left: 20,
                     child: GestureDetector(
                       onTap: () {

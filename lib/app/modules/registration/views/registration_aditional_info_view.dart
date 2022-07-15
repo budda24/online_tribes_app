@@ -100,8 +100,8 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                               'Time to invest',
                               style: kHintStyle,
                             )),
-                        Obx(() => TimeToInvestSlider(
-                            sliderValue: controller.sliderValue)),
+                     TimeToInvestSlider(
+                            sliderValue: controller.sliderValue),
                       ],
                     ),
                     verticalSpaceTiny,
