@@ -2,6 +2,7 @@ import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
+import 'package:flutter_application_1/app/modules/registration/views/profile_notyfications_view.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -109,7 +110,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       onPress: () {
                         controller.closeKeyboard();
                         if (_formKey.currentState!.validate()) {
-                          Get.to(() => RegistrationUploadVideoView());
+                          Get.to(() => ProfileNotyficationsView());
                         }
                       },
                       backgroundColour: kColorWhite,

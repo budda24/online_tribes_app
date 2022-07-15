@@ -106,6 +106,9 @@ class RegistrationController extends GetxController {
     globalController.unFocuseNode();
   }
 
-  @override
-  void onClose() {}
+// ////////////////////////////////////////////////////////
+
+  RxInt actualIndex = 0.obs;
+
+  Image elipseAssets = Image.asset('assets/images/profile/elipse.png');
 }
