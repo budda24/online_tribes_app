@@ -1,6 +1,11 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
+import 'package:flutter_application_1/app/modules/home/views/home_view.dart';
+import 'package:flutter_application_1/app/modules/walkthrough/views/walkthrough_view.dart';
 
 import 'dart:io';
 
@@ -12,6 +17,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'app/bindings/global_bindings.dart';
 import 'app/modules/authorization/controllers/login_controller.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
@@ -20,8 +26,6 @@ import 'app/routes/app_pages.dart';
 import 'package:flutter_application_1/app/modules/walkthrough/controllers/walkthrough_controller.dart';
 
 /* List<CameraDescription> cameras = []; */
-
-
 
 Future<void> _configureFirebaseStorage() async {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
@@ -71,6 +75,7 @@ void _configureFirebaseFunction() {
 
 bool connectToFirebaseEmulator = true;
 void main() async {
+  Get.put(GlobalController());
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -94,42 +99,46 @@ void main() async {
     print('Error in fetching the cameras: $e');
   } */
 
-  final controller = Get.put(GlobalController());
-  Get.put(WalkthroughController());
-  Get.put(LoginController());
-
-  var defaultScreen = Routes.LOGIN;
-  /*if visited set home to loginscree  */
-  if (Get.find<GlobalController>().box.read('isWalkthroughDone') != null &&
-      Get.find<GlobalController>().box.read('isWalkthroughDone')) {
-    defaultScreen = Routes.LOGIN;
-  } else {
-    defaultScreen = Routes.WALKTHROUGH;
-  }
-  if (FirebaseAuth.instance.currentUser == null) {
-    defaultScreen = Routes.LOGIN;
-  } else {
-    defaultScreen = Routes.HOME; //Todo after login go to profile screen
-  }
-
-  runApp(const MyApp()
-      /* GetMaterialApp(
-      title: "Application",
-      initialBinding: ControllersBinding(),
-      initialRoute: Routes.LOGIN,
-
-      /* home: Routes.HOME, */
-      /* theme: ThemeData(inputDecorationTheme: outlineInputTextFormFieldStyle),*/
-      // getPages: AppPages.routes,
-    ), */
-      );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+
+  var defaultRout = Routes.LOGIN;
+  Widget defaultScreen = LoginView();
+  void choseInitialScreen() {
+    print('choseInitialScreen');
+    final globalController = Get.find<GlobalController>();
+    Get.put(WalkthroughController());
+    Get.put(LoginController());
+    /*if visited set home to loginscree  */
+    if (globalController.box.read('isWalkthroughDone') != null &&
+        globalController.box.read('isWalkthroughDone')) {
+      defaultRout = Routes.LOGIN;
+      defaultScreen = LoginView();
+    } else {
+      defaultRout = Routes.WALKTHROUGH;
+      defaultScreen = WalkthroughView();
+    }
+
+    if (FirebaseAuth.instance.currentUser == null) {
+      defaultRout = Routes.LOGIN;
+      defaultScreen = LoginView();
+    } else {
+      defaultRout = Routes.HOME;
+      defaultScreen = HomeScreen();
+      //Todo after login go to profile screen
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Get.put(GlobalController());
+
+    //TODO run to implement walthrough
+    //initialize defaultScreenRout & defaultScreen
+    //choseInitialScreen();
+
     return LayoutBuilder(
       builder: (context, constraints) => MediaQuery(
         data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
@@ -138,8 +147,18 @@ class MyApp extends StatelessWidget {
               690) /* ScreenSizes(constraints: constraints).getScreenSize() */,
           minTextAdapt: true,
           builder: (context, child) => GetMaterialApp(
+            initialBinding: GlobalControllersBinding(),
             title: "Application",
             getPages: AppPages.routes,
+            home: AnimatedSplashScreen(
+              splashIconSize: 300,
+              duration: 1000,
+              splash: 'assets/splash_screen/splash_screen.gif',
+              /* nextRoute: defaultRout, */
+              nextScreen: defaultScreen,
+              splashTransition: SplashTransition.fadeTransition,
+              backgroundColor: AppColors.primaryColor,
+            ),
             initialRoute: Routes.LOGIN,
             defaultTransition: Transition.fadeIn,
             debugShowCheckedModeBanner: false,

@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 /* import '/app/controllers/dialog_controller.dart';
 import '/app/controllers/global_controller.dart'; */
 
-class ControllersBinding extends Bindings {
+class GlobalControllersBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<GlobalController>(

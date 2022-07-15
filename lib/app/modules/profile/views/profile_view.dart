@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_bars.dart';
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
@@ -11,11 +8,9 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarBackArrow(
-        title: Text(
-          'Profile view',
-          style: headingBoldStyle,
-        ),
+      appBar: AppBar(
+        title: Text('ProfileView'),
+        centerTitle: true,
       ),
       body: Center(
         child: Text(
