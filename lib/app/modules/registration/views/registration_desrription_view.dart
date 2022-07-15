@@ -110,7 +110,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                     ),
                   ),
                   Positioned(
-                    top: 220,
+                    top: 165,
                     left: 20,
                     child: GestureDetector(
                       onTap: () {
@@ -121,7 +121,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                             });
                       },
                       child: Image.asset(
-                        'assets/images/authorization_screen/output-onlinepngtools.png',
+                        'assets/images/authorization_screen/bulb_icon.png',
                       ),
                     ),
                   ),
