@@ -1,7 +1,6 @@
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -43,6 +42,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                   children: [
                     NeumorphicCircleBackground(
                       child: MainCirclePhoto.file(
+
                           screeanheight: 300.h,
                           screeanwidth: 250.w,
                           file: cameraController.pickedPhoto!),

@@ -75,6 +75,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                   : NeumorphicCircleBackground(
 
                                       child: MainCirclePhoto.file(
+                                        
                                         screeanheight: 10.h,
                                         screeanwidth: 10.w,
                                         file: cameraController.pickedPhoto!,

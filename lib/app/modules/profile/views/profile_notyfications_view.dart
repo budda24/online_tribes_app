@@ -90,16 +90,26 @@ class ProfileNotyficationsView extends GetView {
                             const Spacer(),
                             Row(
                               children: [
-                                SizedBox(
-                                    height: 40,
-                                    width: 35,
-                                    child: Image.asset(
-                                        'assets/images/profile/confirm_sign.png')),
-                                SizedBox(
-                                    height: 40,
-                                    width: 35,
-                                    child: Image.asset(
-                                        'assets/images/profile/refuse_sign.png')),
+                                InkWell(
+                                  onTap: () {
+                                    //TODO add logic for accept
+                                  },
+                                  child: SizedBox(
+                                      height: 40,
+                                      width: 35,
+                                      child: Image.asset(
+                                          'assets/images/profile/confirm_sign.png')),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    //TODO add logic for refuse
+                                  },
+                                  child: SizedBox(
+                                      height: 40,
+                                      width: 35,
+                                      child: Image.asset(
+                                          'assets/images/profile/refuse_sign.png')),
+                                ),
                               ],
                             )
                           ],
@@ -141,11 +151,16 @@ class ProfileNotyficationsView extends GetView {
                                 )
                               ],
                             ),
-                            SizedBox(
-                                height: 40,
-                                width: 35,
-                                child: Image.asset(
-                                    'assets/images/profile/green_arrow.png')),
+                            InkWell(
+                              onTap: () {
+//TODO add logic
+                              },
+                              child: SizedBox(
+                                  height: 40,
+                                  width: 35,
+                                  child: Image.asset(
+                                      'assets/images/profile/green_arrow.png')),
+                            ),
                           ],
                         ),
                       ),
@@ -185,10 +200,15 @@ class ProfileNotyficationsView extends GetView {
                                 )
                               ],
                             ),
-                            const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 30,
+                            InkWell(
+                              onTap: () {
+                                //TODO add logic delete
+                              },
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 30,
+                              ),
                             )
                           ],
                         ),

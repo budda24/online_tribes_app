@@ -35,6 +35,7 @@ class ProfileView extends GetView {
               verticalSpaceTiny,
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
+              
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
