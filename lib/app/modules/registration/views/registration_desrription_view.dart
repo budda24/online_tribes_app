@@ -12,6 +12,7 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
+import '../../profile/views/profile_info_view.dart';
 import '../widgets/custom_photo_picker.dart';
 import '../widgets/neumorphic_circle_background.dart';
 import '../widgets/tribe_examples_dialog.dart';
@@ -84,8 +85,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                         verticalSpaceLarge,
                         CustomTextField(
                           controller: controller.describeYourselfController,
-                          validate: (value) => controller.validateUser(
-                              value: value, lenght: 1500),
+                          /* validate: (value) => controller.validateUser(
+                              value: value, lenght: 1500), */
                           hintText: 'Describe yourself',
                           maxline: 10,
                           minLine: 2,
@@ -97,7 +98,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           onPress: () {
                             if (controller.checkIfPhotoUpload() &&
                                 _formKey.currentState!.validate()) {
-                              Get.to(() => RegistrationAditionalView());
+                                  Get.to(() => ProfileView());
+                              //Get.to(() => RegistrationAditionalView());
                             }
                           },
                           backgroundColour: kColorWhite,

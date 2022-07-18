@@ -39,7 +39,7 @@ class CustomTextFormFieldShadow extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 6, vertical: 15),
             isDense: true,
             hintText: hintText,
-            hintStyle: textfieldHintStyle,
+            hintStyle: plainTextStyle,
             counterText: "",
             border: InputBorder.none),
       ),

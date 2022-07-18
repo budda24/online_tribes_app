@@ -3,9 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../helpers/theme/app_colors.dart';
 
-class NeuRoundedContainer extends StatelessWidget {
-  const NeuRoundedContainer(
-      {Key? key, required this.height, required this.child})
+class RoundedContainer extends StatelessWidget {
+  const RoundedContainer({Key? key, required this.height, required this.child})
       : super(key: key);
 
   final int height;
