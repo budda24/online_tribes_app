@@ -26,9 +26,7 @@ TextStyle buttonLable = GoogleFonts.lato(
         fontWeight: FontWeight.w900));
 
 TextStyle headingBlackStyle = TextStyle(
-    fontFamily: 'Montserrat',
-    fontSize: 30.0.sp,
-    fontWeight: FontWeight.bold);
+    fontFamily: 'Montserrat', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 TextStyle headingWhiteStyle = TextStyle(
   fontFamily: 'Montserrat',
   color: AppColors.whiteColor,
@@ -45,10 +43,10 @@ TextStyle headingBoldStyle = TextStyle(
 TextStyle tribalNameStyle = TextStyle(
     fontFamily: 'Futura Bk BT', fontSize: 30.0.sp, color: AppColors.whiteColor);
 
-TextStyle textfieldHintStyle = TextStyle(
+TextStyle plainTextStyle = TextStyle(
   fontSize: 18.0.sp,
   fontFamily: 'Leelawadee',
-  /* fontWeight: FontWeight.bold, */
+  fontWeight: FontWeight.bold,
   color: AppColors.blackColor,
 );
 TextStyle popUpMessageStyle = TextStyle(
@@ -72,11 +70,10 @@ TextStyle smallBold = TextStyle(
   fontWeight: FontWeight.bold,
 );
 TextStyle smallBoldGrey = TextStyle(
-  fontSize: 18.sp,
-  fontFamily: montserrat,
-  fontWeight: FontWeight.bold,
-  color: AppColors.greyColor
-);
+    fontSize: 18.sp,
+    fontFamily: montserrat,
+    fontWeight: FontWeight.bold,
+    color: AppColors.greyColor);
 TextStyle smallTextStyle = TextStyle(
     fontFamily: poppins, fontSize: 13.0.sp, fontWeight: FontWeight.w300);
 TextStyle longTextStyle = TextStyle(
@@ -84,10 +81,10 @@ TextStyle longTextStyle = TextStyle(
   fontSize: 22.0.sp,
 );
 TextStyle boldSmallTextStyle = TextStyle(
-  color: AppColors.actionColor,
-    fontFamily: poppins, fontSize: 13.0.sp, fontWeight: FontWeight.bold);
-
-
+    color: AppColors.actionColor,
+    fontFamily: poppins,
+    fontSize: 13.0.sp,
+    fontWeight: FontWeight.bold);
 
 TextStyle lableWhite = TextStyle(
   fontFamily: regular,

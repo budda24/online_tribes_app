@@ -1,4 +1,4 @@
-import 'package:chewie/chewie.dart';
+/* import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -126,39 +126,36 @@ class _ChewieDemoState extends State<ChewieDemo> {
               },
               child: const Text('Fullscreen'),
             ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _platform = TargetPlatform.android;
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("Android controls"),
-                    ),
-                  ),
+           /*  Expanded(
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _platform = TargetPlatform.android;
+                  });
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text("Android controls"),
                 ),
-                Expanded(
-                  child: TextButton(
-                    onPressed: () {
-                      setState(() {
-                        _platform = TargetPlatform.iOS;
-                      });
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                      child: Text("iOS controls"),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
+            Expanded(
+              child: TextButton(
+                onPressed: () {
+                  setState(() {
+                    _platform = TargetPlatform.iOS;
+                  });
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16.0),
+                  child: Text("iOS controls"),
+                ),
+              ),
+            ) */,
           ],
         ),
       ),
     );
   }
 }
+ */

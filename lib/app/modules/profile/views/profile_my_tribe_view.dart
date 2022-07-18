@@ -14,11 +14,11 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../widgets/custom_navigation_bar.dart';
 
-class ProfileTribeView extends GetView {
+class ProfileMyTribeView extends GetView {
   final cameraController = Get.find<CameraController>();
   final profileController = Get.put(ProfileController());
 
-  ProfileTribeView({Key? key}) : super(key: key);
+  ProfileMyTribeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

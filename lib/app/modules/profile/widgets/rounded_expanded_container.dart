@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/theme/text_styles.dart';
 import '../controllers/profile_controller.dart';
 
 class RoundedExpandedContainer extends StatelessWidget {
@@ -32,7 +33,7 @@ class RoundedExpandedContainer extends StatelessWidget {
             },
             width: double.infinity,
             child: Neumorphic(
-              margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
+              margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
               style: NeumorphicStyle(
                 shadowLightColorEmboss: AppColors.primaryColor,
                 depth: -5,
@@ -50,9 +51,12 @@ class RoundedExpandedContainer extends StatelessWidget {
                 height: containerHeight.h,
                 decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Text(
-                  text,
-                  textAlign: TextAlign.center,
+                child: SingleChildScrollView(
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: plainTextStyle,
+                  ),
                 ),
               ),
             ),
