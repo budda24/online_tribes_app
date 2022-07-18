@@ -22,8 +22,8 @@ class CustomNavigationBar extends StatelessWidget {
           color: AppColors.whiteColor,
           border: Border(
               top: BorderSide(
-            color: AppColors.greyColor,
-            width: 3,
+            color: Colors.black26 ,
+            width: 2,
           ))),
       child: Obx(() => Stack(
             children: [

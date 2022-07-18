@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../theme/app_colors.dart';
+import '../../../helpers/theme/app_colors.dart';
 
-class RoundedContainer extends StatelessWidget {
-  const RoundedContainer({Key? key, required this.child, required this.height})
+class NeuRoundedContainer extends StatelessWidget {
+  const NeuRoundedContainer(
+      {Key? key, required this.height, required this.child})
       : super(key: key);
 
   final int height;
@@ -14,7 +14,7 @@ class RoundedContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Neumorphic(
-      margin: const EdgeInsets.symmetric(vertical: 30),
+      margin: const EdgeInsets.symmetric(vertical: 10),
       style: NeumorphicStyle(
         shadowLightColorEmboss: AppColors.primaryColor,
         /* shadowLightColor: AppColors.darkGreyColor, */

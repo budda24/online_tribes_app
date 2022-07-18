@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
 class BottomNavBarItem extends StatelessWidget {
-  String title;
-  String imagePath;
-  VoidCallback onTap;
-
-  BottomNavBarItem({
+  const BottomNavBarItem({
     required this.title,
     required this.imagePath,
     required this.onTap,
     Key? key,
   }) : super(key: key);
+
+  final String title;
+  final String imagePath;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {

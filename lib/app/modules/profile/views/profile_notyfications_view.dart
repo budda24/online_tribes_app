@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/neu_rounded_container.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,13 +46,152 @@ class ProfileNotyficationsView extends GetView {
                   color: AppColors.whiteColor,
                 ),
                 width: double.infinity,
-                height: 380.h,
+                height: 381.h,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(
                     children: [
-                      SizedBox(
-                        height: 40.h,
+                      NeuRoundedContainer(
+                        height: 55,
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 26,
+                                  width: 26,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Image.asset(
+                                        'assets/images/authorization_screen/tribel_signs/business_tribe.png'),
+                                  ),
+                                ),
+                                const Text('Peacemakers')
+                              ],
+                            ),
+                            horizontalSpaceMedium,
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 26,
+                                  width: 36,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Image.asset(
+                                        'assets/images/profile/invited_sign.png'),
+                                  ),
+                                ),
+                                const Text(
+                                  'Invited',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            const Spacer(),
+                            Row(
+                              children: [
+                                SizedBox(
+                                    height: 40,
+                                    width: 35,
+                                    child: Image.asset(
+                                        'assets/images/profile/confirm_sign.png')),
+                                SizedBox(
+                                    height: 40,
+                                    width: 35,
+                                    child: Image.asset(
+                                        'assets/images/profile/refuse_sign.png')),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      NeuRoundedContainer(
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 26,
+                                  width: 26,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Image.asset(
+                                        'assets/images/authorization_screen/tribel_signs/artist_tribe.png'),
+                                  ),
+                                ),
+                                const Text('Drawers')
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 26,
+                                  width: 36,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Image.asset(
+                                        'assets/images/profile/shake_hands.png'),
+                                  ),
+                                ),
+                                const Text(
+                                  'Accepted',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                                height: 40,
+                                width: 35,
+                                child: Image.asset(
+                                    'assets/images/profile/green_arrow.png')),
+                          ],
+                        ),
+                      ),
+                      NeuRoundedContainer(
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 26,
+                                  width: 26,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Image.asset(
+                                        'assets/images/authorization_screen/tribel_signs/writer_tribe.png'),
+                                  ),
+                                ),
+                                const Text('Inkers')
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 26,
+                                  width: 26,
+                                  child: FittedBox(
+                                    fit: BoxFit.fill,
+                                    child: Image.asset(
+                                        'assets/images/profile/happy_face.png'),
+                                  ),
+                                ),
+                                const Text(
+                                  'Invited',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                            const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                              size: 30,
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

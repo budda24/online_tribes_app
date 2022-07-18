@@ -1,6 +1,7 @@
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+import 'package:flutter_application_1/app/modules/profile/views/Profile_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
@@ -14,6 +15,7 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
+import '../../profile/views/profile_view.dart';
 import '../widgets/time_to_invest_slider.dart';
 
 class RegistrationAditionalView extends GetView<RegistrationController> {
@@ -106,7 +108,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       onPress: () {
                         controller.closeKeyboard();
                         if (_formKey.currentState!.validate()) {
-                          Get.to(() => ProfileNotyficationsView());
+                          Get.to(() => ProfileTribeView());
                         }
                       },
                       backgroundColour: kColorWhite,

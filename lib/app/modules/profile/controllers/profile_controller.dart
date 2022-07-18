@@ -1,15 +1,12 @@
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
+  RxInt actualIndex = 0.obs;
 
+  bool isShrinkWrap = true;
 
-   RxInt actualIndex = 0.obs;
-
-
-
-
-
-
-
-
+  void updateIsShrinkWrap() {
+    isShrinkWrap = !isShrinkWrap;
+    update();
+  }
 }
