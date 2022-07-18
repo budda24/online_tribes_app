@@ -7,33 +7,29 @@ class ProfileController extends GetxController {
   RxInt actualIndex = 0.obs;
 
   bool isShrinkWrap = true;
-  void updateIsShrinkWrap() {
-    isShrinkWrap = !isShrinkWrap;
-    update();
-  }
+
 
   /* TargetPlatform? _platform; */
   late VideoPlayerController _videoPlayerController1;
   ChewieController? chewieController;
-   String srcs =
+  String srcs =
       "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4";
 
   Future<void> initializePlayer() async {
-    _videoPlayerController1 =
-        VideoPlayerController.network(srcs);
+    _videoPlayerController1 = VideoPlayerController.network(srcs);
     await Future.wait([
       _videoPlayerController1.initialize(),
     ]);
     _createChewieController();
+    update();
   }
 
-   void _createChewieController() {
+  void _createChewieController() {
     chewieController = ChewieController(
       videoPlayerController: _videoPlayerController1,
       autoPlay: false,
       looping: true,
       hideControlsTimer: const Duration(seconds: 1),
-      
 
       /* additionalOptions: (context) {
         return <OptionItem>[
@@ -55,20 +51,19 @@ class ProfileController extends GetxController {
                 style: const TextStyle(color: Colors.black),
               ),
       ), */
-
     );
   }
 
   @override
-  void onInit()async {
-   await initializePlayer();
+  void onInit() async {
+    await initializePlayer();
     super.onInit();
   }
+
   @override
   void onClose() {
     _videoPlayerController1.dispose();
     chewieController?.dispose();
     super.onClose();
   }
-
 }
