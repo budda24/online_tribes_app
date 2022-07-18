@@ -8,7 +8,6 @@ class ProfileController extends GetxController {
 
   bool isShrinkWrap = true;
 
-
   /* TargetPlatform? _platform; */
   late VideoPlayerController _videoPlayerController1;
   ChewieController? chewieController;

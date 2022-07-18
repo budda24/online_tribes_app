@@ -93,14 +93,15 @@ class ProfileView extends GetView {
                         child: Column(
                           children: [
                             RoundedExpandedContainer(
-                              containerHeight: 200,
+                              heightToExpand: 100,
+                              containerHeight: 150,
                               text: lorem(paragraphs: 2, words: 26),
                             ),
                             RoundedExpandedContainer(
-                              containerHeight: 200,
+                              heightToExpand: 200,
+                              containerHeight: 150,
                               text: lorem(paragraphs: 5, words: 270),
                             ),
-
                             RoundedContainer(
                               height: oneLineContainerHeight,
                               child: Center(

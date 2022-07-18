@@ -5,39 +5,65 @@ import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/theme/text_styles.dart';
 
 class RoundedExpandedContainer extends StatefulWidget {
-  const RoundedExpandedContainer({
-    Key? key,
-    required this.containerHeight,
-    required this.text,
-  }) : super(key: key);
+  const RoundedExpandedContainer(
+      {Key? key,
+      required this.containerHeight,
+      required this.text,
+      required this.heightToExpand})
+      : super(key: key);
 
   final int containerHeight;
-
   final String text;
+  final int heightToExpand;
 
   @override
   State<RoundedExpandedContainer> createState() =>
       _RoundedExpandedContainerState();
 }
 
-class _RoundedExpandedContainerState extends State<RoundedExpandedContainer> {
-  /* final profileController = Get.put(ProfileController()); */
-  bool isShrinkWrap = false;
+class _RoundedExpandedContainerState extends State<RoundedExpandedContainer>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
 
+  @override
+  void initState() {
+    controller = AnimationController(
+        duration: const Duration(milliseconds: 400), vsync: this);
+    animation = Tween<double>(
+            begin: widget.containerHeight.toDouble() - 30,
+            end: widget.containerHeight.toDouble() + widget.heightToExpand - 30)
+        .animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+    super.initState();
+  }
+
+  bool isShrinkWrap = false;
   @override
   Widget build(BuildContext context) {
     void updateIsShrinkWrap() {
       setState(() {
         isShrinkWrap = !isShrinkWrap;
+        switch (controller.status) {
+          case AnimationStatus.completed:
+            controller.reverse();
+            break;
+          case AnimationStatus.dismissed:
+            controller.forward();
+            break;
+          default:
+        }
       });
     }
 
     return Stack(children: [
       AnimatedContainer(
         duration: const Duration(milliseconds: 400),
-        height: isShrinkWrap
+        height: !isShrinkWrap
             ? widget.containerHeight.toDouble()
-            : widget.containerHeight.toDouble() + 100,
+            : widget.containerHeight.toDouble() + widget.heightToExpand,
         width: double.infinity,
         child: Neumorphic(
           margin: const EdgeInsets.fromLTRB(0, 20, 0, 10),
@@ -68,22 +94,14 @@ class _RoundedExpandedContainerState extends State<RoundedExpandedContainer> {
       ),
       Positioned(
         left: 140,
-        top: isShrinkWrap //
-            ? widget.containerHeight.toDouble() - 25
-            : widget.containerHeight + 75,
-        child: Positioned(
-          left: 140,
-          top: isShrinkWrap
-              ? widget.containerHeight.toDouble() - 30
-              : widget.containerHeight + 70,
-          child: InkWell(
-              onTap: () {
-                updateIsShrinkWrap();
-              },
-              child: isShrinkWrap
-                  ? Image.asset('assets/images/profile/expand_more_arrow.png')
-                  : Image.asset('assets/images/profile/expand_less_arrow.png')),
-        ),
+        top: animation.value,
+        child: InkWell(
+            onTap: () {
+              updateIsShrinkWrap();
+            },
+            child: !isShrinkWrap
+                ? Image.asset('assets/images/profile/expand_more_arrow.png')
+                : Image.asset('assets/images/profile/expand_less_arrow.png')),
       )
     ]);
   }
