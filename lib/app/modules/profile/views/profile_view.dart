@@ -1,8 +1,8 @@
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/neu_rounded_container.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/neu_rounded_expanded_container.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/rounded_container.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/rounded_expanded_container.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -53,11 +53,11 @@ class ProfileView extends GetView {
                   padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
                   child: Column(
                     children: [
-                      NeuRoundedExpandedContainer(
+                      RoundedExpandedContainer(
                         containerHeight: 120,
                         text: lorem(paragraphs: 4, words: 250),
                       ),
-                      const NeuRoundedContainer(
+                      const RoundedContainer(
                         height: 55,
                         child: Center(
                           child: Text(
@@ -66,7 +66,7 @@ class ProfileView extends GetView {
                           ),
                         ),
                       ),
-                      const NeuRoundedContainer(
+                      const RoundedContainer(
                         height: 45,
                         child: Center(
                           child: Text(
@@ -75,7 +75,7 @@ class ProfileView extends GetView {
                           ),
                         ),
                       ),
-                      const NeuRoundedContainer(
+                      const RoundedContainer(
                         height: 45,
                         child: Center(
                           child: Text(

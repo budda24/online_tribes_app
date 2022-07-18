@@ -1,7 +1,7 @@
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/neu_rounded_container.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/rounded_container.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
@@ -55,7 +55,7 @@ class ProfileTribeView extends GetView {
                         children: [
                           SizedBox(
                             width: 230,
-                            child: NeuRoundedContainer(
+                            child: RoundedContainer(
                               height: 40,
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 10),
@@ -103,7 +103,7 @@ class ProfileTribeView extends GetView {
                           )
                         ],
                       ),
-                      NeuRoundedContainer(
+                      RoundedContainer(
                         height: 55,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -129,7 +129,7 @@ class ProfileTribeView extends GetView {
                           ],
                         ),
                       ),
-                      NeuRoundedContainer(
+                      RoundedContainer(
                         height: 55,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,7 +155,7 @@ class ProfileTribeView extends GetView {
                           ],
                         ),
                       ),
-                      NeuRoundedContainer(
+                      RoundedContainer(
                         height: 55,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

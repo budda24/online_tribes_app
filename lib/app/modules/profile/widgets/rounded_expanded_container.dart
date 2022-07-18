@@ -5,9 +5,9 @@ import 'package:get/get.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../controllers/profile_controller.dart';
 
-class NeuRoundedExpandedContainer extends StatelessWidget {
+class RoundedExpandedContainer extends StatelessWidget {
   final profileController = Get.put(ProfileController());
-  NeuRoundedExpandedContainer({
+  RoundedExpandedContainer({
     Key? key,
     required this.containerHeight,
     required this.text,

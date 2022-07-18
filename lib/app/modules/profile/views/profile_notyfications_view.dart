@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/neu_rounded_container.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/rounded_container.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +51,7 @@ class ProfileNotyficationsView extends GetView {
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(
                     children: [
-                      NeuRoundedContainer(
+                      RoundedContainer(
                         height: 55,
                         child: Row(
                           children: [
@@ -105,7 +105,7 @@ class ProfileNotyficationsView extends GetView {
                           ],
                         ),
                       ),
-                      NeuRoundedContainer(
+                      RoundedContainer(
                         height: 55,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -149,7 +149,7 @@ class ProfileNotyficationsView extends GetView {
                           ],
                         ),
                       ),
-                      NeuRoundedContainer(
+                      RoundedContainer(
                         height: 55,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
