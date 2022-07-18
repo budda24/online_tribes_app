@@ -27,6 +27,9 @@ class NeuRoundedExpandedContainer extends StatelessWidget {
             height: profCont.isShrinkWrap
                 ? containerHeight.toDouble()
                 : containerHeight.toDouble() + 100,
+            onEnd: () {
+              profileController.updateIsShrinkArrow();
+            },
             width: double.infinity,
             child: Neumorphic(
               margin: const EdgeInsets.fromLTRB(0, 30, 0, 10),
@@ -56,19 +59,22 @@ class NeuRoundedExpandedContainer extends StatelessWidget {
           ),
           Positioned(
             left: 140,
-            top: profCont.isShrinkWrap
-                ? containerHeight.toDouble() - 25
-                : containerHeight + 75,
+            top: profCont.isShrinkArrow
+                ? containerHeight.toDouble() - 30
+                : containerHeight + 70,
             child: InkWell(
-              onTap: () {
-                // profCont.isShrinkWrap = !profCont.isShrinkWrap;
-                // profCont.forceUpdate();
-                profileController.updateIsShrinkWrap();
-              },
-              child: const Icon(
-                Icons.expand_more,
-              ),
-            ),
+                onTap: () {
+                  profileController.updateIsShrinkWrap();
+                },
+                child: profileController.isShrinkWrap
+                    ? profileController.isShrinkArrow
+                        ? Image.asset(
+                            'assets/images/profile/expand_more_arrow.png')
+                        : const SizedBox()
+                    : !profileController.isShrinkArrow
+                        ? Image.asset(
+                            'assets/images/profile/expand_less_arrow.png')
+                        : const SizedBox()),
           ),
         ],
       ),

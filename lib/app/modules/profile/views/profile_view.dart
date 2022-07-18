@@ -9,6 +9,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
 
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
@@ -53,10 +54,9 @@ class ProfileView extends GetView {
                   child: Column(
                     children: [
                       NeuRoundedExpandedContainer(
-
-                          containerHeight: 120,
-                          text: 'text',
-                         ),
+                        containerHeight: 120,
+                        text: lorem(paragraphs: 4, words: 250),
+                      ),
                       const NeuRoundedContainer(
                         height: 55,
                         child: Center(

@@ -108,7 +108,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       onPress: () {
                         controller.closeKeyboard();
                         if (_formKey.currentState!.validate()) {
-                          Get.to(() => ProfileTribeView());
+                          Get.to(() => ProfileView());
                         }
                       },
                       backgroundColour: kColorWhite,
