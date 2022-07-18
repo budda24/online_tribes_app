@@ -35,6 +35,10 @@ dependencies:
   cloud_functions: ^3.3.1
   firebase_storage: ^10.3.1
   animated_splash_screen: ^1.3.0
+  flutter_lorem: ^2.0.0
+  chewie: ^1.3.4
+  video_player: ^2.4.5
+  
 
 
 dev_dependencies:
@@ -56,3 +60,4 @@ flutter:
     - assets/splash_screen/
     - assets/images/authorization_screen/
     - assets/images/authorization_screen/tribel_signs/
+    - assets/icons/
