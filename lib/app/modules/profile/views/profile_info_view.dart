@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/camea_controller.dart';
+import '../../../helpers/const.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../widgets/custom_navigation_bar.dart';
@@ -58,37 +59,49 @@ class ProfileView extends GetView {
                   child: Column(
                     children: [
                       Center(
-                        child: profileController.chewieController != null &&
-                                profileController.chewieController!
-                                    .videoPlayerController.value.isInitialized
-                            ? SizedBox(
-                                width: double.infinity,
-                                height: 300.h,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                                  child: Chewie(
-                                    controller:
-                                        profileController.chewieController!,
+                          child: GetBuilder<ProfileController>(
+                        init: ProfileController(),
+                        builder: (getControllet) =>
+                            profileController.chewieController != null &&
+                                    profileController
+                                        .chewieController!
+                                        .videoPlayerController
+                                        .value
+                                        .isInitialized
+                                ? SizedBox(
+                                    width: double.infinity,
+                                    height: 300.h,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Chewie(
+                                        controller:
+                                            profileController.chewieController!,
+                                      ),
+                                    ),
+                                  )
+                                : Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      spinkit,
+                                      const SizedBox(height: 20),
+                                      const Text('Loading'),
+                                    ],
                                   ),
-                                ),
-                              )
-                            : Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  CircularProgressIndicator(),
-                                  SizedBox(height: 20),
-                                  Text('Loading'),
-                                ],
-                              ),
-                      ),
+                      )),
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 40, right: 40),
+                        padding: const EdgeInsets.only(left: 40, right: 40),
                         child: Column(
                           children: [
                             RoundedExpandedContainer(
-                              containerHeight: 200,
+                              heightToExpand: 100,
+                              containerHeight: 150,
                               text: lorem(paragraphs: 2, words: 26),
+                            ),
+                            RoundedExpandedContainer(
+                              heightToExpand: 200,
+                              containerHeight: 150,
+                              text: lorem(paragraphs: 5, words: 270),
                             ),
                             RoundedContainer(
                               height: oneLineContainerHeight,

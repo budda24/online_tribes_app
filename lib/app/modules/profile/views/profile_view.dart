@@ -35,7 +35,7 @@ class ProfileView extends GetView {
               verticalSpaceTiny,
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
-              
+
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
@@ -55,6 +55,8 @@ class ProfileView extends GetView {
                   child: Column(
                     children: [
                       RoundedExpandedContainer(
+                        heightToExpand: 100,
+
                         containerHeight: 120,
                         text: lorem(paragraphs: 4, words: 250),
                       ),
