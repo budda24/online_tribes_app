@@ -43,46 +43,45 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
               child: Stack(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(
-                         left: 30, right: 30, top: 10),
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, top: 10),
                     child: Column(
                       children: [
                         GetBuilder(
                           init: cameraController,
-                          builder: (CameraController cameraCon) =>
-                              cameraCon.pickedPhoto == null
-                                  ? InkWell(
-                                      child: NeumorphicCircleBackground(
-
-                                        child: MainCirclePhoto.icon(
-                                            screeanheight: 300.h,
-                                            screeanwidth: 250.w,
-                                            icon: Icon(
-                                              Icons.add_a_photo_rounded,
-                                              size: 40,
-                                              color: AppColors.whiteColor,
-                                            )),
-                                      ),
-                                      onTap: () async {
-                                       showModalBottomSheet(
-                                      context: context,
-                                      backgroundColor: AppColors.transparent,
-                                      builder: (BuildContext context) {
-                                        return CustomPhotoPicker();
-                                      });
-                                      },
-                                    )
-                                  : NeumorphicCircleBackground(
-
-                                      child: MainCirclePhoto.file(
-                                        
-                                        screeanheight: 10.h,
-                                        screeanwidth: 10.w,
-                                        file: cameraController.pickedPhoto!,
-                                      ),
-                                    ),
+                          builder: (CameraController cameraCon) => cameraCon
+                                      .pickedPhoto ==
+                                  null
+                              ? InkWell(
+                                  child: NeumorphicCircleBackground(
+                                    child: MainCirclePhoto.icon(
+                                      imageSize: 100,
+                                        screeanheight: 300.h,
+                                        screeanwidth: 250.w,
+                                        icon: Icon(
+                                          Icons.add_a_photo_rounded,
+                                          size: 40,
+                                          color: AppColors.whiteColor,
+                                        )),
+                                  ),
+                                  onTap: () async {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor: AppColors.transparent,
+                                        builder: (BuildContext context) {
+                                          return CustomPhotoPicker();
+                                        });
+                                  },
+                                )
+                              : NeumorphicCircleBackground(
+                                  child: MainCirclePhoto.file(
+                                    imageSize: 100,
+                                    screeanheight: 10.h,
+                                    screeanwidth: 10.w,
+                                    file: cameraController.pickedPhoto!,
+                                  ),
+                                ),
                         ),
-
                         verticalSpaceLarge,
                         CustomTextField(
                           controller: controller.describeYourselfController,
@@ -99,8 +98,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           onPress: () {
                             if (controller.checkIfPhotoUpload() &&
                                 _formKey.currentState!.validate()) {
-                                  Get.to(() => ProfileView());
-                              //Get.to(() => RegistrationAditionalView());
+                              // Get.to(() => ProfileInfoView());
+                              Get.to(() => RegistrationAditionalView());
                             }
                           },
                           backgroundColour: kColorWhite,
@@ -129,7 +128,6 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           radius: 22,
                           child: CircleAvatar(
                             backgroundColor: AppColors.actionColor,
-
                             child: Image.asset(
                               'assets/images/authorization_screen/bulb_icon.png',
                             ),
@@ -147,4 +145,3 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
     );
   }
 }
-

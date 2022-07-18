@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MainCirclePhoto extends StatelessWidget {
   MainCirclePhoto(
       {Key? key,
+      required this.imageSize,
       required this.screeanwidth,
       required this.imagePathN,
       required this.screeanheight})
@@ -14,6 +15,7 @@ class MainCirclePhoto extends StatelessWidget {
 
   MainCirclePhoto.networking(
       {Key? key,
+      required this.imageSize,
       required this.screeanheight,
       required this.screeanwidth,
       required this.imagePathN})
@@ -22,7 +24,7 @@ class MainCirclePhoto extends StatelessWidget {
 
   MainCirclePhoto.file(
       {Key? key,
-      
+      required this.imageSize,
       required this.screeanheight,
       required this.screeanwidth,
       required this.file})
@@ -30,6 +32,7 @@ class MainCirclePhoto extends StatelessWidget {
         super(key: key);
   MainCirclePhoto.icon(
       {Key? key,
+      required this.imageSize,
       required this.screeanheight,
       required this.screeanwidth,
       required this.icon})
@@ -38,16 +41,17 @@ class MainCirclePhoto extends StatelessWidget {
 
   final double screeanheight;
   final double screeanwidth;
-  double? imageSize;
+  double imageSize;
   Icon? icon;
   String imagePathN;
   File? file;
+
   /* final String imagePathL; */
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100.w,
-      height: 100.h,
+      width: imageSize.w,
+      height: imageSize.h,
       decoration: BoxDecoration(
         color: Colors.grey,
         border: Border.all(

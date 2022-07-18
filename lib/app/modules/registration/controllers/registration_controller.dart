@@ -62,7 +62,7 @@ class RegistrationController extends GetxController {
         profileFile: cameraController.pickedVideo!);
 
     userDB.introVideoUrl = await refVideo!.getDownloadURL();
-    userDB.profilePhoto = await refVideo.getDownloadURL();
+    userDB.profilePhoto = await refPhoto!.getDownloadURL();
     userDB.description = describeYourselfController.text;
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =
@@ -85,7 +85,7 @@ class RegistrationController extends GetxController {
   }
 
   bool checkIfVideoUpload() {
-    if (userDB.introVideoUrl != null) {
+    if (cameraController.pickedVideo != null) {
       return true;
     }
     Get.showSnackbar(customSnackbar('Please add Your introduction video'));

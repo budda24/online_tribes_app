@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class ProfileController extends GetxController {
-  RxInt actualIndex = 0.obs;
+  RxInt actualIndex = 1.obs;
 
   bool isShrinkWrap = true;
 

@@ -16,7 +16,8 @@ import '../widgets/custom_navigation_bar.dart';
 
 class ProfileNotyficationsView extends GetView {
   final cameraController = Get.find<CameraController>();
-  final profileController = Get.put(ProfileController());
+  // final profileController = Get.put(ProfileController());
+  final profileController = Get.find<ProfileController>();
 
   ProfileNotyficationsView({Key? key}) : super(key: key);
 
@@ -30,14 +31,15 @@ class ProfileNotyficationsView extends GetView {
         child: SafeArea(
           child: Column(
             children: [
-              verticalSpaceMedium,
+              verticalSpaceTiny,
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
+                    imageSize: 125,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
               ),
-              verticalSpaceLarge,
+              verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -46,7 +48,7 @@ class ProfileNotyficationsView extends GetView {
                   color: AppColors.whiteColor,
                 ),
                 width: double.infinity,
-                height: 381.h,
+                height: 401.h,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(

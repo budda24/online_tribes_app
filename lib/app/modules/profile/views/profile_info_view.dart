@@ -19,11 +19,11 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../widgets/custom_navigation_bar.dart';
 
-class ProfileView extends GetView {
+class ProfileInfoView extends GetView {
   final cameraController = Get.find<CameraController>();
   final profileController = Get.put(ProfileController());
 
-  ProfileView({Key? key}) : super(key: key);
+  ProfileInfoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class ProfileView extends GetView {
               verticalSpaceTiny,
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
-                
+                  imageSize: 125,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
@@ -125,7 +125,7 @@ class ProfileView extends GetView {
                               height: oneLineContainerHeight,
                               child: Center(
                                 child: Text(
-                                  'Hobby 1',
+                                  'Hobby 2',
                                   style: plainTextStyle,
                                 ),
                               ),
