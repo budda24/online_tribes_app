@@ -1,20 +1,12 @@
 import 'package:get/get.dart';
 
 class ProfileController extends GetxController {
-  //TODO: Implement ProfileController
+  RxInt actualIndex = 0.obs;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  bool isShrinkWrap = true;
+
+  void updateIsShrinkWrap() {
+    isShrinkWrap = !isShrinkWrap;
+    update();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

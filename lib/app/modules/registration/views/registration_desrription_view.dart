@@ -120,8 +120,18 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                               return const TribeExamplesDialog();
                             });
                       },
-                      child: Image.asset(
-                        'assets/images/authorization_screen/bulb_icon.png',
+                      child: NeumorphicCircleBackground(
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.whiteColor,
+                          radius: 22,
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.actionColor,
+
+                            child: Image.asset(
+                              'assets/images/authorization_screen/bulb_icon.png',
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),

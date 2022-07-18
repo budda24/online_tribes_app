@@ -106,6 +106,9 @@ class RegistrationController extends GetxController {
     globalController.unFocuseNode();
   }
 
-  @override
-  void onClose() {}
+
+
+
+
+
 }

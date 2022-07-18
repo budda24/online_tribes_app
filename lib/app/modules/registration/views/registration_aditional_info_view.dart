@@ -1,7 +1,9 @@
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+import 'package:flutter_application_1/app/modules/profile/views/Profile_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,13 +15,12 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
+import '../../profile/views/profile_view.dart';
 import '../widgets/time_to_invest_slider.dart';
-import 'registration_upload_video_view.dart';
 
 class RegistrationAditionalView extends GetView<RegistrationController> {
   final _formKey = GlobalKey<FormState>();
-  @override
-  final controller = Get.put(RegistrationController());
+
   final globalController = Get.find<GlobalController>();
   final cameraController = Get.find<CameraController>();
 
@@ -65,7 +66,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       height: 15.h,
                     ),
                     CustomTextField(
-                       controller: controller.hobby1Controller,
+                      controller: controller.hobby1Controller,
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 50),
                       textInputAction: TextInputAction.next,
@@ -80,7 +81,6 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                     ),
                     CustomTextField(
                       controller: controller.hobby2Controller,
-
                       validate: (value) =>
                           controller.validateUser(value: value, lenght: 50),
                       textInputAction: TextInputAction.next,
@@ -100,8 +100,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                               'Time to invest',
                               style: kHintStyle,
                             )),
-                     TimeToInvestSlider(
-                            sliderValue: controller.sliderValue),
+                        TimeToInvestSlider(sliderValue: controller.sliderValue),
                       ],
                     ),
                     verticalSpaceTiny,
@@ -109,7 +108,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       onPress: () {
                         controller.closeKeyboard();
                         if (_formKey.currentState!.validate()) {
-                          Get.to(() => RegistrationUploadVideoView());
+                          Get.to(() => ProfileTribeView());
                         }
                       },
                       backgroundColour: kColorWhite,
