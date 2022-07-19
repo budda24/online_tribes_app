@@ -91,7 +91,7 @@ class RegistrationUploadVideoView extends GetView {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          await cameraController.getFileGallery();
+                          await cameraController.getFileGallery(type: PickedType.video);
                         },
                         child: Image.asset(
                           'assets/images/authorization_screen/upload_video.png',
@@ -109,7 +109,7 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.closeKeyboard();
 
                             if (registrationController.checkIfVideoUpload()) {
-                              /* await registrationController.saveNewUser(); */
+                              await registrationController.saveNewUser();
                               Get.offAllNamed(Routes.PROFILE);
                             }
                           })

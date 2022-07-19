@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/modules/profile/widgets/custom_navigation_bar.dart';
 import 'package:get/get.dart';
 
@@ -19,4 +19,4 @@ class ProfileHomeView extends StatelessWidget {
               .bottomNavigationBarPages[profileController.actualIndex.value],
         ));
   }
-}
+} */

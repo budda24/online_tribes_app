@@ -14,14 +14,28 @@ class CameraController extends GetxController {
 
   PickedType pickedType = PickedType.photo;
 
-  Future<void> getFileGallery() async {
-    final tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
+  Future<void> getFileGallery({required PickedType type}) async {
+    XFile? tmpImagePath;
+    switch (type) {
+      case PickedType.photo:
+        print('picked photo');
+        tmpImagePath = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedType == PickedType.photo) {
+        break;
+      case PickedType.video:
+        print('picked video');
+        tmpImagePath = await _picker.pickVideo(source: ImageSource.gallery);
+        break;
+    }
+
+    if (type == PickedType.photo) {
+      print('assign photo');
       pickedPhoto = File(tmpImagePath!.path);
       update();
     } else {
+      print('assign video');
       pickedVideo = File(tmpImagePath!.path);
+      update();
     }
   }
 

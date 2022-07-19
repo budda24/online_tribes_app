@@ -32,7 +32,7 @@ class CustomPhotoPicker extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                await cameraController.getFileGallery().then((value) async {
+                await cameraController.getFileGallery(type: PickedType.photo).then((value) async {
                   Get.back();
                 });
               },

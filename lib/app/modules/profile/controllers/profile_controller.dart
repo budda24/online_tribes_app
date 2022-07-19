@@ -79,7 +79,7 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() async {
-    /* await getUser(); */
+    await getUser();
 
     super.onInit();
   }
