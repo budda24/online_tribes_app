@@ -15,10 +15,12 @@ final User currentUser = auth.currentUser!;
 final auth = FirebaseAuth.instance;
 
 class Auth {
-  final _uuid = const Uuid();
-  final _globalController = Get.find<GlobalController>();
+  bool phoneCodeSent = false;
 
   String _errorMessage = '';
+  final _globalController = Get.find<GlobalController>();
+  final _uuid = const Uuid();
+  String? _verificationId;
 
   showErrror(String message) {
     Get.showSnackbar(customSnackbar(message));
@@ -44,15 +46,14 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
-//TODO !userCredential only developing processes
-        if (!userCredential.additionalUserInfo!.isNewUser) {
+        if (userCredential.additionalUserInfo!.isNewUser) {
           _globalController.hideLoading();
           Get.offAllNamed(Routes.REGISTRATION);
         } else {
           _globalController.hideLoading();
           //TODO go to profile
-          // Get.offAndToNamed(Routes.PROFIL);
-          Get.offAllNamed(Routes.REGISTRATION);
+         await Get.offAllNamed(Routes.PROFILE);
+         /*  Get.offAllNamed(Routes.REGISTRATION); */
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {
@@ -69,7 +70,9 @@ class Auth {
 
           _globalController.hideLoading();
 
-          Get.offAllNamed(Routes.REGISTRATION);
+          Get.off(() => LoginView());
+          /* Get.offAllNamed(Routes.REGISTRATION); */
+
         }
 
         showErrror(_errorMessage);
@@ -95,32 +98,6 @@ class Auth {
     }
   }
 
-  _verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
-    await auth.signInWithCredential(phoneAuthCredential);
-    _globalController.hideLoading();
-  }
-
-  _verificationFailed(FirebaseAuthException error) {
-    _errorMessage = handlePhoneAuthError(error);
-    showErrror('Phone number verification failed because $_errorMessage');
-  }
-
-  String? _verificationId;
-
-  _codeSent(String verificationId, int? forceResendingToken) async {
-    _verificationId = verificationId;
-    _globalController.hideLoading();
-  }
-
-  _codeAutoRetrievalTimeout(String verificationId) {
-   if(!phoneCodeSent){
-    Get.offAll(() => LoginView());
-   }
-    _globalController.hideLoading();
-
-    return null;
-  }
-
   Future<void> verifyPhoneNumber(String number) async {
     _globalController.showloading();
     try {
@@ -141,8 +118,6 @@ class Auth {
     }
   }
 
-  bool phoneCodeSent = false;
-
   Future<FirebaseAuthException?> signInWithPhoneNumber(String smsCode) async {
     _globalController.showloading();
 
@@ -157,15 +132,13 @@ class Auth {
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         _globalController.hideLoading();
-        
+
         Get.offAllNamed(Routes.REGISTRATION);
       } else {
         //TODO otherwise go to profile
         _globalController.hideLoading();
 
         Get.offAndToNamed(Routes.LOGIN);
-
-
       }
     } on FirebaseAuthException catch (error) {
       _globalController.hideLoading();
@@ -193,5 +166,29 @@ class Auth {
     } on FirebaseException catch (error) {
       print(error);
     }
+  }
+
+  _verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
+    await auth.signInWithCredential(phoneAuthCredential);
+    _globalController.hideLoading();
+  }
+
+  _verificationFailed(FirebaseAuthException error) {
+    _errorMessage = handlePhoneAuthError(error);
+    showErrror('Phone number verification failed because $_errorMessage');
+  }
+
+  _codeSent(String verificationId, int? forceResendingToken) async {
+    _verificationId = verificationId;
+    _globalController.hideLoading();
+  }
+
+  _codeAutoRetrievalTimeout(String verificationId) {
+    if (!phoneCodeSent) {
+      Get.offAll(() => LoginView());
+    }
+    _globalController.hideLoading();
+
+    return null;
   }
 }

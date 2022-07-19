@@ -44,22 +44,21 @@ class UserDB {
   ProfileNotification? profileNotification;
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
-        userId: json["userId"],
-        email: json["email"],
+         userId: json["userId"],
+       email: json["email"],
         phoneNumber: json["phone_number"],
         name: json["name"],
         createdAt: json["createdAt"],
-        requestedTribe: json["requested_tribe"],
+        /* requestedTribe: json["requested_tribe"], */
         description: json["description"],
         introVideoUrl: json["intro_video_url"],
         lifeMotto: json["life_motto"],
         profilePhoto: json["profile_photo"],
-        /* hobby: json["hobby"] , */
         hobbies: Hobbies.fromJson(json["hobbies"]),
         timeToInvest: json["time_to_invest"],
-        attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]),
-        profileNotification:
-            ProfileNotification.fromJson(json["profile_notification"]),
+        /* attendedTribe: AttendedTribe?.fromJson(json["attended_tribe"]), */
+        /* profileNotification:
+            ProfileNotification?.fromJson(json["profile_notification"]), */
       );
 
   Map<String, dynamic> toJson() => {

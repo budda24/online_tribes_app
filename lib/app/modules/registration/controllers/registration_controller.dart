@@ -20,8 +20,7 @@ class RegistrationController extends GetxController {
   final globalController = Get.find<GlobalController>();
   final cameraController = Get.put(CameraController());
 
-  final TextEditingController describeYourselfController =
-      TextEditingController();
+  final TextEditingController describtionController = TextEditingController();
   final TextEditingController lifeMottoController = TextEditingController();
   final TextEditingController hobby1Controller = TextEditingController();
   final TextEditingController hobby2Controller = TextEditingController();
@@ -51,6 +50,8 @@ class RegistrationController extends GetxController {
         fileName: '$fileName${extension(profileFile.path)}');
   }
 
+
+
   Future<void> saveNewUser() async {
     var refPhoto = await uploadFile(
         fileName: 'profileImage',
@@ -63,15 +64,13 @@ class RegistrationController extends GetxController {
 
     userDB.introVideoUrl = await refVideo!.getDownloadURL();
     userDB.profilePhoto = await refPhoto!.getDownloadURL();
-    userDB.description = describeYourselfController.text;
+    userDB.description = describtionController.text;
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =
         Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
     userDB.timeToInvest = sliderValue.value.toInt();
     userDB.email = currentUser.email;
     userDB.phoneNumber = currentUser.phoneNumber;
-    print(
-        'user photo : ${userDB.profilePhoto} user vide : ${userDB.introVideoUrl}');
 
     await UserDBServices().createUser(userDB);
   }
@@ -105,10 +104,4 @@ class RegistrationController extends GetxController {
   closeKeyboard() {
     globalController.unFocuseNode();
   }
-
-
-
-
-
-
 }

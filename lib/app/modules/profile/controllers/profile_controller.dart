@@ -2,9 +2,13 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+
+import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
+import '../../../../infrastructure/fb_services/models/user_model.dart';
 
 class ProfileController extends GetxController {
   RxInt actualIndex = 1.obs;
@@ -12,7 +16,7 @@ class ProfileController extends GetxController {
   bool isShrinkWrap = true;
 
   List<Widget> bottomNavigationBarPages = [
-    ProfileInfoView(),
+    ProfileView(),
     ProfileNotyficationsView(),
     ProfileMyTribeView()
   ];
@@ -20,11 +24,11 @@ class ProfileController extends GetxController {
   /* TargetPlatform? _platform; */
   late VideoPlayerController _videoPlayerController1;
   ChewieController? chewieController;
-  String srcs =
-      "https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4";
+
+  late String profileVideo;
 
   Future<void> initializePlayer() async {
-    _videoPlayerController1 = VideoPlayerController.network(srcs);
+    _videoPlayerController1 = VideoPlayerController.network(profileVideo);
     await Future.wait([
       _videoPlayerController1.initialize(),
     ]);
@@ -38,33 +42,41 @@ class ProfileController extends GetxController {
       autoPlay: false,
       looping: true,
       hideControlsTimer: const Duration(seconds: 1),
-
-      /* additionalOptions: (context) {
-        return <OptionItem>[
-          OptionItem(
-            onTap: toggleVideo,
-            iconData: Icons.live_tv_sharp,
-            title: 'Toggle Video Src',
-          ),
-        ];
-      }, */
-      /* subtitleBuilder: (context, dynamic subtitle) => Container(
-        padding: const EdgeInsets.all(10.0),
-        child: subtitle is InlineSpan
-            ? RichText(
-                text: subtitle,
-              )
-            : Text(
-                subtitle.toString(),
-                style: const TextStyle(color: Colors.black),
-              ),
-      ), */
+      showOptions: false,
     );
+  }
+
+  final TextEditingController describtionController = TextEditingController();
+  final TextEditingController lifeMottoController = TextEditingController();
+  final TextEditingController hobby1Controller = TextEditingController();
+  final TextEditingController hobby2Controller = TextEditingController();
+  final TextEditingController timeToInvestController = TextEditingController();
+
+  var userDbServieces = UserDBServices();
+  UserDB? userDb;
+
+  Future<void> getUser() async {
+    userDb = await userDbServieces.feachUser(auth.currentUser!.uid);
+    assignProfileInfo();
+  }
+
+  void assignProfileInfo() async {
+    describtionController.text = userDb?.description ?? '';
+    lifeMottoController.text = userDb?.lifeMotto ?? '';
+    hobby1Controller.text = userDb?.hobbies?.hobby ?? '';
+    hobby2Controller.text = userDb?.hobbies?.hobby1 ?? '';
+    timeToInvestController.text = userDb?.timeToInvest.toString() ?? '';
+    profileVideo = userDb?.introVideoUrl ??
+        'https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4';
+    update();
+
+    await initializePlayer();
   }
 
   @override
   void onInit() async {
-    await initializePlayer();
+    await getUser();
+
     super.onInit();
   }
 
