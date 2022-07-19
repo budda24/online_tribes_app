@@ -55,6 +55,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                               ? InkWell(
                                   child: NeumorphicCircleBackground(
                                     child: MainCirclePhoto.icon(
+                                      imageSize: 100,
                                         screeanheight: 300.h,
                                         screeanwidth: 250.w,
                                         icon: Icon(
@@ -74,6 +75,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                 )
                               : NeumorphicCircleBackground(
                                   child: MainCirclePhoto.file(
+                                    imageSize: 100,
                                     screeanheight: 10.h,
                                     screeanwidth: 10.w,
                                     file: cameraController.pickedPhoto!,
@@ -96,7 +98,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           onPress: () {
                             if (controller.checkIfPhotoUpload() &&
                                 _formKey.currentState!.validate()) {
-                              /* Get.to(() => ProfileView()); */
+                              // Get.to(() => ProfileInfoView());
                               Get.to(() => RegistrationAditionalView());
                             }
                           },

@@ -6,43 +6,52 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MainCirclePhoto extends StatelessWidget {
   MainCirclePhoto(
-      {required this.screeanwidth,
+      {Key? key,
+      required this.imageSize,
+      required this.screeanwidth,
       required this.imagePathN,
-      /* required this.imagePathL, */
-      required this.screeanheight});
+      required this.screeanheight})
+      : super(key: key);
 
   MainCirclePhoto.networking(
-      {required this.screeanheight,
+      {Key? key,
+      required this.imageSize,
+      required this.screeanheight,
       required this.screeanwidth,
       required this.imagePathN})
-      : file = null;
+      : file = null,
+        super(key: key);
 
   MainCirclePhoto.file(
-      {required this.screeanheight,
+      {Key? key,
+      required this.imageSize,
+      required this.screeanheight,
       required this.screeanwidth,
       required this.file})
-      : imagePathN = '';
+      : imagePathN = '',
+        super(key: key);
   MainCirclePhoto.icon(
-      {required this.screeanheight,
+      {Key? key,
+      required this.imageSize,
+      required this.screeanheight,
       required this.screeanwidth,
       required this.icon})
-      : imagePathN = '';
-
-
+      : imagePathN = '',
+        super(key: key);
 
   final double screeanheight;
   final double screeanwidth;
+  double imageSize;
   Icon? icon;
   String imagePathN;
   File? file;
+
   /* final String imagePathL; */
   @override
   Widget build(BuildContext context) {
     return Container(
-     
-      width: 100.w,
-      height: 100.h,
-      child: icon == null ? null : icon,
+      width: imageSize.w,
+      height: imageSize.h,
       decoration: BoxDecoration(
         color: Colors.grey,
         border: Border.all(
@@ -53,11 +62,14 @@ class MainCirclePhoto extends StatelessWidget {
         image: DecorationImage(
             fit: BoxFit.fill,
             image: file == null
-                ? NetworkImage(imagePathN , )
+                ? NetworkImage(
+                    imagePathN,
+                  )
                 : FileImage(file!)
                     as ImageProvider /* FileImage(file) */ /* fit: BoxFit.fill */
             ),
       ),
+      child: icon,
     );
   }
 }

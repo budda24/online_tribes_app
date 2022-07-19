@@ -1,8 +1,8 @@
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
+import 'package:flutter_application_1/app/modules/registration/views/registration_upload_video_view.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +14,6 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
-import '../../profile/views/profile_info_view.dart';
 import '../widgets/time_to_invest_slider.dart';
 import 'registration_upload_video_view.dart';
 
@@ -44,6 +43,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                   children: [
                     NeumorphicCircleBackground(
                       child: MainCirclePhoto.file(
+                        imageSize: 100,
                           screeanheight: 300.h,
                           screeanwidth: 250.w,
                           file: cameraController.pickedPhoto!),

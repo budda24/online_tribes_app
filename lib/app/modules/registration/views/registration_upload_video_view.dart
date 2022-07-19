@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
@@ -33,6 +34,7 @@ class RegistrationUploadVideoView extends GetView {
               ),
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
+                  imageSize: 100,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
@@ -57,10 +59,24 @@ class RegistrationUploadVideoView extends GetView {
                       SizedBox(
                         height: 40.h,
                       ),
-                      Text(
-                        'Upload your intro video',
-                        style: TextStyle(fontSize: 20.sp),
-                      ),
+                      GetBuilder<CameraController>(
+                          builder: ((cameraContr) =>
+                              cameraContr.pickedVideo == null
+                                  ? Text(
+                                      'Upload your intro video',
+                                      style: TextStyle(fontSize: 20.sp),
+                                    )
+                                  : Row(
+                                      children: [
+                                        Image.asset(
+                                            'assets/images/profile/confirm_sign.png'),
+                                        const SizedBox(width: 20),
+                                        Text(
+                                          'Video successfully loaded',
+                                          style: TextStyle(fontSize: 20.sp),
+                                        )
+                                      ],
+                                    ))),
                       verticalSpaceLarge,
                       GestureDetector(
                         onTap: () async {
@@ -94,8 +110,14 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.closeKeyboard();
 
                             if (registrationController.checkIfVideoUpload()) {
-                              /* await registrationController.saveNewUser(); */
-                              Get.offAllNamed(Routes.PROFILE);
+                              try {
+                                await registrationController.saveNewUser();
+
+                                Get.to(ProfileView());
+                              } catch (e) {
+                                //TODO add error handling
+                                print(e);
+                              }
                             }
                           })
                     ],

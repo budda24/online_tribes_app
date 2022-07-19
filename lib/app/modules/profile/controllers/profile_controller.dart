@@ -8,7 +8,7 @@ import 'package:video_player/video_player.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 
 class ProfileController extends GetxController {
-  RxInt actualIndex = 0.obs;
+  RxInt actualIndex = 1.obs;
 
   bool isShrinkWrap = true;
 

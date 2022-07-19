@@ -16,7 +16,8 @@ import '../widgets/custom_navigation_bar.dart';
 
 class ProfileMyTribeView extends GetView {
   final cameraController = Get.find<CameraController>();
-  final profileController = Get.put(ProfileController());
+  // final profileController = Get.put(ProfileController());
+  final profileController = Get.find<ProfileController>();
 
   ProfileMyTribeView({Key? key}) : super(key: key);
 
@@ -30,14 +31,15 @@ class ProfileMyTribeView extends GetView {
         child: SafeArea(
           child: Column(
             children: [
-              verticalSpaceMedium,
+              verticalSpaceTiny,
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
+                  imageSize: 125,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
               ),
-              verticalSpaceLarge,
+              verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -46,7 +48,7 @@ class ProfileMyTribeView extends GetView {
                   color: AppColors.whiteColor,
                 ),
                 width: double.infinity,
-                height: 381.h,
+                height: 401.h,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
                   child: Column(
@@ -121,11 +123,16 @@ class ProfileMyTribeView extends GetView {
                               'Mothers',
                               style: kHintStyle,
                             ),
-                            SizedBox(
-                                height: 40,
-                                width: 35,
-                                child: Image.asset(
-                                    'assets/images/profile/letter.png')),
+                            InkWell(
+                              onTap: () {
+                                //TODO add logic
+                              },
+                              child: SizedBox(
+                                  height: 40,
+                                  width: 35,
+                                  child: Image.asset(
+                                      'assets/images/profile/letter.png')),
+                            ),
                           ],
                         ),
                       ),
@@ -147,11 +154,17 @@ class ProfileMyTribeView extends GetView {
                               'Travelers',
                               style: kHintStyle,
                             ),
-                            SizedBox(
-                                height: 40,
-                                width: 35,
-                                child: Image.asset(
-                                    'assets/images/profile/letter.png')),
+                            InkWell(
+                              onTap: () {
+
+                                // TODO add logic
+                              },
+                              child: SizedBox(
+                                  height: 40,
+                                  width: 35,
+                                  child: Image.asset(
+                                      'assets/images/profile/letter.png')),
+                            ),
                           ],
                         ),
                       ),
@@ -173,11 +186,16 @@ class ProfileMyTribeView extends GetView {
                               'Pacemakers',
                               style: kHintStyle,
                             ),
-                            SizedBox(
-                                height: 40,
-                                width: 35,
-                                child: Image.asset(
-                                    'assets/images/profile/letter.png')),
+                            InkWell(
+                              onTap: () {
+                                //TODO add logic
+                              },
+                              child: SizedBox(
+                                  height: 40,
+                                  width: 35,
+                                  child: Image.asset(
+                                      'assets/images/profile/letter.png')),
+                            ),
                           ],
                         ),
                       ),

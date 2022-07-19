@@ -16,7 +16,8 @@ import '../widgets/custom_navigation_bar.dart';
 
 class ProfileNotyficationsView extends GetView {
   final cameraController = Get.find<CameraController>();
-  final profileController = Get.put(ProfileController());
+  // final profileController = Get.put(ProfileController());
+  final profileController = Get.find<ProfileController>();
 
   ProfileNotyficationsView({Key? key}) : super(key: key);
 
@@ -30,14 +31,15 @@ class ProfileNotyficationsView extends GetView {
         child: SafeArea(
           child: Column(
             children: [
-              verticalSpaceMedium,
+              verticalSpaceTiny,
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
+                    imageSize: 125,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
               ),
-              verticalSpaceLarge,
+              verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.only(
@@ -46,7 +48,7 @@ class ProfileNotyficationsView extends GetView {
                   color: AppColors.whiteColor,
                 ),
                 width: double.infinity,
-                height: 381.h,
+                height: 401.h,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(
@@ -90,16 +92,26 @@ class ProfileNotyficationsView extends GetView {
                             const Spacer(),
                             Row(
                               children: [
-                                SizedBox(
-                                    height: 40,
-                                    width: 35,
-                                    child: Image.asset(
-                                        'assets/images/profile/confirm_sign.png')),
-                                SizedBox(
-                                    height: 40,
-                                    width: 35,
-                                    child: Image.asset(
-                                        'assets/images/profile/refuse_sign.png')),
+                                InkWell(
+                                  onTap: () {
+                                    //TODO add logic for accept
+                                  },
+                                  child: SizedBox(
+                                      height: 40,
+                                      width: 35,
+                                      child: Image.asset(
+                                          'assets/images/profile/confirm_sign.png')),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    //TODO add logic for refuse
+                                  },
+                                  child: SizedBox(
+                                      height: 40,
+                                      width: 35,
+                                      child: Image.asset(
+                                          'assets/images/profile/refuse_sign.png')),
+                                ),
                               ],
                             )
                           ],
@@ -141,11 +153,16 @@ class ProfileNotyficationsView extends GetView {
                                 )
                               ],
                             ),
-                            SizedBox(
-                                height: 40,
-                                width: 35,
-                                child: Image.asset(
-                                    'assets/images/profile/green_arrow.png')),
+                            InkWell(
+                              onTap: () {
+//TODO add logic
+                              },
+                              child: SizedBox(
+                                  height: 40,
+                                  width: 35,
+                                  child: Image.asset(
+                                      'assets/images/profile/green_arrow.png')),
+                            ),
                           ],
                         ),
                       ),
@@ -185,10 +202,15 @@ class ProfileNotyficationsView extends GetView {
                                 )
                               ],
                             ),
-                            const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 30,
+                            InkWell(
+                              onTap: () {
+                                //TODO add logic delete
+                              },
+                              child: const Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 30,
+                              ),
                             )
                           ],
                         ),
