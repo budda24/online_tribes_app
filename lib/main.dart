@@ -31,7 +31,7 @@ Future<void> _configureFirebaseStorage() async {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
   int configPort = const int.fromEnvironment("STORAGE_EMU_PORT");
   // Android emulator must be pointed to 10.0.2.2
-  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : '127.0.0.1';
   var host = configHost.isNotEmpty ? configHost : defaultHost;
   var port = configPort != 0 ? configPort : 9199;
   await FirebaseStorage.instance.useStorageEmulator(host, port);
@@ -42,7 +42,7 @@ Future<void> _configureFirebaseAuth() async {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
   int configPort = const int.fromEnvironment("AUTH_EMU_PORT");
   // Android emulator must be pointed to 10.0.2.2
-  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : '127.0.0.1';
   var host = configHost.isNotEmpty ? configHost : defaultHost;
   var port = configPort != 0 ? configPort : 9099;
   await FirebaseAuth.instance.useAuthEmulator(host, port);
@@ -54,7 +54,7 @@ void _configureFirebaseFirestore() {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
   int configPort = const int.fromEnvironment("DB_EMU_PORT");
   // Android emulator must be pointed to 10.0.2.2
-  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : '127.0.0.1';
   var host = configHost.isNotEmpty ? configHost : defaultHost;
   var port = configPort != 0 ? configPort : 8080;
 
@@ -68,7 +68,7 @@ void _configureFirebaseFirestore() {
 }
 
 void _configureFirebaseFunction() {
-  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : '127.0.0.1';
   FirebaseFunctions functions = FirebaseFunctions.instance;
   functions.useFunctionsEmulator(defaultHost, 5001);
 }

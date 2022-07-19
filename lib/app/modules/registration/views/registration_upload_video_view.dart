@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../../profile/views/profile_home_view.dart';
 
 class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();
@@ -110,8 +111,19 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.closeKeyboard();
 
                             if (registrationController.checkIfVideoUpload()) {
+<<<<<<< HEAD
                               /* await registrationController.saveNewUser(); */
                               Get.offAllNamed(Routes.PROFILE);
+=======
+                              try {
+                                await registrationController.saveNewUser();
+
+                                Get.to(ProfileView());
+                              } catch (e) {
+                                //TODO add error handling
+                                print(e);
+                              }
+>>>>>>> f98652b993cb419d7204df11438b52ea1d29f587
                             }
                           })
                     ],

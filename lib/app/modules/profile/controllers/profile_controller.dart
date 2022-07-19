@@ -1,30 +1,29 @@
 import 'package:chewie/chewie.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/models/user_model.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
+import '../../../../infrastructure/fb_services/models/user_model.dart';
 
 class ProfileController extends GetxController {
   RxInt actualIndex = 1.obs;
 
   bool isShrinkWrap = true;
 
-  /* final registrationController = Get.find<RegistrationController>(); */
-
-  /* final String describtion = '';
-  final String lifeMotto = '';
-  final String hobby1 = '';
-  final String hobby2 = '';
-  final String timeToInvest = ''; */
+  List<Widget> bottomNavigationBarPages = [
+    ProfileView(),
+    ProfileNotyficationsView(),
+    ProfileMyTribeView()
+  ];
 
   /* TargetPlatform? _platform; */
   late VideoPlayerController _videoPlayerController1;
   ChewieController? chewieController;
-
-  late String profileVideo;
 
   Future<void> initializePlayer() async {
     _videoPlayerController1 = VideoPlayerController.network(profileVideo);
@@ -59,6 +58,9 @@ class ProfileController extends GetxController {
     assignProfileInfo();
   }
 
+  late String profileVideo;
+  late String profilePhoto;
+
   void assignProfileInfo() async {
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
@@ -67,8 +69,11 @@ class ProfileController extends GetxController {
     timeToInvestController.text = userDb?.timeToInvest.toString() ?? '';
     profileVideo = userDb?.introVideoUrl ??
         'https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4';
+    profilePhoto = userDb!.profilePhoto!;
+    print(profilePhoto);
+    print(profileVideo);
     update();
-    
+
     await initializePlayer();
   }
 

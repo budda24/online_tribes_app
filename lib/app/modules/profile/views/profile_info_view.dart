@@ -6,7 +6,6 @@ import 'package:flutter_application_1/app/modules/profile/controllers/profile_co
 import 'package:flutter_application_1/app/modules/profile/widgets/rounded_container.dart';
 import 'package:flutter_application_1/app/modules/profile/widgets/rounded_expanded_container.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -107,7 +106,22 @@ class ProfileView extends GetView<ProfileController> {
                                   containerHeight: 150,
                                   text: controller.lifeMottoController.text,
                                 ),
-                                /* RoundedContainer(
+                        ])),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 40, right: 40),
+                          child: Column(
+                            children: [
+                              RoundedExpandedContainer(
+                                heightToExpand: 100,
+                                containerHeight: 150,
+                                text: controller.describtionController.text,
+                              ),
+                              RoundedExpandedContainer(
+                                heightToExpand: 200,
+                                containerHeight: 150,
+                                text: controller.lifeMottoController.text,
+                              ),
+                              /* RoundedContainer(
                                   height: oneLineContainerHeight,
                                   child: Center(
                                     child: Text(
@@ -116,35 +130,34 @@ class ProfileView extends GetView<ProfileController> {
                                     ),
                                   ),
                                 ), */
-                                RoundedContainer(
-                                  height: oneLineContainerHeight,
-                                  child: Center(
-                                    child: Text(
-                                      controller.hobby1Controller.text,
-                                      style: plainTextStyle,
-                                    ),
+                              RoundedContainer(
+                                height: oneLineContainerHeight,
+                                child: Center(
+                                  child: Text(
+                                    controller.hobby1Controller.text,
+                                    style: plainTextStyle,
                                   ),
                                 ),
-                                RoundedContainer(
-                                  height: oneLineContainerHeight,
-                                  child: Center(
-                                    child: Text(
-                                      controller.hobby2Controller.text,
-                                      style: plainTextStyle,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                                // RoundedContainer(
+                                //   height: oneLineContainerHeight,
+                                //   child: Center(
+                                //     child: Text(
+                                //       controller.hobby2Controller.text,
+                                //       style: plainTextStyle,
+                                //     ),
+                                //   ),
+                                // ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              );
-            }
-          ),
+                ),
+              ],
+            );
+          }),
         ),
       ),
     );
