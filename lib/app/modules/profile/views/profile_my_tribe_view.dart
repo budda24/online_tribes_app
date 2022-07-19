@@ -24,8 +24,7 @@ class ProfileMyTribeView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar:
-          CustomNavigationBar(actualIndex: profileController.actualIndex),
+     
       backgroundColor: kMainColor,
       body: SingleChildScrollView(
         child: SafeArea(

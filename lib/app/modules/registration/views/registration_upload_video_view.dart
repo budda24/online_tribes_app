@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../../profile/views/profile_home_view.dart';
 
 class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();

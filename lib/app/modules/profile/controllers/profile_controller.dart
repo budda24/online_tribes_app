@@ -1,4 +1,7 @@
 import 'package:chewie/chewie.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
@@ -7,6 +10,12 @@ class ProfileController extends GetxController {
   RxInt actualIndex = 1.obs;
 
   bool isShrinkWrap = true;
+
+  List<Widget> bottomNavigationBarPages = [
+    ProfileInfoView(),
+    ProfileNotyficationsView(),
+    ProfileMyTribeView()
+  ];
 
   /* TargetPlatform? _platform; */
   late VideoPlayerController _videoPlayerController1;
