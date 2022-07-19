@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
@@ -14,7 +13,6 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
-import '../../profile/views/profile_home_view.dart';
 
 class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();
@@ -35,7 +33,7 @@ class RegistrationUploadVideoView extends GetView {
               ),
               NeumorphicCircleBackground(
                 child: MainCirclePhoto.file(
-                  imageSize: 100,
+                    imageSize: 100,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
@@ -111,19 +109,8 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.closeKeyboard();
 
                             if (registrationController.checkIfVideoUpload()) {
-<<<<<<< HEAD
                               /* await registrationController.saveNewUser(); */
                               Get.offAllNamed(Routes.PROFILE);
-=======
-                              try {
-                                await registrationController.saveNewUser();
-
-                                Get.to(ProfileView());
-                              } catch (e) {
-                                //TODO add error handling
-                                print(e);
-                              }
->>>>>>> f98652b993cb419d7204df11438b52ea1d29f587
                             }
                           })
                     ],

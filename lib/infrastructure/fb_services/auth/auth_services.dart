@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 
@@ -52,8 +53,10 @@ class Auth {
         } else {
           _globalController.hideLoading();
           //TODO go to profile
-         await Get.offAllNamed(Routes.PROFILE);
-         /*  Get.offAllNamed(Routes.REGISTRATION); */
+          print('go to profile');
+           await Get.offAllNamed(Routes.PROFILE);
+          /* Get.to(ProfileView()); */
+          /*  Get.offAllNamed(Routes.REGISTRATION); */
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {

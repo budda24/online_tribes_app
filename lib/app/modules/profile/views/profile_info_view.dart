@@ -41,13 +41,13 @@ class ProfileView extends GetView<ProfileController> {
               return Column(
                 children: [
                   verticalSpaceTiny,
-                  NeumorphicCircleBackground(
+                  /* NeumorphicCircleBackground(
                     child: MainCirclePhoto.file(
                       imageSize: 100,
                         screeanheight: 300.h,
                         screeanwidth: 250.w,
                         file: cameraController.pickedPhoto!),
-                  ),
+                  ), */
                   verticalSpaceSmall,
                   Container(
                     decoration: BoxDecoration(

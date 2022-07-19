@@ -15,10 +15,10 @@ class ProfileController extends GetxController {
 
   bool isShrinkWrap = true;
 
-  List<Widget> bottomNavigationBarPages = [
-    ProfileView(),
-    ProfileNotyficationsView(),
-    ProfileMyTribeView()
+  List<Type> bottomNavigationBarPages = [
+    ProfileView,
+    ProfileNotyficationsView,
+    ProfileMyTribeView
   ];
 
   /* TargetPlatform? _platform; */
