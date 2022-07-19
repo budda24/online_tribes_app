@@ -1,4 +1,4 @@
-import 'package:chewie/chewie.dart';
+/* import 'package:chewie/chewie.dart'; */
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
@@ -17,24 +17,29 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../registration/widgets/neumorphic_circle_background.dart';
 import '../widgets/custom_navigation_bar.dart';
+import '../widgets/video_player.dart';
 
-class ProfileView extends GetView<ProfileController> {
+class ProfileInfoView extends GetView<ProfileController> {
   final cameraController = Get.put(CameraController());
   @override
   final controller = Get.put(ProfileController());
 
-  ProfileView({Key? key}) : super(key: key);
+  ProfileInfoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const int oneLineContainerHeight = 60;
 
-    return Scaffold(
-      bottomNavigationBar:
-          CustomNavigationBar(actualIndex: controller.actualIndex),
-      backgroundColor: kMainColor,
-      body: SingleChildScrollView(
-        child: SafeArea(
+    return GestureDetector(
+      onTap: () {
+        print('GestureDetector');
+        controller.videoController.showAndHideOverlay(false);
+      },
+      child: Scaffold(
+        bottomNavigationBar:
+            CustomNavigationBar(actualIndex: controller.actualIndex),
+        backgroundColor: kMainColor,
+        body: SafeArea(
           child: GetBuilder<ProfileController>(builder: (vontroller) {
             return Column(
               children: [
@@ -62,30 +67,30 @@ class ProfileView extends GetView<ProfileController> {
                         Center(
                             child: GetBuilder<ProfileController>(
                           init: ProfileController(),
-                          builder: (getControllet) => controller
-                                          .chewieController !=
-                                      null &&
-                                  controller.chewieController!
-                                      .videoPlayerController.value.isInitialized
-                              ? SizedBox(
-                                  width: double.infinity,
-                                  height: 300.h,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Chewie(
-                                      controller: controller.chewieController!,
+                          builder: (getControllet) =>
+                              controller.videoController != null
+                                  ? SizedBox(
+                                      width: double.infinity,
+                                      height: 300.h,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 0.1.sw),
+                                        child: CustomVideoPlayer(
+                                          videoController:
+                                              controller.videoController,
+                                          videoSrc: controller.profileVideo,
+                                        ),
+                                      ),
+                                    )
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        spinkit,
+                                        const SizedBox(height: 20),
+                                        const Text('Loading'),
+                                      ],
                                     ),
-                                  ),
-                                )
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    spinkit,
-                                    const SizedBox(height: 20),
-                                    const Text('Loading'),
-                                  ],
-                                ),
                         )),
                         Padding(
                           padding: const EdgeInsets.only(left: 40, right: 40),
@@ -94,12 +99,12 @@ class ProfileView extends GetView<ProfileController> {
                               RoundedExpandedContainer(
                                 heightToExpand: 100,
                                 containerHeight: 150,
-                                text: controller.describtionController.text,
+                                text: controller.lifeMottoController.text,
                               ),
                               RoundedExpandedContainer(
                                 heightToExpand: 200,
                                 containerHeight: 150,
-                                text: controller.lifeMottoController.text,
+                                text: controller.describtionController.text,
                               ),
                               RoundedContainer(
                                 height: oneLineContainerHeight,

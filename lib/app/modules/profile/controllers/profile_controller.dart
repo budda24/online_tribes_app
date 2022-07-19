@@ -1,14 +1,16 @@
-import 'package:chewie/chewie.dart';
+/* import 'package:chewie/chewie.dart'; */
+
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
+import 'package:video_viewer/video_viewer.dart';
+
+import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
+import '../../../../infrastructure/fb_services/models/user_model.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
-
-import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
-import '../../../../infrastructure/fb_services/models/user_model.dart';
 
 class ProfileController extends GetxController {
   RxInt actualIndex = 1.obs;
@@ -16,33 +18,14 @@ class ProfileController extends GetxController {
   bool isShrinkWrap = true;
 
   List<Type> bottomNavigationBarPages = [
-    ProfileView,
+    ProfileInfoView,
     ProfileNotyficationsView,
     ProfileMyTribeView
   ];
 
-  /* TargetPlatform? _platform; */
-  late VideoPlayerController _videoPlayerController1;
-  ChewieController? chewieController;
 
-  Future<void> initializePlayer() async {
-    _videoPlayerController1 = VideoPlayerController.network(profileVideo);
-    await Future.wait([
-      _videoPlayerController1.initialize(),
-    ]);
-    _createChewieController();
-    update();
-  }
 
-  void _createChewieController() {
-    chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController1,
-      autoPlay: false,
-      looping: true,
-      hideControlsTimer: const Duration(seconds: 1),
-      showOptions: false,
-    );
-  }
+  final VideoViewerController videoController = VideoViewerController();
 
   final TextEditingController describtionController = TextEditingController();
   final TextEditingController lifeMottoController = TextEditingController();
@@ -70,11 +53,10 @@ class ProfileController extends GetxController {
     profileVideo = userDb?.introVideoUrl ??
         'https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4';
     profilePhoto = userDb!.profilePhoto!;
-    print(profilePhoto);
-    print(profileVideo);
+
     update();
 
-    await initializePlayer();
+    /* await initializePlayer(); */
   }
 
   @override
@@ -82,12 +64,5 @@ class ProfileController extends GetxController {
     await getUser();
 
     super.onInit();
-  }
-
-  @override
-  void onClose() {
-    _videoPlayerController1.dispose();
-    chewieController?.dispose();
-    super.onClose();
   }
 }

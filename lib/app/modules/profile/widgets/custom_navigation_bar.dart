@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
 import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/models/user_model.dart';
 import 'package:get/get.dart';
 
 import '../../../helpers/main_constants.dart';
@@ -54,14 +53,14 @@ class CustomNavigationBar extends StatelessWidget {
                   BottomNavBarItem(
                       onTap: () {
                         actualIndex.value = 1;
-                         Get.to(ProfileView());
+                        Get.to(ProfileInfoView());
                       },
                       title: 'My Profile',
                       imagePath: 'assets/images/profile/tribe.png'),
                   BottomNavBarItem(
                       onTap: () {
                         actualIndex.value = 2;
-                         Get.to(ProfileNotyficationsView());
+                        Get.to(ProfileNotyficationsView());
                       },
                       title: 'Notifications',
                       imagePath: 'assets/images/profile/bell.png'),
