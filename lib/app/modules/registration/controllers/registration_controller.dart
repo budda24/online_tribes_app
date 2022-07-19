@@ -63,7 +63,7 @@ class RegistrationController extends GetxController {
         profileFile: cameraController.pickedVideo!);
 
     userDB.introVideoUrl = await refVideo!.getDownloadURL();
-    userDB.profilePhoto = await refPhoto!.getDownloadURL();
+    userDB.profilePhoto = await refVideo.getDownloadURL();
     userDB.description = describtionController.text;
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =

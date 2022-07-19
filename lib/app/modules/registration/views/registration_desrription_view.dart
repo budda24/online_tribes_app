@@ -98,7 +98,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           onPress: () {
                             if (controller.checkIfPhotoUpload() &&
                                 _formKey.currentState!.validate()) {
-                              // Get.to(() => ProfileInfoView());
+                              /* Get.to(() => ProfileView()); */
                               Get.to(() => RegistrationAditionalView());
                             }
                           },
