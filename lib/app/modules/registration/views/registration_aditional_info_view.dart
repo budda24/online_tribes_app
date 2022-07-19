@@ -16,6 +16,7 @@ import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
 import '../../profile/views/profile_info_view.dart';
 import '../widgets/time_to_invest_slider.dart';
+import 'registration_upload_video_view.dart';
 
 class RegistrationAditionalView extends GetView<RegistrationController> {
   final _formKey = GlobalKey<FormState>();
@@ -107,7 +108,8 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                       onPress: () {
                         controller.closeKeyboard();
                         if (_formKey.currentState!.validate()) {
-                          Get.to(() => ProfileView());
+                          /* Get.to(() => ProfileView()); */
+                          Get.to(RegistrationUploadVideoView());
                         }
                       },
                       backgroundColour: kColorWhite,

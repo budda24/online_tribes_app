@@ -4,6 +4,7 @@ import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -17,7 +18,7 @@ class RegistrationUploadVideoView extends GetView {
   final cameraController = Get.find<CameraController>();
   final registrationController = Get.find<RegistrationController>();
 
-   RegistrationUploadVideoView({Key? key}) : super(key: key);
+  RegistrationUploadVideoView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,6 @@ class RegistrationUploadVideoView extends GetView {
                     screeanwidth: 250.w,
                     file: cameraController.pickedPhoto!),
               ),
-
               SizedBox(
                 height: 40.h,
               ),
@@ -51,8 +51,7 @@ class RegistrationUploadVideoView extends GetView {
                 width: double.infinity,
                 height: 460.h,
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 30, right: 30, top: 10),
+                  padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(
                     children: [
                       SizedBox(
@@ -95,7 +94,8 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.closeKeyboard();
 
                             if (registrationController.checkIfVideoUpload()) {
-                              await registrationController.saveNewUser();
+                              /* await registrationController.saveNewUser(); */
+                              Get.offAllNamed(Routes.PROFILE);
                             }
                           })
                     ],

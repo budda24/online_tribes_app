@@ -53,13 +53,6 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => ProfileView(),
       binding: ProfileBinding(),
-      /* children: [
-        GetPage(
-          name: _Paths.PROFILE,
-          page: () => ProfileView(),
-          binding: ProfileBinding(),
-        ),
-      ], */
     ),
   ];
 }
