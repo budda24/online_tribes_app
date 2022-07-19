@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
+import 'package:flutter_application_1/app/modules/registration/views/registration_aditional_info_view.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
 // Package imports:
@@ -16,7 +17,6 @@ import '../../profile/views/profile_info_view.dart';
 import '../widgets/custom_photo_picker.dart';
 import '../widgets/neumorphic_circle_background.dart';
 import '../widgets/tribe_examples_dialog.dart';
-import 'registration_aditional_info_view.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
@@ -84,7 +84,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                         ),
                         verticalSpaceLarge,
                         CustomTextField(
-                          controller: controller.describeYourselfController,
+                          controller: controller.describtionController,
                           /* validate: (value) => controller.validateUser(
                               value: value, lenght: 1500), */
                           hintText: 'Describe yourself',
@@ -98,7 +98,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           onPress: () {
                             if (controller.checkIfPhotoUpload() &&
                                 _formKey.currentState!.validate()) {
-                              // Get.to(() => ProfileInfoView());
+                              /* Get.to(() => ProfileView()); */
                               Get.to(() => RegistrationAditionalView());
                             }
                           },

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_but
 import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -109,14 +110,8 @@ class RegistrationUploadVideoView extends GetView {
                             registrationController.closeKeyboard();
 
                             if (registrationController.checkIfVideoUpload()) {
-                              try {
-                                await registrationController.saveNewUser();
-
-                                Get.to(ProfileInfoView());
-                              } catch (e) {
-                                //TODO add error handling
-                                print(e);
-                              }
+                              /* await registrationController.saveNewUser(); */
+                              Get.offAllNamed(Routes.PROFILE);
                             }
                           })
                     ],

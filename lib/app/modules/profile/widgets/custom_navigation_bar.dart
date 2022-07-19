@@ -54,7 +54,7 @@ class CustomNavigationBar extends StatelessWidget {
                   BottomNavBarItem(
                       onTap: () {
                         actualIndex.value = 1;
-                         Get.to(ProfileInfoView());
+                         Get.to(ProfileView());
                       },
                       title: 'My Profile',
                       imagePath: 'assets/images/profile/tribe.png'),

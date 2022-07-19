@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 class UserCloudStorageServices {
 
   const UserCloudStorageServices();
+
   Future<Reference?> uploadFile(
       {required io.File imageToUpload,
       required String fileName,
