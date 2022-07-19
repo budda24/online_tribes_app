@@ -24,8 +24,6 @@ class ProfileController extends GetxController {
   late VideoPlayerController _videoPlayerController1;
   ChewieController? chewieController;
 
-  late String profileVideo;
-
   Future<void> initializePlayer() async {
     _videoPlayerController1 = VideoPlayerController.network(profileVideo);
     await Future.wait([
@@ -59,6 +57,9 @@ class ProfileController extends GetxController {
     assignProfileInfo();
   }
 
+  late String profileVideo;
+  late String profilePhoto;
+
   void assignProfileInfo() async {
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
@@ -67,8 +68,11 @@ class ProfileController extends GetxController {
     timeToInvestController.text = userDb?.timeToInvest.toString() ?? '';
     profileVideo = userDb?.introVideoUrl ??
         'https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4';
+    profilePhoto = userDb!.profilePhoto!;
+    print(profilePhoto);
+    print(profileVideo);
     update();
-    
+
     await initializePlayer();
   }
 
