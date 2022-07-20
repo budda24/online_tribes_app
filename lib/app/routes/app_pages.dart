@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/app/modules/profile/views/profile_home_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/authorization/bindings/login_binding.dart';
@@ -48,7 +49,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => ProfileInfoView(),
+      page: () => ProfileHomeView(),
       binding: ProfileBinding(),
     ),
   ];

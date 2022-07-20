@@ -2,28 +2,17 @@
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
-import 'package:video_viewer/video_viewer.dart';
+import 'package:video_viewer/domain/bloc/controller.dart';
 
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
+
 import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 
 class ProfileController extends GetxController {
-  RxInt actualIndex = 1.obs;
+  RxInt actualIndex = 0.obs;
 
   bool isShrinkWrap = true;
-
-  List<Type> bottomNavigationBarPages = [
-    ProfileInfoView,
-    ProfileNotyficationsView,
-    ProfileMyTribeView
-  ];
-
-
 
   final VideoViewerController videoController = VideoViewerController();
 
