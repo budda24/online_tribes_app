@@ -1,5 +1,8 @@
 /* import 'package:chewie/chewie.dart'; */
 
+import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_accepted.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_invited.dart';
+import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_rejected.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
@@ -36,25 +39,48 @@ class ProfileController extends GetxController {
 
   Future<void> getUser() async {
     userDb = await userDbServieces.feachUser(auth.currentUser!.uid);
-    print('user id : ${auth.currentUser!.uid}feched user$userDb');
     assignProfileInfo();
   }
 
   late String profileVideo;
-  late String profilePhoto;
-
+  String profilePhoto = '';
   void assignProfileInfo() async {
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
     hobby1Controller.text = userDb?.hobbies?.hobby ?? '';
     hobby2Controller.text = userDb?.hobbies?.hobby1 ?? '';
     timeToInvestController.text = userDb?.timeToInvest.toString() ?? '';
-    profileVideo = userDb?.introVideoUrl ??
-        'https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4';
+    profileVideo = userDb!.introVideoUrl!;
     profilePhoto = userDb!.profilePhoto!;
-    print('profile photo:$profilePhoto');
 
     update();
+  }
+
+  ProfileNotification get _notification {
+    var userNotification = userDb?.profileNotification;
+    return ProfileNotification(
+      acceptedRequest: userNotification?.acceptedRequest,
+      rejectedRequest: userNotification?.rejectedRequest,
+      tribalRequest: userNotification?.tribalRequest,
+    );
+  }
+
+  List<Widget> get notificationWidgets {
+    List<Widget> notificationWidgetList = [];
+
+    _notification.acceptedRequest?.forEach((e) {
+      notificationWidgetList.add(const NotificationTileAccepted());
+    });
+    _notification.rejectedRequest?.forEach((e) {
+      notificationWidgetList.add(const NotificationTileRejected());
+    });
+    _notification.tribalRequest?.forEach((e) {
+      notificationWidgetList.add(const NotificationTileInvited());
+    });
+
+    notificationWidgetList.shuffle();
+
+    return notificationWidgetList;
   }
 
   @override

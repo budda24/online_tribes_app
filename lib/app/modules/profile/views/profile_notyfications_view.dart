@@ -13,10 +13,12 @@ import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../widgets/custom_navigation_bar.dart';
+import '../widgets/noticification_tile_accepted.dart';
+import '../widgets/noticification_tile_invited.dart';
+import '../widgets/noticification_tile_rejected.dart';
 
 class ProfileNotyficationsView extends GetView {
   final cameraController = Get.find<CameraController>();
-  // final profileController = Get.put(ProfileController());
   final profileController = Get.find<ProfileController>();
 
   ProfileNotyficationsView({Key? key}) : super(key: key);
@@ -24,20 +26,18 @@ class ProfileNotyficationsView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
+
       backgroundColor: kMainColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
               verticalSpaceTiny,
-              NeumorphicCircleBackground(
-                child: MainCirclePhoto.file(
-                    imageSize: 125,
-                    screeanheight: 300.h,
-                    screeanwidth: 250.w,
-                    file: cameraController.pickedPhoto!),
-              ),
+              MainCirclePhoto.networking(
+                  imageSize: 125,
+                  screeanheight: 300.h,
+                  screeanwidth: 250.w,
+                  imagePathN: profileController.profilePhoto),
               verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(
@@ -52,168 +52,7 @@ class ProfileNotyficationsView extends GetView {
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(
                     children: [
-                      RoundedContainer(
-                        height: 55,
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 26,
-                                  width: 26,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Image.asset(
-                                        'assets/images/authorization_screen/tribel_signs/business_tribe.png'),
-                                  ),
-                                ),
-                                const Text('Peacemakers')
-                              ],
-                            ),
-                            horizontalSpaceMedium,
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 26,
-                                  width: 36,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Image.asset(
-                                        'assets/images/profile/invited_sign.png'),
-                                  ),
-                                ),
-                                const Text(
-                                  'Invited',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            const Spacer(),
-                            Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    //TODO add logic for accept
-                                  },
-                                  child: SizedBox(
-                                      height: 40,
-                                      width: 35,
-                                      child: Image.asset(
-                                          'assets/images/profile/confirm_sign.png')),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    //TODO add logic for refuse
-                                  },
-                                  child: SizedBox(
-                                      height: 40,
-                                      width: 35,
-                                      child: Image.asset(
-                                          'assets/images/profile/refuse_sign.png')),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      RoundedContainer(
-                        height: 55,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 26,
-                                  width: 26,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Image.asset(
-                                        'assets/images/authorization_screen/tribel_signs/artist_tribe.png'),
-                                  ),
-                                ),
-                                const Text('Drawers')
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 26,
-                                  width: 36,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Image.asset(
-                                        'assets/images/profile/shake_hands.png'),
-                                  ),
-                                ),
-                                const Text(
-                                  'Accepted',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            InkWell(
-                              onTap: () {
-//TODO add logic
-                              },
-                              child: SizedBox(
-                                  height: 40,
-                                  width: 35,
-                                  child: Image.asset(
-                                      'assets/images/profile/green_arrow.png')),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RoundedContainer(
-                        height: 55,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 26,
-                                  width: 26,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Image.asset(
-                                        'assets/images/authorization_screen/tribel_signs/writer_tribe.png'),
-                                  ),
-                                ),
-                                const Text('Inkers')
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 26,
-                                  width: 26,
-                                  child: FittedBox(
-                                    fit: BoxFit.fill,
-                                    child: Image.asset(
-                                        'assets/images/profile/happy_face.png'),
-                                  ),
-                                ),
-                                const Text(
-                                  'Invited',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            InkWell(
-                              onTap: () {
-                                //TODO add logic delete
-                              },
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.red,
-                                size: 30,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      ...profileController.notificationWidgets
                     ],
                   ),
                 ),
@@ -225,3 +64,7 @@ class ProfileNotyficationsView extends GetView {
     );
   }
 }
+
+
+
+

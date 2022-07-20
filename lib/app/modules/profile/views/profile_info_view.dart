@@ -44,13 +44,11 @@ class ProfileInfoView extends GetView<ProfileController> {
             return Column(
               children: [
                 verticalSpaceTiny,
-                NeumorphicCircleBackground(
-                  child: MainCirclePhoto.networking(
-                      imageSize: 100,
-                      screeanheight: 300.h,
-                      screeanwidth: 250.w,
-                      imagePathN: controller.profilePhoto),
-                ),
+                MainCirclePhoto.networking(
+                    imageSize: 100,
+                    screeanheight: 300.h,
+                    screeanwidth: 250.w,
+                    imagePathN: controller.profilePhoto),
                 verticalSpaceSmall,
                 Container(
                   decoration: BoxDecoration(

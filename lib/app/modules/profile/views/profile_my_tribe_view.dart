@@ -24,20 +24,18 @@ class ProfileMyTribeView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
+
       backgroundColor: kMainColor,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
               verticalSpaceTiny,
-              NeumorphicCircleBackground(
-                child: MainCirclePhoto.file(
-                  imageSize: 125,
-                    screeanheight: 300.h,
-                    screeanwidth: 250.w,
-                    file: cameraController.pickedPhoto!),
-              ),
+              MainCirclePhoto.file(
+                imageSize: 125,
+                  screeanheight: 300.h,
+                  screeanwidth: 250.w,
+                  file: cameraController.pickedPhoto!),
               verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(

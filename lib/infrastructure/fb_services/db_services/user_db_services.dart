@@ -17,7 +17,7 @@ class UserDBServices {
 
   Future<UserDB?> feachUser(String userId) async {
     var snapshot = await _db.collection('USERS').doc(userId).get();
-    snapshot.reference.printInfo();
+
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();

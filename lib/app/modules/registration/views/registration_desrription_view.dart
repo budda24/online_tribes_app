@@ -73,18 +73,17 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                                         });
                                   },
                                 )
-                              : NeumorphicCircleBackground(
-                                  child: MainCirclePhoto.file(
-                                    imageSize: 100,
-                                    screeanheight: 10.h,
-                                    screeanwidth: 10.w,
-                                    file: cameraController.pickedPhoto!,
-                                  ),
-                                ),
+                              : MainCirclePhoto.file(
+                                imageSize: 100,
+                                screeanheight: 10.h,
+                                screeanwidth: 10.w,
+                                file: cameraController.pickedPhoto!,
+                              ),
                         ),
                         verticalSpaceLarge,
                         CustomTextField(
                           controller: controller.describtionController,
+                          //TODO switch on  validation
                           /* validate: (value) => controller.validateUser(
                               value: value, lenght: 1500), */
                           hintText: 'Describe yourself',
