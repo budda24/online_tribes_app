@@ -2,7 +2,7 @@
 
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:video_player/video_player.dart';
+
 import 'package:video_viewer/video_viewer.dart';
 
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
@@ -23,8 +23,6 @@ class ProfileController extends GetxController {
     ProfileMyTribeView
   ];
 
-
-
   final VideoViewerController videoController = VideoViewerController();
 
   final TextEditingController describtionController = TextEditingController();
@@ -38,6 +36,7 @@ class ProfileController extends GetxController {
 
   Future<void> getUser() async {
     userDb = await userDbServieces.feachUser(auth.currentUser!.uid);
+    print('user id : ${auth.currentUser!.uid}feched user$userDb');
     assignProfileInfo();
   }
 
@@ -53,10 +52,9 @@ class ProfileController extends GetxController {
     profileVideo = userDb?.introVideoUrl ??
         'https://assets.mixkit.co/videos/preview/mixkit-spinning-around-the-earth-29351-large.mp4';
     profilePhoto = userDb!.profilePhoto!;
+    print('profile photo:$profilePhoto');
 
     update();
-
-    /* await initializePlayer(); */
   }
 
   @override

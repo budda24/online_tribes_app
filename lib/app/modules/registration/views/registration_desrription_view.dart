@@ -88,8 +88,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                           /* validate: (value) => controller.validateUser(
                               value: value, lenght: 1500), */
                           hintText: 'Describe yourself',
-                          maxline: 10,
-                          minLine: 2,
+                          maxline: 14,
+                          minLine: 8,
                           height: 307.h,
                           width: 400.w,
                         ),
