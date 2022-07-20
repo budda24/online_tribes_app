@@ -13,8 +13,7 @@ import '../../../controllers/camea_controller.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
 class ProfileNotyficationsView extends GetView<CameraController> {
-  // final cameraController = Get.find<CameraController>();
-  // final profileController = Get.put(ProfileController());
+ 
    final profileController = Get.find<ProfileController>();
 
   ProfileNotyficationsView({Key? key}) : super(key: key);

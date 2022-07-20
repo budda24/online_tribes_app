@@ -14,9 +14,7 @@ import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
-  //  final cameraController = Get.find<CameraController>();
-  // final profileController = Get.put(ProfileController());
-  //  final cameraController = Get.put(CameraController());
+
    final profileController = Get.find<ProfileController>();
 
   ProfileMyTribeView({Key? key}) : super(key: key);

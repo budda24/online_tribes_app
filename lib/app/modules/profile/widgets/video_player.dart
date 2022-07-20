@@ -24,10 +24,10 @@ class CustomVideoPlayer extends StatelessWidget {
           progressBarStyle: ProgressBarStyle(
               backgroundColor: AppColors.actionColor,
               bar: BarStyle.progress(
-                background: AppColors.whiteColor,
                 color: AppColors.actionColor,
-                height: 0,
+                height: 1,
               )),
+              
           loading: spinkit,
           volumeBarStyle: VolumeBarStyle(
               bar: BarStyle.volume(background: AppColors.actionColor)),

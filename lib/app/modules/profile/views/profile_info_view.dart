@@ -17,12 +17,6 @@ import '../../registration/widgets/neumorphic_circle_background.dart';
 import '../widgets/video_player.dart';
 
 class ProfileInfoView extends StatelessWidget {
-  // final cameraController = Get.put(CameraController());
-  // @override
-  // final controller = Get.put(ProfileController());
-
-  //  final cameraController = Get.find<CameraController>();
-  // final profileController = Get.put(ProfileController());
   final profileController = Get.find<ProfileController>();
 
   ProfileInfoView({Key? key}) : super(key: key);
@@ -34,7 +28,6 @@ class ProfileInfoView extends StatelessWidget {
     return SafeArea(
       child: GestureDetector(
         onTap: () {
-          print('GestureDetector');
           profileController.videoController.showAndHideOverlay(false);
         },
         child: GetBuilder<ProfileController>(builder: (vontroller) {
@@ -71,8 +64,8 @@ class ProfileInfoView extends StatelessWidget {
                                 width: double.infinity,
                                 height: 300.h,
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 0.1.sw),
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 0.1.sw),
                                   child: CustomVideoPlayer(
                                     videoController:
                                         profileController.videoController,
@@ -96,14 +89,13 @@ class ProfileInfoView extends StatelessWidget {
                             RoundedExpandedContainer(
                               heightToExpand: 100,
                               containerHeight: 150,
-                              text:
-                                  profileController.lifeMottoController.text,
+                              text: profileController.lifeMottoController.text,
                             ),
                             RoundedExpandedContainer(
                               heightToExpand: 200,
                               containerHeight: 150,
-                              text: profileController
-                                  .describtionController.text,
+                              text:
+                                  profileController.describtionController.text,
                             ),
                             RoundedContainer(
                               height: oneLineContainerHeight,
