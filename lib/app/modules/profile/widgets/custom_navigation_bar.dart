@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
 import 'package:get/get.dart';
 
 import '../../../helpers/main_constants.dart';
@@ -32,19 +29,19 @@ class CustomNavigationBar extends StatelessWidget {
               Positioned(
                   left: 45,
                   top: 5,
-                  child: actualIndex.value == 1
+                  child: actualIndex.value == 0
                       ? kBottomNavBarGreenMarker
                       : const SizedBox()),
               Positioned(
                   left: 165,
                   top: 5,
-                  child: actualIndex.value == 2
+                  child: actualIndex.value == 1
                       ? kBottomNavBarGreenMarker
                       : const SizedBox()),
               Positioned(
                   right: 45,
                   top: 5,
-                  child: actualIndex.value == 3
+                  child: actualIndex.value == 2
                       ? kBottomNavBarGreenMarker
                       : const SizedBox()),
               Row(
@@ -52,22 +49,19 @@ class CustomNavigationBar extends StatelessWidget {
                 children: [
                   BottomNavBarItem(
                       onTap: () {
-                        actualIndex.value = 1;
-                        Get.to(ProfileInfoView());
+                        actualIndex.value = 0;
                       },
                       title: 'My Profile',
                       imagePath: 'assets/images/profile/tribe.png'),
                   BottomNavBarItem(
                       onTap: () {
-                        actualIndex.value = 2;
-                        Get.to(ProfileNotyficationsView());
+                        actualIndex.value = 1;
                       },
                       title: 'Notifications',
                       imagePath: 'assets/images/profile/bell.png'),
                   BottomNavBarItem(
                       onTap: () {
-                        actualIndex.value = 3;
-                        Get.to(ProfileMyTribeView());
+                        actualIndex.value = 2;
                       },
                       title: 'My Tribe',
                       imagePath: 'assets/images/profile/tent.png'),
