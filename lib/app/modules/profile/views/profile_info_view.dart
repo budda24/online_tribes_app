@@ -23,12 +23,13 @@ class ProfileInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('ProfileInfoView');
     const int oneLineContainerHeight = 60;
 
     return SafeArea(
       child: GestureDetector(
         onTap: () {
-          profileController.videoController.showAndHideOverlay(false);
+          profileController.videoController?.showAndHideOverlay(false);
         },
         child: GetBuilder<ProfileController>(builder: (vontroller) {
           return Column(
@@ -39,7 +40,7 @@ class ProfileInfoView extends StatelessWidget {
                     imageSize: 125,
                     screeanheight: 300.h,
                     screeanwidth: 250.w,
-                    imagePathN: profileController.profilePhoto),
+                    imagePathN: profileController.profilePhotoUrl),
               ),
               verticalSpaceSmall,
               Container(
@@ -66,9 +67,9 @@ class ProfileInfoView extends StatelessWidget {
                                 child: Padding(
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 0.1.sw),
-                                  child: CustomVideoPlayer(
+                                  child: CustomVideoPlayer.network(
                                     videoController:
-                                        profileController.videoController,
+                                        profileController.videoController!,
                                     videoSrc: profileController.profileVideo,
                                   ),
                                 ),

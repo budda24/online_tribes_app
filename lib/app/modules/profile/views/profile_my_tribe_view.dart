@@ -9,29 +9,28 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
-
-   final profileController = Get.find<ProfileController>();
+  final profileController = Get.find<ProfileController>();
 
   ProfileMyTribeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print('ProfileMyTribeView');
     return SafeArea(
       child: Column(
         children: [
           verticalSpaceTiny,
           NeumorphicCircleBackground(
-                child: MainCirclePhoto.networking(
-                    imageSize: 125,
-                    screeanheight: 300.h,
-                    screeanwidth: 250.w,
-                    imagePathN: profileController.profilePhoto),
-              ),
+            child: MainCirclePhoto.networking(
+                imageSize: 125,
+                screeanheight: 300.h,
+                screeanwidth: 250.w,
+                imagePathN: profileController.profilePhotoUrl),
+          ),
           verticalSpaceSmall,
           Container(
             decoration: BoxDecoration(

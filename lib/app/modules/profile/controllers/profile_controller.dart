@@ -3,6 +3,7 @@
 import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_accepted.dart';
 import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_invited.dart';
 import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_rejected.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class ProfileController extends GetxController {
 
   bool isShrinkWrap = true;
 
-  final VideoViewerController videoController = VideoViewerController();
+  VideoViewerController? videoController = VideoViewerController();
 
   final TextEditingController describtionController = TextEditingController();
   final TextEditingController lifeMottoController = TextEditingController();
@@ -27,23 +28,29 @@ class ProfileController extends GetxController {
   final TextEditingController timeToInvestController = TextEditingController();
 
   var userDbServieces = UserDBServices();
+  var userStorageServieces = UserCloudStorageServices();
   UserDB? userDb;
 
   Future<void> getUser() async {
     userDb = await userDbServieces.feachUser(auth.currentUser!.uid);
+
     assignProfileInfo();
   }
 
   late String profileVideo;
-  String profilePhoto = '';
+  String profilePhotoUrl = '';
   void assignProfileInfo() async {
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
     hobby1Controller.text = userDb?.hobbies?.hobby ?? '';
     hobby2Controller.text = userDb?.hobbies?.hobby1 ?? '';
     timeToInvestController.text = userDb?.timeToInvest.toString() ?? '';
+
+    //TODO download and store the file localy not working with emulators
+    /* profileVideo = await UserCloudStorageServices.downloadFileFromURL(
+        userDb!.introVideoUrl!); */
     profileVideo = userDb!.introVideoUrl!;
-    profilePhoto = userDb!.profilePhoto!;
+    profilePhotoUrl = userDb!.profilePhoto!;
 
     update();
   }
@@ -77,10 +84,7 @@ class ProfileController extends GetxController {
 
   @override
   void onInit() async {
-    
     await getUser();
-
-
     super.onInit();
   }
 }

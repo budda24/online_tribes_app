@@ -31,7 +31,7 @@ Future<void> _configureFirebaseStorage() async {
   String configHost = const String.fromEnvironment("FIREBASE_EMU_URL");
   int configPort = const int.fromEnvironment("STORAGE_EMU_PORT");
   // Android emulator must be pointed to 10.0.2.2
-  var defaultHost = Platform.isAndroid ? '127.0.0.1' : 'localhost';
+  var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
   var host = configHost.isNotEmpty ? configHost : defaultHost;
   var port = configPort != 0 ? configPort : 9199;
   await FirebaseStorage.instance.useStorageEmulator(host, port);

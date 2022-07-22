@@ -19,6 +19,7 @@ class ProfileNotyficationsView extends GetView {
 
   @override
   Widget build(BuildContext context) {
+    print('ProfileNotyficationsView');
     return Scaffold(
       backgroundColor: kMainColor,
       body: SingleChildScrollView(
@@ -30,7 +31,7 @@ class ProfileNotyficationsView extends GetView {
                   imageSize: 125,
                   screeanheight: 300.h,
                   screeanwidth: 250.w,
-                  imagePathN: profileController.profilePhoto),
+                  imagePathN: profileController.profilePhotoUrl),
               verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(
@@ -44,8 +45,8 @@ class ProfileNotyficationsView extends GetView {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(
-                    /* children: [...profileController.notificationWidgets], */
-                  ),
+                      /* children: [...profileController.notificationWidgets], */
+                      ),
                 ),
               ),
             ],
