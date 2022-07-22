@@ -1,6 +1,6 @@
 // Flutter imports:
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/helpers/const.dart';
+
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
@@ -13,6 +13,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 // Project imports:
 
+import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
@@ -47,7 +48,7 @@ class LoginView extends GetView<LoginController> {
                                 child: Column(
                                   children: [
                                     verticalSpaceMedium,
-                                    1.sh < tabletSize
+                                    1.sh < largeTablet
                                         ? Image.asset(
                                             'assets/images/authorization_screen/logo/xxxhdpi.png',
                                             fit: BoxFit.fill,
@@ -91,7 +92,6 @@ class LoginView extends GetView<LoginController> {
                                             : 0,
                                       ),
                                       SlimRoundedButton(
-
                                         backgroundColour:
                                             AppColors.primaryColor,
                                         title: controller
