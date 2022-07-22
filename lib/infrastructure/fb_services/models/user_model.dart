@@ -19,7 +19,6 @@ class UserDB {
     this.introVideoUrl,
     this.lifeMotto,
     this.profilePhoto,
-    /* this.hobby, */
     this.hobbies,
     this.timeToInvest,
     this.attendedTribe,
@@ -44,8 +43,8 @@ class UserDB {
   ProfileNotification? profileNotification;
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
-         userId: json["userId"],
-       email: json["email"],
+        userId: json["userId"],
+        email: json["email"],
         phoneNumber: json["phone_number"],
         name: json["name"],
         createdAt: json["createdAt"],
@@ -127,21 +126,24 @@ class ProfileNotification {
     this.rejectedRequest,
   });
 
-  Request? tribalRequest;
-  Request? acceptedRequest;
-  RejectedRequest? rejectedRequest;
+  List<Request>? tribalRequest;
+  List<Request>? acceptedRequest;
+  List<Request>? rejectedRequest;
 
   factory ProfileNotification.fromJson(Map<String, dynamic> json) =>
       ProfileNotification(
-        tribalRequest: Request.fromJson(json["tribal_request"]),
-        acceptedRequest: Request.fromJson(json["accepted_request"]),
-        rejectedRequest: RejectedRequest.fromJson(json["rejected_request"]),
+        tribalRequest: List<Request>.from(
+            json["tribal_request"].map((x) => Request.fromJson(x))),
+        acceptedRequest: List<Request>.from(
+            json["accepted_request"].map((x) => Request.fromJson(x))),
+        rejectedRequest: List<Request>.from(
+            json["rejected_request"].map((x) => Request.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "tribal_request": tribalRequest?.toJson(),
-        "accepted_request": acceptedRequest?.toJson(),
-        "rejected_request": rejectedRequest?.toJson(),
+        "tribal_request": tribalRequest?.map((e) => e.toJson()).toList(),
+        "accepted_request": acceptedRequest?.map((x) => x.toJson()).toList(),
+        "rejected_request": rejectedRequest?.map((x) => x.toJson()).toList(),
       };
 }
 
@@ -159,29 +161,4 @@ class Request {
   Map<String, dynamic> toJson() => {
         "tribe_id": tribeId,
       };
-}
-
-class RejectedRequest {
-  RejectedRequest({
-    required this.tribeId,
-  });
-
-  TribeId tribeId;
-
-  factory RejectedRequest.fromJson(Map<String, dynamic> json) =>
-      RejectedRequest(
-        tribeId: TribeId.fromJson(json["tribe_id"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "tribe_id": tribeId.toJson(),
-      };
-}
-
-class TribeId {
-  TribeId();
-
-  factory TribeId.fromJson(Map<String, dynamic> json) => TribeId();
-
-  Map<String, dynamic> toJson() => {};
 }

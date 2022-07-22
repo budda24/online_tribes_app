@@ -48,16 +48,16 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
                         topLeft: Radius.circular(30.r),
                       )),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
                     child: ListView(
                       children: [
                         SizedBox(
                           height: 50.h,
                         ),
-                        CustomVideoPlayer(
-                          videoSrc: 'videoSrc',
-                          videoController: videoController,
-                        ),
+                        CustomVideoPlayer.network(
+                            videoSrc: 'videoSrc',
+                            videoController: videoController),
                         RoundedInputContainer(
                           height: 60,
                           hintText: 'Name',
@@ -101,8 +101,8 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
                         RoundedInputContainer(
                           height: 80,
                           hintText: 'Motto of Tribe',
-                          textController:
-                              tribeRegistrationController.mottoOfTribeController,
+                          textController: tribeRegistrationController
+                              .mottoOfTribeController,
                           validate: (value) => tribeRegistrationController
                               .validateTribe(value: value, lenght: 250),
                         ),

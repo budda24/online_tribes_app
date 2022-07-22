@@ -41,13 +41,11 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    NeumorphicCircleBackground(
-                      child: MainCirclePhoto.file(
-                        imageSize: 100,
-                          screeanheight: 300.h,
-                          screeanwidth: 250.w,
-                          file: cameraController.pickedPhoto!),
-                    ),
+                    MainCirclePhoto.file(
+                      imageSize: 100,
+                        screeanheight: 300.h,
+                        screeanwidth: 250.w,
+                        file: cameraController.pickedPhoto!),
                     SizedBox(
                       height: 15.h,
                     ),

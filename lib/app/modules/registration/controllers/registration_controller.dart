@@ -39,7 +39,7 @@ class RegistrationController extends GetxController {
       required String directory,
       required io.File profileFile}) async {
     //TODO cloud function to resize photo to secure the end point
-    const storage = UserCloudStorageServices();
+    final storage = UserCloudStorageServices();
 
     String userId = auth.currentUser!.uid;
 
@@ -51,6 +51,7 @@ class RegistrationController extends GetxController {
   }
 
   Future<void> saveNewUser() async {
+    globalController.showloading();
     var refPhoto = await uploadFile(
         fileName: 'profileImage',
         directory: 'profile',

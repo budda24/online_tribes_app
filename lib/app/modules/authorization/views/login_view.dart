@@ -26,6 +26,7 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    print('${1.sh} < $tabletSize');
     Get.put(LoginController());
 
     return GestureDetector(
@@ -46,10 +47,15 @@ class LoginView extends GetView<LoginController> {
                                 child: Column(
                                   children: [
                                     verticalSpaceMedium,
-                                    Image.asset(
-                                      'assets/images/authorization_screen/online_tribes_logo.png',
-                                      fit: BoxFit.fill,
-                                    ),
+                                    1.sh < tabletSize
+                                        ? Image.asset(
+                                            'assets/images/authorization_screen/logo/xxxhdpi.png',
+                                            fit: BoxFit.fill,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/authorization_screen/logo/700x500.png',
+                                            fit: BoxFit.fill,
+                                          ),
                                     Text('Welcome back, \n        fellas!',
                                         style: lableWhite)
                                   ],
@@ -85,6 +91,7 @@ class LoginView extends GetView<LoginController> {
                                             : 0,
                                       ),
                                       SlimRoundedButton(
+
                                         backgroundColour:
                                             AppColors.primaryColor,
                                         title: controller
@@ -148,12 +155,17 @@ class LoginView extends GetView<LoginController> {
                                                     .signInWithGoogle();
                                               },
                                               child: SizedBox(
-                                                height: 60,
-                                                width: 250,
-                                                child: Image.asset(
-                                                  'assets/images/authorization_screen/google_sign.png',
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                height: 60.h,
+                                                width: 250.w,
+                                                child: 1.sh < tabletSize
+                                                    ? Image.asset(
+                                                        'assets/images/authorization_screen/google/xxxhdpi.png',
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.asset(
+                                                        'assets/images/authorization_screen/google/700x175.png',
+                                                        fit: BoxFit.cover,
+                                                      ),
                                               ),
                                             )
                                           ],

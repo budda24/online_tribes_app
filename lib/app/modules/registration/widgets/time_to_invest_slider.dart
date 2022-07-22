@@ -24,7 +24,7 @@ class TimeToInvestSlider extends StatelessWidget {
                     height: 80,
                     width: 80,
                     child: Image.asset(
-                      'assets/images/authorization_screen/logo50x50.png',
+                      'assets/images/authorization_screen/50x50.png',
                     )),
                 Positioned(
                     right: 15,
