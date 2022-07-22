@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
+import 'package:video_viewer/video_viewer.dart';
 
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
@@ -15,6 +17,7 @@ class CustomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var profileController = Get.find<ProfileController>();
     return Container(
       height: 90,
       decoration: BoxDecoration(
@@ -49,18 +52,22 @@ class CustomNavigationBar extends StatelessWidget {
                 children: [
                   BottomNavBarItem(
                       onTap: () {
+                        profileController.videoController =
+                            VideoViewerController();
                         actualIndex.value = 0;
                       },
                       title: 'My Profile',
                       imagePath: 'assets/images/profile/tribe.png'),
                   BottomNavBarItem(
                       onTap: () {
+                        profileController.videoController = null;
                         actualIndex.value = 1;
                       },
                       title: 'Notifications',
                       imagePath: 'assets/images/profile/bell.png'),
                   BottomNavBarItem(
                       onTap: () {
+                        profileController.videoController = null;
                         actualIndex.value = 2;
                       },
                       title: 'My Tribe',
