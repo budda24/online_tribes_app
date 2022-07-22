@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
-import 'package:flutter_application_1/app/modules/registration/views/registration_desrription_view.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -47,16 +44,14 @@ class Auth {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
 
-        if (userCredential.additionalUserInfo!.isNewUser) {
+        if (userCredential.additionalUserInfo!.isNewUser &&
+            _globalController.isCurrentUserInDB == false) {
           _globalController.hideLoading();
           Get.offAllNamed(Routes.REGISTRATION);
         } else {
           _globalController.hideLoading();
-          //TODO go to profile
-          print('go to profile');
-           await Get.offAllNamed(Routes.PROFILE);
-          /* Get.to(ProfileView()); */
-          /*  Get.offAllNamed(Routes.REGISTRATION); */
+
+          await Get.offAllNamed(Routes.PROFILE);
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {

@@ -8,18 +8,13 @@ class GlobalController extends GetxController {
   final box = GetStorage();
 
   RxBool isLoadingVisible = false.obs;
-  /* List<CameraDescription>? camera; */
 
-  // User? user;
-  // void isUserLogged() {
-  //   if (auth.currentUser != null) {
-  //     user = auth.currentUser;
-  //     Get.offAllNamed(Routes.HOME);
-  //   } else {
-  //     user = null;
-  //     Get.offAll(LoginView());
-  //   }
-  // }
+  bool isCurrentUserInDB = false;
+
+  Future<void> saveRegistrationState() async {
+    isCurrentUserInDB = true;
+    await box.write('isCurrentUserInDB', isCurrentUserInDB);
+  }
 
   void unFocuseNode() {
     Get.focusScope!.unfocus();
@@ -31,5 +26,12 @@ class GlobalController extends GetxController {
 
   hideLoading() {
     isLoadingVisible.value = false;
+  }
+
+  @override
+  void onInit() {
+    isCurrentUserInDB = box.read('isCurrentUserInDB') ?? isCurrentUserInDB;
+
+    super.onInit();
   }
 }

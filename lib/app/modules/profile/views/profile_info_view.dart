@@ -44,9 +44,9 @@ class ProfileInfoView extends StatelessWidget {
               verticalSpaceSmall,
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.r),
+                      topRight: Radius.circular(30.r)),
                   color: AppColors.whiteColor,
                 ),
                 width: double.infinity,

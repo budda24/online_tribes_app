@@ -30,27 +30,21 @@ class SlimRoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Neumorphic(
       style: NeumorphicStyle(
-        surfaceIntensity:0.9,
-        shadowLightColorEmboss:Colors.white,
+        surfaceIntensity: 0.9,
+        shadowLightColorEmboss: Colors.white,
         shadowLightColor: AppColors.primaryColor,
-        depth:  -5,
+        depth: -5,
         shape: NeumorphicShape.convex,
         lightSource: LightSource.bottomRight,
-       /*  intensity:45, */
+        /*  intensity:45, */
         shadowDarkColor: Colors.black,
         color: AppColors.actionColor,
-
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
       ),
-      padding:
-          EdgeInsets.only(left: 40.w, right: 40.w, top: 2.h, bottom: 2.h),
+      padding: EdgeInsets.only(left: 40.w, right: 40.w, top: 2.h, bottom: 2.h),
       child: TextButton(
-
-        child: Text(
-          title,
-          style:buttonLable
-        ),
         onPressed: onPress,
+        child: Text(title, style: buttonLable),
       ),
     );
   }

@@ -50,8 +50,6 @@ class RegistrationController extends GetxController {
         fileName: '$fileName${extension(profileFile.path)}');
   }
 
-
-
   Future<void> saveNewUser() async {
     var refPhoto = await uploadFile(
         fileName: 'profileImage',
@@ -73,6 +71,8 @@ class RegistrationController extends GetxController {
     userDB.phoneNumber = currentUser.phoneNumber;
 
     await UserDBServices().createUser(userDB);
+
+    await globalController.saveRegistrationState();
   }
 
   bool checkIfPhotoUpload() {

@@ -85,8 +85,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                         verticalSpaceLarge,
                         CustomTextField(
                           controller: controller.describtionController,
-                          /* validate: (value) => controller.validateUser(
-                              value: value, lenght: 1500), */
+                           validate: (value) => controller.validateUser(
+                              value: value, lenght: 1500),
                           hintText: 'Describe yourself',
                           maxline: 14,
                           minLine: 8,
