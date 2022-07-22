@@ -62,6 +62,8 @@ flutter:
     - assets/images/welcome_screans/
     - assets/splash_screen/
     - assets/images/authorization_screen/
+    - assets/images/authorization_screen/logo/
+    - assets/images/authorization_screen/google/
     - assets/images/authorization_screen/tribel_signs/
     - assets/icons/
     - assets/images/profile/
