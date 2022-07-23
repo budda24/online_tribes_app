@@ -3,6 +3,7 @@ import 'package:flutter_application_1/app/modules/profile/controllers/profile_co
 import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
 
+import '../../../controllers/global_controler.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
 import 'bottom_nav_bar_item.dart';
@@ -14,6 +15,7 @@ class CustomNavigationBar extends StatelessWidget {
   }) : super(key: key);
 
   RxInt actualIndex;
+  final globalController = Get.find<GlobalController>();
 
   @override
   Widget build(BuildContext context) {

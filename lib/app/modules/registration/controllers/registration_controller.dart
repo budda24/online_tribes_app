@@ -72,7 +72,8 @@ class RegistrationController extends GetxController {
     userDB.phoneNumber = currentUser.phoneNumber;
 
     await UserDBServices().createUser(userDB);
-    globalController.hideLoading();
+
+    await globalController.saveRegistrationState();
   }
 
   bool checkIfPhotoUpload() {
