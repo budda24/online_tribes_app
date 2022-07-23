@@ -48,15 +48,10 @@ class LoginView extends GetView<LoginController> {
                                 child: Column(
                                   children: [
                                     verticalSpaceMedium,
-                                    1.sh < largeTablet
-                                        ? Image.asset(
-                                            'assets/images/authorization_screen/logo/xxxhdpi.png',
-                                            fit: BoxFit.fill,
-                                          )
-                                        : Image.asset(
-                                            'assets/images/authorization_screen/logo/700x500.png',
-                                            fit: BoxFit.fill,
-                                          ),
+                                    Image.asset(
+                                      'assets/images/authorization_screen/logo/xxxhdpi.png',
+                                      fit: BoxFit.fill,
+                                    ),
                                     Text('Welcome back, \n        fellas!',
                                         style: lableWhite)
                                   ],
@@ -157,15 +152,10 @@ class LoginView extends GetView<LoginController> {
                                               child: SizedBox(
                                                 height: 60.h,
                                                 width: 250.w,
-                                                child: 1.sh < tabletSize
-                                                    ? Image.asset(
-                                                        'assets/images/authorization_screen/google/xxxhdpi.png',
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/images/authorization_screen/google/700x175.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                child: Image.asset(
+                                                  'assets/images/authorization_screen/google/xxxhdpi.png',
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             )
                                           ],
