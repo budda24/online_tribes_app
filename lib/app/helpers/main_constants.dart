@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // theme colors
 const kMainColor = Color(0xff8FFCBB);
@@ -53,3 +55,7 @@ const String cWriteringTribe = 'assets/images/authorization_screen/tribel_signs/
 const String cIllnessTribe = 'assets/images/authorization_screen/tribel_signs/illness_tribe.png';
 const String cAddCustomSign = 'assets/images/tribe_registration/add_custom_sign.png';
 
+var spinkit = SpinKitSpinningLines(
+  color: AppColors.actionColor,
+  size: 80.0,
+);
