@@ -1,4 +1,3 @@
-import 'package:flutter_application_1/app/modules/tribe_registration/views/registration_tribe_choose_sign.dart';
 import 'package:get/get.dart';
 
 import '../modules/authorization/bindings/login_binding.dart';
@@ -7,9 +6,11 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 
+import '../modules/profile/views/profile_home_view.dart';
 import '../modules/registration/bindings/registration_binding.dart';
 import '../modules/registration/views/registration_desrription_view.dart';
-import '../modules/tribe_registration/views/tribe_registration_start.dart';
+import '../modules/tribe_registration/bindings/tribe_registration_binding.dart';
+import '../modules/tribe_registration/views/registration_tribe_choose_sign.dart';
 import '../modules/walkthrough/bindings/walkthrough_binding.dart';
 import '../modules/walkthrough/views/walkthrough_view.dart';
 
@@ -50,8 +51,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => TribeRegistrationStart(),
+      page: () => ProfileHomeView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.TRIBE_REGISTRATION,
+      page: () => RegistrationTribeChooseSign(),
+      binding: TribeRegistrationBinding(),
     ),
   ];
 }

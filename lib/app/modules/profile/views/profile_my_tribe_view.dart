@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../widgets/bacgroundRoundedContainer.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
   final profileController = Get.find<ProfileController>();
@@ -32,14 +33,7 @@ class ProfileMyTribeView extends StatelessWidget {
                 imagePathN: profileController.profilePhotoUrl),
           ),
           verticalSpaceSmall,
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-              color: AppColors.whiteColor,
-            ),
-            width: double.infinity,
-            height: 400.h,
+          BacgroundRoundedContainer(
             child: Padding(
               padding: const EdgeInsets.only(left: 40, right: 40, top: 10),
               child: Column(

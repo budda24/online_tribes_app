@@ -11,16 +11,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../registration/widgets/neumorphic_circle_background.dart';
+import '../widgets/bacgroundRoundedContainer.dart';
 import '../widgets/video_player.dart';
 
 class ProfileInfoView extends StatelessWidget {
-  final profileController = Get.find<ProfileController>();
-
   ProfileInfoView({Key? key}) : super(key: key);
+
+  final profileController = Get.find<ProfileController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +44,7 @@ class ProfileInfoView extends StatelessWidget {
                     imagePathN: profileController.profilePhotoUrl),
               ),
               verticalSpaceSmall,
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30.r),
-                      topRight: Radius.circular(30.r)),
-                  color: AppColors.whiteColor,
-                ),
-                width: double.infinity,
-                height: 400.h,
+              BacgroundRoundedContainer(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -131,3 +123,4 @@ class ProfileInfoView extends StatelessWidget {
     );
   }
 }
+

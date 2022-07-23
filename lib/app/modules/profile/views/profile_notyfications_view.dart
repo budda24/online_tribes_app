@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
 
@@ -10,6 +9,7 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../widgets/bacgroundRoundedContainer.dart';
 
 class ProfileNotyficationsView extends GetView {
   final cameraController = Get.find<CameraController>();
@@ -33,15 +33,7 @@ class ProfileNotyficationsView extends GetView {
                   screeanwidth: 250.w,
                   imagePathN: profileController.profilePhotoUrl),
               verticalSpaceSmall,
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30)),
-                  color: AppColors.whiteColor,
-                ),
-                width: double.infinity,
-                height: 401.h,
+              BacgroundRoundedContainer(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30, right: 30, top: 10),
                   child: Column(

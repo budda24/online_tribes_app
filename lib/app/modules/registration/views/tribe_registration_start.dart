@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/modules/profile/views/profile_home_view.dart';
 import 'package:flutter_application_1/app/modules/tribe_registration/views/registration_tribe_choose_sign.dart';
 import 'package:flutter_application_1/app/modules/tribe_registration/widgets/background.dart';
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class TribeRegistrationStart extends StatelessWidget {
+class TribeChoice extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +37,7 @@ class TribeRegistrationStart extends StatelessWidget {
                 children: [
                   MaterialButton(
                     onPressed: () {
-                      Get.to(RegistrationTribeChooseSign());
+                      Get.toNamed(Routes.TRIBE_REGISTRATION);
                     },
                     minWidth: 117.w,
                     color: AppColors.whiteColor,
@@ -51,7 +53,9 @@ class TribeRegistrationStart extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.offAllNamed(Routes.PROFILE);
+                    },
                     child: Row(
                       children: [
                         Text(
