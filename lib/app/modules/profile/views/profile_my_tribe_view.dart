@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
-import '../widgets/bacgroundRoundedContainer.dart';
+import '../widgets/bacground_rounded_container.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
   final profileController = Get.find<ProfileController>();

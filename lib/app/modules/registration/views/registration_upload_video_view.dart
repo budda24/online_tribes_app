@@ -10,17 +10,20 @@ import 'package:flutter_application_1/app/modules/registration/widgets/neumorphi
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
+import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 
 class RegistrationUploadVideoView extends GetView {
-  final cameraController = Get.find<CameraController>();
-  final registrationController = Get.find<RegistrationController>();
-  final globalController = Get.find<GlobalController>();
-
   RegistrationUploadVideoView({Key? key}) : super(key: key);
+
+  final cameraController = Get.find<CameraController>();
+  final globalController = Get.find<GlobalController>();
+  final registrationController = Get.find<RegistrationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class RegistrationUploadVideoView extends GetView {
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
                 height: 10.h,
@@ -44,97 +48,97 @@ class RegistrationUploadVideoView extends GetView {
                 height: 40.h,
               ),
               verticalSpaceMedium,
-              Obx(
-                () => globalController.isLoadingVisible.value
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          spinkit,
-                          const SizedBox(height: 20),
-                          const Text('Loading'),
-                        ],
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30)),
-                          color: AppColors.whiteColor,
-                        ),
-                        width: double.infinity,
-                        height: 460.h,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 30, top: 10),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40.h,
+              GetBuilder<RegistrationController>(
+                builder: (buildController) {
+                  return buildController.progress == 100.0
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.check_rounded,
+                              color: AppColors.actionColor,
+                              size: 50.sp,
+                            ),
+                            SizedBox(
+                              width: 5.0.w,
+                            ),
+                            Text(
+                              'Upload Complete',
+                              style: GoogleFonts.poppins(
+                                  color: AppColors.actionColor,
+                                  fontSize: 30.sp),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircularPercentIndicator(
+                              radius: 70,
+                              lineWidth: 20,
+                              percent: buildController.progress / 100,
+                              backgroundColor: AppColors.whiteColor,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              linearGradient: LinearGradient(colors: [
+                                AppColors.actionColor,
+                                AppColors.primaryColor,
+                              ]),
+                              rotateLinearGradient: true,
+                              animation: true,
+                              animateFromLastPercent: true,
+                              animationDuration: 20,
+                              curve: Curves.bounceIn,
+                              widgetIndicator: Image.asset(
+                                'assets/images/authorization_screen/logo/50x50.png',
                               ),
-                              GetBuilder<CameraController>(
-                                  builder: ((cameraContr) => cameraContr
-                                              .pickedVideo ==
-                                          null
-                                      ? Text(
-                                          'Upload your intro video',
-                                          style: TextStyle(fontSize: 20.sp),
-                                        )
-                                      : Row(
-                                          children: [
-                                            Image.asset(
-                                                'assets/images/profile/confirm_sign.png'),
-                                            const SizedBox(width: 20),
-                                            Text(
-                                              'Video successfully loaded',
-                                              style: TextStyle(fontSize: 20.sp),
-                                            )
-                                          ],
-                                        ))),
-                              verticalSpaceLarge,
-                              GestureDetector(
-                                onTap: () async {
-                                  await cameraController.getVideoCamera();
-                                },
-                                child: Image.asset(
-                                  'assets/images/authorization_screen/add_photo.png',
-                                  scale: 1.3,
-                                ),
+                              center: Text(
+                                '${buildController.progress} %',
+                                style: headingBoldStyle,
                               ),
-                              SizedBox(
-                                height: 25.h,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  await cameraController.getFileGallery(
-                                      type: PickedType.video);
-                                },
-                                child: Image.asset(
-                                  'assets/images/authorization_screen/upload_video.png',
-                                  scale: 1.3,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 45.h,
-                              ),
-                              SlimRoundedButton(
-                                  backgroundColour: AppColors.primaryColor,
-                                  title: 'Continue',
-                                  textColor: AppColors.whiteColor,
-                                  onPress: () async {
-                                    registrationController.closeKeyboard();
+                            ),
+                          ],
+                        );
+                },
+              ),
+              verticalSpaceLarge,
+              GestureDetector(
+                onTap: () async {
+                  await cameraController.getVideoCamera();
+                },
+                child: Image.asset(
+                  'assets/images/authorization_screen/add_photo.png',
+                  scale: 1.3,
+                ),
+              ),
+              SizedBox(
+                height: 25.h,
+              ),
+              GestureDetector(
+                onTap: () async {
+                  await cameraController.getFileGallery(type: PickedType.video);
+                },
+                child: Image.asset(
+                  'assets/images/authorization_screen/upload_video.png',
+                  scale: 1.3,
+                ),
+              ),
+              SizedBox(
+                height: 45.h,
+              ),
+              SlimRoundedButton(
+                  backgroundColour: AppColors.primaryColor,
+                  title: 'Continue',
+                  textColor: AppColors.whiteColor,
+                  onPress: () async {
+                    registrationController.closeKeyboard();
+                    Get.off(TribeRegistrationChoice());
 
-                                    if (registrationController
-                                        .checkIfVideoUpload()) {
-                                      await registrationController
-                                          .saveNewUser();
-                                      Get.offAll(TribeChoice());
-                                    }
-                                  })
-                            ],
-                          ),
-                        ),
-                      ),
-              )
+                    if (registrationController.checkIfVideoUpload()) {
+                      /* await registrationController.saveNewUser(); */
+
+                      /* Get.offAll(TribeChoice()); */
+                    }
+                  })
             ],
           ),
         ),

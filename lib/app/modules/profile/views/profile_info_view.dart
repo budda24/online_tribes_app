@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
 import '../../registration/widgets/neumorphic_circle_background.dart';
-import '../widgets/bacgroundRoundedContainer.dart';
+import '../widgets/bacground_rounded_container.dart';
 import '../widgets/video_player.dart';
 
 class ProfileInfoView extends StatelessWidget {

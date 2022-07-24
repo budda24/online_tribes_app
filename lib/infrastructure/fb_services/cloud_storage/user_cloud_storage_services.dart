@@ -9,23 +9,23 @@ class UserCloudStorageServices {
 
   static final storage = FirebaseStorage.instance;
 
-  Future<Reference?> uploadFile({
+  UploadTask uploadFile({
     required io.File imageToUpload,
     required String fileName,
     required String userId,
     required String path,
-  }) async {
+  }) {
     final Reference ref = storage.ref('$userId/$path').child(fileName);
+    
+    return ref.putFile(imageToUpload);
 
-    await ref.putFile(imageToUpload);
-
-    return Future.value(ref);
+    /* var uploadedtask = UploadedTask(refrence: ref, task: task); */
   }
 
   static Future<File> downloadFileFromURL(String url) async {
     print(url);
-    Reference _ref = storage.refFromURL(url);
+    Reference ref = storage.refFromURL(url);
     final dir = await getApplicationDocumentsDirectory();
-    return File('${dir.path}/${_ref.name}');
+    return File('${dir.path}/${ref.name}');
   }
 }

@@ -40,13 +40,14 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: ScreenUtil().screenHeight * 0.65,
                   decoration: BoxDecoration(
-                      color: AppColors.whiteColor,
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(30.r),
+                    borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30.r),
-                      )),
+                        topRight: Radius.circular(30.r)),
+                    color: AppColors.whiteColor,
+                  ),
+                  width: double.infinity,
+                  height: 500.h,
                   child: Padding(
                     padding:
                         EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
@@ -114,23 +115,24 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
                           validate: (value) => tribeRegistrationController
                               .validateTribe(value: value, lenght: 200),
                         ),
+                        SlimRoundedButton(
+                          backgroundColour: AppColors.actionColor,
+                          title: 'Continue',
+                          textColor: AppColors.whiteColor,
+                          onPress: () {},
+                        ),
                       ],
                     ),
                   ),
                 ),
-                Container(
+                /* Container(
                   color: AppColors.whiteColor,
                   height: ScreenUtil().screenHeight * 0.1,
                   width: double.infinity,
                   child: Center(
-                    child: SlimRoundedButton(
-                      backgroundColour: AppColors.actionColor,
-                      title: 'Continue',
-                      textColor: AppColors.whiteColor,
-                      onPress: () {},
-                    ),
+                    child:
                   ),
-                )
+                ) */
               ],
             ),
             Positioned(

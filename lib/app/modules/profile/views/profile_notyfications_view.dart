@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
-import '../widgets/bacgroundRoundedContainer.dart';
+import '../widgets/bacground_rounded_container.dart';
 
 class ProfileNotyficationsView extends GetView {
   final cameraController = Get.find<CameraController>();
