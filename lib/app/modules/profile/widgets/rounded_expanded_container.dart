@@ -92,16 +92,19 @@ class _RoundedExpandedContainerState extends State<RoundedExpandedContainer>
           ),
         ),
       ),
-      Positioned(
-        left: 140,
+      Positioned.fill(
+        /* left: 179.w,*/
         top: animation.value,
-        child: InkWell(
-            onTap: () {
-              updateIsShrinkWrap();
-            },
-            child: !isShrinkWrap
-                ? Image.asset('assets/images/profile/expand_more_arrow.png')
-                : Image.asset('assets/images/profile/expand_less_arrow.png')),
+        child: Align(
+          alignment: Alignment.center,
+          child: InkWell(
+              onTap: () {
+                updateIsShrinkWrap();
+              },
+              child: !isShrinkWrap
+                  ? Image.asset('assets/images/profile/expand_more_arrow.png')
+                  : Image.asset('assets/images/profile/expand_less_arrow.png')),
+        ),
       )
     ]);
   }

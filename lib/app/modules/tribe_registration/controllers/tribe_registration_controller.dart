@@ -12,16 +12,5 @@ class TribeRegistrationController extends GetxController {
   TextEditingController mottoOfTribeController = TextEditingController();
   TextEditingController weeklySuggestedTimeController = TextEditingController();
 
-
-
-
-  String? validateTribe({required String value, required int lenght}) {
-    if (value.isEmpty) {
-      return 'write some text';
-    }
-    if (value.length > lenght) {
-      return 'Max message lenght = ${lenght.toString()} char';
-    }
-    return null;
-  }
+  
 }

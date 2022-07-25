@@ -4,7 +4,6 @@ import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/main_button.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
-import 'package:flutter_application_1/app/modules/registration/views/tribe_registration_start.dart';
 import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +15,8 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/text_styles.dart';
-import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../../../helpers/widgets/online_tribes/profile/main_circle_photo.dart';
+import 'tribe_registration_start.dart';
 
 class RegistrationUploadVideoView extends GetView {
   RegistrationUploadVideoView({Key? key}) : super(key: key);
@@ -131,12 +131,11 @@ class RegistrationUploadVideoView extends GetView {
                   textColor: AppColors.whiteColor,
                   onPress: () async {
                     registrationController.closeKeyboard();
-                    Get.off(TribeRegistrationChoice());
 
                     if (registrationController.checkIfVideoUpload()) {
-                      /* await registrationController.saveNewUser(); */
-
-                      /* Get.offAll(TribeChoice()); */
+                      await registrationController
+                          .saveNewUser()
+                          .then((value) => Get.off(TribeRegistrationChoice()));
                     }
                   })
             ],

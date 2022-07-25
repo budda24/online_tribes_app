@@ -17,7 +17,7 @@ class BacgroundRoundedContainer extends StatelessWidget {
           color: AppColors.whiteColor,
         ),
         width: double.infinity,
-        height: 434.h,
+        height: 550.h,
         child: child);
   }
 }

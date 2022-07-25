@@ -28,6 +28,16 @@ class GlobalController extends GetxController {
     isLoadingVisible.value = false;
   }
 
+  String? validateInputs({required String value, required int lenght}) {
+    if (value.isEmpty) {
+      return 'write some text';
+    }
+    if (value.length > lenght) {
+      return 'Max message lenght = ${lenght.toString()} char';
+    }
+    return null;
+  }
+
   @override
   void onInit() {
     isCurrentUserInDB = box.read('isCurrentUserInDB') ?? isCurrentUserInDB;

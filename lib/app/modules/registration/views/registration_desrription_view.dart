@@ -11,15 +11,17 @@ import 'package:get/get.dart';
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/widgets/online_tribes/main_circle_photo.dart';
+import '../../../helpers/widgets/online_tribes/profile/main_circle_photo.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../profile/views/profile_info_view.dart';
 import '../widgets/custom_photo_picker.dart';
 import '../widgets/neumorphic_circle_background.dart';
 import '../widgets/tribe_examples_dialog.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/form_field.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/registration/form_field.dart';
 import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
+
+import 'tribe_registration_start.dart';
 
 class RegistrationDescriptionView extends GetView<RegistrationController> {
   final _formKey = GlobalKey<FormState>();
@@ -94,9 +96,12 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
                         verticalSpaceLarge,
                         SlimRoundedButton(
                           onPress: () {
+                            /* Get.to(TribeRegistrationChoice()); */
+
                             if (controller.checkIfPhotoUpload() &&
                                 _formKey.currentState!.validate()) {
                               /* Get.to(() => ProfileView()); */
+
                               Get.to(() => RegistrationAditionalView());
                             }
                           },
