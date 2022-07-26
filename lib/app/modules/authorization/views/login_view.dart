@@ -1,6 +1,6 @@
 // Flutter imports:
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/helpers/const.dart';
+
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
@@ -13,6 +13,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 // Project imports:
 
+import '../../../helpers/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
@@ -47,15 +48,10 @@ class LoginView extends GetView<LoginController> {
                                 child: Column(
                                   children: [
                                     verticalSpaceMedium,
-                                    1.sh < tabletSize
-                                        ? Image.asset(
-                                            'assets/images/authorization_screen/logo/xxxhdpi.png',
-                                            fit: BoxFit.fill,
-                                          )
-                                        : Image.asset(
-                                            'assets/images/authorization_screen/logo/700x500.png',
-                                            fit: BoxFit.fill,
-                                          ),
+                                    Image.asset(
+                                      'assets/images/authorization_screen/logo/xxxhdpi.png',
+                                      fit: BoxFit.fill,
+                                    ),
                                     Text('Welcome back, \n        fellas!',
                                         style: lableWhite)
                                   ],
@@ -156,15 +152,10 @@ class LoginView extends GetView<LoginController> {
                                               child: SizedBox(
                                                 height: 60.h,
                                                 width: 250.w,
-                                                child: 1.sh < tabletSize
-                                                    ? Image.asset(
-                                                        'assets/images/authorization_screen/google/xxxhdpi.png',
-                                                        fit: BoxFit.cover,
-                                                      )
-                                                    : Image.asset(
-                                                        'assets/images/authorization_screen/google/700x175.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
+                                                child: Image.asset(
+                                                  'assets/images/authorization_screen/google/xxxhdpi.png',
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             )
                                           ],

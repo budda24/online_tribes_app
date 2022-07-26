@@ -49,6 +49,12 @@ TextStyle plainTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   color: AppColors.blackColor,
 );
+TextStyle hintTextStyle = TextStyle(
+  fontSize: 18.0.sp,
+  fontFamily: 'Leelawadee',
+  fontWeight: FontWeight.bold,
+  color: AppColors.blackColor,
+);
 TextStyle popUpMessageStyle = TextStyle(
   color: AppColors.blackColor,
   fontFamily: regular,

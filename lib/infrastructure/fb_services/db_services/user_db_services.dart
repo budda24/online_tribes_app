@@ -7,6 +7,7 @@ import '../models/user_model.dart';
 class UserDBServices {
   final _db = FirebaseFirestore.instance;
   Future<void> createUser(UserDB user) async {
+    print('creating user');
     try {
       // user.createdAt = FieldValue.serverTimestamp();
       await _db.collection('USERS').doc(user.userId).set(user.toJson());

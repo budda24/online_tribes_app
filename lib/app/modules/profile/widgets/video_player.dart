@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:video_viewer/video_viewer.dart';
 
-import '../../../helpers/const.dart';
+import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
 
 enum VideoAsset { network, local }
@@ -31,6 +31,7 @@ class CustomVideoPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(videoController);
     return VideoViewer(
         enableVerticalSwapingGesture: false,
         enableHorizontalSwapingGesture: false,
@@ -41,7 +42,14 @@ class CustomVideoPlayer extends StatelessWidget {
                 color: AppColors.actionColor,
                 height: 1,
               )),
-          loading: spinkit,
+          loading: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              spinkit,
+              const SizedBox(height: 20),
+              const Text('Loading'),
+            ],
+          ),
           volumeBarStyle: VolumeBarStyle(
               bar: BarStyle.volume(background: AppColors.actionColor)),
           playAndPauseStyle:

@@ -23,12 +23,8 @@ class CustomNavigationBar extends StatelessWidget {
     return Container(
       height: 90,
       decoration: BoxDecoration(
-          color: AppColors.whiteColor,
-          border: const Border(
-              top: BorderSide(
-            color: Colors.black26,
-            width: 2,
-          ))),
+        color: AppColors.whiteColor,
+      ),
       child: Obx(() => Stack(
             children: [
               Positioned(

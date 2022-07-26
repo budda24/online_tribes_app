@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../helpers/widgets/online_tribes/rounded_bacgroud_container.dart';
+import '../../../helpers/widgets/online_tribes/profile/rounded_bacgroud_container.dart';
 import 'rounded_container.dart';
 
 class NotificationTileAccepted extends StatelessWidget {

@@ -108,7 +108,6 @@ class MyApp extends StatelessWidget {
   var defaultRout = Routes.LOGIN;
   Widget defaultScreen = LoginView();
   void choseInitialScreen() {
-    print('choseInitialScreen');
     final globalController = Get.find<GlobalController>();
     Get.put(WalkthroughController());
     Get.put(LoginController());
@@ -134,7 +133,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //TODO run to implement walthrough
     //initialize defaultScreenRout & defaultScreen
     //choseInitialScreen();
@@ -159,7 +157,7 @@ class MyApp extends StatelessWidget {
               splashTransition: SplashTransition.fadeTransition,
               backgroundColor: AppColors.primaryColor,
             ),
-            initialRoute: Routes.LOGIN,
+            initialRoute: defaultRout,
             defaultTransition: Transition.fadeIn,
             debugShowCheckedModeBanner: false,
           ),

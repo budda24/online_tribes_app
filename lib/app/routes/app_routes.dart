@@ -8,7 +8,8 @@ abstract class Routes {
   static const REGISTRATION = _Paths.REGISTRATION;
   static const WALKTHROUGH = _Paths.WALKTHROUGH;
   static const PROFILE = _Paths.PROFILE;
-  
+  static const TRIBE_REGISTRATION = _Paths.TRIBE_REGISTRATION;
+
 }
 
 abstract class _Paths {
@@ -18,5 +19,7 @@ abstract class _Paths {
   static const REGISTRATION = '/registration';
   static const WALKTHROUGH = '/walkthrough';
   static const PROFILE = '/profile';
+  static const TRIBE_REGISTRATION = '/tribe_registration';
+
 
 }
