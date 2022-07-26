@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controllers/profile_controller.dart';
 import 'rounded_container.dart';
 
-
-
 class NotificationTileRejected extends StatelessWidget {
-  const NotificationTileRejected({
+  NotificationTileRejected({
+    required this.tribeId,
     Key? key,
   }) : super(key: key);
+
+  var profileController = Get.find<ProfileController>();
+
+  String tribeId;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +42,7 @@ class NotificationTileRejected extends StatelessWidget {
                 width: 26,
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: Image.asset(
-                      'assets/images/profile/happy_face.png'),
+                  child: Image.asset('assets/images/profile/happy_face.png'),
                 ),
               ),
               const Text(
@@ -48,7 +52,9 @@ class NotificationTileRejected extends StatelessWidget {
             ],
           ),
           InkWell(
-            onTap: () {
+            onTap: () async {
+              await profileController.deleteNotification(tribeId);
+
               //TODO add logic delete
             },
             child: const Icon(

@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../helpers/theme/ui_helpers.dart';
+import '../controllers/profile_controller.dart';
 import 'rounded_container.dart';
 
 class NotificationTileInvited extends StatelessWidget {
-  const NotificationTileInvited({
+  NotificationTileInvited({
+    required this.tribeId,
     Key? key,
   }) : super(key: key);
+
+  var profileController = Get.find<ProfileController>();
+
+  String tribeId;
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +43,7 @@ class NotificationTileInvited extends StatelessWidget {
                 width: 36,
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: Image.asset(
-                      'assets/images/profile/invited_sign.png'),
+                  child: Image.asset('assets/images/profile/invited_sign.png'),
                 ),
               ),
               const Text(
@@ -56,18 +62,20 @@ class NotificationTileInvited extends StatelessWidget {
                 child: SizedBox(
                     height: 40,
                     width: 35,
-                    child: Image.asset(
-                        'assets/images/profile/confirm_sign.png')),
+                    child:
+                        Image.asset('assets/images/profile/confirm_sign.png')),
               ),
               InkWell(
-                onTap: () {
+                onTap: () async {
+                  await profileController.deleteNotification(tribeId);
+
                   //TODO add logic for refuse
                 },
                 child: SizedBox(
                     height: 40,
                     width: 35,
-                    child: Image.asset(
-                        'assets/images/profile/refuse_sign.png')),
+                    child:
+                        Image.asset('assets/images/profile/refuse_sign.png')),
               ),
             ],
           )

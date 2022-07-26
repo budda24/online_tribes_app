@@ -28,4 +28,9 @@ class UserCloudStorageServices {
     final dir = await getApplicationDocumentsDirectory();
     return File('${dir.path}/${_ref.name}');
   }
+
+  
+
+
+  //TODO write function to delete here || deleting doc with tribe_id
 }

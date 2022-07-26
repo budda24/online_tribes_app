@@ -91,7 +91,6 @@ class LoginView extends GetView<LoginController> {
                                             : 0,
                                       ),
                                       SlimRoundedButton(
-
                                         backgroundColour:
                                             AppColors.primaryColor,
                                         title: controller

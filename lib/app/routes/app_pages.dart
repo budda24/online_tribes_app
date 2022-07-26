@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/app/modules/profile/views/profile_home_view.dart';
 import 'package:flutter_application_1/app/modules/tribe_registration/views/registration_tribe_choose_sign.dart';
 import 'package:get/get.dart';
 
@@ -50,7 +51,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => TribeRegistrationStart(),
+      page: () => ProfileHomeView(),
       binding: ProfileBinding(),
     ),
   ];

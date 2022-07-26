@@ -62,13 +62,13 @@ class CustomNavigationBar extends StatelessWidget {
                       imagePath: 'assets/images/profile/tribe.png'),
                   BottomNavBarItem(
                       onTap: () {
-                        profileController.videoController = null;
+                        /*   profileController.videoController = null; */
                         actualIndex.value = 1;
                       },
                       title: 'Notifications',
                       imagePath: 'assets/images/profile/bell.png'),
                   BottomNavBarItem(
-                      onTap: () {
+                      onTap: () async {
                         profileController.videoController = null;
                         actualIndex.value = 2;
                       },
