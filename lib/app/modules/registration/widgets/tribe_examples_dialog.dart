@@ -30,12 +30,8 @@ class TribeExamplesDialog extends StatelessWidget {
               return Container(
                 margin: EdgeInsets.only(
                     bottom: 10.h, top: 10.h),
-                child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
+                child: GestureDetector(
+                   onTap: () {
                         Get.to(
                           DescriptionExamplePage(
                             description: TribeProfileExamples
@@ -54,7 +50,11 @@ class TribeExamplesDialog extends StatelessWidget {
                           ),
                         );
                       },
-                      child: Container(
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.start,
+                    children: [
+                      Container(
                         width: 80.w,
                         height: 80.h,
                         margin:
@@ -65,25 +65,25 @@ class TribeExamplesDialog extends StatelessWidget {
                                     index]
                                 .imageAssetPath),
                       ),
-                    ),
-                    SizedBox(
-                      width: 38.w,
-                    ),
-                    Column(children: [
-                      Text(
-                        TribeProfileExamples
-                            .listTribeProfileExamples[index]
-                            .userName,
-                        style: kMontserratBold,
+                      SizedBox(
+                        width: 38.w,
                       ),
-                      Text(
-                        TribeProfileExamples
-                            .listTribeProfileExamples[index]
-                            .tribeName,
-                        style: kMontserratBold,
-                      ),
-                    ])
-                  ],
+                      Column(children: [
+                        Text(
+                          TribeProfileExamples
+                              .listTribeProfileExamples[index]
+                              .userName,
+                          style: kMontserratBold,
+                        ),
+                        Text(
+                          TribeProfileExamples
+                              .listTribeProfileExamples[index]
+                              .tribeName,
+                          style: kMontserratBold,
+                        ),
+                      ])
+                    ],
+                  ),
                 ),
               );
             }),

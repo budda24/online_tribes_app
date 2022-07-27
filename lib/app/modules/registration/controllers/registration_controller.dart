@@ -1,16 +1,17 @@
+// Package imports:
 import 'dart:io' as io;
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 
+// Project imports:
+import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
+import '../../../controllers/global_controler.dart';
+import '../../../helpers/theme/alert_styles.dart';
 import '../../authorization/controllers/login_controller.dart';
 import '../../../controllers/camea_controller.dart';
 

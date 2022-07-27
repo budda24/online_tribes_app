@@ -1,14 +1,14 @@
-/* import 'package:chewie/chewie.dart'; */
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/rounded_container.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/rounded_expanded_container.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
+//Package imports:
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+// Project imports:
+import '../../../helpers/theme/text_styles.dart';
+import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
+import '../controllers/profile_controller.dart';
+import '../widgets/rounded_container.dart';
+import '../widgets/rounded_expanded_container.dart';
 
 class ProfileInfoView extends StatelessWidget {
   ProfileInfoView({Key? key}) : super(key: key);

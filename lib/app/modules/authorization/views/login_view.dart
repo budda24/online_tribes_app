@@ -1,19 +1,16 @@
-// Flutter imports:
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
-
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
 // Package imports:
-import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:get/get.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 // Project imports:
 
+import '../../../controllers/global_controler.dart';
 import '../../../helpers/main_constants.dart';
+import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/theme/text_styles.dart';
+import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';

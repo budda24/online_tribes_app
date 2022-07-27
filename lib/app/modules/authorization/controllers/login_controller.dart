@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
 
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+//Package imports:
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-
+// Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../controllers/global_controler.dart';
 

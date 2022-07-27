@@ -1,19 +1,15 @@
-/* import 'package:chewie/chewie.dart'; */
-
-import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_accepted.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/noticification_tile_rejected.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+//Package imports:
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:video_viewer/video_viewer.dart';
-
+// Project imports:
+import '../../../../infrastructure/fb_services/auth/auth_services.dart';
+import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
-
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
-
+import '../widgets/noticification_tile_accepted.dart';
 import '../widgets/noticification_tile_invited.dart';
+import '../widgets/noticification_tile_rejected.dart';
 
 class ProfileController extends GetxController {
   RxInt actualIndex = 0.obs;

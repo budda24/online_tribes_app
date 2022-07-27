@@ -44,6 +44,7 @@ class DescriptionExamplePage extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 20),
                   child: Image.asset(imageAssetPath),
                 ),
+                horizontalSpaceSmall,
                 Text(
                   title,
                   style: kName,
@@ -51,7 +52,7 @@ class DescriptionExamplePage extends StatelessWidget {
               ]),
               verticalSpaceMedium,
               RoundedBacgroundContainer(
-                height: 500.h,
+                height: 435.h,
                 screanHeight: boxConstrains.maxHeight,
                 screanWidth: boxConstrains.maxWidth,
                 bcColor: AppColors.whiteColor,

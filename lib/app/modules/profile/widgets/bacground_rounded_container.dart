@@ -1,6 +1,8 @@
+//Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// Project imports:
 import '../../../helpers/theme/app_colors.dart';
 
 class BacgroundRoundedContainer extends StatelessWidget {

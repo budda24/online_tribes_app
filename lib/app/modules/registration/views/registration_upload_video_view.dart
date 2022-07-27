@@ -10,7 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:percent_indicator/percent_indicator.dart';
+
 
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';

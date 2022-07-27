@@ -1,18 +1,13 @@
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/rounded_container.dart';
+//Package imports:
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 
-import '../../../helpers/main_constants.dart';
-import '../../../helpers/theme/text_styles.dart';
+// Project imports:
+import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../../helpers/widgets/online_tribes/profile/tribal_tile.dart';
+import '../controllers/profile_controller.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
   var profileController = Get.find<ProfileController>();
@@ -61,7 +56,3 @@ class ProfileMyTribeView extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/modules/authorization/controllers/login_controller.dart';
-import 'package:flutter_application_1/app/routes/app_pages.dart';
 
+//Package imports:
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+// Project imports:
+import '../../../controllers/global_controler.dart';
 import '../../../helpers/main_constants.dart';
+import '../../../routes/app_pages.dart';
+import '../../authorization/controllers/login_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {

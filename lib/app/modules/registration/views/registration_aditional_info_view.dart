@@ -1,19 +1,24 @@
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/registration/form_field.dart';
-import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
-import 'package:flutter_application_1/app/modules/registration/views/registration_upload_video_view.dart';
-import 'package:flutter_application_1/app/modules/registration/widgets/neumorphic_circle_background.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
+
+
+
+
+
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 
 import 'package:get/get.dart';
 
 import '../../../controllers/camea_controller.dart';
+import '../../../controllers/global_controler.dart';
 import '../../../helpers/main_constants.dart';
+import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/main_button.dart';
 import '../../../helpers/widgets/online_tribes/profile/main_circle_photo.dart';
 
+import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
+import '../controllers/registration_controller.dart';
 import '../widgets/time_to_invest_slider.dart';
 import 'registration_upload_video_view.dart';
 

@@ -1,13 +1,15 @@
+//Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_info_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_my_tribe_view.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_notyfications_view.dart';
-import 'package:flutter_application_1/app/modules/profile/widgets/custom_navigation_bar.dart';
 import 'package:get/get.dart';
 
+// Project imports:
 import '../../../controllers/camea_controller.dart';
+import '../../../helpers/theme/app_colors.dart';
 import '../controllers/profile_controller.dart';
+import '../widgets/custom_navigation_bar.dart';
+import 'profile_info_view.dart';
+import 'profile_my_tribe_view.dart';
+import 'profile_notyfications_view.dart';
 
 class ProfileHomeView extends GetView {
   ProfileHomeView({Key? key}) : super(key: key);

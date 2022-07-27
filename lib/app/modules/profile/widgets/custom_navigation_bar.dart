@@ -1,11 +1,13 @@
+//Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
 import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
 
+// Project imports:
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
+import '../controllers/profile_controller.dart';
 import 'bottom_nav_bar_item.dart';
 
 class CustomNavigationBar extends StatelessWidget {

@@ -1,11 +1,13 @@
+//Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/profile/profile_template.dart';
-import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
-
 import 'package:get/get.dart';
 
+// Project imports:
 import '../../../controllers/camea_controller.dart';
 import '../../../helpers/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
+import '../controllers/profile_controller.dart';
+import '../widgets/notification_list.dart';
 
 class ProfileNotyficationsView extends GetView {
   final cameraController = Get.find<CameraController>();
@@ -20,7 +22,7 @@ class ProfileNotyficationsView extends GetView {
       body: SingleChildScrollView(
         child: SafeArea(
             child: ProfileTemplate(
-          fields: const [/* profileController.notificationWidgets */],
+          fields: const [NotificationList()],
           title: const SizedBox.shrink(),
           videoSrc: '',
           profileImage: Image.network(profileController.profilePhotoUrl),
