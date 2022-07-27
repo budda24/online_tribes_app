@@ -1,7 +1,7 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../helpers/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
 
 class RoundedInputContainer extends StatelessWidget {

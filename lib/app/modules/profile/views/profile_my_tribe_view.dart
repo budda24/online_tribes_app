@@ -8,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
-import '../../../helpers/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';

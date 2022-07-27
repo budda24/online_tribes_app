@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../helpers/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../models/tribal_example.dart';
 import '../views/registration_destription_hint_view_view.dart';
+import 'tribal_desctription_example.dart';
 
 
 

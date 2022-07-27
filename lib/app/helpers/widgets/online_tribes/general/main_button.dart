@@ -6,7 +6,7 @@ import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import '../../theme/ui_helpers.dart';
+import '../../../theme/ui_helpers.dart';
 
 // Project imports:
 

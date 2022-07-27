@@ -4,7 +4,7 @@ import 'package:flutter_application_1/app/modules/authorization/controllers/logi
 import 'package:flutter_application_1/app/routes/app_pages.dart';
 
 import 'package:get/get.dart';
-import '../../../helpers/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../controllers/home_controller.dart';
 
 class HomeScreen extends GetView<HomeController> {

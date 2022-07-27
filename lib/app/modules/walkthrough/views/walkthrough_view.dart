@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 /* import 'package:flutter_application_1/app/helpers/main_constants.dart'; */
 
-import '../../../helpers/widgets/online_tribes/main_button.dart';
+import '../../../helpers/widgets/online_tribes/general/main_button.dart';
 import '../../../helpers/widgets/registration_and_login/background_and_info.dart';
 import '../controllers/walkthrough_controller.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';

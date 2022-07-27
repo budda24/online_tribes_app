@@ -145,6 +145,10 @@ class MyApp extends StatelessWidget {
               690) /* ScreenSizes(constraints: constraints).getScreenSize() */,
           minTextAdapt: true,
           builder: (context, child) => GetMaterialApp(
+            /* theme: ThemeData(
+                inputDecorationTheme: const InputDecorationTheme(
+              isDense: true,
+            )), */
             initialBinding: GlobalControllersBinding(),
             title: "Application",
             getPages: AppPages.routes,

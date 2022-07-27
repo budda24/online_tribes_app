@@ -4,12 +4,12 @@ import 'package:flutter_application_1/app/modules/tribe_registration/controllers
 import 'package:flutter_application_1/app/modules/tribe_registration/widgets/rounded_input_container.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/app/helpers/main_constants.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/general/main_constants.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 
 import 'package:video_viewer/domain/bloc/controller.dart';
 
-import '../../../helpers/widgets/online_tribes/main_button.dart';
+import '../../../helpers/widgets/online_tribes/general/main_button.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 
 class RegistrationTribeCreationTribe extends StatelessWidget {
@@ -23,8 +23,14 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
         child: ProfileTemplate(
-          videoController: videoController,
           fields: [
+            RoundedInputContainer(
+              height: 120,
+              hintText: 'Description',
+              textController: tribeRegistrationController.descritionController,
+              validate: (value) =>
+                  globalController.validateInputs(value: value, lenght: 1500),
+            ),
             RoundedInputContainer(
               height: 60,
               hintText: 'Name',
@@ -38,13 +44,6 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
               textController: tribeRegistrationController.typeController,
               validate: (value) =>
                   globalController.validateInputs(value: value, lenght: 50),
-            ),
-            RoundedInputContainer(
-              height: 120,
-              hintText: 'Description',
-              textController: tribeRegistrationController.descritionController,
-              validate: (value) =>
-                  globalController.validateInputs(value: value, lenght: 1500),
             ),
             RoundedInputContainer(
               height: 80,
@@ -88,7 +87,7 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
             textColor: AppColors.whiteColor,
             onPress: () {},
           ),
-          profileImage: Image.asset(cArtistTribe),
+          profileImage: Image.asset(cArtistTribeSign),
         ),
       ),
     );

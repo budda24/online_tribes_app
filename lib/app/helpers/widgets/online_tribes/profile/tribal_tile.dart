@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../modules/profile/widgets/rounded_container.dart';
-import '../../../main_constants.dart';
+import '../general/main_constants.dart';
 
 class TribeTile extends StatelessWidget {
   const TribeTile({

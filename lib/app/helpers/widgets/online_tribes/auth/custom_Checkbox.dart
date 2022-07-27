@@ -1,4 +1,4 @@
-import '../../../main_constants.dart';
+import '../general/main_constants.dart';
 import 'package:flutter/material.dart';
 
 class CustomCheckbox extends StatefulWidget {

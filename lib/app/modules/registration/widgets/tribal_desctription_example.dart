@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // Package imports:
 
 // Project imports:
-import '../../../helpers/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 
 class DescriptionExamplePage extends StatelessWidget {
   final String description;

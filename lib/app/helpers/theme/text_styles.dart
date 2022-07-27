@@ -19,6 +19,14 @@ TextStyle lightButtonTextStyle =
 TextStyle title = TextStyle(
     fontFamily: 'Futura Md BT', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
+TextStyle greenTitle = TextStyle(
+  color: AppColors.actionColor,
+    fontFamily: 'Futura Md BT', fontSize: 20.0.sp, fontWeight: FontWeight.bold);
+
+    TextStyle greenContainerLable = TextStyle(
+  color: AppColors.primaryColor,
+    fontFamily: 'TribalDecorate', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
+
 TextStyle buttonLable = GoogleFonts.lato(
     textStyle: TextStyle(
         color: AppColors.whiteColor,
@@ -27,6 +35,7 @@ TextStyle buttonLable = GoogleFonts.lato(
 
 TextStyle headingBlackStyle = TextStyle(
     fontFamily: 'Montserrat', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
+
 TextStyle headingWhiteStyle = TextStyle(
   fontFamily: 'Montserrat',
   color: AppColors.whiteColor,
@@ -98,6 +107,19 @@ TextStyle lableWhite = TextStyle(
   fontSize: 30.0.sp,
   color: AppColors.whiteColor,
 );
+
+class TextContainerLable extends StatelessWidget {
+  const TextContainerLable({Key? key, required this.text}) : super(key: key);
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: greenContainerLable,
+    );
+  }
+}
 
 
 

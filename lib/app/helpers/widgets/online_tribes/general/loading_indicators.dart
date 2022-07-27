@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../theme/app_colors.dart';
-import '../theme/font_sizes.dart';
+import '../../../theme/app_colors.dart';
+import '../../../theme/font_sizes.dart';
 
 Widget defaultLoadingIndicator = Center(
   child: SizedBox(

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/camea_controller.dart';
+import '../../../../controllers/camea_controller.dart';
 
 class CustomPhotoPicker extends StatelessWidget {
   CustomPhotoPicker({Key? key}) : super(key: key);
 
   final CameraController cameraController = Get.find<CameraController>();
-  final registrationController = Get.find<RegistrationController>();
+  /* final registrationController = Get.find<RegistrationController>(); */
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,9 @@ class CustomPhotoPicker extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () async {
-                await cameraController.getFileGallery(type: PickedType.photo).then((value) async {
+                await cameraController
+                    .getFileGallery(type: PickedType.photo)
+                    .then((value) async {
                   Get.back();
                 });
               },
