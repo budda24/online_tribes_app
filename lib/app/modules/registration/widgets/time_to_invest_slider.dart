@@ -1,7 +1,9 @@
+// Package imports:
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
-import '../../../helpers/main_constants.dart';
+// Project imports:
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
 
 // ignore: must_be_immutable

@@ -6,10 +6,11 @@ import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/profile/widgets/video_player.dart';
 
 
-import '../../../main_constants.dart';
+
 import '../../../theme/app_colors.dart';
 import '../../../theme/ui_helpers.dart';
-import '../main_button.dart';
+import '../general/main_button.dart';
+import '../general/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
   ProfileTemplate({
@@ -48,28 +49,30 @@ class ProfileTemplate extends StatelessWidget {
             BacgroundRoundedContainer(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
-                child: ListView(
-                  children: [
-                    verticalSpaceExtraLarge,
-                    videoSrc != null
-                        ? videoController != null
-                            ? CustomVideoPlayer.network(
-                                videoSrc: videoSrc,
-                                videoController: videoController!)
-                            : const SizedBox.shrink()
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              spinkit,
-                              const SizedBox(height: 20),
-                              const Text('Loading'),
-                            ],
-                          ),
-                    ...fields,
-                    verticalSpaceLarge,
-                    button ?? const SizedBox.shrink(),
-                    verticalSpaceLarge
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      verticalSpaceExtraLarge,
+                      videoSrc != null
+                          ? videoController != null
+                              ? CustomVideoPlayer.network(
+                                  videoSrc: videoSrc,
+                                  videoController: videoController!)
+                              : const SizedBox.shrink()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                spinkit,
+                                const SizedBox(height: 20),
+                                const Text('Loading'),
+                              ],
+                            ),
+                      ...fields,
+                      verticalSpaceLarge,
+                      button ?? const SizedBox.shrink(),
+                      verticalSpaceLarge
+                    ],
+                  ),
                 ),
               ),
             ),

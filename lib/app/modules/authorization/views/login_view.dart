@@ -7,12 +7,13 @@ import 'package:intl_phone_field/phone_number.dart';
 // Project imports:
 
 import '../../../controllers/global_controler.dart';
-import '../../../helpers/main_constants.dart';
+
 import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
-import '../../../helpers/widgets/online_tribes/main_button.dart';
+import '../../../helpers/widgets/online_tribes/general/main_button.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
 import '../../registration/widgets/custom_pin_put.dart';
 import '../controllers/login_controller.dart';

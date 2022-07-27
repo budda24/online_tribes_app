@@ -46,16 +46,26 @@ Image kBottomNavBarGreenMarker =
     Image.asset('assets/images/profile/elipse.png');
 
 const String cConfirmSign = 'assets/images/profile/confirm_sign.png';
-const String cMotheringTribe = 'assets/images/authorization_screen/tribel_signs/mothering_tribe.png';
-const String cMusicalTribe = 'assets/images/authorization_screen/tribel_signs/musical_tribe.png';
-const String cTravellerTribe = 'assets/images/authorization_screen/tribel_signs/traveller_tribe.png';
-const String cArtistTribe = 'assets/images/authorization_screen/tribel_signs/artist_tribe.png';
-const String cBussinessTribe = 'assets/images/authorization_screen/tribel_signs/business_tribe.png';
-const String cWriteringTribe = 'assets/images/authorization_screen/tribel_signs/writer_tribe.png';
-const String cIllnessTribe = 'assets/images/authorization_screen/tribel_signs/illness_tribe.png';
-const String cAddCustomSign = 'assets/images/tribe_registration/add_custom_sign.png';
+const String cMotheringTribeSign =
+    'assets/images/authorization_screen/tribel_signs/mothering_tribe.png';
+const String cMusicalTribeSign =
+    'assets/images/authorization_screen/tribel_signs/musical_tribe.png';
+const String cTravellerTribeSign =
+    'assets/images/authorization_screen/tribel_signs/traveller_tribe.png';
+const String cArtistTribeSign =
+    'assets/images/authorization_screen/tribel_signs/artist_tribe.png';
+const String cBussinessTribeSign =
+    'assets/images/authorization_screen/tribel_signs/business_tribe.png';
+const String cWriteringTribeSign =
+    'assets/images/authorization_screen/tribel_signs/writer_tribe.png';
+const String cIllnessTribeSign =
+    'assets/images/authorization_screen/tribel_signs/illness_tribe.png';
+const String cAddCustomSignSign =
+    'assets/images/tribe_registration/add_custom_sign.png';
 
 var spinkit = SpinKitSpinningLines(
   color: AppColors.actionColor,
   size: 80.0,
 );
+
+const int oneLineContainerHeight = 60;

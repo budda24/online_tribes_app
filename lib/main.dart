@@ -1,29 +1,27 @@
+// Package imports:
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
-import 'package:flutter_application_1/app/modules/home/views/home_view.dart';
-import 'package:flutter_application_1/app/modules/walkthrough/views/walkthrough_view.dart';
-
 import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 import 'app/bindings/global_bindings.dart';
-import 'app/modules/authorization/controllers/login_controller.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
+// Project imports:
 import 'app/controllers/global_controler.dart';
+import 'app/helpers/theme/app_colors.dart';
+import 'app/modules/authorization/controllers/login_controller.dart';
+import 'app/modules/authorization/views/login_view.dart';
+import 'app/modules/home/views/home_view.dart';
+import 'app/modules/walkthrough/controllers/walkthrough_controller.dart';
+import 'app/modules/walkthrough/views/walkthrough_view.dart';
 import 'app/routes/app_pages.dart';
-import 'package:flutter_application_1/app/modules/walkthrough/controllers/walkthrough_controller.dart';
 
 /* List<CameraDescription> cameras = []; */
 
@@ -145,6 +143,10 @@ class MyApp extends StatelessWidget {
               690) /* ScreenSizes(constraints: constraints).getScreenSize() */,
           minTextAdapt: true,
           builder: (context, child) => GetMaterialApp(
+            /* theme: ThemeData(
+                inputDecorationTheme: const InputDecorationTheme(
+              isDense: true,
+            )), */
             initialBinding: GlobalControllersBinding(),
             title: "Application",
             getPages: AppPages.routes,

@@ -1,16 +1,14 @@
-// Flutter imports:
+// Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_bars.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/profile/rounded_bacgroud_container.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// Package imports:
-
 // Project imports:
-import '../../../helpers/main_constants.dart';
+import '../../../helpers/theme/app_bars.dart';
+import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/theme/text_styles.dart';
+import '../../../helpers/theme/ui_helpers.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/widgets/online_tribes/profile/rounded_bacgroud_container.dart';
 
 class DescriptionExamplePage extends StatelessWidget {
   final String description;

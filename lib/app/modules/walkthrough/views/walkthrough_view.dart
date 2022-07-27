@@ -1,15 +1,13 @@
+// Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
-import 'package:flutter_application_1/app/helpers/widgets/registration_and_login/row_progress_dott.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-/* import 'package:flutter_application_1/app/helpers/main_constants.dart'; */
-
-import '../../../helpers/widgets/online_tribes/main_button.dart';
+// Project imports:
+import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/theme/text_styles.dart';
+import '../../../helpers/theme/ui_helpers.dart';
+import '../../../helpers/widgets/online_tribes/general/main_button.dart';
 import '../../../helpers/widgets/registration_and_login/background_and_info.dart';
 import '../controllers/walkthrough_controller.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';

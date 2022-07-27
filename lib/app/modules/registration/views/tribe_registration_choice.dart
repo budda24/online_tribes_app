@@ -1,11 +1,12 @@
+// Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/modules/profile/views/profile_home_view.dart';
-import 'package:flutter_application_1/app/modules/tribe_registration/views/registration_tribe_choose_sign.dart';
-import 'package:flutter_application_1/app/modules/tribe_registration/widgets/background.dart';
-import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+// Project imports:
+import '../../../helpers/theme/app_colors.dart';
+import '../../../routes/app_pages.dart';
+import '../../tribe_registration/widgets/background.dart';
 
 class TribeRegistrationChoice extends StatelessWidget {
   @override

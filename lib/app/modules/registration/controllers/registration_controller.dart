@@ -14,9 +14,10 @@ import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/alert_styles.dart';
 import '../../authorization/controllers/login_controller.dart';
 import '../../../controllers/camea_controller.dart';
+import '../views/tribe_registration_choice.dart';
 
 class RegistrationController extends GetxController {
-  final loginController = Get.find<LoginController>();
+  final loginController = Get.put(LoginController());
   final globalController = Get.find<GlobalController>();
   final cameraController = Get.put(CameraController());
 
@@ -54,6 +55,8 @@ class RegistrationController extends GetxController {
     );
   }
 
+  var videoUploaded = false.obs;
+
   Future<void> saveNewUser() async {
     globalController.showloading();
     await uploadFile(
@@ -79,9 +82,9 @@ class RegistrationController extends GetxController {
               }
               if (event.state == TaskState.success) {
                 userDB.introVideoUrl = await event.ref.getDownloadURL();
-                print('video : ${userDB.introVideoUrl}');
-
                 await UserDBServices().createUser(userDB);
+                videoUploaded.value = true;
+                Get.to(TribeRegistrationChoice());
               }
             }));
 
@@ -106,7 +109,7 @@ class RegistrationController extends GetxController {
     return false;
   }
 
-  bool checkIfVideoUpload() {
+  bool checkIfVideoChosen() {
     if (cameraController.pickedVideo != null) {
       return true;
     }

@@ -1,7 +1,9 @@
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
-
 import 'package:get/get.dart';
+
+// Project imports:
+import '../../../app/helpers/theme/alert_styles.dart';
 import '../models/user_model.dart';
 
 class UserDBServices {
@@ -42,9 +44,6 @@ class UserDBServices {
       print('notyfication Id: ${element.tribeId}');
     });
 
-    await _db
-        .collection('USERS')
-        .doc(user.userId)
-        .update(user.toJson());
+    await _db.collection('USERS').doc(user.userId).update(user.toJson());
   }
 }

@@ -1,12 +1,12 @@
+// Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../helpers/main_constants.dart';
+// Project imports:
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../models/tribal_example.dart';
 import '../views/registration_destription_hint_view_view.dart';
-
-
 
 class TribeExamplesDialog extends StatelessWidget {
   const TribeExamplesDialog({
@@ -15,55 +15,39 @@ class TribeExamplesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Dialog(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(40)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
       elevation: 16,
       child: Container(
         height: 445.h,
         padding: EdgeInsets.symmetric(vertical: 5.h),
         child: ListView.builder(
-            itemCount: TribeProfileExamples
-                .listTribeProfileExamples.length,
+            itemCount: TribeProfileExamples.listTribeProfileExamples.length,
             itemBuilder: (_, index) {
               return Container(
-                margin: EdgeInsets.only(
-                    bottom: 10.h, top: 10.h),
+                margin: EdgeInsets.only(bottom: 10.h, top: 10.h),
                 child: GestureDetector(
-                   onTap: () {
-                        Get.to(
-                          DescriptionExamplePage(
-                            description: TribeProfileExamples
-                                .listTribeProfileExamples[
-                                    index]
-                                .description,
-                            title: TribeProfileExamples
-                                .listTribeProfileExamples[
-                                    index]
-                                .tribeName,
-                            imageAssetPath:
-                                TribeProfileExamples
-                                    .listTribeProfileExamples[
-                                        index]
-                                    .imageAssetPath,
-                          ),
-                        );
-                      },
+                  onTap: () {
+                    Get.to(
+                      DescriptionExamplePage(
+                        description: TribeProfileExamples
+                            .listTribeProfileExamples[index].description,
+                        title: TribeProfileExamples
+                            .listTribeProfileExamples[index].tribeName,
+                        imageAssetPath: TribeProfileExamples
+                            .listTribeProfileExamples[index].imageAssetPath,
+                      ),
+                    );
+                  },
                   child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
                         width: 80.w,
                         height: 80.h,
-                        margin:
-                            const EdgeInsets.only(left: 20),
-                        child: Image.asset(
-                            TribeProfileExamples
-                                .listTribeProfileExamples[
-                                    index]
-                                .imageAssetPath),
+                        margin: const EdgeInsets.only(left: 20),
+                        child: Image.asset(TribeProfileExamples
+                            .listTribeProfileExamples[index].imageAssetPath),
                       ),
                       SizedBox(
                         width: 38.w,
@@ -71,14 +55,12 @@ class TribeExamplesDialog extends StatelessWidget {
                       Column(children: [
                         Text(
                           TribeProfileExamples
-                              .listTribeProfileExamples[index]
-                              .userName,
+                              .listTribeProfileExamples[index].userName,
                           style: kMontserratBold,
                         ),
                         Text(
                           TribeProfileExamples
-                              .listTribeProfileExamples[index]
-                              .tribeName,
+                              .listTribeProfileExamples[index].tribeName,
                           style: kMontserratBold,
                         ),
                       ])
@@ -91,4 +73,3 @@ class TribeExamplesDialog extends StatelessWidget {
     );
   }
 }
-

@@ -1,9 +1,9 @@
+// Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
-
 import 'package:get/get.dart';
 
-/* import '../../../modules/authorization/views/login_view.dart'; */
+// Project imports:
+import '../../../controllers/global_controler.dart';
 import '../../../modules/walkthrough/models/walkthrough_model.dart';
 import '../../../routes/app_pages.dart';
 

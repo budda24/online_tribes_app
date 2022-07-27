@@ -1,11 +1,13 @@
+// Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
-import 'package:flutter_application_1/app/modules/authorization/views/login_view.dart';
-
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:uuid/uuid.dart';
+
+// Project imports:
 import '../../../app/controllers/global_controler.dart';
+import '../../../app/helpers/theme/alert_styles.dart';
+import '../../../app/modules/authorization/views/login_view.dart';
 import '../../../app/routes/app_pages.dart';
 
 final User currentUser = auth.currentUser!;

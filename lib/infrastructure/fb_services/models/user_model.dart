@@ -2,8 +2,8 @@
 //
 //     final welcome = welcomeFromJson(jsonString);
 
+// Package imports:
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 UserDB welcomeFromJson(String str) => UserDB.fromJson(json.decode(str));
@@ -29,7 +29,7 @@ class UserDB {
 
   String userId;
   String? email;
-  
+
   String? phoneNumber;
   String? name;
   String? requestedTribe;

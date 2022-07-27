@@ -1,9 +1,13 @@
+// Package imports:
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
-class TribeRegistrationController extends GetxController {
-  RxInt? choosenIndex = 9.obs;
+// Project imports:
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../widgets/tribal_sign_picker.dart';
+import '../widgets/tribe_sign_with_pointer.dart';
 
+class TribeRegistrationController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController typeController = TextEditingController();
   TextEditingController descritionController = TextEditingController();
@@ -12,5 +16,19 @@ class TribeRegistrationController extends GetxController {
   TextEditingController mottoOfTribeController = TextEditingController();
   TextEditingController weeklySuggestedTimeController = TextEditingController();
 
-  
+  RxInt? choosenSignIndex = (-1).obs;
+  RxBool isSignChosen = false.obs;
+  String? chosenTribalSign;
+  String? uploadedTribalSign;
+
+  List<Widget> tribesSigns = [
+    TribeSignWithPointer(imagePath: cMotheringTribeSign, index: 0),
+    TribeSignWithPointer(imagePath: cMusicalTribeSign, index: 1),
+    TribeSignWithPointer(imagePath: cTravellerTribeSign, index: 2),
+    TribeSignWithPointer(imagePath: cArtistTribeSign, index: 3),
+    TribeSignWithPointer(imagePath: cBussinessTribeSign, index: 4),
+    TribeSignWithPointer(imagePath: cWriteringTribeSign, index: 5),
+    TribeSignWithPointer(imagePath: cIllnessTribeSign, index: 6),
+    TribalSignPicker()
+  ];
 }

@@ -1,18 +1,24 @@
+// Package imports:
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../helpers/main_constants.dart';
+// Project imports:
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
 
 class RoundedInputContainer extends StatelessWidget {
-  const RoundedInputContainer(
-      {Key? key, required this.height, required this.hintText,required this.textController,required this.validate,})
-      : super(key: key);
+  const RoundedInputContainer({
+    Key? key,
+    required this.height,
+    required this.hintText,
+    required this.textController,
+    required this.validate,
+  }) : super(key: key);
 
   final int height;
   final String hintText;
   final FormFieldValidator? validate;
-   final TextEditingController textController;
+  final TextEditingController textController;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class RoundedInputContainer extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10))),
         child: TextFormField(
           controller: textController,
-          validator: validate ,
+          validator: validate,
           style: kMontserratBold,
           textAlign: TextAlign.center,
           decoration: InputDecoration(

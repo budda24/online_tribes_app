@@ -1,6 +1,8 @@
+// Package imports:
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
+// Project imports:
 import '../../../helpers/theme/app_colors.dart';
 
 class CustomPinPut extends StatelessWidget {
@@ -17,7 +19,6 @@ class CustomPinPut extends StatelessWidget {
       focusedPinTheme: _focusedPinTheme,
       submittedPinTheme: _submittedPinTheme,
       showCursor: true,
-
       onCompleted: (pin) {
         smsPinCode.text = pin;
       },

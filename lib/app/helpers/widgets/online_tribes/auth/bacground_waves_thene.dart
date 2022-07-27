@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import '../../../main_constants.dart';
+import '../general/main_constants.dart';
 
 class GreenWaves2 extends StatelessWidget {
    GreenWaves2({

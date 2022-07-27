@@ -1,6 +1,6 @@
+// Package imports:
 import 'dart:io' as io;
 import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -16,7 +16,7 @@ class UserCloudStorageServices {
     required String path,
   }) {
     final Reference ref = storage.ref('$userId/$path').child(fileName);
-    
+
     return ref.putFile(imageToUpload);
 
     /* var uploadedtask = UploadedTask(refrence: ref, task: task); */
@@ -29,7 +29,7 @@ class UserCloudStorageServices {
     return File('${dir.path}/${ref.name}');
   }
 
-  
+
 
 
   //TODO write function to delete here || deleting doc with tribe_id

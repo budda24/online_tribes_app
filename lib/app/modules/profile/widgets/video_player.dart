@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:video_viewer/video_viewer.dart';
 
 // Project imports:
-import '../../../helpers/main_constants.dart';
+
 import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 
 enum VideoAsset { network, local }
 

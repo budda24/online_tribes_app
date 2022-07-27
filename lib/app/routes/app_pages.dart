@@ -1,11 +1,12 @@
+// Package imports:
 import 'package:get/get.dart';
 
+// Project imports:
 import '../modules/authorization/bindings/login_binding.dart';
 import '../modules/authorization/views/login_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
-
 import '../modules/profile/views/profile_home_view.dart';
 import '../modules/registration/bindings/registration_binding.dart';
 import '../modules/registration/views/registration_desrription_view.dart';
