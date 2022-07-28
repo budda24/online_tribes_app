@@ -72,7 +72,7 @@ class UserDB {
         "time_to_invest": timeToInvest,
         "attended_tribe": attendedTribe?.toJson(),
         "profile_notification":
-            List<dynamic>.from(profileNotification!.map((x) => x.toJson())),
+            profileNotification?.map((x) => x.toJson()).toList(),
       };
 }
 

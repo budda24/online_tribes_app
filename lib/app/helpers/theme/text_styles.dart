@@ -24,7 +24,7 @@ TextStyle greenTitle = TextStyle(
     fontFamily: 'Futura Md BT', fontSize: 20.0.sp, fontWeight: FontWeight.bold);
 
     TextStyle greenContainerLable = TextStyle(
-  color: AppColors.primaryColor,
+  color: AppColors.actionColor,
     fontFamily: 'TribalDecorate', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
 TextStyle buttonLable = GoogleFonts.lato(

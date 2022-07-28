@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 // Project imports:
 import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../models/tribal_example.dart';
-import '../views/registration_destription_hint_view_view.dart';
+import 'tribal_desctription_example.dart';
 
 class TribeExamplesDialog extends StatelessWidget {
   const TribeExamplesDialog({

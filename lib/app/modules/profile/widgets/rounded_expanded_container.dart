@@ -7,16 +7,18 @@ import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/theme/text_styles.dart';
 
 class RoundedExpandedContainer extends StatefulWidget {
-  const RoundedExpandedContainer(
-      {Key? key,
-      required this.containerHeight,
-      required this.text,
-      required this.heightToExpand})
-      : super(key: key);
+  const RoundedExpandedContainer({
+    Key? key,
+    required this.containerHeight,
+    required this.text,
+    required this.heightToExpand,
+    this.lable,
+  }) : super(key: key);
 
   final int containerHeight;
   final String text;
   final int heightToExpand;
+  final String? lable;
 
   @override
   State<RoundedExpandedContainer> createState() =>
@@ -79,7 +81,7 @@ class _RoundedExpandedContainerState extends State<RoundedExpandedContainer>
             boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
           ),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
             width: 0.8.sw,
             height: widget.containerHeight.h,
             decoration: const BoxDecoration(
@@ -95,7 +97,6 @@ class _RoundedExpandedContainerState extends State<RoundedExpandedContainer>
         ),
       ),
       Positioned.fill(
-        /* left: 179.w,*/
         top: animation.value,
         child: Align(
           alignment: Alignment.center,
@@ -107,7 +108,16 @@ class _RoundedExpandedContainerState extends State<RoundedExpandedContainer>
                   ? Image.asset('assets/images/profile/expand_more_arrow.png')
                   : Image.asset('assets/images/profile/expand_less_arrow.png')),
         ),
-      )
+      ),
+      widget.text == null
+          ? const SizedBox.shrink()
+          : Positioned.fill(
+              top: -5,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: TextContainerLable(text: widget.lable!),
+              ),
+            )
     ]);
   }
 }
