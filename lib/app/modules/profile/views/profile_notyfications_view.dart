@@ -23,7 +23,7 @@ class ProfileNotyficationsView extends GetView {
       body: SingleChildScrollView(
         child: SafeArea(
             child: ProfileTemplate(
-          fields: const [NotificationList()],
+          fields:  [NotificationList()],
           title: const SizedBox.shrink(),
           videoSrc: '',
           profileImage: Image.network(profileController.profilePhotoUrl),

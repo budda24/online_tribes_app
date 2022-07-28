@@ -89,13 +89,35 @@ class ProfileController extends GetxController {
 //TODO  notificationWidgetList is all the notification from database
   }
 
+  int? deletedIndex;
+
   Future<void> deleteNotification(String tribeId) async {
+    removeItem(deletedIndex!);
+
     userDb?.profileNotification
         ?.removeWhere((element) => element.tribeId == tribeId);
     print('tribe id to delete: $tribeId');
 
     await userDbServieces.updateDoc(userDb!);
+
     update();
+  }
+
+  final listKey = GlobalKey<AnimatedListState>();
+
+  buildItem(Widget item, Animation<double> animation, int index) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: item,
+    );
+  }
+
+  void removeItem(int i) {
+    Widget removedItem = notificationWidgets.removeAt(i);
+    AnimatedListRemovedItemBuilder builder = (context, animation) {
+      return buildItem(removedItem, animation, i);
+    };
+    listKey.currentState!.removeItem(i, builder);
   }
 
   //TODO deleteNotificatio calling the delete from user_cloud_storage_servieces
