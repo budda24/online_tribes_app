@@ -6,8 +6,6 @@ import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-import '../../../theme/ui_helpers.dart';
-
 // Project imports:
 
 class SlimRoundedButton extends StatelessWidget {
@@ -16,17 +14,11 @@ class SlimRoundedButton extends StatelessWidget {
   String title;
   VoidCallback onPress;
 
-  /* double screenWidth;
-  double screenHeight; */
-
   SlimRoundedButton({
     required this.backgroundColour,
     required this.title,
     required this.textColor,
     required this.onPress,
-
-    /* required this.screenWidth,
-        required this.screenHeight */
   });
 
   @override
@@ -43,12 +35,14 @@ class SlimRoundedButton extends StatelessWidget {
         color: AppColors.actionColor,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40.r)),
       ),
-      padding: 1.sh < tabletSize
-          ? EdgeInsets.only(left: 40.w, right: 40.w, top: 2.h, bottom: 2.h)
-          : EdgeInsets.only(left: 80.w, right: 80.w, top: 4.h, bottom: 4.h),
+      padding: EdgeInsets.symmetric(horizontal: 80.w, vertical: 2.h),
       child: TextButton(
         onPressed: onPress,
-        child: Text(title, style: buttonLable),
+        child: Text(
+          title,
+          style: buttonLable,
+          textAlign: TextAlign.center,
+        ),
       ),
     );
   }

@@ -28,22 +28,17 @@ class UserDBServices {
       print('json: $jsonEnc'); */
 
       user = UserDB.fromJson(userDoc!);
-      print(
-          '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
-      print('user ProfileN: ${user.description}');
+
       // user.profileNotification?.forEach((element) {
       //   print('request: ${element.type}');
       //   print('request: ${element.createdAt.toIso8601String()}');
       // });
     }
+    print('returning user');
     return user;
   }
 
   Future<void> updateDoc(UserDB user) async {
-    user.profileNotification?.forEach((element) {
-      print('notyfication Id: ${element.tribeId}');
-    });
-
     await _db.collection('USERS').doc(user.userId).update(user.toJson());
   }
 }

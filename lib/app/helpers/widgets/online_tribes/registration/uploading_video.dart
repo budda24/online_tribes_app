@@ -14,7 +14,6 @@ import '../profile/profile_template.dart';
 class UploadingVideoView extends StatelessWidget {
   UploadingVideoView({
     Key? key,
-    
     required this.saveData,
     required this.profileImage,
   }) : super(key: key);
@@ -129,7 +128,7 @@ class UploadingVideoView extends StatelessWidget {
                   })
             ],
             title: const SizedBox.shrink(),
-            videoSrc: '',
+            profileVideoSrc: '',
             profileImage: profileImage),
       ),
     );

@@ -26,14 +26,15 @@ class CustomVideoPlayer extends StatelessWidget {
   })  : videoSrc = '',
         super(key: key);
 
-  final String? videoSrc;
+  final String videoSrc;
   final VideoViewerController videoController;
   final VideoAsset type;
   final File? videoFile;
 
   @override
   Widget build(BuildContext context) {
-    print(videoController);
+    print('link: $videoSrc :  type: $type');
+
     return VideoViewer(
         enableVerticalSwapingGesture: false,
         enableHorizontalSwapingGesture: false,
@@ -61,7 +62,7 @@ class CustomVideoPlayer extends StatelessWidget {
         source: type == VideoAsset.network
             ? {
                 "SubRip Text": VideoSource(
-                  video: VideoPlayerController.network(videoSrc!),
+                  video: VideoPlayerController.network(videoSrc),
                 ),
               }
             : {

@@ -25,7 +25,6 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
-    print('${1.sh} < $tabletSize');
     Get.put(LoginController());
 
     return GestureDetector(
@@ -89,8 +88,8 @@ class LoginView extends GetView<LoginController> {
                                             AppColors.primaryColor,
                                         title: controller
                                                 .isVeryficationScreen.value
-                                            ? 'Verify SMS code'
-                                            : 'Login',
+                                            ? 'Verify SMS'
+                                            : 'Login\nRegister',
                                         textColor: AppColors.whiteColor,
                                         onPress: () async {
                                           if (!controller

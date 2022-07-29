@@ -81,7 +81,7 @@ class RegistrationTribeCreationTribe extends StatelessWidget {
             'Create a Tribe',
             style: kName,
           ),
-          videoSrc: '',
+          profileVideoSrc: '',
           button: SlimRoundedButton(
             backgroundColour: AppColors.actionColor,
             title: 'Continue',
