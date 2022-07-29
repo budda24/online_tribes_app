@@ -20,7 +20,6 @@ class ProfileInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     print('ProfileInfoView');
 
-
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -35,20 +34,20 @@ class ProfileInfoView extends StatelessWidget {
               videoSrc: getController.profileVideo,
               fields: [
                 verticalSpaceSmall,
-                const TextContainerLable(text: ' Life motto '),
                 RoundedExpandedContainer(
+                  lable: 'Life motto',
                   heightToExpand: 100,
                   containerHeight: 150,
                   text: getController.lifeMottoController.text,
                 ),
-                const TextContainerLable(text: ' Description '),
                 RoundedExpandedContainer(
+                  lable: 'Description',
                   heightToExpand: 200,
                   containerHeight: 150,
                   text: getController.describtionController.text,
                 ),
-                const TextContainerLable(text: ' Hobby '),
                 RoundedContainer(
+                  lable: 'Hobby',
                   height: oneLineContainerHeight,
                   child: Center(
                     child: Text(
@@ -57,8 +56,8 @@ class ProfileInfoView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const TextContainerLable(text: ' Hobby '),
                 RoundedContainer(
+                  lable: 'Hobby',
                   height: oneLineContainerHeight,
                   child: Center(
                     child: Text(
@@ -75,7 +74,3 @@ class ProfileInfoView extends StatelessWidget {
     );
   }
 }
-
-
-
-

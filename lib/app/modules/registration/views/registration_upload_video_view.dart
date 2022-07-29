@@ -14,7 +14,6 @@ import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../controllers/registration_controller.dart';
 import '../widgets/time_to_invest_slider.dart';
-import 'tribe_registration_choice.dart';
 
 class RegistrationUploadVideoView extends GetView {
   RegistrationUploadVideoView({Key? key}) : super(key: key);
@@ -57,8 +56,9 @@ class RegistrationUploadVideoView extends GetView {
                                 backgroundColor: AppColors.primaryColor,
                                 circularStrokeCap: CircularStrokeCap.round,
                                 linearGradient: LinearGradient(colors: [
+                                  AppColors.primaryColor,
                                   AppColors.actionColor,
-                                  AppColors.whiteColor,
+
                                 ]),
                                 rotateLinearGradient: true,
                                 animation: true,
@@ -130,8 +130,7 @@ class RegistrationUploadVideoView extends GetView {
 
               if (registrationController.checkIfVideoChosen()) {
                 await registrationController
-                    .saveNewUser()
-                    .then((value) => Get.off(TribeRegistrationChoice()));
+                    .saveNewUser() /* .then((value) => Get.off(TribeRegistrationChoice())) */;
               }
             }) /* UploadingVideoView(
         saveData: registrationController.saveNewUser,

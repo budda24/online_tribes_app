@@ -13,19 +13,20 @@ class NotificationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      builder: (c) {
+      builder: (builderController) {
         return SizedBox(
-            height: 300,
-            width: 500,
-            child: AnimatedList(
-              key: c.listKey,
-              initialItemCount: c.notificationWidgets.length,
-              itemBuilder: ((context, index, animation) {
-                c.deletedIndex = index;
-                return c.buildItem(
-                    c.notificationWidgets[index], animation, index);
-              }),
-            ));
+          height: 350,
+          width: 500,
+          child: AnimatedList(
+            key: builderController.listKey,
+            initialItemCount: builderController.notificationWidgets.length,
+            itemBuilder: ((context, index, animation) {
+              /* c.deletedIndex = index; */
+              return builderController.buildItem(
+                  builderController.notificationWidgets[index], animation, index);
+            }),
+          ),
+        );
       },
     );
   }

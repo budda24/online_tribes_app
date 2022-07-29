@@ -54,9 +54,11 @@ class UserDB {
         hobbies: Hobbies.fromJson(json["hobbies"]),
         timeToInvest: json["time_to_invest"],
         /*  attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]), */
-        profileNotification: (json["profile_notification"] as List<dynamic>)
-            .map((e) => ProfileNotification.fromJson(e))
-            .toList(),
+        profileNotification: json["profile_notification"] == null
+            ? null
+            : (json["profile_notification"] as List<dynamic>)
+                .map((e) => ProfileNotification.fromJson(e))
+                .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,7 +74,7 @@ class UserDB {
         "time_to_invest": timeToInvest,
         "attended_tribe": attendedTribe?.toJson(),
         "profile_notification":
-            List<dynamic>.from(profileNotification!.map((x) => x.toJson())),
+            profileNotification?.map((x) => x.toJson()).toList(),
       };
 }
 
