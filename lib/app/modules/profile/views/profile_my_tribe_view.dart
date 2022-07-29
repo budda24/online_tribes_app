@@ -1,8 +1,10 @@
 //Package imports:
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
 // Project imports:
+import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../../helpers/widgets/online_tribes/profile/tribal_tile.dart';
@@ -15,9 +17,21 @@ class ProfileMyTribeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ProfileMyTribeView');
     return SafeArea(
       child: ProfileTemplate(
+        rigtTopPositionad:
+            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          Text(
+            'Create a Tribe',
+            style: greenTitle,
+          ),
+          InkWell(
+            onTap: () {
+              Get.toNamed(Routes.TRIBE_REGISTRATION);
+            },
+            child: Image.asset('assets/images/profile/create-tribe.png'),
+          ),
+        ]),
         videoController: null,
         fields: [
           SearchBar(searchCalback: () {}, controller: profileController),
@@ -62,7 +76,6 @@ class ProfileMyTribeView extends StatelessWidget {
         profileVideoSrc: '',
         profileImage: Image.network(profileController.profilePhotoUrl),
       ),
-      
     );
   }
 }

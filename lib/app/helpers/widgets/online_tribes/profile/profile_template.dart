@@ -5,18 +5,18 @@ import 'package:video_viewer/domain/bloc/controller.dart';
 import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/profile/widgets/video_player.dart';
 import '../../../theme/app_colors.dart';
-import '../../../theme/text_styles.dart';
 import '../../../theme/ui_helpers.dart';
 import '../general/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
   ProfileTemplate({
     Key? key,
-    this.videoController,
     required this.fields,
     required this.title,
     required this.profileVideoSrc,
     required this.profileImage,
+    this.videoController,
+    this.rigtTopPositionad,
     this.button,
   }) : super(key: key);
 
@@ -27,6 +27,7 @@ class ProfileTemplate extends StatelessWidget {
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
+  Column? rigtTopPositionad;
 
   @override
   Widget build(BuildContext context) {
@@ -84,25 +85,11 @@ class ProfileTemplate extends StatelessWidget {
             ),
           ),
           Positioned.fill(
-            right: 30,
+            top: 50,
+            right: 10,
             child: Align(
               alignment: Alignment.topRight,
-              child: Column(
-
-                children: [
-                Text(
-                  'Create a Tribe',
-                  style: greenTitle,
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.add,
-                    size: 60,
-                    color: AppColors.actionColor,
-                  ),
-                ),
-              ]),
+              child: rigtTopPositionad,
             ),
           ),
         ],
