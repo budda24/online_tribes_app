@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:video_viewer/domain/bloc/controller.dart';
 
 import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/profile/widgets/video_player.dart';
 import '../../../theme/app_colors.dart';
-import '../../../theme/text_styles.dart';
 import '../../../theme/ui_helpers.dart';
 import '../general/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
   ProfileTemplate({
     Key? key,
-    this.videoController,
     required this.fields,
     required this.title,
     required this.profileVideoSrc,
     required this.profileImage,
+    this.videoController,
+    this.rigtTopPositionad,
     this.button,
   }) : super(key: key);
 
@@ -27,6 +29,7 @@ class ProfileTemplate extends StatelessWidget {
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
+  Column? rigtTopPositionad;
 
   @override
   Widget build(BuildContext context) {
@@ -40,26 +43,29 @@ class ProfileTemplate extends StatelessWidget {
           ),
           BacgroundRoundedContainer.profile(
             height: 530,
+              child: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
-              child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    verticalSpaceExtraLarge,
-                    profileVideoSrc != null
-                        ? videoController != null
-                            ? CustomVideoPlayer.network(
-                                videoSrc: profileVideoSrc!,
-                                videoController: videoController!)
-                            : const SizedBox.shrink()
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              spinkit,
-                              const SizedBox(height: 20),
-                              const Text('Loading'),
-                            ],
-                          ),
+                    verticalSpaceLarge,
+                    GetBuilder<ProfileController>(
+                      builder: (builderController) =>
+                          builderController.profileVideo != ''
+                              ? videoController != null
+                                  ? CustomVideoPlayer.network(
+                                      videoSrc: profileVideoSrc!,
+                                      videoController: videoController!)
+                                  : const SizedBox.shrink()
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    spinkit,
+                                    const SizedBox(height: 20),
+                                    const Text('Loading'),
+                                  ],
+                                ),
+                    ),
                     ...fields,
                     button != null
                         ? verticalSpaceLarge
@@ -84,11 +90,12 @@ class ProfileTemplate extends StatelessWidget {
             ),
           ),
           Positioned.fill(
-            top: 0,
-            right: 30,
+            top: 50,
+            right: 10,
             child: Align(
-                alignment: Alignment.topRight,
-                child: button ?? const SizedBox.shrink()),
+              alignment: Alignment.topRight,
+              child: rigtTopPositionad,
+            ),
           ),
         ],
       ),

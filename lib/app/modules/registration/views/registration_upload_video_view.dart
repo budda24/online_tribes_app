@@ -63,7 +63,7 @@ class RegistrationUploadVideoView extends GetView {
                                 rotateLinearGradient: true,
                                 animation: true,
                                 animateFromLastPercent: true,
-                                animationDuration: 20,
+                                animationDuration: 2000,
                                 curve: Curves.bounceIn,
                                 widgetIndicator: Image.asset(
                                   'assets/images/authorization_screen/logo/50x50.png',

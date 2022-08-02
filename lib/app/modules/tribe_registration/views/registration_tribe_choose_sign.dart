@@ -58,7 +58,7 @@ class RegistrationTribeChooseSign extends StatelessWidget {
               ),
             ),
           ),
-          BacgroundRoundedContainer(
+          /* BacgroundRoundedContainer(
             child: GridView(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -66,7 +66,7 @@ class RegistrationTribeChooseSign extends StatelessWidget {
               ),
               children: tribeRegistrationController.tribesSigns,
             ),
-          )
+          ) */
         ],
       ),
     );

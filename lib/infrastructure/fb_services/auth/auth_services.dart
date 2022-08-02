@@ -65,14 +65,11 @@ class Auth {
 
           Get.off(() => LoginView());
         } else if (error.code == 'invalid-credential') {
-          _errorMessage =
-              showErrror('Error while authorization. Please try again');
+          _errorMessage = 'Error while authorization. Please try again';
 
           _globalController.hideLoading();
 
           Get.off(() => LoginView());
-          /* Get.offAllNamed(Routes.REGISTRATION); */
-
         }
 
         showErrror(_errorMessage);
@@ -80,7 +77,7 @@ class Auth {
         _globalController.hideLoading();
         Get.off(() => LoginView());
       } catch (e) {
-        Get.showSnackbar(customSnackbar('Error try sign in later $e'));
+        showErrror('Error try sign in later $e');
         _globalController.hideLoading();
 
         Get.off(() => LoginView());
@@ -109,10 +106,12 @@ class Auth {
           codeSent: _codeSent,
           codeAutoRetrievalTimeout: _codeAutoRetrievalTimeout);
     } on FirebaseAuthException catch (error) {
+      print('FirebaseAuthException');
       _globalController.hideLoading();
 
       showErrror(error.message!);
     } catch (error) {
+      print('catch');
       _globalController.hideLoading();
       print(error);
     }
@@ -133,15 +132,17 @@ class Auth {
       if (userCredential.additionalUserInfo!.isNewUser &&
           _globalController.isCurrentUserInDB == false) {
         _globalController.hideLoading();
+        print('is new user');
 
         Get.offAllNamed(Routes.REGISTRATION);
       } else {
         //TODO otherwise go to profile
         _globalController.hideLoading();
-
-        Get.offAndToNamed(Routes.PROFILE);
+        print('go to profile');
+        Get.offAllNamed(Routes.PROFILE);
       }
     } on FirebaseAuthException catch (error) {
+      print('FirebaseAuthException');
       _globalController.hideLoading();
 
       _errorMessage = handlePhoneAuthError(error);
@@ -149,6 +150,7 @@ class Auth {
       showErrror(_errorMessage);
       return error;
     } catch (e) {
+      print('catch');
       _globalController.hideLoading();
 
       print(e.toString());
@@ -162,7 +164,7 @@ class Auth {
       await auth.signOut();
 
       _globalController.hideLoading();
-
+      print('logout  Get.off(() => LoginView()');
       Get.off(() => LoginView());
     } on FirebaseException catch (error) {
       print(error);
@@ -176,6 +178,7 @@ class Auth {
 
   _verificationFailed(FirebaseAuthException error) {
     _errorMessage = handlePhoneAuthError(error);
+    print('_verificationFailed');
     showErrror('Phone number verification failed because $_errorMessage');
   }
 
@@ -186,6 +189,7 @@ class Auth {
 
   _codeAutoRetrievalTimeout(String verificationId) {
     if (!phoneCodeSent) {
+      print('_codeAutoRetrievalTimeout  Get.off(() => LoginView()');
       Get.offAll(() => LoginView());
     }
     _globalController.hideLoading();

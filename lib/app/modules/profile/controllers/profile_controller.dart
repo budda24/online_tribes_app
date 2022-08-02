@@ -37,7 +37,6 @@ class ProfileController extends GetxController {
   String profilePhotoUrl = '';
 
   void assignProfileInfo() async {
-    print('assigninguser');
     profileVideo = userDb?.introVideoUrl ?? '';
     profilePhotoUrl = userDb!.profilePhoto!;
     describtionController.text = userDb?.description ?? '';
@@ -129,4 +128,6 @@ class ProfileController extends GetxController {
     await getUser();
     super.onInit();
   }
+
+
 }
