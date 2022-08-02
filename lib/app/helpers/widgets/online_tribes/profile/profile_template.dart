@@ -4,12 +4,9 @@ import 'package:video_viewer/domain/bloc/controller.dart';
 
 import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/profile/widgets/video_player.dart';
-
-
-
 import '../../../theme/app_colors.dart';
+import '../../../theme/text_styles.dart';
 import '../../../theme/ui_helpers.dart';
-import '../general/main_button.dart';
 import '../general/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
@@ -18,7 +15,7 @@ class ProfileTemplate extends StatelessWidget {
     this.videoController,
     required this.fields,
     required this.title,
-    required this.videoSrc,
+    required this.profileVideoSrc,
     required this.profileImage,
     this.button,
   }) : super(key: key);
@@ -26,72 +23,75 @@ class ProfileTemplate extends StatelessWidget {
   final VideoViewerController? videoController;
 
   final Widget title;
-  final String? videoSrc;
+  final String? profileVideoSrc;
   final List<Widget> fields;
   Image profileImage;
-  SlimRoundedButton? button;
+  Widget? button;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Column(
-          children: [
-            SizedBox(
-              height: 0.25.sh,
-              child: Padding(
-                padding: EdgeInsets.only(top: 5.h, right: 25.w, left: 25.w),
-                child: Center(
-                  child: title,
+    return SizedBox(
+      height: 1.sh,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          SizedBox(
+            height: 1.sh,
+          ),
+          BacgroundRoundedContainer.profile(
+            height: 530,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    verticalSpaceExtraLarge,
+                    profileVideoSrc != null
+                        ? videoController != null
+                            ? CustomVideoPlayer.network(
+                                videoSrc: profileVideoSrc!,
+                                videoController: videoController!)
+                            : const SizedBox.shrink()
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              spinkit,
+                              const SizedBox(height: 20),
+                              const Text('Loading'),
+                            ],
+                          ),
+                    ...fields,
+                    button != null
+                        ? verticalSpaceLarge
+                        : const SizedBox.shrink(),
+                    button ?? const SizedBox.shrink(),
+                  ],
                 ),
               ),
-            ),
-            BacgroundRoundedContainer(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      verticalSpaceExtraLarge,
-                      videoSrc != null
-                          ? videoController != null
-                              ? CustomVideoPlayer.network(
-                                  videoSrc: videoSrc,
-                                  videoController: videoController!)
-                              : const SizedBox.shrink()
-                          : Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                spinkit,
-                                const SizedBox(height: 20),
-                                const Text('Loading'),
-                              ],
-                            ),
-                      ...fields,
-                      verticalSpaceLarge,
-                      button ?? const SizedBox.shrink(),
-                      verticalSpaceLarge
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        Positioned(
-          left: 125,
-          top: 120,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: AppColors.primaryColor,
-            child: CircleAvatar(
-              backgroundImage: profileImage.image,
-              radius: 65,
-              backgroundColor: AppColors.greyColor,
             ),
           ),
-        ),
-      ],
+          Positioned(
+            left: 125,
+            top: 70,
+            child: CircleAvatar(
+              radius: 70,
+              backgroundColor: AppColors.primaryColor,
+              child: CircleAvatar(
+                backgroundImage: profileImage.image,
+                radius: 65,
+                backgroundColor: AppColors.greyColor,
+              ),
+            ),
+          ),
+          Positioned.fill(
+            top: 0,
+            right: 30,
+            child: Align(
+                alignment: Alignment.topRight,
+                child: button ?? const SizedBox.shrink()),
+          ),
+        ],
+      ),
     );
   }
 }

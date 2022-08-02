@@ -30,7 +30,6 @@ class ProfileController extends GetxController {
 
   Future<void> getUser() async {
     userDb = await userDbServieces.feachUser(auth.currentUser!.uid);
-
     assignProfileInfo();
   }
 
@@ -38,7 +37,8 @@ class ProfileController extends GetxController {
   String profilePhotoUrl = '';
 
   void assignProfileInfo() async {
-    profileVideo = userDb!.introVideoUrl!;
+    print('assigninguser');
+    profileVideo = userDb?.introVideoUrl ?? '';
     profilePhotoUrl = userDb!.profilePhoto!;
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
@@ -56,16 +56,13 @@ class ProfileController extends GetxController {
   }
 
   List<ProfileNotification>? get _profileNotyfication {
-    print(userDb!.profileNotification);
     return userDb?.profileNotification;
   }
 
   List<Widget> get notificationWidgets {
     List<Widget> notificationWidget = [];
 
-//TODO  notificationWidgetList is all the notification from database
-
-    _profileNotyfication?.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    sortProfileNotyficationsByDate();
 
     _profileNotyfication?.forEach((element) {
       switch (element.type) {
@@ -85,8 +82,10 @@ class ProfileController extends GetxController {
       }
     });
     return notificationWidget;
+  }
 
-//TODO  notificationWidgetList is all the notification from database
+  sortProfileNotyficationsByDate() {
+    _profileNotyfication?.sort((a, b) => a.createdAt.compareTo(b.createdAt));
   }
 
   Future<void> deleteNotification(String tribeId) async {

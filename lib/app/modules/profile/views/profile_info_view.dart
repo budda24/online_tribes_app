@@ -20,54 +20,55 @@ class ProfileInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     print('ProfileInfoView');
 
-    return SafeArea(
+    return GestureDetector(
+      onTap: () {
+        profileController.videoController?.showAndHideOverlay(false);
+      },
       child: GestureDetector(
         onTap: () {
           profileController.videoController?.showAndHideOverlay(false);
         },
         child: GetBuilder<ProfileController>(builder: (getController) {
-          return SingleChildScrollView(
-            child: ProfileTemplate(
-              profileImage: Image.network(getController.profilePhotoUrl),
-              videoController: getController.videoController!,
-              title: const SizedBox.shrink(),
-              videoSrc: getController.profileVideo,
-              fields: [
-                verticalSpaceSmall,
-                RoundedExpandedContainer(
-                  lable: 'Life motto',
-                  heightToExpand: 100,
-                  containerHeight: 150,
-                  text: getController.lifeMottoController.text,
-                ),
-                RoundedExpandedContainer(
-                  lable: 'Description',
-                  heightToExpand: 200,
-                  containerHeight: 150,
-                  text: getController.describtionController.text,
-                ),
-                RoundedContainer(
-                  lable: 'Hobby',
-                  height: oneLineContainerHeight,
-                  child: Center(
-                    child: Text(
-                      profileController.hobby1Controller.text,
-                      style: plainTextStyle,
-                    ),
+          return ProfileTemplate(
+            profileImage: Image.network(getController.profilePhotoUrl),
+            videoController: getController.videoController!,
+            title: const SizedBox.shrink(),
+            profileVideoSrc: getController.profileVideo,
+            fields: [
+              verticalSpaceSmall,
+              RoundedExpandedContainer(
+                lable: 'Life motto',
+                heightToExpand: 100,
+                containerHeight: 150,
+                text: getController.lifeMottoController.text,
+              ),
+              RoundedExpandedContainer(
+                lable: 'Description',
+                heightToExpand: 200,
+                containerHeight: 150,
+                text: getController.describtionController.text,
+              ),
+              RoundedContainer(
+                lable: 'Hobby',
+                height: oneLineContainerHeight,
+                child: Center(
+                  child: Text(
+                    profileController.hobby1Controller.text,
+                    style: plainTextStyle,
                   ),
                 ),
-                RoundedContainer(
-                  lable: 'Hobby',
-                  height: oneLineContainerHeight,
-                  child: Center(
-                    child: Text(
-                      profileController.hobby2Controller.text,
-                      style: plainTextStyle,
-                    ),
+              ),
+              RoundedContainer(
+                lable: 'Hobby',
+                height: oneLineContainerHeight,
+                child: Center(
+                  child: Text(
+                    profileController.hobby2Controller.text,
+                    style: plainTextStyle,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         }),
       ),

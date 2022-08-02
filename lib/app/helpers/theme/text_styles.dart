@@ -23,7 +23,7 @@ TextStyle greenTitle = TextStyle(
   color: AppColors.actionColor,
     fontFamily: 'Futura Md BT', fontSize: 20.0.sp, fontWeight: FontWeight.bold);
 
-    TextStyle greenContainerLable = TextStyle(
+    TextStyle tribalFontLable = TextStyle(
   color: AppColors.actionColor,
     fontFamily: 'TribalDecorate', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
@@ -116,7 +116,7 @@ class TextContainerLable extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: greenContainerLable,
+      style: tribalFontLable,
     );
   }
 }

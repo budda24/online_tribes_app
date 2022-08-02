@@ -6,9 +6,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../helpers/theme/app_colors.dart';
 
 class BacgroundRoundedContainer extends StatelessWidget {
-  const BacgroundRoundedContainer({Key? key, required this.child})
+  BacgroundRoundedContainer({
+    Key? key,
+    required this.child,
+  })  : height = 550.h,
+        super(key: key);
+  BacgroundRoundedContainer.profile(
+      {Key? key, required this.child, required this.height})
       : super(key: key);
   final Widget child;
+  double height;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +26,7 @@ class BacgroundRoundedContainer extends StatelessWidget {
           color: AppColors.whiteColor,
         ),
         width: double.infinity,
-        height: 550.h,
+        height: height,
         child: child);
   }
 }

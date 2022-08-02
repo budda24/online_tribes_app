@@ -130,7 +130,8 @@ class Auth {
       User? user = userCredential.user;
       phoneCodeSent = true;
 
-      if (userCredential.additionalUserInfo!.isNewUser) {
+      if (userCredential.additionalUserInfo!.isNewUser &&
+          _globalController.isCurrentUserInDB == false) {
         _globalController.hideLoading();
 
         Get.offAllNamed(Routes.REGISTRATION);
@@ -138,7 +139,7 @@ class Auth {
         //TODO otherwise go to profile
         _globalController.hideLoading();
 
-        Get.offAndToNamed(Routes.LOGIN);
+        Get.offAndToNamed(Routes.PROFILE);
       }
     } on FirebaseAuthException catch (error) {
       _globalController.hideLoading();
