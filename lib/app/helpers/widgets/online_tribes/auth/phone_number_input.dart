@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -7,12 +6,22 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/text_styles.dart';
 
 class PhoneNumberInput extends StatelessWidget {
-  const PhoneNumberInput({Key? key, required this.controller}) : super(key: key);
+  PhoneNumberInput(
+      {Key? key,
+      required this.controller,
+      required this.isEnabled,
+      this.initialNumber})
+      : super(key: key);
 
- final LoginController controller;
+  final LoginController controller;
+  PhoneNumber? initialNumber;
+  final isEnabled;
 
   @override
   Widget build(BuildContext context) {
+    /* print('initialNumber dialCode: ${initialNumber!.dialCode}');
+    print('initialNumber isoCode: ${initialNumber!.isoCode}');
+    print('initialNumber phoneNumber: ${initialNumber!.phoneNumber}'); */
     return Neumorphic(
       style: NeumorphicStyle(
           depth: 10,
@@ -22,19 +31,18 @@ class PhoneNumberInput extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 6),
         child: InternationalPhoneNumberInput(
+          isEnabled: isEnabled,
           onSaved: (PhoneNumber value) {
-
             controller.numberToVerify = value;
           },
-          onInputChanged: (PhoneNumber value) {
-
-          },
+          onInputChanged: (PhoneNumber value) {},
           selectorConfig: const SelectorConfig(
               setSelectorButtonAsPrefixIcon: true,
               selectorType: PhoneInputSelectorType.DIALOG,
               trailingSpace: true),
           autoValidateMode: AutovalidateMode.disabled,
-          initialValue: controller.numberToVerify,
+          initialValue: initialNumber,
+          ignoreBlank: true,
           selectorTextStyle: const TextStyle(color: Colors.grey, fontSize: 16),
           textFieldController: controller.phoneTextEditingController,
           formatInput: false,
@@ -49,4 +57,4 @@ class PhoneNumberInput extends StatelessWidget {
       ),
     );
   }
-  }
+}

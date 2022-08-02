@@ -65,7 +65,10 @@ class LoginView extends GetView<LoginController> {
                                   Form(
                                     key: _formKey,
                                     child: PhoneNumberInput(
+                                      initialNumber: controller.numberToVerify,
                                       controller: controller,
+                                      isEnabled: !controller
+                                          .isVeryficationScreen.value,
                                     ),
                                   ),
                                   verticalSpaceLarge,
