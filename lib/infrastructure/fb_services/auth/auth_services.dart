@@ -126,22 +126,20 @@ class Auth {
     );
     try {
       var userCredential = await auth.signInWithCredential(credential);
-      User? user = userCredential.user;
+
       phoneCodeSent = true;
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         _globalController.hideLoading();
-        print('is new user');
 
         Get.offAllNamed(Routes.REGISTRATION);
       } else {
         //TODO otherwise go to profile
         _globalController.hideLoading();
-        print('go to profile');
+
         Get.offAllNamed(Routes.PROFILE);
       }
     } on FirebaseAuthException catch (error) {
-      print('FirebaseAuthException');
       _globalController.hideLoading();
 
       _errorMessage = handlePhoneAuthError(error);
@@ -149,7 +147,6 @@ class Auth {
       showErrror(_errorMessage);
       return error;
     } catch (e) {
-      print('catch');
       _globalController.hideLoading();
 
       print(e.toString());
@@ -163,7 +160,7 @@ class Auth {
       await auth.signOut();
 
       _globalController.hideLoading();
-      print('logout  Get.off(() => LoginView()');
+
       Get.off(() => LoginView());
     } on FirebaseException catch (error) {
       print(error);
@@ -177,7 +174,6 @@ class Auth {
 
   _verificationFailed(FirebaseAuthException error) {
     _errorMessage = handlePhoneAuthError(error);
-    print('_verificationFailed');
     showErrror('Phone number verification failed because $_errorMessage');
   }
 
@@ -188,7 +184,6 @@ class Auth {
 
   _codeAutoRetrievalTimeout(String verificationId) {
     if (!phoneCodeSent) {
-      print('_codeAutoRetrievalTimeout  Get.off(() => LoginView()');
       Get.offAll(() => LoginView());
     }
     _globalController.hideLoading();
