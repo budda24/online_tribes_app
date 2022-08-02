@@ -37,7 +37,6 @@ class ProfileController extends GetxController {
   String profilePhotoUrl = '';
 
   void assignProfileInfo() async {
-    print('assigninguser');
     profileVideo = userDb?.introVideoUrl ?? '';
     profilePhotoUrl = userDb!.profilePhoto!;
     describtionController.text = userDb?.description ?? '';

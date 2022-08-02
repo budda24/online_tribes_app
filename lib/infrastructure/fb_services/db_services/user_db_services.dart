@@ -9,7 +9,6 @@ import '../models/user_model.dart';
 class UserDBServices {
   final _db = FirebaseFirestore.instance;
   Future<void> createUser(UserDB user) async {
-    print('creating user');
     try {
       // user.createdAt = FieldValue.serverTimestamp();
       await _db.collection('USERS').doc(user.userId).set(user.toJson());
@@ -23,18 +22,8 @@ class UserDBServices {
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();
-
-      /* var jsonEnc = json.encode(snapshot.data());
-      print('json: $jsonEnc'); */
-
       user = UserDB.fromJson(userDoc!);
-
-      // user.profileNotification?.forEach((element) {
-      //   print('request: ${element.type}');
-      //   print('request: ${element.createdAt.toIso8601String()}');
-      // });
     }
-    print('returning user');
     return user;
   }
 
