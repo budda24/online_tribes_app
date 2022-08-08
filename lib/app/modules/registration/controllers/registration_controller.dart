@@ -78,6 +78,7 @@ class RegistrationController extends GetxController {
                             event.totalBytes.toDouble()) *
                         100)
                     .roundToDouble();
+
                 update();
               }
               if (event.state == TaskState.success) {
