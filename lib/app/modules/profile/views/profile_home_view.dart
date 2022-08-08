@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // Project imports:
-import '../../../controllers/camea_controller.dart';
+import '../../../controllers/camera_controller.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../controllers/profile_controller.dart';
 import '../widgets/custom_navigation_bar.dart';

@@ -37,7 +37,6 @@ class LoginController extends GetxController {
 
     //check if attemting to register new number
     if (boxPhonNumber != numberToVerify!.phoneNumber) {
-      print('write box number');
       removeNumberfromBox();
       writeNumberToBox();
     }

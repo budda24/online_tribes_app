@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // Project imports:
-import '../../../controllers/camea_controller.dart';
+import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import '../../../../controllers/camea_controller.dart';
+import '../../../../controllers/camera_controller.dart';
 import '../../../../modules/registration/controllers/registration_controller.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/text_styles.dart';

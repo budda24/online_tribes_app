@@ -13,7 +13,7 @@ import '../../../../infrastructure/fb_services/models/user_model.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/alert_styles.dart';
 import '../../authorization/controllers/login_controller.dart';
-import '../../../controllers/camea_controller.dart';
+import '../../../controllers/camera_controller.dart';
 import '../views/tribe_registration_choice.dart';
 
 class RegistrationController extends GetxController {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 // Project imports:
-import '../../../controllers/camea_controller.dart';
+import '../../../controllers/camera_controller.dart';
 import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../controllers/profile_controller.dart';

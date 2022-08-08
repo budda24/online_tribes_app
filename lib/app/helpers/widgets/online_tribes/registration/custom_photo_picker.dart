@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/camea_controller.dart';
+import '../../../../controllers/camera_controller.dart';
 
 class CustomPhotoPicker extends StatelessWidget {
   CustomPhotoPicker({Key? key}) : super(key: key);

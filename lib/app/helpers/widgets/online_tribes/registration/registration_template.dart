@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../controllers/camea_controller.dart';
+import '../../../../controllers/camera_controller.dart';
 import '../../../../controllers/global_controler.dart';
 import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/registration/controllers/registration_controller.dart';
