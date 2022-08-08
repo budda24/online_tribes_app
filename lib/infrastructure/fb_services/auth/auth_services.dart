@@ -26,12 +26,13 @@ class Auth {
     Get.showSnackbar(customSnackbar(message));
   }
 
+  /* GoogleSignInAccount? googleSignInAccount; */
+  final GoogleSignIn googleSignIn = GoogleSignIn();
   Future<User?> signInWithGoogle() async {
-    _globalController.showloading();
-
-    final GoogleSignIn googleSignIn = GoogleSignIn();
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
+
+    _globalController.showloading();
 
     if (googleSignInAccount != null) {
       final GoogleSignInAuthentication googleSignInAuthentication =
@@ -155,19 +156,6 @@ class Auth {
     return null;
   }
 
-  Future<void> logout() async {
-    _globalController.showloading();
-    try {
-      await auth.signOut();
-
-      _globalController.hideLoading();
-
-      Get.off(() => LoginView());
-    } on FirebaseException catch (error) {
-      print(error);
-    }
-  }
-
   _verificationCompleted(PhoneAuthCredential phoneAuthCredential) async {
     await auth.signInWithCredential(phoneAuthCredential);
     _globalController.hideLoading();
@@ -190,5 +178,19 @@ class Auth {
     _globalController.hideLoading();
 
     return null;
+  }
+
+  Future<void> logout() async {
+    _globalController.showloading();
+    try {
+      await FirebaseAuth.instance.signOut();
+      await googleSignIn.disconnect();
+
+      _globalController.hideLoading();
+
+      Get.off(() => LoginView());
+    } on FirebaseException catch (error) {
+      print(error);
+    }
   }
 }

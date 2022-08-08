@@ -1,5 +1,6 @@
 //Package imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -64,6 +65,11 @@ class ProfileInfoView extends StatelessWidget {
                 ),
               ),
             ),
+            IconButton(
+                onPressed: () {
+                  profileController.logout();
+                },
+                icon: const Icon(Icons.logout)),
           ],
         );
       }),
