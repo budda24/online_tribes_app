@@ -1,6 +1,6 @@
 //Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
+import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -28,6 +28,23 @@ class ProfileInfoView extends StatelessWidget {
       child: GetBuilder<ProfileController>(builder: (getController) {
         return ProfileTemplate(
           profileImage: Image.network(getController.profilePhotoUrl),
+          rigtTopPositionad:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            Text(
+              'Log Out',
+              style: greenTitle,
+            ),
+            InkWell(
+              onTap: () {
+                profileController.logout();
+              },
+              child: Icon(
+                Icons.logout,
+                size: 50,
+                color: AppColors.actionColor,
+              ),
+            ),
+          ]),
           videoController: getController.videoController!,
           title: const SizedBox.shrink(),
           profileVideoSrc: getController.profileVideo,
@@ -65,11 +82,14 @@ class ProfileInfoView extends StatelessWidget {
                 ),
               ),
             ),
-            IconButton(
-                onPressed: () {
-                  profileController.logout();
+            InkWell(
+                onTap: () {
+                  profileController.deleteUser();
                 },
-                icon: const Icon(Icons.logout)),
+                child: TextContainerLable(
+                  text: 'Delete Account',
+                  lableStyle: tribalFontLableRed,
+                )),
           ],
         );
       }),

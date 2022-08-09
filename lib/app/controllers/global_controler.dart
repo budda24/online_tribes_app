@@ -3,6 +3,8 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../helpers/theme/alert_styles.dart';
+
 class GlobalController extends GetxController {
   String currentUserRole = '';
   final box = GetStorage();
@@ -36,6 +38,12 @@ class GlobalController extends GetxController {
       return 'Max message lenght = ${lenght.toString()} char';
     }
     return null;
+  }
+
+  showErrror(String message) {
+    if (Get.isOverlaysClosed) {
+      Get.showSnackbar(customSnackbar(message));
+    }
   }
 
   @override

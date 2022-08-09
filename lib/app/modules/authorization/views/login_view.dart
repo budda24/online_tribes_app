@@ -65,7 +65,7 @@ class LoginView extends GetView<LoginController> {
                                   Form(
                                     key: _formKey,
                                     child: PhoneNumberInput(
-                                      initialNumber: controller.numberToVerify,
+                                      /* initialNumber: controller.numberToVerify, */
                                       controller: controller,
                                       isEnabled: !controller
                                           .isVeryficationScreen.value,
@@ -95,12 +95,14 @@ class LoginView extends GetView<LoginController> {
                                             : 'Login \n Register',
                                         textColor: AppColors.whiteColor,
                                         onPress: () async {
+                                          _formKey.currentState!.save();
                                           if (!controller
-                                              .isVeryficationScreen.value) {
-                                            _formKey.currentState!.save();
+                                                  .isVeryficationScreen.value &&
+                                              controller.isNumberChosen) {
                                             await controller
                                                 .verifyPhoneNumber();
-                                          } else {
+                                          } else if (controller
+                                              .isNumberChosen) {
                                             globalController.unFocuseNode();
                                             await controller
                                                 .signInWithPhoneNumber();

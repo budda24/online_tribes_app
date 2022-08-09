@@ -127,7 +127,7 @@ class RegistrationUploadVideoView extends GetView {
         buttonCallBack: () async {
           registrationController.closeKeyboard();
 
-          if (registrationController.checkIfVideoChosen()) {
+          if (registrationController.isVideoChosen()) {
             await registrationController.saveNewUser();
           }
         },

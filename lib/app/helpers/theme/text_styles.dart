@@ -20,12 +20,22 @@ TextStyle title = TextStyle(
     fontFamily: 'Futura Md BT', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
 TextStyle greenTitle = TextStyle(
-  color: AppColors.actionColor,
-    fontFamily: 'Futura Md BT', fontSize: 20.0.sp, fontWeight: FontWeight.bold);
+    color: AppColors.actionColor,
+    fontFamily: 'Futura Md BT',
+    fontSize: 20.0.sp,
+    fontWeight: FontWeight.bold);
 
-    TextStyle tribalFontLable = TextStyle(
-  color: AppColors.actionColor,
-    fontFamily: 'TribalDecorate', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
+TextStyle tribalFontLable = TextStyle(
+    color: AppColors.actionColor,
+    fontFamily: 'TribalDecorate',
+    fontSize: 30.0.sp,
+    fontWeight: FontWeight.bold);
+
+    TextStyle tribalFontLableRed = TextStyle(
+    color: AppColors.errorRedColor,
+    fontFamily: 'TribalDecorate',
+    fontSize: 30.0.sp,
+    fontWeight: FontWeight.bold);
 
 TextStyle buttonLable = GoogleFonts.lato(
     textStyle: TextStyle(
@@ -109,14 +119,17 @@ TextStyle lableWhite = TextStyle(
 );
 
 class TextContainerLable extends StatelessWidget {
-  const TextContainerLable({Key? key, required this.text}) : super(key: key);
+  const TextContainerLable(
+      {Key? key, required this.text, required this.lableStyle})
+      : super(key: key);
   final String text;
+  final TextStyle lableStyle;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: tribalFontLable,
+      style: lableStyle,
     );
   }
 }

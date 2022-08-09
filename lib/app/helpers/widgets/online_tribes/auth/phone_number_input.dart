@@ -10,11 +10,11 @@ class PhoneNumberInput extends StatelessWidget {
       {Key? key,
       required this.controller,
       required this.isEnabled,
-      this.initialNumber})
+      /* this.initialNumber */})
       : super(key: key);
 
   final LoginController controller;
-  PhoneNumber? initialNumber;
+  /* PhoneNumber? initialNumber; */
   final isEnabled;
 
   @override
@@ -41,7 +41,7 @@ class PhoneNumberInput extends StatelessWidget {
               selectorType: PhoneInputSelectorType.DIALOG,
               trailingSpace: true),
           autoValidateMode: AutovalidateMode.disabled,
-          initialValue: initialNumber,
+          initialValue: controller.numberToVerify,
           ignoreBlank: true,
           selectorTextStyle: const TextStyle(color: Colors.grey, fontSize: 16),
           textFieldController: controller.phoneTextEditingController,

@@ -30,6 +30,9 @@ class LoginController extends GetxController {
     globalController.box.remove('isoCode');
   }
 
+  bool get isNumberChosen =>
+      numberToVerify!.phoneNumber != numberToVerify!.dialCode;
+
   Future<void> verifyPhoneNumber() async {
     isVeryficationScreen.value = true;
 

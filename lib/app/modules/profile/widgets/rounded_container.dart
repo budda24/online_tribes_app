@@ -49,7 +49,7 @@ class RoundedContainer extends StatelessWidget {
             top: -15,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: TextContainerLable(text: lable!),
+                child: TextContainerLable(text: lable!,lableStyle: tribalFontLable,),
               ),
             )
     ]);

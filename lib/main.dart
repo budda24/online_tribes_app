@@ -69,6 +69,8 @@ void _configureFirebaseFunction() {
   var defaultHost = Platform.isAndroid ? '10.0.2.2' : 'localhost';
   FirebaseFunctions functions = FirebaseFunctions.instance;
   functions.useFunctionsEmulator(defaultHost, 5001);
+
+  debugPrint('Using Firebase Function emulator on: $defaultHost:5001');
 }
 
 bool connectToFirebaseEmulator = true;
@@ -158,7 +160,9 @@ class MyApp extends StatelessWidget {
               nextScreen: defaultScreen,
               splashTransition: SplashTransition.fadeTransition,
               backgroundColor: AppColors.primaryColor,
+
             ),
+
             initialRoute: defaultRout,
             defaultTransition: Transition.fadeIn,
             debugShowCheckedModeBanner: false,

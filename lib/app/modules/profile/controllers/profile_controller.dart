@@ -38,7 +38,7 @@ class ProfileController extends GetxController {
 
   void assignProfileInfo() async {
     profileVideo = userDb?.introVideoUrl ?? '';
-    profilePhotoUrl = userDb?.profilePhoto ?? '';
+    profilePhotoUrl = userDb!.profilePhoto!;
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
     hobby1Controller.text = userDb?.hobbies?.hobby ?? '';
@@ -48,8 +48,8 @@ class ProfileController extends GetxController {
     //TODO download and store the file localy not working with emulators
     /* profileVideo = await UserCloudStorageServices.downloadFileFromURL(
         userDb!.introVideoUrl!); */
-    profileVideo = userDb?.introVideoUrl ?? '';
-    profilePhotoUrl = userDb?.profilePhoto ?? '';
+    profileVideo = userDb!.introVideoUrl ?? '';
+    profilePhotoUrl = userDb!.profilePhoto ?? '';
 
     update();
   }
@@ -125,6 +125,13 @@ class ProfileController extends GetxController {
 
   logout() {
     Auth().logout();
+  }
+
+  Future<void> deleteUser() async {
+    await userDbServieces.deleteUser(userDb!);
+    await userStorageServieces
+        .deleteAssetsUser(userDb!)
+        .then((value) => logout());
   }
 
   @override

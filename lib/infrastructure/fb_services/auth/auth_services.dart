@@ -22,9 +22,6 @@ class Auth {
   final _uuid = const Uuid();
   String? _verificationId;
 
-  showErrror(String message) {
-    Get.showSnackbar(customSnackbar(message));
-  }
 
   /* GoogleSignInAccount? googleSignInAccount; */
   final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -46,6 +43,7 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
+        print(userCredential.user?.uid);
 
         if (userCredential.additionalUserInfo!.isNewUser &&
             _globalController.isCurrentUserInDB == false) {
@@ -73,12 +71,12 @@ class Auth {
           Get.off(() => LoginView());
         }
 
-        showErrror(_errorMessage);
+        _globalController.showErrror(_errorMessage);
 
         _globalController.hideLoading();
         Get.off(() => LoginView());
       } catch (e) {
-        showErrror('Error try sign in later $e');
+        _globalController.showErrror('Error try sign in later $e');
         _globalController.hideLoading();
 
         Get.off(() => LoginView());
@@ -107,12 +105,11 @@ class Auth {
           codeSent: _codeSent,
           codeAutoRetrievalTimeout: _codeAutoRetrievalTimeout);
     } on FirebaseAuthException catch (error) {
-      print('FirebaseAuthException');
+
       _globalController.hideLoading();
 
-      showErrror(error.message!);
+      _globalController.showErrror(error.message!);
     } catch (error) {
-      print('catch');
       _globalController.hideLoading();
       print(error);
     }
@@ -146,7 +143,7 @@ class Auth {
 
       _errorMessage = handlePhoneAuthError(error);
 
-      showErrror(_errorMessage);
+      _globalController.showErrror(_errorMessage);
       return error;
     } catch (e) {
       _globalController.hideLoading();
@@ -163,7 +160,7 @@ class Auth {
 
   _verificationFailed(FirebaseAuthException error) {
     _errorMessage = handlePhoneAuthError(error);
-    showErrror('Phone number verification failed because $_errorMessage');
+    _globalController.showErrror('Phone number verification failed because $_errorMessage');
   }
 
   _codeSent(String verificationId, int? forceResendingToken) async {

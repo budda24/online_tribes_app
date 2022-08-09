@@ -83,14 +83,12 @@ class RegistrationController extends GetxController {
               }
               if (event.state == TaskState.success) {
                 userDB.introVideoUrl = await event.ref.getDownloadURL();
+                Get.to(TribeRegistrationChoice());
                 await UserDBServices().createUser(userDB);
                 videoUploaded.value = true;
-                Get.to(TribeRegistrationChoice());
               }
             }));
 
-    /* userDB.introVideoUrl = await uploadedTaskVideo.refrence.getDownloadURL();
-    userDB.profilePhoto = await uploadedTaskPhoto.ev.getDownloadURL(); */
     userDB.description = describtionController.text;
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =
@@ -110,7 +108,7 @@ class RegistrationController extends GetxController {
     return false;
   }
 
-  bool checkIfVideoChosen() {
+  bool isVideoChosen() {
     if (cameraController.pickedVideo != null) {
       return true;
     }
