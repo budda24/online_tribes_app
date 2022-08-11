@@ -2,9 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 // Project imports:
 import '../theme/text_styles.dart';
@@ -29,6 +27,56 @@ GetSnackBar customSnackbar(String message) {
     ),
     backgroundColor: AppColors.primaryColorWithOpacity40,
   );
+}
+
+class Alerts {
+  Alerts.confirmation({
+    required this.onConfirm,
+    required this.title,
+    required this.content,
+  });
+  final Function onConfirm;
+  final String title;
+  final String content;
+
+  showConfirmDialog() {
+    Widget confirmBtn() {
+      return ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(AppColors.errorRedColor)),
+          onPressed: () {
+            onConfirm();
+          },
+          child: const Text("Confirm"));
+    }
+
+    Widget cancelBtn() {
+      return ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor:
+                  MaterialStateProperty.all<Color>(AppColors.actionColor)),
+          onPressed: () {
+            Get.back();
+          },
+          child: const Text("Cancel"));
+    }
+
+    Get.defaultDialog(
+      title: title,
+      titleStyle: tribalFontLableRed,
+      /* middleText: "You content goes here...", */
+      content: Text(
+        content,
+        style: plainTextStyle,
+        textAlign: TextAlign.center,
+      ),
+      barrierDismissible: true,
+      radius: 50.0,
+      confirm: confirmBtn(),
+      cancel: cancelBtn(),
+    );
+  }
 }
 
 /* final AlertStyle defaultAlertStyle = AlertStyle(

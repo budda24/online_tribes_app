@@ -32,9 +32,7 @@ class UserCloudStorageServices {
     return File('${dir.path}/${ref.name}');
   }
 
-   Future<void> deleteAssetsUser(UserDB user) async {
 
-  }
 
   //TODO write function to delete here || deleting doc with tribe_id
 }

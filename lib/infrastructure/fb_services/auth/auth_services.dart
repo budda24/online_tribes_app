@@ -22,7 +22,6 @@ class Auth {
   final _uuid = const Uuid();
   String? _verificationId;
 
-
   /* GoogleSignInAccount? googleSignInAccount; */
   final GoogleSignIn googleSignIn = GoogleSignIn();
   Future<User?> signInWithGoogle() async {
@@ -105,7 +104,6 @@ class Auth {
           codeSent: _codeSent,
           codeAutoRetrievalTimeout: _codeAutoRetrievalTimeout);
     } on FirebaseAuthException catch (error) {
-
       _globalController.hideLoading();
 
       _globalController.showErrror(error.message!);
@@ -160,7 +158,8 @@ class Auth {
 
   _verificationFailed(FirebaseAuthException error) {
     _errorMessage = handlePhoneAuthError(error);
-    _globalController.showErrror('Phone number verification failed because $_errorMessage');
+    _globalController
+        .showErrror('Phone number verification failed because $_errorMessage');
   }
 
   _codeSent(String verificationId, int? forceResendingToken) async {
@@ -189,5 +188,10 @@ class Auth {
     } on FirebaseException catch (error) {
       print(error);
     }
+  }
+
+  Future<void> deleteUser()async {
+  return await auth.currentUser!.delete();
+  
   }
 }

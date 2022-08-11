@@ -1,5 +1,6 @@
 //Package imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
 // Project imports:
@@ -13,28 +14,31 @@ import '../widgets/noticification_tile_rejected.dart';
 
 class ProfileController extends GetxController {
   RxInt actualIndex = 0.obs;
-
-  bool isShrinkWrap = true;
-
-  VideoViewerController? videoController = VideoViewerController();
-
   final TextEditingController describtionController = TextEditingController();
-  final TextEditingController lifeMottoController = TextEditingController();
   final TextEditingController hobby1Controller = TextEditingController();
   final TextEditingController hobby2Controller = TextEditingController();
+  bool isShrinkWrap = true;
+  final TextEditingController lifeMottoController = TextEditingController();
+  final listKey = GlobalKey<AnimatedListState>();
+  String profilePhotoUrl = '';
+  String profileVideo = '';
   final TextEditingController timeToInvestController = TextEditingController();
-
+  var userAuthenticationServieces = Auth();
+  UserDB? userDb;
   var userDbServieces = UserDBServices();
   var userStorageServieces = UserCloudStorageServices();
-  UserDB? userDb;
+  VideoViewerController? videoController = VideoViewerController();
+
+  @override
+  void onInit() async {
+    await getUser();
+    super.onInit();
+  }
 
   Future<void> getUser() async {
     userDb = await userDbServieces.feachUser(auth.currentUser!.uid);
     assignProfileInfo();
   }
-
-  String profileVideo = '';
-  String profilePhotoUrl = '';
 
   void assignProfileInfo() async {
     profileVideo = userDb?.introVideoUrl ?? '';
@@ -52,10 +56,6 @@ class ProfileController extends GetxController {
     profilePhotoUrl = userDb!.profilePhoto ?? '';
 
     update();
-  }
-
-  List<ProfileNotification>? get _profileNotyfication {
-    return userDb?.profileNotification;
   }
 
   List<Widget> get notificationWidgets {
@@ -101,8 +101,6 @@ class ProfileController extends GetxController {
     update();
   }
 
-  final listKey = GlobalKey<AnimatedListState>();
-
   void removeItemAnimation(int index) {
     Widget removedItem = notificationWidgets.elementAt(index);
 
@@ -123,20 +121,17 @@ class ProfileController extends GetxController {
     );
   }
 
-  logout() {
-    Auth().logout();
+  logout() async {
+    await Auth().logout();
   }
 
   Future<void> deleteUser() async {
-    await userDbServieces.deleteUser(userDb!);
-    await userStorageServieces
-        .deleteAssetsUser(userDb!)
-        .then((value) => logout());
+    await userDbServieces.deleteUser(userDb!.userId);
+    await userAuthenticationServieces.deleteUser();
+    Get.offAllNamed(Routes.LOGIN);
   }
 
-  @override
-  void onInit() async {
-    await getUser();
-    super.onInit();
+  List<ProfileNotification>? get _profileNotyfication {
+    return userDb?.profileNotification;
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:get/get.dart';
 
 // Project imports:
+import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
@@ -84,7 +85,10 @@ class ProfileInfoView extends StatelessWidget {
             ),
             InkWell(
                 onTap: () {
-                  profileController.deleteUser();
+                  Alerts.confirmation(
+                      onConfirm: profileController.deleteUser,
+                      title: "Are you Sure you want to delete",
+                      content: "All you data will be deleted irreversibly ").showConfirmDialog();
                 },
                 child: TextContainerLable(
                   text: 'Delete Account',

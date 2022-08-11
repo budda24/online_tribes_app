@@ -31,7 +31,7 @@ class UserDBServices {
     await _db.collection('USERS').doc(user.userId).update(user.toJson());
   }
 
-  Future<void> deleteUser(UserDB user) async {
-    await _db.collection('USERS').doc(user.userId).delete();
+  Future<void> deleteUser(String userId) async {
+    await _db.collection('USERS').doc(userId).delete();
   }
 }
