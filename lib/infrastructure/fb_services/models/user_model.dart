@@ -18,7 +18,7 @@ class UserDB {
     this.name,
     this.requestedTribe,
     this.description,
-    this.introVideoUrl,
+    this.introVideo,
     this.lifeMotto,
     this.profilePhoto,
     this.hobbies,
@@ -29,14 +29,13 @@ class UserDB {
 
   String userId;
   String? email;
-
   String? phoneNumber;
   String? name;
   String? requestedTribe;
   String? description;
-  String? introVideoUrl;
+  UploadedFile? introVideo;
   String? lifeMotto;
-  String? profilePhoto;
+  UploadedFile? profilePhoto;
   Hobbies? hobbies;
   int? timeToInvest;
   AttendedTribe? attendedTribe;
@@ -48,9 +47,9 @@ class UserDB {
         name: json["name"],
         requestedTribe: json["requested_tribe"],
         description: json["description"],
-        introVideoUrl: json["intro_video_url"],
+        introVideo:UploadedFile.fromJson(json["intro_video_url"]),
         lifeMotto: json["life_motto"],
-        profilePhoto: json["profile_photo"],
+        profilePhoto:UploadedFile.fromJson(json["profile_photo"]),
         hobbies: Hobbies.fromJson(json["hobbies"]),
         timeToInvest: json["time_to_invest"],
         /*  attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]), */
@@ -67,9 +66,9 @@ class UserDB {
         "name": name,
         "requested_tribe": requestedTribe,
         "description": description,
-        "intro_video_url": introVideoUrl,
+        "intro_video_url": introVideo!.toJson(),
         "life_motto": lifeMotto,
-        "profile_photo": profilePhoto,
+        "profile_photo": profilePhoto!.toJson(),
         "hobbies": hobbies?.toJson(),
         "time_to_invest": timeToInvest,
         "attended_tribe": attendedTribe?.toJson(),
@@ -117,6 +116,70 @@ class Hobbies {
         "hobby1": hobby1,
       };
 }
+
+class UploadedFile {
+  UploadedFile({
+    required this.downloadUrl,
+    required this.metaData,
+  });
+
+  String downloadUrl;
+  Metadata metaData;
+
+  factory UploadedFile.fromJson(Map<String, dynamic> json) => UploadedFile(
+        downloadUrl: json["downloadUrl"],
+        metaData:Metadata.fromJson(json["metaData"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "downloadUrl": downloadUrl,
+        "metaData": metaData.toJson(),
+      };
+}
+
+class Metadata {
+  Metadata({
+    required this.bucket,
+    required this.name,
+    required this.size,
+    required this.fullPath,
+    required this.contentType,
+    required this.timeCreated,
+    required this.contentEncoding,
+  });
+
+  final String? bucket;
+  final String fullPath;
+  final int size;
+  final DateTime? timeCreated;
+  final String contentType;
+  final String? contentEncoding;
+  final String name;
+
+
+
+
+  factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
+        bucket: json["bucket"],
+        fullPath: json["fullPath"],
+        size: json["size"],
+        timeCreated:((json["timeCreated"]) as Timestamp).toDate(),
+        contentType: json["contentType"],
+        contentEncoding: json["contentEncoding"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "bucket": bucket,
+        "fullPath": fullPath,
+        "size": size,
+        "timeCreated": timeCreated,
+        "contentType": contentType,
+        "contentEncoding": contentEncoding,
+        "name": name,
+      };
+}
+
 
 class ProfileNotification {
   ProfileNotification({

@@ -41,8 +41,8 @@ class ProfileController extends GetxController {
   }
 
   void assignProfileInfo() async {
-    profileVideo = userDb?.introVideoUrl ?? '';
-    profilePhotoUrl = userDb!.profilePhoto!;
+    profileVideo = userDb?.introVideo!.downloadUrl ?? '';
+    profilePhotoUrl = userDb!.profilePhoto!.downloadUrl;
     describtionController.text = userDb?.description ?? '';
     lifeMottoController.text = userDb?.lifeMotto ?? '';
     hobby1Controller.text = userDb?.hobbies?.hobby ?? '';
@@ -52,8 +52,8 @@ class ProfileController extends GetxController {
     //TODO download and store the file localy not working with emulators
     /* profileVideo = await UserCloudStorageServices.downloadFileFromURL(
         userDb!.introVideoUrl!); */
-    profileVideo = userDb!.introVideoUrl ?? '';
-    profilePhotoUrl = userDb!.profilePhoto ?? '';
+    profileVideo = userDb!.introVideo!.downloadUrl;
+    profilePhotoUrl = userDb!.profilePhoto!.downloadUrl;
 
     update();
   }

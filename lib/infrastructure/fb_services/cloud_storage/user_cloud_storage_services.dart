@@ -32,7 +32,5 @@ class UserCloudStorageServices {
     return File('${dir.path}/${ref.name}');
   }
 
-
-
   //TODO write function to delete here || deleting doc with tribe_id
 }

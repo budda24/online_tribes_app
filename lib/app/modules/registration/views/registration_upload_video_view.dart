@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:native_device_orientation/native_device_orientation.dart';
 
 // Project imports:
 import '../../../controllers/camera_controller.dart';
@@ -81,7 +82,34 @@ class RegistrationUploadVideoView extends GetView {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    await cameraController.getVideoCamera();
+                    NativeDeviceOrientationReader(builder: (context) {
+                      NativeDeviceOrientation orientation =
+                          NativeDeviceOrientationReader.orientation(context);
+
+                      int turns;
+                      switch (orientation) {
+                        case NativeDeviceOrientation.landscapeLeft:
+                          turns = -1;
+                          break;
+                        case NativeDeviceOrientation.landscapeRight:
+                          turns = 1;
+                          break;
+                        case NativeDeviceOrientation.portraitDown:
+                          turns = 2;
+                          break;
+                        default:
+                          turns = 0;
+                          break;
+                      }
+
+                      return RotatedBox(
+                          quarterTurns: turns, child: const Text('data'));
+                    });
+                    /* await SystemChrome.setPreferredOrientations([
+                      DeviceOrientation.landscapeRight,
+                      DeviceOrientation.landscapeLeft,
+                    ]); */
+                    cameraController.getVideoCamera();
                   },
                   child: Container(
                     margin: const EdgeInsets.only(top: 25),

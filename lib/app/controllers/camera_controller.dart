@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
 
@@ -48,11 +49,13 @@ class CameraController extends GetxController {
   }
 
   Future<void> getVideoCamera() async {
+
     final tmpImagePath = await _picker.pickVideo(
       source: ImageSource.camera,
       preferredCameraDevice: CameraDevice.front,
       maxDuration: const Duration(minutes: 3),
     );
+   
     pickedVideo = File(tmpImagePath!.path);
     update();
   }

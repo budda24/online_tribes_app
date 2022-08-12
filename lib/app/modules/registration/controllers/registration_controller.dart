@@ -63,9 +63,21 @@ class RegistrationController extends GetxController {
             fileName: 'profileImage',
             directory: 'profile',
             profileFile: cameraController.pickedPhoto!)
-        .then((taskSnapshot) => taskSnapshot.then((p0) async {
-              userDB.profilePhoto = await p0.ref.getDownloadURL();
-              print('image : ${userDB.profilePhoto}');
+        .then((taskSnapshot) => taskSnapshot.then((upladTask) async {
+              var url = await upladTask.ref.getDownloadURL();
+              var metaDataRef = await upladTask.ref.getMetadata();
+              var metaData = Metadata(
+                  bucket: metaDataRef.bucket,
+                  name: metaDataRef.name,
+                  size: metaDataRef.size!,
+                  fullPath: metaDataRef.fullPath,
+                  contentType: metaDataRef.contentType!,
+                  timeCreated: metaDataRef.timeCreated,
+                  contentEncoding: metaDataRef.contentEncoding);
+
+              userDB.profilePhoto =
+                  UploadedFile(downloadUrl: url, metaData: metaData);
+
             }));
 
     await uploadFile(
@@ -82,10 +94,24 @@ class RegistrationController extends GetxController {
                 update();
               }
               if (event.state == TaskState.success) {
-                userDB.introVideoUrl = await event.ref.getDownloadURL();
-                Get.to(TribeRegistrationChoice());
+              var url = await event.ref.getDownloadURL();
+              var metaDataRef = await event.ref.getMetadata();
+              var metaData = Metadata(
+                  bucket: metaDataRef.bucket,
+                  name: metaDataRef.name,
+                  size: metaDataRef.size!,
+                  fullPath: metaDataRef.fullPath,
+                  contentType: metaDataRef.contentType!,
+                  timeCreated: metaDataRef.timeCreated,
+                  contentEncoding: metaDataRef.contentEncoding);
+
+              userDB.introVideo =
+                  UploadedFile(downloadUrl: url, metaData: metaData);
+
                 await UserDBServices().createUser(userDB);
                 videoUploaded.value = true;
+                Get.to(TribeRegistrationChoice());
+
               }
             }));
 
