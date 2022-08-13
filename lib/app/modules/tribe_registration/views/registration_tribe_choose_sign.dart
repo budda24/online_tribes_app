@@ -10,10 +10,12 @@ import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../profile/widgets/bacground_rounded_container.dart';
 import '../controllers/tribe_registration_controller.dart';
+import '../widgets/tribal_sign_picker.dart';
+import '../widgets/tribe_sign_with_pointer.dart';
 import 'registration_tribe_create_tribe.dart';
 
-class RegistrationTribeChooseSign extends StatelessWidget {
-  final tribeRegistrationController = Get.put(TribeRegistrationController());
+class RegistrationTribeChooseSign extends GetView<TribeRegistrationController> {
+  /* final tribeRegistrationController = Get.put(TribeRegistrationController()); */
 
   @override
   Widget build(BuildContext context) {
@@ -35,38 +37,46 @@ class RegistrationTribeChooseSign extends StatelessWidget {
                     'Choose',
                     style: kName,
                   ),
-                  Obx(() => tribeRegistrationController.isSignChosen.value
-                      ? InkWell(
-                          onTap: () {
-                            tribeRegistrationController
-                                        .choosenSignIndex!.value !=
-                                    -1
-                                ? Get.to(RegistrationTribeCreationTribe())
-                                : null;
-                          },
-                          child: SizedBox(
-                            height: 30.h,
-                            width: 40.w,
-                            child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: Image.asset(cConfirmSign),
+                  Obx(
+                    () => controller.isSignChosen.value
+                        ? InkWell(
+                            onTap: () {
+                              controller.choosenSignIndex!.value != -1
+                                  ? Get.to(RegistrationTribeCreationTribe())
+                                  : null;
+                            },
+                            child: SizedBox(
+                              height: 30.h,
+                              width: 40.w,
+                              child: FittedBox(
+                                fit: BoxFit.fill,
+                                child: Image.asset(cConfirmSign),
+                              ),
                             ),
-                          ),
-                        )
-                      : const SizedBox.shrink())
+                          )
+                        : const SizedBox.shrink(),
+                  )
                 ],
               ),
             ),
           ),
-          /* BacgroundRoundedContainer(
+          BacgroundRoundedContainer(
             child: GridView(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 120.h,
               ),
-              children: tribeRegistrationController.tribesSigns,
+              children: [
+                ...controller.tribesSigns
+                    .map((element) => TribeSignWithPointer(
+                          imagePath: element['imagePath'],
+                          index: element['index'],
+                        ))
+                    .toList(),
+                TribalSignPicker()
+              ],
             ),
-          ) */
+          )
         ],
       ),
     );

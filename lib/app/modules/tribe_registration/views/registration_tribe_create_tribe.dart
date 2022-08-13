@@ -13,7 +13,7 @@ import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../controllers/tribe_registration_controller.dart';
 import '../widgets/rounded_input_container.dart';
 
-class RegistrationTribeCreationTribe extends StatelessWidget {
+class RegistrationTribeCreationTribe extends GetView {
   final tribeRegistrationController = Get.put(TribeRegistrationController());
   final globalController = Get.find<GlobalController>();
   final videoController = Get.put(VideoViewerController());

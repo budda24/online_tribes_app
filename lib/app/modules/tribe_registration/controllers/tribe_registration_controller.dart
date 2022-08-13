@@ -21,14 +21,21 @@ class TribeRegistrationController extends GetxController {
   String? chosenTribalSign;
   String? uploadedTribalSign;
 
-  List<Widget> tribesSigns = [
-    TribeSignWithPointer(imagePath: cMotheringTribeSign, index: 0),
+  List<Map<String,dynamic>> tribesSigns = [
+    {'imagePath': cMotheringTribeSign, 'index':0 },
+    {'imagePath': cMusicalTribeSign, 'index':1 },
+    {'imagePath': cTravellerTribeSign, 'index':2 },
+    {'imagePath': cArtistTribeSign, 'index':3 },
+    {'imagePath': cBussinessTribeSign, 'index':4 },
+    {'imagePath': cWriteringTribeSign, 'index':5 },
+    {'imagePath': cIllnessTribeSign, 'index':6 },
+    /* TribeSignWithPointer(imagePath: cMotheringTribeSign, index: 0),
     TribeSignWithPointer(imagePath: cMusicalTribeSign, index: 1),
     TribeSignWithPointer(imagePath: cTravellerTribeSign, index: 2),
     TribeSignWithPointer(imagePath: cArtistTribeSign, index: 3),
     TribeSignWithPointer(imagePath: cBussinessTribeSign, index: 4),
     TribeSignWithPointer(imagePath: cWriteringTribeSign, index: 5),
     TribeSignWithPointer(imagePath: cIllnessTribeSign, index: 6),
-    TribalSignPicker()
+    TribalSignPicker() */
   ];
 }
