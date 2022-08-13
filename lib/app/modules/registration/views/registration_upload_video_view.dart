@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -82,7 +83,7 @@ class RegistrationUploadVideoView extends GetView {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    NativeDeviceOrientationReader(builder: (context) {
+                    /* NativeDeviceOrientationReader(builder: (context) {
                       NativeDeviceOrientation orientation =
                           NativeDeviceOrientationReader.orientation(context);
 
@@ -104,11 +105,13 @@ class RegistrationUploadVideoView extends GetView {
 
                       return RotatedBox(
                           quarterTurns: turns, child: const Text('data'));
-                    });
+                    }); */
+                    //lanscape mode but it dosen't affect the camera
                     /* await SystemChrome.setPreferredOrientations([
                       DeviceOrientation.landscapeRight,
                       DeviceOrientation.landscapeLeft,
                     ]); */
+
                     cameraController.getVideoCamera();
                   },
                   child: Container(

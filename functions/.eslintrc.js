@@ -1,3 +1,5 @@
+const { MAXIMUM_TEST_PHONE_NUMBERS } = require("firebase-admin/lib/auth/auth-config")
+
 module.exports = {
   root: true,
   env: {
@@ -17,6 +19,7 @@ module.exports = {
     skipBlankLines: true,
     project: ["tsconfig.json", "tsconfig.dev.json"],
     tsconfigRootDir: __dirname,
+
     sourceType: "module",
   },
   ignorePatterns: [
@@ -27,7 +30,9 @@ module.exports = {
     "import",
   ],
   rules: {
-    "quotes": ["error", "double"],
     "import/no-unresolved": 0,
+    "no-multiple-empty-lines": max,
+    "padded-blocks":["error", "never"]
+
   },
 };

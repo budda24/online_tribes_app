@@ -25,7 +25,7 @@ export const addMessage = functions.https.onRequest(async (req, res)=>{
 // uppercase version of the message to /messages/:documentId/uppercase
 exports.makeUppercase = functions.firestore.document("/messages/{documentId}")
     .onCreate((snap, context) => {
-      const original = snap.data().original;
+      const original:string = snap.data().original;
 
       // Access the parameter `{documentId}` with `context.params`
       functions.logger.log("Uppercasing", context.params.documentId, original);
@@ -59,3 +59,33 @@ const deleteUserData = async (id:string) => {
   });
   console.log({result: `delete user files with id ${id}`});
 };
+
+/* exports.resizeVideo = functions.storage.object().onFinalize((object) => {
+  const filePath = object.id;
+   const isVideo = object.contentType?.startsWith("video");
+  if (filePath.startsWith("online-tribes-6a28c.appspot.com/USERS/tmp/") && isVideo) {
+
+  }
+  return true;
+
+}); */
+exports.resizingVideo = functions.firestore.document("USERS/{userID}").onUpdate(async (snap, context)=>{
+  const path = require('path');
+  const os = require('os');
+  
+
+  const data = snap.after.data();
+
+  const baseUrl = data.intro_video_url.metaData.fullPath;
+  const name =  data.intro_video_url.metaData.name;
+
+  const tempPath = path.join(os.tmpdir(), name);
+
+  await admin.storage().bucket().file(baseUrl).download({destination: tempPath});
+
+  console.log('Image downloaded locally to', tempPath);
+
+}
+)
+
+

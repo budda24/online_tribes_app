@@ -78,6 +78,7 @@ void main() async {
   Get.put(GlobalController());
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
+  
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

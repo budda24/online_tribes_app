@@ -55,8 +55,15 @@ class CameraController extends GetxController {
       preferredCameraDevice: CameraDevice.front,
       maxDuration: const Duration(minutes: 3),
     );
-   
+
     pickedVideo = File(tmpImagePath!.path);
+    //portait mode
+    /* await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);  */
     update();
   }
 }

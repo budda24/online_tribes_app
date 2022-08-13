@@ -41,6 +41,7 @@ dependencies:
   video_viewer: ^1.2.7
   percent_indicator: ^4.2.2
   animated_text_kit: ^4.2.2
+  native_device_orientation: ^1.1.4
   #liquid_progress_indicator: ^0.4.0
 
 
