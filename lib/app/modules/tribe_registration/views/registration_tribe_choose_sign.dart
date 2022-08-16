@@ -34,7 +34,7 @@ class RegistrationTribeChooseSign extends GetView<TribeRegistrationController> {
                     width: 30.w,
                   ),
                   const Text(
-                    'Choose',
+                    'Choose Tribal Sign',
                     style: kName,
                   ),
                   Obx(

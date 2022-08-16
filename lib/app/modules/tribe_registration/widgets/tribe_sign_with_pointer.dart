@@ -22,6 +22,8 @@ class TribeSignWithPointer extends StatelessWidget {
       child: InkWell(
         onTap: () {
           tribeRegistrationController.choosenSignIndex!.value = index;
+          tribeRegistrationController.uploadedTribalSign = null;
+          tribeRegistrationController.update();
           tribeRegistrationController.chosenTribalSign = imagePath;
           tribeRegistrationController.isSignChosen.value = true;
         },
