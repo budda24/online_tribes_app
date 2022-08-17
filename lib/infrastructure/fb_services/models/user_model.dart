@@ -139,22 +139,30 @@ class UploadedFile {
 
 class AvailableTime {
   AvailableTime({
+    required this.startZero,
+    required this.endZero,
     required this.timeZone,
     required this.start,
     required this.end,
   });
 
+  int startZero;
+  int endZero;
   String timeZone;
   int start;
   int end;
 
   factory AvailableTime.fromJson(Map<String, dynamic> json) => AvailableTime(
+        startZero: json["start_zero"],
+        endZero: json["end_zero"],
         timeZone: json["time_zone"],
         start: json["start"],
         end: json["end"],
       );
 
   Map<String, dynamic> toJson() => {
+        "start_zero": startZero,
+        "end_zero": endZero,
         "time_zone": timeZone,
         "start": start,
         "end": end,

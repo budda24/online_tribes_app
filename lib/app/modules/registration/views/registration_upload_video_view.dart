@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
+import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/alert_styles.dart';
@@ -14,6 +14,7 @@ import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
+import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
 import '../controllers/registration_controller.dart';
 
 class RegistrationUploadVideoView extends GetView {
@@ -48,42 +49,41 @@ class RegistrationUploadVideoView extends GetView {
                         ],
                       )
                     : const SizedBox.shrink()),
-            verticalSpaceTiny,
-            GetBuilder<RegistrationController>(
-              builder: (builderController) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularPercentIndicator(
-                      radius: 50.w,
-                      lineWidth: 10.w,
-                      percent: builderController.progress / 100,
-                      backgroundColor: AppColors.primaryColor,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      linearGradient: LinearGradient(colors: [
-                        AppColors.primaryColor,
-                        AppColors.actionColor,
-                      ]),
-                      rotateLinearGradient: true,
-                      animation: true,
-                      animateFromLastPercent: true,
-                      animationDuration: 2000,
-                      curve: Curves.bounceIn,
-                      widgetIndicator: Image.asset(
-                        'assets/images/authorization_screen/logo/50x50.png',
-                      ),
-                      center: Text(
-                        '${builderController.progress} %',
-                        style: headingBoldStyle,
-                      ),
+            verticalSpaceSmall,
+            GetBuilder<RegistrationController>(builder: (builderController) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularPercentIndicator(
+                    radius: 50.w,
+                    lineWidth: 10.w,
+                    percent: builderController.progress / 100,
+                    backgroundColor: AppColors.primaryColor,
+                    circularStrokeCap: CircularStrokeCap.round,
+                    linearGradient: LinearGradient(colors: [
+                      AppColors.primaryColor,
+                      AppColors.actionColor,
+                    ]),
+                    rotateLinearGradient: true,
+                    animation: true,
+                    animateFromLastPercent: true,
+                    animationDuration: 2000,
+                    curve: Curves.bounceIn,
+                    widgetIndicator: Image.asset(
+                      'assets/images/authorization_screen/logo/50x50.png',
                     ),
-                  ],
-                );
-              }
-            ),
+                    center: Text(
+                      '${builderController.progress} %',
+                      style: headingBoldStyle,
+                    ),
+                  ),
+                ],
+              );
+            }),
+            verticalSpaceTiny,
             Text(
               'Chose introduction video',
-              style: greenActionTitle,
+              style: greenTitle,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -155,47 +155,13 @@ class RegistrationUploadVideoView extends GetView {
             verticalSpaceMedium,
             Text(
               'Available time for meeting',
-              style: greenActionTitle,
+              style: greenTitle,
             ),
-            IconButton(
-              constraints: BoxConstraints(minHeight: 70.h, minWidth: 70.w),
-              padding: EdgeInsets.zero,
-              onPressed: () async {
-                registrationController.availableTime =
-                    await showTimeRangePicker(
-                        interval: const Duration(hours: 1),
-                        minDuration: const Duration(hours: 1),
-                        use24HourFormat: false,
-                        padding: 30,
-                        strokeWidth: 20,
-                        handlerRadius: 14,
-                        strokeColor: AppColors.actionColor,
-                        handlerColor: AppColors.actionColor.withOpacity(0.7),
-                        selectedColor: AppColors.actionColor,
-                        backgroundColor: AppColors.primaryColor,
-                        ticks: 12,
-                        ticksColor: AppColors.actionColor,
-                        snap: true,
-                        context: context,
-                        timeTextStyle: tribalFontLable,
-                        activeTimeTextStyle: tribalFontLableWhite);
-                /* print(result.endTime.hour); */ //int
-                /* print(DateTime.now().timeZoneName.runtimeType); */
-              },
-              icon: Container(
-                height: 200.h,
-                width: 200.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primaryColor, width: 1),
-                ),
-                child: Icon(
-                  Icons.access_alarms,
-                  size: 50.h,
-                  color: AppColors.blackColor,
-                ),
-              ),
-            )
+            AvailableTimeButton(onPressed: () async {
+              registrationController.availableTime =
+                  await TimeCovertingServices()
+                      .getCustomTimeRangePicker(context);
+            })
             /* Stack(
               children: [
                 const Positioned(

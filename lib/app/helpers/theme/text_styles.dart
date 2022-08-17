@@ -24,6 +24,11 @@ TextStyle greenActionTitle = TextStyle(
     fontFamily: 'Futura Md BT',
     fontSize: 20.0.sp,
     fontWeight: FontWeight.bold);
+    TextStyle greenTitle = TextStyle(
+    color: AppColors.primaryColor,
+    fontFamily: 'Futura Md BT',
+    fontSize: 20.0.sp,
+    fontWeight: FontWeight.bold);
 
 TextStyle tribalFontLable = TextStyle(
     color: AppColors.actionColor,

@@ -1,5 +1,6 @@
 //Package imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
@@ -13,21 +14,27 @@ import '../widgets/noticification_tile_invited.dart';
 import '../widgets/noticification_tile_rejected.dart';
 
 class ProfileController extends GetxController {
-  RxInt actualIndex = 0.obs;
+  var globalController = Get.find<GlobalController>();
+
   final TextEditingController describtionController = TextEditingController();
   final TextEditingController hobby1Controller = TextEditingController();
   final TextEditingController hobby2Controller = TextEditingController();
-  bool isShrinkWrap = true;
   final TextEditingController lifeMottoController = TextEditingController();
-  final listKey = GlobalKey<AnimatedListState>();
-  String profilePhotoUrl = '';
-  String profileVideo = '';
   final TextEditingController timeToInvestController = TextEditingController();
+  VideoViewerController? videoController = VideoViewerController();
+
+  final listKey = GlobalKey<AnimatedListState>();
+
   var userAuthenticationServieces = Auth();
-  UserDB? userDb;
   var userDbServieces = UserDBServices();
   var userStorageServieces = UserCloudStorageServices();
-  VideoViewerController? videoController = VideoViewerController();
+
+  RxInt actualIndex = 0.obs;
+
+  UserDB? userDb;
+  String profilePhotoUrl = '';
+  String profileVideo = '';
+  bool isShrinkWrap = true;
 
   @override
   void onInit() async {
@@ -126,8 +133,10 @@ class ProfileController extends GetxController {
   }
 
   Future<void> deleteUser() async {
+    globalController.showloading();
     await userDbServieces.deleteUser(userDb!.userId);
     await userAuthenticationServieces.deleteUser();
+    globalController.hideLoading();
     Get.offAllNamed(Routes.LOGIN);
   }
 

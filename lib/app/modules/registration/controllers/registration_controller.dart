@@ -11,6 +11,7 @@ import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
+import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/alert_styles.dart';
 import '../../authorization/controllers/login_controller.dart';
@@ -118,7 +119,13 @@ class RegistrationController extends GetxController {
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =
         Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
+
+    var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
     userDB.availableTime = AvailableTime(
+        endZero: TimeCovertingServices.CountOffsetHour(
+            hour: availableTime!.endTime.hour, offset: timeZoneOffset),
+        startZero: TimeCovertingServices.CountOffsetHour(
+            hour: availableTime!.startTime.hour, offset: timeZoneOffset),
         timeZone: DateTime.now().timeZoneName,
         start: availableTime!.startTime.hour,
         end: availableTime!.endTime.hour);
@@ -126,6 +133,7 @@ class RegistrationController extends GetxController {
     userDB.phoneNumber = currentUser.phoneNumber;
 
     await globalController.saveRegistrationState();
+    globalController.hideLoading();
   }
 
   bool checkIfPhotoUpload() {

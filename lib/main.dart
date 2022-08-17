@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'app/bindings/global_bindings.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
+
 // Project imports:
 import 'app/controllers/global_controler.dart';
 import 'app/helpers/theme/app_colors.dart';

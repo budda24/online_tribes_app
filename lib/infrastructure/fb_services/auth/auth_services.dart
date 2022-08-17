@@ -6,7 +6,6 @@ import 'package:uuid/uuid.dart';
 
 // Project imports:
 import '../../../app/controllers/global_controler.dart';
-import '../../../app/helpers/theme/alert_styles.dart';
 import '../../../app/modules/authorization/views/login_view.dart';
 import '../../../app/routes/app_pages.dart';
 
@@ -42,7 +41,6 @@ class Auth {
       try {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
-        print(userCredential.user?.uid);
 
         if (userCredential.additionalUserInfo!.isNewUser &&
             _globalController.isCurrentUserInDB == false) {
@@ -190,8 +188,7 @@ class Auth {
     }
   }
 
-  Future<void> deleteUser()async {
-  return await auth.currentUser!.delete();
-  
+  Future<void> deleteUser() async {
+    return await auth.currentUser!.delete();
   }
 }

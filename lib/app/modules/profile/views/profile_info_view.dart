@@ -1,6 +1,7 @@
 //Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/infrastructure/native_functions/time_converting_services.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -20,8 +21,6 @@ class ProfileInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ProfileInfoView');
-
     return GestureDetector(
       onTap: () {
         profileController.videoController?.showAndHideOverlay(false);
@@ -33,11 +32,12 @@ class ProfileInfoView extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text(
               'Log Out',
-              style: greenActionTitle,
+              style: greenTitle,
             ),
             InkWell(
               onTap: () {
-                profileController.logout();
+                /* profileController.logout(); */
+                print(profileController.userDb!.availableTime!.timeZone);
               },
               child: Icon(
                 Icons.logout,
@@ -51,6 +51,29 @@ class ProfileInfoView extends StatelessWidget {
           profileVideoSrc: getController.profileVideo,
           fields: [
             verticalSpaceSmall,
+            Text(
+              'Availability',
+              style: tribalFontLable,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  profileController.userDb!.availableTime!.start.hours.inHours
+                      .toString(),
+                  style: tribalFontLableRed,
+                ),
+                Text(
+                  "-",
+                  style: tribalFontLableRed,
+                ),
+                Text(
+                  profileController.userDb!.availableTime!.end.hours.inHours
+                      .toString(),
+                  style: tribalFontLableRed,
+                ),
+              ],
+            ),
             RoundedExpandedContainer(
               lable: 'Life motto',
               heightToExpand: 100,
