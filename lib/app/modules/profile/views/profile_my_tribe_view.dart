@@ -22,7 +22,7 @@ class ProfileMyTribeView extends StatelessWidget {
           Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         Text(
           'Create a Tribe',
-          style: greenTitle,
+          style: greenActionTitle,
         ),
         InkWell(
           onTap: () {

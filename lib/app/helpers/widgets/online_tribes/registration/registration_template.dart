@@ -55,7 +55,7 @@ class RegistrationTemplate extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 100,
+                              height: 50,
                             ),
                             Container(
                               margin: const EdgeInsets.only(bottom: 20),

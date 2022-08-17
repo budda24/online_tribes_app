@@ -45,7 +45,7 @@ class UploadingVideoView extends StatelessWidget {
                             ),
                             Text(
                               'Upload Complete',
-                              style: greenTitle,
+                              style: greenActionTitle,
                             ),
                           ],
                         )

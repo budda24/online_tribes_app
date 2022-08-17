@@ -35,7 +35,7 @@ class RegistrationController extends GetxController {
     userId: currentUser.uid,
   );
 
-  double progress = 0.0;
+  RxDouble progress = 0.0.obs;
 
   Future<UploadTask> uploadFile(
       {required String fileName,
@@ -77,7 +77,6 @@ class RegistrationController extends GetxController {
 
               userDB.profilePhoto =
                   UploadedFile(downloadUrl: url, metaData: metaData);
-
             }));
 
     await uploadFile(
@@ -86,7 +85,7 @@ class RegistrationController extends GetxController {
             profileFile: cameraController.pickedVideo!)
         .then((uploadTask) => uploadTask.snapshotEvents.listen((event) async {
               if (event.state == TaskState.running) {
-                progress = ((event.bytesTransferred.toDouble() /
+                progress.value = ((event.bytesTransferred.toDouble() /
                             event.totalBytes.toDouble()) *
                         100)
                     .roundToDouble();
@@ -94,24 +93,23 @@ class RegistrationController extends GetxController {
                 update();
               }
               if (event.state == TaskState.success) {
-              var url = await event.ref.getDownloadURL();
-              var metaDataRef = await event.ref.getMetadata();
-              var metaData = Metadata(
-                  bucket: metaDataRef.bucket,
-                  name: metaDataRef.name,
-                  size: metaDataRef.size!,
-                  fullPath: metaDataRef.fullPath,
-                  contentType: metaDataRef.contentType!,
-                  timeCreated: metaDataRef.timeCreated,
-                  contentEncoding: metaDataRef.contentEncoding);
+                var url = await event.ref.getDownloadURL();
+                var metaDataRef = await event.ref.getMetadata();
+                var metaData = Metadata(
+                    bucket: metaDataRef.bucket,
+                    name: metaDataRef.name,
+                    size: metaDataRef.size!,
+                    fullPath: metaDataRef.fullPath,
+                    contentType: metaDataRef.contentType!,
+                    timeCreated: metaDataRef.timeCreated,
+                    contentEncoding: metaDataRef.contentEncoding);
 
-              userDB.introVideo =
-                  UploadedFile(downloadUrl: url, metaData: metaData);
+                userDB.introVideo =
+                    UploadedFile(downloadUrl: url, metaData: metaData);
 
                 await UserDBServices().createUser(userDB);
                 videoUploaded.value = true;
                 Get.to(TribeRegistrationChoice());
-
               }
             }));
 
@@ -134,13 +132,16 @@ class RegistrationController extends GetxController {
     return false;
   }
 
-  bool isVideoChosen() {
+  RxBool isVideoChosen = false.obs;
+
+  /* bool checkIfVideoChosen() {
     if (cameraController.pickedVideo != null) {
+      isVideoChosen.value = true;
       return true;
     }
-    Get.showSnackbar(customSnackbar('Please add Your introduction video'));
+
     return false;
-  }
+  } */
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {

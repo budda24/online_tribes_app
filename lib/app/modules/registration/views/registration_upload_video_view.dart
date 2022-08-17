@@ -1,21 +1,20 @@
 // Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:native_device_orientation/native_device_orientation.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
 import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
+import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../controllers/registration_controller.dart';
-import '../widgets/time_to_invest_slider.dart';
 
 class RegistrationUploadVideoView extends GetView {
   RegistrationUploadVideoView({Key? key}) : super(key: key);
@@ -31,52 +30,54 @@ class RegistrationUploadVideoView extends GetView {
       body: RegistrationTemplate(
         centerWidget: Column(
           children: [
-            GetBuilder<RegistrationController>(
-              builder: (buildController) {
-                return buildController.progress == 100.0
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.check_rounded,
-                            color: AppColors.actionColor,
-                            size: 30.sp,
-                          ),
-                          Text(
-                            'Upload Complete',
-                            style: greenTitle,
-                          ),
-                        ],
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CircularPercentIndicator(
-                            radius: 70,
-                            lineWidth: 20,
-                            percent: buildController.progress / 100,
-                            backgroundColor: AppColors.primaryColor,
-                            circularStrokeCap: CircularStrokeCap.round,
-                            linearGradient: LinearGradient(colors: [
-                              AppColors.primaryColor,
-                              AppColors.actionColor,
-                            ]),
-                            rotateLinearGradient: true,
-                            animation: true,
-                            animateFromLastPercent: true,
-                            animationDuration: 2000,
-                            curve: Curves.bounceIn,
-                            widgetIndicator: Image.asset(
-                              'assets/images/authorization_screen/logo/50x50.png',
-                            ),
-                            center: Text(
-                              '${buildController.progress} %',
-                              style: headingBoldStyle,
-                            ),
-                          ),
-                        ],
-                      );
-              },
+            Obx(() => registrationController.isVideoChosen.value
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.check_rounded,
+                        color: AppColors.actionColor,
+                        size: 30.sp,
+                      ),
+                      Text(
+                        'Video is chosen',
+                        style: greenActionTitle,
+                      ),
+                    ],
+                  )
+                : const SizedBox.shrink()),
+            verticalSpaceTiny,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularPercentIndicator(
+                  radius: 50.w,
+                  lineWidth: 10.w,
+                  percent: registrationController.progress.value / 100,
+                  backgroundColor: AppColors.primaryColor,
+                  circularStrokeCap: CircularStrokeCap.round,
+                  linearGradient: LinearGradient(colors: [
+                    AppColors.primaryColor,
+                    AppColors.actionColor,
+                  ]),
+                  rotateLinearGradient: true,
+                  animation: true,
+                  animateFromLastPercent: true,
+                  animationDuration: 2000,
+                  curve: Curves.bounceIn,
+                  widgetIndicator: Image.asset(
+                    'assets/images/authorization_screen/logo/50x50.png',
+                  ),
+                  center: Text(
+                    '${registrationController.progress.value} %',
+                    style: headingBoldStyle,
+                  ),
+                ),
+              ],
+            ),
+            Text(
+              'Chose introduction video',
+              style: greenActionTitle,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,7 +113,10 @@ class RegistrationUploadVideoView extends GetView {
                       DeviceOrientation.landscapeLeft,
                     ]); */
 
-                    cameraController.getVideoCamera();
+                    await cameraController.getVideoCamera();
+                    if (cameraController.pickedVideo != null) {
+                      registrationController.isVideoChosen.value = true;
+                    }
                   },
                   child: Container(
                     margin: const EdgeInsets.only(top: 25),
@@ -127,6 +131,9 @@ class RegistrationUploadVideoView extends GetView {
                   onTap: () async {
                     await cameraController.getFileGallery(
                         type: PickedType.video);
+                    if (cameraController.pickedVideo != null) {
+                      registrationController.isVideoChosen.value = true;
+                    }
                   },
                   child: Container(
                     margin: const EdgeInsets.only(top: 25),
@@ -140,7 +147,47 @@ class RegistrationUploadVideoView extends GetView {
               ],
             ),
             verticalSpaceMedium,
-            Stack(
+            Text(
+              'Available time for meeting',
+              style: greenActionTitle,
+            ),
+            IconButton(
+              constraints: BoxConstraints(minHeight: 70.h, minWidth: 70.w),
+              padding: EdgeInsets.zero,
+              onPressed: () async {
+                TimeRange result = await showTimeRangePicker(
+                    interval: const Duration(hours: 1),
+                    minDuration: const Duration(hours: 1),
+                    use24HourFormat: false,
+                    padding: 30,
+                    strokeWidth: 20,
+                    handlerRadius: 14,
+                    strokeColor: AppColors.actionColor,
+                    handlerColor: AppColors.actionColor.withOpacity(0.7),
+                    selectedColor: AppColors.actionColor,
+                    backgroundColor: AppColors.primaryColor,
+                    ticks: 12,
+                    ticksColor: AppColors.actionColor,
+                    snap: true,
+                    context: context,
+                    timeTextStyle: tribalFontLable,
+                    activeTimeTextStyle: tribalFontLableWhite);
+              },
+              icon: Container(
+                height: 200.h,
+                width: 200.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.primaryColor, width: 1),
+                ),
+                child: Icon(
+                  Icons.access_alarms,
+                  size: 50.h,
+                  color: AppColors.blackColor,
+                ),
+              ),
+            )
+            /* Stack(
               children: [
                 const Positioned(
                     top: 65,
@@ -152,14 +199,17 @@ class RegistrationUploadVideoView extends GetView {
                 TimeToInvestSlider(
                     sliderValue: registrationController.sliderValue),
               ],
-            ),
+            ), */
           ],
         ),
         buttonCallBack: () async {
           registrationController.closeKeyboard();
 
-          if (registrationController.isVideoChosen()) {
+          if (registrationController.isVideoChosen.value) {
             await registrationController.saveNewUser();
+          } else {
+            Get.showSnackbar(
+                customSnackbar('Please add Your introduction video'));
           }
         },
       ),

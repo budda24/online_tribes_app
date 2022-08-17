@@ -33,7 +33,7 @@ class ProfileInfoView extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             Text(
               'Log Out',
-              style: greenTitle,
+              style: greenActionTitle,
             ),
             InkWell(
               onTap: () {
@@ -86,9 +86,10 @@ class ProfileInfoView extends StatelessWidget {
             InkWell(
                 onTap: () {
                   Alerts.confirmation(
-                      onConfirm: profileController.deleteUser,
-                      title: "Are you Sure you want to delete",
-                      content: "All you data will be deleted irreversibly ").showConfirmDialog();
+                          onConfirm: profileController.deleteUser,
+                          title: "Are you Sure you want to delete",
+                          content: "All you data will be deleted irreversibly ")
+                      .showConfirmDialog();
                 },
                 child: TextContainerLable(
                   text: 'Delete Account',
