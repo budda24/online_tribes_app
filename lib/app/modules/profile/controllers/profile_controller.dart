@@ -47,7 +47,7 @@ class ProfileController extends GetxController {
     lifeMottoController.text = userDb?.lifeMotto ?? '';
     hobby1Controller.text = userDb?.hobbies?.hobby ?? '';
     hobby2Controller.text = userDb?.hobbies?.hobby1 ?? '';
-    timeToInvestController.text = userDb?.timeToInvest.toString() ?? '';
+    //TODO DISPLAY THE CONVERTER TIME/* timeToInvestController.text = userDb?.timeToInvest.toString() ?? ''; */
 
     //TODO download and store the file localy not working with emulators
     /* profileVideo = await UserCloudStorageServices.downloadFileFromURL(

@@ -33,6 +33,7 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
   Widget build(BuildContext context) {
     rebuildAllChildren(context);
     return RegistrationTemplate(
+      topElementsMargin: 100,
       centerWidget: CustomTextField(
         controller: controller.describtionController,
         validate: (value) =>

@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
@@ -25,17 +26,17 @@ class RegistrationController extends GetxController {
   final TextEditingController lifeMottoController = TextEditingController();
   final TextEditingController hobby1Controller = TextEditingController();
   final TextEditingController hobby2Controller = TextEditingController();
-  final TextEditingController timeToInvestController = TextEditingController();
+  /* final TextEditingController timeToInvestController = TextEditingController(); */
 
   io.File? profilePicture;
 
-  RxDouble sliderValue = 1.0.obs;
+  TimeRange? availableTime;
 
   UserDB userDB = UserDB(
     userId: currentUser.uid,
   );
 
-  RxDouble progress = 0.0.obs;
+  double progress = 0.0;
 
   Future<UploadTask> uploadFile(
       {required String fileName,
@@ -85,7 +86,7 @@ class RegistrationController extends GetxController {
             profileFile: cameraController.pickedVideo!)
         .then((uploadTask) => uploadTask.snapshotEvents.listen((event) async {
               if (event.state == TaskState.running) {
-                progress.value = ((event.bytesTransferred.toDouble() /
+                progress = ((event.bytesTransferred.toDouble() /
                             event.totalBytes.toDouble()) *
                         100)
                     .roundToDouble();
@@ -117,7 +118,10 @@ class RegistrationController extends GetxController {
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =
         Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
-    userDB.timeToInvest = sliderValue.value.toInt();
+    userDB.availableTime = AvailableTime(
+        timeZone: DateTime.now().timeZoneName,
+        start: availableTime!.startTime.hour,
+        end: availableTime!.endTime.hour);
     userDB.email = currentUser.email;
     userDB.phoneNumber = currentUser.phoneNumber;
 
@@ -132,7 +136,12 @@ class RegistrationController extends GetxController {
     return false;
   }
 
-  RxBool isVideoChosen = false.obs;
+  bool isVideoChosen = false;
+
+  switchIsVideoCosen() {
+    isVideoChosen = !isVideoChosen;
+    update();
+  }
 
   /* bool checkIfVideoChosen() {
     if (cameraController.pickedVideo != null) {

@@ -22,6 +22,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
   @override
   Widget build(BuildContext context) {
     return RegistrationTemplate(
+      topElementsMargin: 100,
       centerWidget:
           Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         CustomTextField(

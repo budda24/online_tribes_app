@@ -22,7 +22,7 @@ class UserDB {
     this.lifeMotto,
     this.profilePhoto,
     this.hobbies,
-    this.timeToInvest,
+    this.availableTime,
     this.attendedTribe,
     this.profileNotification,
   });
@@ -37,7 +37,7 @@ class UserDB {
   String? lifeMotto;
   UploadedFile? profilePhoto;
   Hobbies? hobbies;
-  int? timeToInvest;
+  AvailableTime? availableTime;
   AttendedTribe? attendedTribe;
   List<ProfileNotification>? profileNotification;
 
@@ -47,11 +47,11 @@ class UserDB {
         name: json["name"],
         requestedTribe: json["requested_tribe"],
         description: json["description"],
-        introVideo:UploadedFile.fromJson(json["intro_video_url"]),
+        introVideo: UploadedFile.fromJson(json["intro_video_url"]),
         lifeMotto: json["life_motto"],
-        profilePhoto:UploadedFile.fromJson(json["profile_photo"]),
+        profilePhoto: UploadedFile.fromJson(json["profile_photo"]),
         hobbies: Hobbies.fromJson(json["hobbies"]),
-        timeToInvest: json["time_to_invest"],
+        availableTime: AvailableTime.fromJson(json["available_time"]),
         /*  attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]), */
         profileNotification: json["profile_notification"] == null
             ? null
@@ -70,7 +70,7 @@ class UserDB {
         "life_motto": lifeMotto,
         "profile_photo": profilePhoto!.toJson(),
         "hobbies": hobbies?.toJson(),
-        "time_to_invest": timeToInvest,
+        "available_time": availableTime?.toJson(),
         "attended_tribe": attendedTribe?.toJson(),
         "profile_notification":
             profileNotification?.map((x) => x.toJson()).toList(),
@@ -128,12 +128,36 @@ class UploadedFile {
 
   factory UploadedFile.fromJson(Map<String, dynamic> json) => UploadedFile(
         downloadUrl: json["downloadUrl"],
-        metaData:Metadata.fromJson(json["metaData"]),
+        metaData: Metadata.fromJson(json["metaData"]),
       );
 
   Map<String, dynamic> toJson() => {
         "downloadUrl": downloadUrl,
         "metaData": metaData.toJson(),
+      };
+}
+
+class AvailableTime {
+  AvailableTime({
+    required this.timeZone,
+    required this.start,
+    required this.end,
+  });
+
+  String timeZone;
+  int start;
+  int end;
+
+  factory AvailableTime.fromJson(Map<String, dynamic> json) => AvailableTime(
+        timeZone: json["time_zone"],
+        start: json["start"],
+        end: json["end"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "time_zone": timeZone,
+        "start": start,
+        "end": end,
       };
 }
 
@@ -156,14 +180,11 @@ class Metadata {
   final String? contentEncoding;
   final String name;
 
-
-
-
   factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
         bucket: json["bucket"],
         fullPath: json["fullPath"],
         size: json["size"],
-        timeCreated:((json["timeCreated"]) as Timestamp).toDate(),
+        timeCreated: ((json["timeCreated"]) as Timestamp).toDate(),
         contentType: json["contentType"],
         contentEncoding: json["contentEncoding"],
         name: json["name"],
@@ -179,7 +200,6 @@ class Metadata {
         "name": name,
       };
 }
-
 
 class ProfileNotification {
   ProfileNotification({

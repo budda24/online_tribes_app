@@ -19,6 +19,7 @@ class RegistrationTemplate extends StatelessWidget {
     this.formKey,
     required this.buttonCallBack,
     this.title,
+    required this.topElementsMargin
   }) : super(key: key);
 
   final GlobalKey<FormState>? formKey;
@@ -31,6 +32,7 @@ class RegistrationTemplate extends StatelessWidget {
   final Widget centerWidget;
   final VoidCallback buttonCallBack;
   final String? title;
+  final double topElementsMargin;
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +49,15 @@ class RegistrationTemplate extends StatelessWidget {
                 Positioned(
                   child: BacgroundRoundedContainer(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 50.w, vertical: 10),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
                       child: Form(
                         key: formKey,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            const SizedBox(
-                              height: 50,
+                             SizedBox(
+                              height: topElementsMargin,
                             ),
                             Container(
                               margin: const EdgeInsets.only(bottom: 20),

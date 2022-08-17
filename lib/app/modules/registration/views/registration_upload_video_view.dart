@@ -28,52 +28,58 @@ class RegistrationUploadVideoView extends GetView {
     return Scaffold(
       backgroundColor: kMainColor,
       body: RegistrationTemplate(
+        topElementsMargin: 50,
         centerWidget: Column(
           children: [
-            Obx(() => registrationController.isVideoChosen.value
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.check_rounded,
-                        color: AppColors.actionColor,
-                        size: 30.sp,
-                      ),
-                      Text(
-                        'Video is chosen',
-                        style: greenActionTitle,
-                      ),
-                    ],
-                  )
-                : const SizedBox.shrink()),
+            GetBuilder<RegistrationController>(
+                builder: (builderController) => builderController.isVideoChosen
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.check_rounded,
+                            color: AppColors.actionColor,
+                            size: 30.sp,
+                          ),
+                          Text(
+                            'Video is chosen',
+                            style: greenActionTitle,
+                          ),
+                        ],
+                      )
+                    : const SizedBox.shrink()),
             verticalSpaceTiny,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularPercentIndicator(
-                  radius: 50.w,
-                  lineWidth: 10.w,
-                  percent: registrationController.progress.value / 100,
-                  backgroundColor: AppColors.primaryColor,
-                  circularStrokeCap: CircularStrokeCap.round,
-                  linearGradient: LinearGradient(colors: [
-                    AppColors.primaryColor,
-                    AppColors.actionColor,
-                  ]),
-                  rotateLinearGradient: true,
-                  animation: true,
-                  animateFromLastPercent: true,
-                  animationDuration: 2000,
-                  curve: Curves.bounceIn,
-                  widgetIndicator: Image.asset(
-                    'assets/images/authorization_screen/logo/50x50.png',
-                  ),
-                  center: Text(
-                    '${registrationController.progress.value} %',
-                    style: headingBoldStyle,
-                  ),
-                ),
-              ],
+            GetBuilder<RegistrationController>(
+              builder: (builderController) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularPercentIndicator(
+                      radius: 50.w,
+                      lineWidth: 10.w,
+                      percent: builderController.progress / 100,
+                      backgroundColor: AppColors.primaryColor,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      linearGradient: LinearGradient(colors: [
+                        AppColors.primaryColor,
+                        AppColors.actionColor,
+                      ]),
+                      rotateLinearGradient: true,
+                      animation: true,
+                      animateFromLastPercent: true,
+                      animationDuration: 2000,
+                      curve: Curves.bounceIn,
+                      widgetIndicator: Image.asset(
+                        'assets/images/authorization_screen/logo/50x50.png',
+                      ),
+                      center: Text(
+                        '${builderController.progress} %',
+                        style: headingBoldStyle,
+                      ),
+                    ),
+                  ],
+                );
+              }
             ),
             Text(
               'Chose introduction video',
@@ -115,7 +121,7 @@ class RegistrationUploadVideoView extends GetView {
 
                     await cameraController.getVideoCamera();
                     if (cameraController.pickedVideo != null) {
-                      registrationController.isVideoChosen.value = true;
+                      registrationController.switchIsVideoCosen();
                     }
                   },
                   child: Container(
@@ -132,7 +138,7 @@ class RegistrationUploadVideoView extends GetView {
                     await cameraController.getFileGallery(
                         type: PickedType.video);
                     if (cameraController.pickedVideo != null) {
-                      registrationController.isVideoChosen.value = true;
+                      registrationController.switchIsVideoCosen();
                     }
                   },
                   child: Container(
@@ -155,23 +161,26 @@ class RegistrationUploadVideoView extends GetView {
               constraints: BoxConstraints(minHeight: 70.h, minWidth: 70.w),
               padding: EdgeInsets.zero,
               onPressed: () async {
-                TimeRange result = await showTimeRangePicker(
-                    interval: const Duration(hours: 1),
-                    minDuration: const Duration(hours: 1),
-                    use24HourFormat: false,
-                    padding: 30,
-                    strokeWidth: 20,
-                    handlerRadius: 14,
-                    strokeColor: AppColors.actionColor,
-                    handlerColor: AppColors.actionColor.withOpacity(0.7),
-                    selectedColor: AppColors.actionColor,
-                    backgroundColor: AppColors.primaryColor,
-                    ticks: 12,
-                    ticksColor: AppColors.actionColor,
-                    snap: true,
-                    context: context,
-                    timeTextStyle: tribalFontLable,
-                    activeTimeTextStyle: tribalFontLableWhite);
+                registrationController.availableTime =
+                    await showTimeRangePicker(
+                        interval: const Duration(hours: 1),
+                        minDuration: const Duration(hours: 1),
+                        use24HourFormat: false,
+                        padding: 30,
+                        strokeWidth: 20,
+                        handlerRadius: 14,
+                        strokeColor: AppColors.actionColor,
+                        handlerColor: AppColors.actionColor.withOpacity(0.7),
+                        selectedColor: AppColors.actionColor,
+                        backgroundColor: AppColors.primaryColor,
+                        ticks: 12,
+                        ticksColor: AppColors.actionColor,
+                        snap: true,
+                        context: context,
+                        timeTextStyle: tribalFontLable,
+                        activeTimeTextStyle: tribalFontLableWhite);
+                /* print(result.endTime.hour); */ //int
+                /* print(DateTime.now().timeZoneName.runtimeType); */
               },
               icon: Container(
                 height: 200.h,
@@ -205,7 +214,7 @@ class RegistrationUploadVideoView extends GetView {
         buttonCallBack: () async {
           registrationController.closeKeyboard();
 
-          if (registrationController.isVideoChosen.value) {
+          if (registrationController.isVideoChosen) {
             await registrationController.saveNewUser();
           } else {
             Get.showSnackbar(
