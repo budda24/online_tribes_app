@@ -13,6 +13,7 @@ String welcomeToJson(UserDB data) => json.encode(data.toJson());
 class UserDB {
   UserDB({
     required this.userId,
+    this.createdAt,
     this.email,
     this.phoneNumber,
     this.name,
@@ -28,6 +29,7 @@ class UserDB {
   });
 
   String userId;
+  FieldValue? createdAt;
   String? email;
   String? phoneNumber;
   String? name;
@@ -43,6 +45,7 @@ class UserDB {
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
         userId: json["userId"],
+        createdAt: json["created_at"],
         email: json["email"],
         name: json["name"],
         requestedTribe: json["requested_tribe"],
@@ -62,6 +65,7 @@ class UserDB {
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
+        "created_at": createdAt,
         "email": email,
         "name": name,
         "requested_tribe": requestedTribe,

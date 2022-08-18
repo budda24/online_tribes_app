@@ -151,14 +151,6 @@ class RegistrationController extends GetxController {
     update();
   }
 
-  /* bool checkIfVideoChosen() {
-    if (cameraController.pickedVideo != null) {
-      isVideoChosen.value = true;
-      return true;
-    }
-
-    return false;
-  } */
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {
