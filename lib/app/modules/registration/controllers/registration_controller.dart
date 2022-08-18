@@ -107,8 +107,11 @@ class RegistrationController extends GetxController {
 
               userDB.introVideo =
                   UploadedFile(downloadUrl: url, metaData: metaData);
+                  for (var i = 0; i < 20; i++) {
+                    await UserDBServices().createUser(userDB);
+                  }
 
-                await UserDBServices().createUser(userDB);
+
                 videoUploaded.value = true;
                 Get.to(TribeRegistrationChoice());
 

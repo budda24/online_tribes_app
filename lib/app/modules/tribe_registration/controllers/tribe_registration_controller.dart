@@ -3,6 +3,8 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/models/user_model.dart';
 import 'package:get/get.dart';
 
 // Project imports:
@@ -39,4 +41,57 @@ class TribeRegistrationController extends GetxController {
     TribeSignWithPointer(imagePath: cIllnessTribeSign, index: 6),
     TribalSignPicker() */
   ];
+
+/////////////////////////
+  ///
+  ///
+  List<UserDB> usersList = [];
+  final ScrollController scrollController = ScrollController();
+  RxInt itemLimit = 6.obs;
+  RxInt currentItemLength = 0.obs;
+   RxInt previousItemLength = 0.obs;
+  bool isLoading = false;
+
+  Future<void> getUsers() async {
+    usersList = await Future.delayed(const Duration(seconds: 3)).then(
+      (_) {
+        return UserDBServices().feachAllUsers(limit: itemLimit.value);
+      },
+    );
+
+    currentItemLength.value = usersList.length;
+    isLoading = false;
+    update();
+    print('object>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+  }
+
+  void scrollListener() {
+    final position = scrollController.offset;
+
+    if (position >= 0.8) {
+      //  if (previousItemLength != currentItemLength) {
+        // previousItemLength = currentItemLength;
+      itemLimit = itemLimit + 2;
+      isLoading = true;
+      update();
+      getUsers();
+      print(' added >>>>>>>>>>>');
+      //  }
+    }
+  }
+
+  @override
+  void onInit() async {
+    scrollController.addListener(scrollListener);
+    print('init');
+
+    await getUsers();
+
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
+  }
 }

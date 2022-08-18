@@ -34,4 +34,13 @@ class UserDBServices {
   Future<void> deleteUser(String userId) async {
     await _db.collection('USERS').doc(userId).delete();
   }
+
+  Future<List<UserDB>> feachAllUsers({required int limit}) async {
+    var snapshot = await _db.collection('USERS').limit(limit).get();
+
+    var userList = List<UserDB>.from(
+        snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList());
+
+    return userList;
+  }
 }

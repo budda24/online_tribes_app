@@ -85,8 +85,9 @@ TextStyle outlineInputTextFormFieldLabelStyle = TextStyle(
 );
 TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
   color: AppColors.greyColor,
-  fontSize: 16.sp,
+  fontSize: 14.sp,
   fontFamily: montserrat,
+  
 );
 
 TextStyle smallBold = TextStyle(
