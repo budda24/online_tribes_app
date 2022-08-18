@@ -28,165 +28,138 @@ class RegistrationUploadVideoView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kMainColor,
-      body: RegistrationTemplate(
-        topElementsMargin: 50,
-        centerWidget: Column(
-          children: [
-            GetBuilder<RegistrationController>(
-                builder: (builderController) => builderController.isVideoChosen
-                    ? Row(
+      body: GetBuilder<RegistrationController>(
+        builder: (builderController) => RegistrationTemplate(
+          showButton: builderController.progress != 0.0 ? false : true,
+          topElementsMargin: 50,
+          centerWidget: Column(
+            children: [
+              builderController.isVideoChosen &&
+                      builderController.progress == 0.0
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.check_rounded,
+                          color: AppColors.actionColor,
+                          size: 30.sp,
+                        ),
+                        Text(
+                          'Video is chosen',
+                          style: greenActionTitle,
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+              verticalSpaceSmall,
+              builderController.progress == 0.0
+                  ? const SizedBox.shrink()
+                  : Container(
+                      height: 300,
+                      margin: const EdgeInsets.only(top: 70),
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.check_rounded,
-                            color: AppColors.actionColor,
-                            size: 30.sp,
-                          ),
-                          Text(
-                            'Video is chosen',
-                            style: greenActionTitle,
+                          CircularPercentIndicator(
+                            radius: 100.w,
+                            lineWidth: 20.w,
+                            percent: builderController.progress / 100,
+                            backgroundColor: AppColors.primaryColor,
+                            circularStrokeCap: CircularStrokeCap.round,
+                            linearGradient: LinearGradient(colors: [
+                              AppColors.primaryColor,
+                              AppColors.actionColor,
+                            ]),
+                            rotateLinearGradient: true,
+                            animation: true,
+                            animateFromLastPercent: true,
+                            animationDuration: 2000,
+                            curve: Curves.bounceIn,
+                            widgetIndicator: Image.asset(
+                              'assets/images/authorization_screen/logo/50x50.png',
+                            ),
+                            center: Text(
+                              '${builderController.progress} %',
+                              style: headingBoldStyle,
+                            ),
                           ),
                         ],
-                      )
-                    : const SizedBox.shrink()),
-            verticalSpaceSmall,
-            GetBuilder<RegistrationController>(builder: (builderController) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularPercentIndicator(
-                    radius: 50.w,
-                    lineWidth: 10.w,
-                    percent: builderController.progress / 100,
-                    backgroundColor: AppColors.primaryColor,
-                    circularStrokeCap: CircularStrokeCap.round,
-                    linearGradient: LinearGradient(colors: [
-                      AppColors.primaryColor,
-                      AppColors.actionColor,
-                    ]),
-                    rotateLinearGradient: true,
-                    animation: true,
-                    animateFromLastPercent: true,
-                    animationDuration: 2000,
-                    curve: Curves.bounceIn,
-                    widgetIndicator: Image.asset(
-                      'assets/images/authorization_screen/logo/50x50.png',
+                      ),
                     ),
-                    center: Text(
-                      '${builderController.progress} %',
-                      style: headingBoldStyle,
-                    ),
-                  ),
-                ],
-              );
-            }),
-            verticalSpaceTiny,
-            Text(
-              'Chose introduction video',
-              style: greenTitle,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    /* NativeDeviceOrientationReader(builder: (context) {
-                      NativeDeviceOrientation orientation =
-                          NativeDeviceOrientationReader.orientation(context);
+              verticalSpaceTiny,
+              builderController.progress == 0.0
+                  ? Container(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Chose introduction video',
+                            style: greenTitle,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  await cameraController.getVideoCamera();
+                                  if (cameraController.pickedVideo != null) {
+                                    registrationController.switchIsVideoCosen();
+                                  }
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 25),
+                                  height: 100,
+                                  width: 100,
+                                  child: Image.asset(
+                                    'assets/images/authorization_screen/add_photo.png',
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  await cameraController.getFileGallery(
+                                      type: PickedType.video);
+                                  if (cameraController.pickedVideo != null) {
+                                    registrationController.switchIsVideoCosen();
+                                  }
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 25),
+                                  height: 100,
+                                  width: 100,
+                                  child: Image.asset(
+                                    'assets/images/authorization_screen/upload_video.png',
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          verticalSpaceMedium,
+                          Text(
+                            'Available time for meeting',
+                            style: greenTitle,
+                          ),
+                          AvailableTimeButton(onPressed: () async {
+                            registrationController.availableTime =
+                                await TimeCovertingServices()
+                                    .getCustomTimeRangePicker(context);
+                          })
+                        ],
+                      ),
+                    )
+                  : const SizedBox.shrink()
+            ],
+          ),
+          buttonCallBack: () async {
+            registrationController.closeKeyboard();
 
-                      int turns;
-                      switch (orientation) {
-                        case NativeDeviceOrientation.landscapeLeft:
-                          turns = -1;
-                          break;
-                        case NativeDeviceOrientation.landscapeRight:
-                          turns = 1;
-                          break;
-                        case NativeDeviceOrientation.portraitDown:
-                          turns = 2;
-                          break;
-                        default:
-                          turns = 0;
-                          break;
-                      }
-
-                      return RotatedBox(
-                          quarterTurns: turns, child: const Text('data'));
-                    }); */
-                    //lanscape mode but it dosen't affect the camera
-                    /* await SystemChrome.setPreferredOrientations([
-                      DeviceOrientation.landscapeRight,
-                      DeviceOrientation.landscapeLeft,
-                    ]); */
-
-                    await cameraController.getVideoCamera();
-                    if (cameraController.pickedVideo != null) {
-                      registrationController.switchIsVideoCosen();
-                    }
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 25),
-                    height: 100,
-                    width: 100,
-                    child: Image.asset(
-                      'assets/images/authorization_screen/add_photo.png',
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    await cameraController.getFileGallery(
-                        type: PickedType.video);
-                    if (cameraController.pickedVideo != null) {
-                      registrationController.switchIsVideoCosen();
-                    }
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 25),
-                    height: 100,
-                    width: 100,
-                    child: Image.asset(
-                      'assets/images/authorization_screen/upload_video.png',
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            verticalSpaceMedium,
-            Text(
-              'Available time for meeting',
-              style: greenTitle,
-            ),
-            AvailableTimeButton(onPressed: () async {
-              registrationController.availableTime =
-                  await TimeCovertingServices()
-                      .getCustomTimeRangePicker(context);
-            })
-            /* Stack(
-              children: [
-                const Positioned(
-                    top: 65,
-                    left: 100,
-                    child: Text(
-                      'Time to invest',
-                      style: kHintStyle,
-                    )),
-                TimeToInvestSlider(
-                    sliderValue: registrationController.sliderValue),
-              ],
-            ), */
-          ],
+            if (registrationController.isVideoChosen) {
+              await registrationController.saveNewUser();
+            } else {
+              Get.showSnackbar(
+                  customSnackbar('Please add Your introduction video'));
+            }
+          },
         ),
-        buttonCallBack: () async {
-          registrationController.closeKeyboard();
-
-          if (registrationController.isVideoChosen) {
-            await registrationController.saveNewUser();
-          } else {
-            Get.showSnackbar(
-                customSnackbar('Please add Your introduction video'));
-          }
-        },
       ),
     );
   }

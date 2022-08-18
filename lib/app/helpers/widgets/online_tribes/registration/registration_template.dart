@@ -19,7 +19,8 @@ class RegistrationTemplate extends StatelessWidget {
     this.formKey,
     required this.buttonCallBack,
     this.title,
-    required this.topElementsMargin
+    required this.topElementsMargin,
+    this.showButton = true,
   }) : super(key: key);
 
   final GlobalKey<FormState>? formKey;
@@ -33,6 +34,7 @@ class RegistrationTemplate extends StatelessWidget {
   final VoidCallback buttonCallBack;
   final String? title;
   final double topElementsMargin;
+  final bool showButton;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class RegistrationTemplate extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                             SizedBox(
+                            SizedBox(
                               height: topElementsMargin,
                             ),
                             Container(
@@ -128,15 +130,17 @@ class RegistrationTemplate extends StatelessWidget {
                             )
                           : const SizedBox.shrink()),
                 ),
-                Positioned(
-                  bottom: 30,
-                  child: SlimRoundedButton(
-                    onPress: buttonCallBack,
-                    backgroundColour: kColorWhite,
-                    title: 'Continue',
-                    textColor: kTextColorDarkGrey,
-                  ),
-                )
+                showButton
+                    ? Positioned(
+                        bottom: 30,
+                        child: SlimRoundedButton(
+                          onPress: buttonCallBack,
+                          backgroundColour: kColorWhite,
+                          title: 'Continue',
+                          textColor: kTextColorDarkGrey,
+                        ),
+                      )
+                    : const SizedBox.shrink()
               ],
             ),
           ),
