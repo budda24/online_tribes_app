@@ -13,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'app/bindings/global_bindings.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
+
 // Project imports:
 import 'app/controllers/global_controler.dart';
 import 'app/helpers/theme/app_colors.dart';
@@ -78,7 +79,6 @@ void main() async {
   Get.put(GlobalController());
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -137,6 +137,19 @@ class MyApp extends StatelessWidget {
     //TODO run to implement walthrough
     //initialize defaultScreenRout & defaultScreen
     //choseInitialScreen();
+    Map<int, Color> color = {
+      50: AppColors.actionColor.withOpacity(0.1),
+      100: AppColors.actionColor.withOpacity(0.05),
+      200: AppColors.actionColor.withOpacity(0.2),
+      300: AppColors.actionColor.withOpacity(0.3),
+      400: AppColors.actionColor.withOpacity(0.4),
+      500: AppColors.actionColor.withOpacity(0.5),
+      600: AppColors.actionColor.withOpacity(0.6),
+      700: AppColors.actionColor.withOpacity(0.7),
+      800: AppColors.actionColor.withOpacity(0.8),
+      900: AppColors.actionColor.withOpacity(0.9),
+    };
+    MaterialColor colorCustom = MaterialColor(0xff20A857, color);
 
     return LayoutBuilder(
       builder: (context, constraints) => MediaQuery(
@@ -146,10 +159,10 @@ class MyApp extends StatelessWidget {
               690) /* ScreenSizes(constraints: constraints).getScreenSize() */,
           minTextAdapt: true,
           builder: (context, child) => GetMaterialApp(
-            /* theme: ThemeData(
-                inputDecorationTheme: const InputDecorationTheme(
-              isDense: true,
-            )), */
+            theme: ThemeData(
+              primarySwatch: colorCustom,
+              primaryColor: AppColors.primaryColor,
+            ),
             initialBinding: GlobalControllersBinding(),
             title: "Application",
             getPages: AppPages.routes,
@@ -161,9 +174,7 @@ class MyApp extends StatelessWidget {
               nextScreen: defaultScreen,
               splashTransition: SplashTransition.fadeTransition,
               backgroundColor: AppColors.primaryColor,
-
             ),
-
             initialRoute: defaultRout,
             defaultTransition: Transition.fadeIn,
             debugShowCheckedModeBanner: false,

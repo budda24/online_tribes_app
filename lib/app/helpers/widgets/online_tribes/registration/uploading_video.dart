@@ -122,7 +122,7 @@ class UploadingVideoView extends StatelessWidget {
                   onPress: () async {
                     registrationController.closeKeyboard();
 
-                    if (registrationController.isVideoChosen()) {
+                    if (registrationController.isVideoChosen) {
                       await saveData();
                     }
                   })

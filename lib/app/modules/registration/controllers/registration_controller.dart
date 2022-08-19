@@ -4,12 +4,14 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
+import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/alert_styles.dart';
 import '../../authorization/controllers/login_controller.dart';
@@ -25,11 +27,11 @@ class RegistrationController extends GetxController {
   final TextEditingController lifeMottoController = TextEditingController();
   final TextEditingController hobby1Controller = TextEditingController();
   final TextEditingController hobby2Controller = TextEditingController();
-  final TextEditingController timeToInvestController = TextEditingController();
+  /* final TextEditingController timeToInvestController = TextEditingController(); */
 
   io.File? profilePicture;
 
-  RxDouble sliderValue = 1.0.obs;
+  TimeRange? availableTime;
 
   UserDB userDB = UserDB(
     userId: currentUser.uid,
@@ -77,7 +79,6 @@ class RegistrationController extends GetxController {
 
               userDB.profilePhoto =
                   UploadedFile(downloadUrl: url, metaData: metaData);
-
             }));
 
     await uploadFile(
@@ -94,27 +95,22 @@ class RegistrationController extends GetxController {
                 update();
               }
               if (event.state == TaskState.success) {
-              var url = await event.ref.getDownloadURL();
-              var metaDataRef = await event.ref.getMetadata();
-              var metaData = Metadata(
-                  bucket: metaDataRef.bucket,
-                  name: metaDataRef.name,
-                  size: metaDataRef.size!,
-                  fullPath: metaDataRef.fullPath,
-                  contentType: metaDataRef.contentType!,
-                  timeCreated: metaDataRef.timeCreated,
-                  contentEncoding: metaDataRef.contentEncoding);
+                var url = await event.ref.getDownloadURL();
+                var metaDataRef = await event.ref.getMetadata();
+                var metaData = Metadata(
+                    bucket: metaDataRef.bucket,
+                    name: metaDataRef.name,
+                    size: metaDataRef.size!,
+                    fullPath: metaDataRef.fullPath,
+                    contentType: metaDataRef.contentType!,
+                    timeCreated: metaDataRef.timeCreated,
+                    contentEncoding: metaDataRef.contentEncoding);
 
-              userDB.introVideo =
-                  UploadedFile(downloadUrl: url, metaData: metaData);
-                  for (var i = 0; i < 20; i++) {
-                    await UserDBServices().createUser(userDB);
-                  }
-
+                userDB.introVideo =
+                    UploadedFile(downloadUrl: url, metaData: metaData);
 
                 videoUploaded.value = true;
                 Get.to(TribeRegistrationChoice());
-
               }
             }));
 
@@ -122,11 +118,21 @@ class RegistrationController extends GetxController {
     userDB.lifeMotto = lifeMottoController.text;
     userDB.hobbies =
         Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
-    userDB.timeToInvest = sliderValue.value.toInt();
+
+    var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
+    userDB.availableTime = AvailableTime(
+        endZero: TimeCovertingServices.CountOffsetHour(
+            hour: availableTime!.endTime.hour, offset: timeZoneOffset),
+        startZero: TimeCovertingServices.CountOffsetHour(
+            hour: availableTime!.startTime.hour, offset: timeZoneOffset),
+        timeZone: DateTime.now().timeZoneName,
+        start: availableTime!.startTime.hour,
+        end: availableTime!.endTime.hour);
     userDB.email = currentUser.email;
     userDB.phoneNumber = currentUser.phoneNumber;
 
     await globalController.saveRegistrationState();
+    globalController.hideLoading();
   }
 
   bool checkIfPhotoUpload() {
@@ -137,13 +143,13 @@ class RegistrationController extends GetxController {
     return false;
   }
 
-  bool isVideoChosen() {
-    if (cameraController.pickedVideo != null) {
-      return true;
-    }
-    Get.showSnackbar(customSnackbar('Please add Your introduction video'));
-    return false;
+  bool isVideoChosen = false;
+
+  switchIsVideoCosen() {
+    isVideoChosen = !isVideoChosen;
+    update();
   }
+
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {

@@ -14,6 +14,7 @@ class UserDB {
   UserDB({
     required this.userId,
     this.isInvited,
+    this.createdAt,
     this.email,
     this.phoneNumber,
     this.name,
@@ -23,12 +24,13 @@ class UserDB {
     this.lifeMotto,
     this.profilePhoto,
     this.hobbies,
-    this.timeToInvest,
+    this.availableTime,
     this.attendedTribe,
     this.profileNotification,
   });
   bool? isInvited;
   String userId;
+  FieldValue? createdAt;
   String? email;
   String? phoneNumber;
   String? name;
@@ -38,12 +40,13 @@ class UserDB {
   String? lifeMotto;
   UploadedFile? profilePhoto;
   Hobbies? hobbies;
-  int? timeToInvest;
+  AvailableTime? availableTime;
   AttendedTribe? attendedTribe;
   List<ProfileNotification>? profileNotification;
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
         userId: json["userId"],
+        createdAt: json["created_at"],
         email: json["email"],
         name: json["name"],
         requestedTribe: json["requested_tribe"],
@@ -52,7 +55,7 @@ class UserDB {
         lifeMotto: json["life_motto"],
         profilePhoto: UploadedFile.fromJson(json["profile_photo"]),
         hobbies: Hobbies.fromJson(json["hobbies"]),
-        timeToInvest: json["time_to_invest"],
+        availableTime: AvailableTime.fromJson(json["available_time"]),
         /*  attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]), */
         profileNotification: json["profile_notification"] == null
             ? null
@@ -63,6 +66,7 @@ class UserDB {
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
+        "created_at": createdAt,
         "email": email,
         "name": name,
         "requested_tribe": requestedTribe,
@@ -71,7 +75,7 @@ class UserDB {
         "life_motto": lifeMotto,
         "profile_photo": profilePhoto!.toJson(),
         "hobbies": hobbies?.toJson(),
-        "time_to_invest": timeToInvest,
+        "available_time": availableTime?.toJson(),
         "attended_tribe": attendedTribe?.toJson(),
         "profile_notification":
             profileNotification?.map((x) => x.toJson()).toList(),
@@ -135,6 +139,38 @@ class UploadedFile {
   Map<String, dynamic> toJson() => {
         "downloadUrl": downloadUrl,
         "metaData": metaData.toJson(),
+      };
+}
+
+class AvailableTime {
+  AvailableTime({
+    required this.startZero,
+    required this.endZero,
+    required this.timeZone,
+    required this.start,
+    required this.end,
+  });
+
+  int startZero;
+  int endZero;
+  String timeZone;
+  int start;
+  int end;
+
+  factory AvailableTime.fromJson(Map<String, dynamic> json) => AvailableTime(
+        startZero: json["start_zero"],
+        endZero: json["end_zero"],
+        timeZone: json["time_zone"],
+        start: json["start"],
+        end: json["end"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "start_zero": startZero,
+        "end_zero": endZero,
+        "time_zone": timeZone,
+        "start": start,
+        "end": end,
       };
 }
 

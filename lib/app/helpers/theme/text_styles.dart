@@ -19,8 +19,13 @@ TextStyle lightButtonTextStyle =
 TextStyle title = TextStyle(
     fontFamily: 'Futura Md BT', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
-TextStyle greenTitle = TextStyle(
+TextStyle greenActionTitle = TextStyle(
     color: AppColors.actionColor,
+    fontFamily: 'Futura Md BT',
+    fontSize: 20.0.sp,
+    fontWeight: FontWeight.bold);
+    TextStyle greenTitle = TextStyle(
+    color: AppColors.primaryColor,
     fontFamily: 'Futura Md BT',
     fontSize: 20.0.sp,
     fontWeight: FontWeight.bold);
@@ -30,8 +35,13 @@ TextStyle tribalFontLable = TextStyle(
     fontFamily: 'TribalDecorate',
     fontSize: 30.0.sp,
     fontWeight: FontWeight.bold);
+TextStyle tribalFontLableWhite = TextStyle(
+    color: AppColors.whiteColor,
+    fontFamily: 'TribalDecorate',
+    fontSize: 30.0.sp,
+    fontWeight: FontWeight.bold);
 
-    TextStyle tribalFontLableRed = TextStyle(
+TextStyle tribalFontLableRed = TextStyle(
     color: AppColors.errorRedColor,
     fontFamily: 'TribalDecorate',
     fontSize: 30.0.sp,
