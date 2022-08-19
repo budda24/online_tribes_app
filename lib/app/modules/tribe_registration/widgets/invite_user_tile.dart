@@ -1,36 +1,40 @@
+import 'package:flutter_application_1/app/modules/tribe_registration/controllers/tribe_registration_controller.dart';
+import 'package:flutter_application_1/app/modules/tribe_registration/views/invite_user_detal_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/models/user_model.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:get/get.dart';
 
 import '../../../helpers/theme/app_colors.dart';
 
 class InviteUserTile extends StatelessWidget {
-  InviteUserTile({required this.userImage, required this.userMotto, Key? key})
-      : super(key: key);
+  InviteUserTile({required this.user, Key? key}) : super(key: key);
 
-  String userImage;
-  String userMotto;
-  bool? isInvided;
+  UserDB user;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
-      child: Neumorphic(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          style: NeumorphicStyle(
-            shadowLightColorEmboss: AppColors.whiteColor,
-            depth: -4,
-            intensity: 5,
-            oppositeShadowLightSource: true,
-            shape: NeumorphicShape.convex,
-            lightSource: LightSource.topLeft,
-            border: NeumorphicBorder(width: 2, color: AppColors.primaryColor),
-            shadowDarkColor: AppColors.darkGreyColor,
-            color: isInvided != null
-                ? AppColors.whiteColor
-                : AppColors.primaryColor,
-            boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
-          ),
-          child: ClipRRect(
+        onTap: () {
+          Get.to(InviteUserDetailView(), arguments: user);
+        },
+        child: GetBuilder<TribeRegistrationController>(
+          builder: (builderController) => Neumorphic(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            style: NeumorphicStyle(
+              color: user.isInvited == null || false
+                  ? AppColors.primaryColor
+                  : AppColors.whiteColor,
+              shadowLightColorEmboss: AppColors.whiteColor,
+              depth: -4,
+              intensity: 5,
+              oppositeShadowLightSource: true,
+              shape: NeumorphicShape.convex,
+              lightSource: LightSource.topLeft,
+              border: NeumorphicBorder(width: 2, color: AppColors.primaryColor),
+              shadowDarkColor: AppColors.darkGreyColor,
+              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
+            ),
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -40,14 +44,15 @@ class InviteUserTile extends StatelessWidget {
                       radius: 37,
                       backgroundColor: AppColors.whiteColor,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage(userImage),
+                        backgroundImage:
+                            NetworkImage(user.profilePhoto!.downloadUrl),
                         radius: 35,
                         backgroundColor: AppColors.greyColor,
                       ),
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      userMotto,
+                      user.lifeMotto!,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.blackColor,
@@ -58,7 +63,13 @@ class InviteUserTile extends StatelessWidget {
                       height: 24,
                       minWidth: 110,
                       onPressed: () {
-                        isInvided = true;
+                        if (user.isInvited == null) {
+                          user.isInvited = true;
+                        } else {
+                          user.isInvited = !user.isInvited!;
+                        }
+                        builderController.rebuildWidget;
+
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -74,8 +85,10 @@ class InviteUserTile extends StatelessWidget {
                     ),
                   ],
                 ),
-              ))),
-    );
+              ),
+            ),
+          ),
+        ));
   }
 }
 

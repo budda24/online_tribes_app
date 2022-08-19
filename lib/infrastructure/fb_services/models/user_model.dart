@@ -13,6 +13,7 @@ String welcomeToJson(UserDB data) => json.encode(data.toJson());
 class UserDB {
   UserDB({
     required this.userId,
+    this.isInvited,
     this.email,
     this.phoneNumber,
     this.name,
@@ -26,7 +27,7 @@ class UserDB {
     this.attendedTribe,
     this.profileNotification,
   });
-
+  bool? isInvited;
   String userId;
   String? email;
   String? phoneNumber;
@@ -47,9 +48,9 @@ class UserDB {
         name: json["name"],
         requestedTribe: json["requested_tribe"],
         description: json["description"],
-        introVideo:UploadedFile.fromJson(json["intro_video_url"]),
+        introVideo: UploadedFile.fromJson(json["intro_video_url"]),
         lifeMotto: json["life_motto"],
-        profilePhoto:UploadedFile.fromJson(json["profile_photo"]),
+        profilePhoto: UploadedFile.fromJson(json["profile_photo"]),
         hobbies: Hobbies.fromJson(json["hobbies"]),
         timeToInvest: json["time_to_invest"],
         /*  attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]), */
@@ -128,7 +129,7 @@ class UploadedFile {
 
   factory UploadedFile.fromJson(Map<String, dynamic> json) => UploadedFile(
         downloadUrl: json["downloadUrl"],
-        metaData:Metadata.fromJson(json["metaData"]),
+        metaData: Metadata.fromJson(json["metaData"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -156,14 +157,11 @@ class Metadata {
   final String? contentEncoding;
   final String name;
 
-
-
-
   factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
         bucket: json["bucket"],
         fullPath: json["fullPath"],
         size: json["size"],
-        timeCreated:((json["timeCreated"]) as Timestamp).toDate(),
+        timeCreated: ((json["timeCreated"]) as Timestamp).toDate(),
         contentType: json["contentType"],
         contentEncoding: json["contentEncoding"],
         name: json["name"],
@@ -179,7 +177,6 @@ class Metadata {
         "name": name,
       };
 }
-
 
 class ProfileNotification {
   ProfileNotification({

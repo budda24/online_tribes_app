@@ -49,7 +49,7 @@ class TribeRegistrationController extends GetxController {
   final ScrollController scrollController = ScrollController();
   RxInt itemLimit = 6.obs;
   RxInt currentItemLength = 0.obs;
-   RxInt previousItemLength = 0.obs;
+  RxInt previousItemLength = 0.obs;
   bool isLoading = false;
 
   Future<void> getUsers() async {
@@ -70,7 +70,7 @@ class TribeRegistrationController extends GetxController {
 
     if (position >= 0.8) {
       //  if (previousItemLength != currentItemLength) {
-        // previousItemLength = currentItemLength;
+      // previousItemLength = currentItemLength;
       itemLimit = itemLimit + 2;
       isLoading = true;
       update();
@@ -78,6 +78,10 @@ class TribeRegistrationController extends GetxController {
       print(' added >>>>>>>>>>>');
       //  }
     }
+  }
+
+  rebuildWidget() {
+    update();
   }
 
   @override

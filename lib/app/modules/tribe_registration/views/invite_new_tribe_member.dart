@@ -66,7 +66,7 @@ class InviteNewTribeMember extends StatelessWidget {
                                       mainAxisExtent: 180,
                                       crossAxisCount: 2,
                                       childAspectRatio: 2 / 3,
-                                      crossAxisSpacing: 30,
+                                      crossAxisSpacing: 20,
                                       mainAxisSpacing: 0),
                               itemBuilder: ((context, index) {
                                 if (builderController.currentItemLength.value ==
@@ -75,12 +75,8 @@ class InviteNewTribeMember extends StatelessWidget {
                                 }
 
                                 return InviteUserTile(
-                                  userImage: tribeRegistrationController
-                                      .usersList[index]
-                                      .profilePhoto!
-                                      .downloadUrl,
-                                  userMotto: tribeRegistrationController
-                                      .usersList[index].lifeMotto!,
+                                  user: tribeRegistrationController
+                                      .usersList[index],
                                 );
                               }),
                             );
