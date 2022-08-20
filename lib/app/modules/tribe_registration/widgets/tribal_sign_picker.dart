@@ -30,7 +30,7 @@ class TribalSignPicker extends StatelessWidget {
               });
           tribeRegistrationController.uploadedTribalSign =
               cameraController.pickedPhoto;
-
+          tribeRegistrationController.chosenTribalSign = null;
           tribeRegistrationController.choosenSignIndex!.value = -1;
           tribeRegistrationController.update();
         },
