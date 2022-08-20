@@ -17,8 +17,9 @@ class UserCloudStorageServices {
     required String fileName,
     required String userId,
     required String path,
+    required String folder
   }) {
-    final Reference ref = storage.ref('USERS/$userId/$path').child(fileName);
+    final Reference ref = storage.ref('$folder/$userId/$path').child(fileName);
 
     return ref.putFile(imageToUpload);
 

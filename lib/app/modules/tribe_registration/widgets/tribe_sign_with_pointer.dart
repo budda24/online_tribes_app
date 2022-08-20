@@ -1,5 +1,7 @@
 // Package imports:
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/controllers/camera_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +12,7 @@ import '../controllers/tribe_registration_controller.dart';
 
 class TribeSignWithPointer extends StatelessWidget {
   final tribeRegistrationController = Get.find<TribeRegistrationController>();
+  final cameraController = Get.find<CameraController>();
 
   TribeSignWithPointer({required this.imagePath, required this.index, Key? key})
       : super(key: key);
@@ -20,12 +23,13 @@ class TribeSignWithPointer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: InkWell(
-        onTap: () {
+        onTap: () async {
           tribeRegistrationController.choosenSignIndex!.value = index;
           tribeRegistrationController.uploadedTribalSign = null;
-          tribeRegistrationController.update();
           tribeRegistrationController.chosenTribalSign = imagePath;
           tribeRegistrationController.isSignChosen.value = true;
+
+          tribeRegistrationController.update();
         },
         child: Stack(
           children: [

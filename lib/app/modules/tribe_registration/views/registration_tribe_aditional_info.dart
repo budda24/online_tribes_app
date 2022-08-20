@@ -1,44 +1,71 @@
 // Package imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
+import 'package:flutter_application_1/app/helpers/widgets/online_tribes/registration/registration_template.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
 
 // Project imports:
+import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/widgets/online_tribes/general/main_button.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
-import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
+import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
+import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
 import '../controllers/tribe_registration_controller.dart';
-import '../widgets/rounded_input_container.dart';
 
-class RegistrationTribeCreationTribe extends GetView {
-  final tribeRegistrationController = Get.put(TribeRegistrationController());
+class RegistrationTribeAditionalInfo extends GetView {
+  final tribeRegistrationController = Get.find<TribeRegistrationController>();
   final globalController = Get.find<GlobalController>();
-  final videoController = Get.put(VideoViewerController());
+  final videoController = Get.find<VideoViewerController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      body: SingleChildScrollView(
-        child: ProfileTemplate(
-          fields: [
-            RoundedInputContainer(
-              height: 120,
-              hintText: 'Description',
-              textController: tribeRegistrationController.descritionController,
-              validate: (value) =>
-                  globalController.validateInputs(value: value, lenght: 1500),
+      body: RegistrationTemplate(
+        topElementsMargin: 100,
+        buttonCallBack: () {},
+        centerWidget: Column(
+          children: [
+            verticalSpaceMedium,
+            CustomTextField(
+              textInputAction: TextInputAction.next,
+              controller: tribeRegistrationController.nameController,
+              /* validate: (value) =>
+                  controller.validateUser(value: value, lenght: 200), */
+              hintText: 'Tribe Name',
+              maxline: 2,
+              minLine: 1,
+              height: 130.h,
+              width: 500.w,
             ),
-            RoundedInputContainer(
-              height: 60,
-              hintText: 'Name',
-              textController: tribeRegistrationController.nameController,
-              validate: (value) =>
-                  globalController.validateInputs(value: value, lenght: 50),
+            verticalSpaceMedium,
+            CustomTextField(
+              textInputAction: TextInputAction.next,
+              controller: tribeRegistrationController.nameController,
+              /* validate: (value) =>
+                  controller.validateUser(value: value, lenght: 200), */
+              hintText: 'Tribe type',
+              maxline: 2,
+              minLine: 1,
+              height: 130.h,
+              width: 500.w,
             ),
+            verticalSpaceMedium,
+            AvailableTimeButton(onPressed: () async {
+              tribeRegistrationController.availableTime =
+                  await TimeCovertingServices()
+                      .getCustomTimeRangePicker(context);
+            })
+          ],
+        ),
+      ),
+    );
+  }
+}
+/*
             RoundedInputContainer(
               height: 60,
               hintText: 'Type',
@@ -75,22 +102,4 @@ class RegistrationTribeCreationTribe extends GetView {
                   tribeRegistrationController.weeklySuggestedTimeController,
               validate: (value) =>
                   globalController.validateInputs(value: value, lenght: 200),
-            ),
-          ],
-          title: const Text(
-            'Create a Tribe',
-            style: kName,
-          ),
-          profileVideoSrc: '',
-          button: SlimRoundedButton(
-            backgroundColour: AppColors.actionColor,
-            title: 'Continue',
-            textColor: AppColors.whiteColor,
-            onPress: () {},
-          ),
-          profileImage: Image.asset(cArtistTribeSign),
-        ),
-      ),
-    );
-  }
-}
+            ), */

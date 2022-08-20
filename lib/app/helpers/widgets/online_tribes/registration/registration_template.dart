@@ -21,6 +21,7 @@ class RegistrationTemplate extends StatelessWidget {
     this.title,
     required this.topElementsMargin,
     this.showButton = true,
+    this.imagepath,
   }) : super(key: key);
 
   final GlobalKey<FormState>? formKey;
@@ -35,9 +36,12 @@ class RegistrationTemplate extends StatelessWidget {
   final String? title;
   final double topElementsMargin;
   final bool showButton;
+  /*  final File? image; */
+  final String? imagepath;
 
   @override
   Widget build(BuildContext context) {
+    print(imagepath);
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
@@ -82,41 +86,38 @@ class RegistrationTemplate extends StatelessWidget {
                     backgroundColor: AppColors.primaryColor,
                     child: GetBuilder(
                       init: cameraController,
-                      builder: (CameraController cameraCon) => cameraCon
-                                  .pickedPhoto ==
-                              null
-                          ? InkWell(
-                              child: NeumorphicCircleBackground(
-                                child: CircleAvatar(
+                      builder: (CameraController cameraCon) =>
+                          cameraCon.pickedPhoto == null && imagepath == null
+                              ? InkWell(
+                                  child: NeumorphicCircleBackground(
+                                    child: CircleAvatar(
+                                      radius: 65,
+                                      backgroundColor: AppColors.greyColor,
+                                      child: Icon(
+                                        Icons.add_a_photo_rounded,
+                                        size: 40,
+                                        color: AppColors.whiteColor,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () async {
+                                    showModalBottomSheet(
+                                        context: context,
+                                        backgroundColor: AppColors.transparent,
+                                        builder: (BuildContext context) {
+                                          return CustomPhotoPicker();
+                                        });
+                                  },
+                                )
+                              : CircleAvatar(
+                                  backgroundImage:
+                                  imagepath == null
+                                      ?Image.file(cameraController.pickedPhoto!)
+                                          .image
+                                          :Image.asset(imagepath!).image,
                                   radius: 65,
                                   backgroundColor: AppColors.greyColor,
-                                  child: Icon(
-                                    Icons.add_a_photo_rounded,
-                                    size: 40,
-                                    color: AppColors.whiteColor,
-                                  ),
                                 ),
-                              ),
-                              onTap: () async {
-                                showModalBottomSheet(
-                                    context: context,
-                                    backgroundColor: AppColors.transparent,
-                                    builder: (BuildContext context) {
-                                      return CustomPhotoPicker();
-                                    });
-                              },
-                            )
-                          : CircleAvatar(
-                              backgroundImage: cameraController.pickedPhoto ==
-                                      null
-                                  ? Image.asset(
-                                          'assets/images/profile/bell.png')
-                                      .image
-                                  : Image.file(cameraController.pickedPhoto!)
-                                      .image,
-                              radius: 65,
-                              backgroundColor: AppColors.greyColor,
-                            ),
                     ),
                   ),
                 ),

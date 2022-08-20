@@ -50,6 +50,7 @@ class RegistrationController extends GetxController {
 
     return Future.value(
       storage.uploadFile(
+        folder: "Users",
           path: directory,
           userId: userId,
           imageToUpload: profileFile,
