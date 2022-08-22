@@ -21,7 +21,7 @@ class InviteUserTile extends StatelessWidget {
           builder: (builderController) => Neumorphic(
             margin: const EdgeInsets.symmetric(vertical: 10),
             style: NeumorphicStyle(
-              color: user.isInvited == null || false
+              color: user.isInvited == false
                   ? AppColors.primaryColor
                   : AppColors.whiteColor,
               shadowLightColorEmboss: AppColors.whiteColor,
@@ -42,7 +42,10 @@ class InviteUserTile extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 37,
-                      backgroundColor: AppColors.whiteColor,
+                      backgroundColor:
+                           user.isInvited == false
+                              ? AppColors.whiteColor
+                              : AppColors.primaryColor,
                       child: CircleAvatar(
                         backgroundImage:
                             NetworkImage(user.profilePhoto!.downloadUrl),
@@ -52,7 +55,7 @@ class InviteUserTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 3),
                     Text(
-                      user.lifeMotto!,
+                      user.phoneNumber!,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.blackColor,
@@ -63,22 +66,31 @@ class InviteUserTile extends StatelessWidget {
                       height: 24,
                       minWidth: 110,
                       onPressed: () {
-                        if (user.isInvited == null) {
-                          user.isInvited = true;
+                        print(user.isInvited);
+                        if (builderController.invitedUsersList.length == 5) {
+                          user.isInvited = false;
                         } else {
-                          user.isInvited = !user.isInvited!;
+                          user.isInvited = !user.isInvited;
                         }
-                        builderController.rebuildWidget;
 
+                        builderController.rebuildWidget();
+                        builderController.updateInvidedUsersList(user);
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      color: AppColors.actionColor,
+                      color:   user.isInvited == false 
+                          ? AppColors.actionColor
+                          : AppColors.primaryColor,
                       child: Text(
-                        'Invite',
+                         user.isInvited == false
+                            ? 'Invite'
+                            : 'Invited',
                         style: TextStyle(
-                          color: AppColors.whiteColor,
+                          color:
+                             user.isInvited == false
+                                  ? AppColors.whiteColor
+                                  : AppColors.blackColor,
                           fontSize: 16,
                         ),
                       ),

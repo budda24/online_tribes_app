@@ -7,16 +7,18 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/text_styles.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({
-    Key? key,
-    required this.controller,
-    required this.searchCalback,
-    required this.hintText
-  }) : super(key: key);
+  const SearchBar(
+      {Key? key,
+      required this.controller,
+      required this.searchCalback,
+      required this.hintText,
+      required this.textEditingController })
+      : super(key: key);
 
   final String hintText;
-  final Function? searchCalback;
+  final VoidCallback searchCalback;
   final GetxController controller;
+  final TextEditingController textEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class SearchBar extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(top: 0.h),
               child: TextFormField(
+                controller: textEditingController,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -52,9 +55,10 @@ class SearchBar extends StatelessWidget {
             oppositeShadowLightSource: true,
           ),
           child: InkWell(
-            onTap: () {
+            onTap:
+              searchCalback,
               //TODO add search logic
-            },
+
             child: Container(
               width: 49.h,
               height: 30.h,

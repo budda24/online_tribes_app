@@ -21,6 +21,7 @@ class ProfileController extends GetxController {
   final TextEditingController hobby2Controller = TextEditingController();
   final TextEditingController lifeMottoController = TextEditingController();
   final TextEditingController timeToInvestController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
   VideoViewerController? videoController = VideoViewerController();
 
   final listKey = GlobalKey<AnimatedListState>();

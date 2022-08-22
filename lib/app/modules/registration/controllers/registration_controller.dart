@@ -35,6 +35,7 @@ class RegistrationController extends GetxController {
 
   UserDB userDB = UserDB(
     userId: currentUser.uid,
+    isInvited: false,
   );
 
   double progress = 0.0;
@@ -50,7 +51,7 @@ class RegistrationController extends GetxController {
 
     return Future.value(
       storage.uploadFile(
-        folder: "Users",
+          folder: "Users",
           path: directory,
           userId: userId,
           imageToUpload: profileFile,
@@ -86,54 +87,58 @@ class RegistrationController extends GetxController {
             fileName: 'profileVideo',
             directory: 'profile',
             profileFile: cameraController.pickedVideo!)
-        .then((uploadTask) => uploadTask.snapshotEvents.listen((event) async {
-              if (event.state == TaskState.running) {
-                progress = ((event.bytesTransferred.toDouble() /
-                            event.totalBytes.toDouble()) *
-                        100)
-                    .roundToDouble();
+        .then(
+      (uploadTask) => uploadTask.snapshotEvents.listen(
+        (event) async {
+          if (event.state == TaskState.running) {
+            progress = ((event.bytesTransferred.toDouble() /
+                        event.totalBytes.toDouble()) *
+                    100)
+                .roundToDouble();
 
-                update();
-              }
-              if (event.state == TaskState.success) {
-                var url = await event.ref.getDownloadURL();
-                var metaDataRef = await event.ref.getMetadata();
-                var metaData = Metadata(
-                    bucket: metaDataRef.bucket,
-                    name: metaDataRef.name,
-                    size: metaDataRef.size!,
-                    fullPath: metaDataRef.fullPath,
-                    contentType: metaDataRef.contentType!,
-                    timeCreated: metaDataRef.timeCreated,
-                    contentEncoding: metaDataRef.contentEncoding);
+            update();
+          }
+          if (event.state == TaskState.success) {
+            var url = await event.ref.getDownloadURL();
+            var metaDataRef = await event.ref.getMetadata();
+            var metaData = Metadata(
+                bucket: metaDataRef.bucket,
+                name: metaDataRef.name,
+                size: metaDataRef.size!,
+                fullPath: metaDataRef.fullPath,
+                contentType: metaDataRef.contentType!,
+                timeCreated: metaDataRef.timeCreated,
+                contentEncoding: metaDataRef.contentEncoding);
 
-                userDB.introVideo =
-                    UploadedFile(downloadUrl: url, metaData: metaData);
+            userDB.introVideo =
+                UploadedFile(downloadUrl: url, metaData: metaData);
+            userDB.description = describtionController.text;
+            userDB.lifeMotto = lifeMottoController.text;
+            userDB.hobbies = Hobbies(
+                hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
+            var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
+            userDB.availableTime = AvailableTime(
+                endZero: TimeCovertingServices.CountOffsetHour(
+                    hour: availableTime!.endTime.hour, offset: timeZoneOffset),
+                startZero: TimeCovertingServices.CountOffsetHour(
+                    hour: availableTime!.startTime.hour,
+                    offset: timeZoneOffset),
+                timeZone: DateTime.now().timeZoneName,
+                start: availableTime!.startTime.hour,
+                end: availableTime!.endTime.hour);
+            userDB.email = currentUser.email;
+            userDB.phoneNumber = currentUser.phoneNumber;
 
-                videoUploaded.value = true;
-                Get.to(TribeRegistrationChoice());
-              }
-            }));
+            await globalController.saveRegistrationState();
+            globalController.hideLoading();
 
-    userDB.description = describtionController.text;
-    userDB.lifeMotto = lifeMottoController.text;
-    userDB.hobbies =
-        Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
-
-    var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
-    userDB.availableTime = AvailableTime(
-        endZero: TimeCovertingServices.CountOffsetHour(
-            hour: availableTime!.endTime.hour, offset: timeZoneOffset),
-        startZero: TimeCovertingServices.CountOffsetHour(
-            hour: availableTime!.startTime.hour, offset: timeZoneOffset),
-        timeZone: DateTime.now().timeZoneName,
-        start: availableTime!.startTime.hour,
-        end: availableTime!.endTime.hour);
-    userDB.email = currentUser.email;
-    userDB.phoneNumber = currentUser.phoneNumber;
-
-    await globalController.saveRegistrationState();
-    globalController.hideLoading();
+            await UserDBServices().createFewUser(userDB);
+            videoUploaded.value = true;
+            Get.to(const TribeRegistrationChoice());
+          }
+        },
+      ),
+    );
   }
 
   bool checkIfPhotoUpload() {
@@ -150,7 +155,6 @@ class RegistrationController extends GetxController {
     isVideoChosen = !isVideoChosen;
     update();
   }
-
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {

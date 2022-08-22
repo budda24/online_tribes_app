@@ -11,9 +11,10 @@ UserDB welcomeFromJson(String str) => UserDB.fromJson(json.decode(str));
 String welcomeToJson(UserDB data) => json.encode(data.toJson());
 
 class UserDB {
+
   UserDB({
     required this.userId,
-    this.isInvited,
+    required this.isInvited,
     this.createdAt,
     this.email,
     this.phoneNumber,
@@ -28,7 +29,7 @@ class UserDB {
     this.attendedTribe,
     this.profileNotification,
   });
-  bool? isInvited;
+  bool isInvited =  false;
   String userId;
   FieldValue? createdAt;
   String? email;
@@ -46,8 +47,10 @@ class UserDB {
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
         userId: json["userId"],
-        createdAt: json["created_at"],
+     /*     createdAt: json["created_at"], */
+        isInvited:  json["is_invited"],
         email: json["email"],
+        phoneNumber: json["phone_number"],
         name: json["name"],
         requestedTribe: json["requested_tribe"],
         description: json["description"],
@@ -66,8 +69,10 @@ class UserDB {
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
+        "is_invited": isInvited,
         "created_at": createdAt,
         "email": email,
+        "phone_number": phoneNumber,
         "name": name,
         "requested_tribe": requestedTribe,
         "description": description,

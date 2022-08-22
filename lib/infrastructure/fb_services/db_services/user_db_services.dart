@@ -10,7 +10,7 @@ class UserDBServices {
   final _db = FirebaseFirestore.instance;
   Future<void> createUser(UserDB user) async {
     try {
-       user.createdAt = FieldValue.serverTimestamp();
+      user.createdAt = FieldValue.serverTimestamp();
       await _db.collection('USERS').doc(user.userId).set(user.toJson());
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar("Account can't be created because $e"));
@@ -35,12 +35,71 @@ class UserDBServices {
     await _db.collection('USERS').doc(userId).delete();
   }
 
-  Future<List<UserDB>> feachAllUsers({required int limit}) async {
-    var snapshot = await _db.collection('USERS').limit(limit).get();
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchLimitedUsers(
+      {required int limit, DocumentSnapshot? startAfter}) async {
+    if (startAfter == null) {
+      var snapshot = await _db
+          .collection('USERS')
+          .orderBy('created_at')
+          .limit(limit)
+          .get();
+      // var userList = List<UserDB>.from(
+      //     snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList());
 
-    var userList = List<UserDB>.from(
-        snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList());
+      return snapshot;
+    } else {
+      var snapshot = await _db
+          .collection('USERS')
+          .orderBy('created_at')
+          .limit(limit)
+          .startAfterDocument(startAfter)
+          .get();
 
-    return userList;
+      // var userList = List<UserDB>.from(
+      //     snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList());
+      return snapshot;
+    }
+  }
+
+  Future<List<UserDB>> feachUserByEmail({required String email}) async {
+    var snapshot =
+        await _db.collection('USERS').where('email', isEqualTo: email).get();
+
+    var user =
+        List<UserDB>.from(snapshot.docs.map((e) => UserDB.fromJson(e.data())))
+            .toList();
+    return user;
+  }
+
+  Future<List<UserDB>> feachUserByPhoneNumber(
+      {required String phoneNumber}) async {
+    var snapshot = await _db
+        .collection('USERS')
+        .where('phone_number', isEqualTo: phoneNumber)
+        .get();
+
+    var user =
+        List<UserDB>.from(snapshot.docs.map((e) => UserDB.fromJson(e.data())))
+            .toList();
+    return user;
+  }
+
+  Future<void> createFewUser(UserDB user) async {
+    try {
+      user.createdAt = FieldValue.serverTimestamp();
+      for (var i = 0; i < 20; i++) {
+        user.email = (user.email ?? '') + i.toString();
+        print(user.email);
+        user.phoneNumber = (user.phoneNumber ?? '') + i.toString();
+        print(user.phoneNumber);
+        await _db
+            .collection('USERS')
+            .doc(user.userId + i.toString())
+            .set(user.toJson());
+      }
+      await _db.collection('USERS').doc(user.userId).set(user.toJson());
+    } on FirebaseException catch (e) {
+      Get.showSnackbar(customSnackbar("Account can't be created because $e"));
+    }
   }
 }
