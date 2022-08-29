@@ -45,6 +45,8 @@ dependencies:
   time_range_picker: ^2.2.0
   timezone: ^0.8.0
   instant: ^0.4.1
+  permission_handler: ^9.0.2
+  dropdown_button2: ^1.7.2
   #liquid_progress_indicator: ^0.4.0
 
 
@@ -69,7 +71,7 @@ flutter:
     - assets/images/authorization_screen/
     - assets/images/authorization_screen/logo/
     - assets/images/authorization_screen/google/
-    - assets/images/authorization_screen/tribel_signs/
+    - assets/images/tribel_signs/
     - assets/icons/
     - assets/images/profile/
     - assets/images/tribe_registration/

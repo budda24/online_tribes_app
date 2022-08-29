@@ -1,14 +1,13 @@
 //Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/infrastructure/native_functions/time_converting_services.dart';
 import 'package:get/get.dart';
 
 // Project imports:
 import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../controllers/profile_controller.dart';
 import '../widgets/rounded_container.dart';
@@ -117,7 +116,7 @@ class ProfileInfoView extends StatelessWidget {
                 child: TextContainerLable(
                   text: 'Delete Account',
                   lableStyle: tribalFontLableRed,
-                )),
+                ),),
           ],
         );
       }),

@@ -7,7 +7,7 @@ import '../../../helpers/theme/app_bars.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/rounded_bacgroud_container.dart';
 
 class DescriptionExamplePage extends StatelessWidget {

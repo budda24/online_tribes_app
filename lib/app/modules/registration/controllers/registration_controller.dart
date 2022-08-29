@@ -8,7 +8,7 @@ import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
-import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
+import '../../../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
 import '../../../../infrastructure/native_functions/time_converting_services.dart';
@@ -44,13 +44,13 @@ class RegistrationController extends GetxController {
       required String directory,
       required io.File profileFile}) {
     //TODO cloud function to resize photo to secure the end point
-    final storage = UserCloudStorageServices();
+    final storage = CloudStorageServices();
 
     String userId = auth.currentUser!.uid;
 
     return Future.value(
       storage.uploadFile(
-        folder: "Users",
+          folder: "Users",
           path: directory,
           userId: userId,
           imageToUpload: profileFile,
@@ -147,11 +147,10 @@ class RegistrationController extends GetxController {
 
   bool isVideoChosen = false;
 
-  switchIsVideoCosen() {
+  void switchIsVideoCosen() {
     isVideoChosen = !isVideoChosen;
     update();
   }
-
 
   String? validateUser({required String value, required int lenght}) {
     if (value.isEmpty) {
@@ -163,7 +162,7 @@ class RegistrationController extends GetxController {
     return null;
   }
 
-  closeKeyboard() {
+  /* closeKeyboard() {
     globalController.unFocuseNode();
-  }
+  } */
 }

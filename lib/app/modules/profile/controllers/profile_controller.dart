@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
-import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
+import '../../../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
 import '../widgets/noticification_tile_accepted.dart';
@@ -27,7 +27,7 @@ class ProfileController extends GetxController {
 
   var userAuthenticationServieces = Auth();
   var userDbServieces = UserDBServices();
-  var userStorageServieces = UserCloudStorageServices();
+  var userStorageServieces = CloudStorageServices();
 
   RxInt actualIndex = 0.obs;
 

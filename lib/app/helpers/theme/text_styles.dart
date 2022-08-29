@@ -24,7 +24,7 @@ TextStyle greenActionTitle = TextStyle(
     fontFamily: 'Futura Md BT',
     fontSize: 20.0.sp,
     fontWeight: FontWeight.bold);
-    TextStyle greenTitle = TextStyle(
+TextStyle greenTitle = TextStyle(
     color: AppColors.primaryColor,
     fontFamily: 'Futura Md BT',
     fontSize: 20.0.sp,
@@ -97,6 +97,35 @@ TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
   color: AppColors.greyColor,
   fontSize: 16.sp,
   fontFamily: montserrat,
+);
+// text style
+TextStyle kName = TextStyle(
+    fontFamily: 'Futura Bk BT',
+    fontSize: 30.0,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor);
+
+TextStyle kHintStyle = TextStyle(
+  fontSize: 20.0,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.bold,
+  color: AppColors.blackColor,
+);
+TextStyle kHintStyleWhite = TextStyle(
+  fontSize: 20.0,
+  fontFamily: 'Poppins',
+  fontWeight: FontWeight.bold,
+  color: AppColors.whiteColor,
+);
+TextStyle kMontserratBold = const TextStyle(
+  fontSize: 18,
+  fontFamily: 'Montserrat',
+  fontWeight: FontWeight.bold,
+);
+
+const headingStyle = TextStyle(
+  fontFamily: 'Built Relationship',
+  fontSize: 30.0,
 );
 
 TextStyle smallBold = TextStyle(

@@ -4,6 +4,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
 // Project imports:
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
@@ -35,40 +36,34 @@ class ProfileMyTribeView extends StatelessWidget {
       fields: [
         SearchBar(searchCalback: () {}, controller: profileController),
         TribeTile(
-          tribalSign: Image.asset(
-              'assets/images/authorization_screen/tribel_signs/mothering_tribe.png'),
+          tribalSign: Image.asset(cMotheringTribeSign),
           tribalName: 'Mothering',
           letterCallback: () {},
         ),
         TribeTile(
           letterCallback: () {},
           tribalName: 'Travelers',
-          tribalSign: Image.asset(
-              'assets/images/authorization_screen/tribel_signs/traveller_tribe.png'),
+          tribalSign: Image.asset(cTravellerTribeSign),
         ),
         TribeTile(
           letterCallback: () {},
           tribalName: 'Pacemakers',
-          tribalSign: Image.asset(
-              'assets/images/authorization_screen/tribel_signs/business_tribe.png'),
+          tribalSign: Image.asset(cBussinessTribeSign),
         ),
         TribeTile(
           letterCallback: () {},
           tribalName: 'Pacemakers',
-          tribalSign: Image.asset(
-              'assets/images/authorization_screen/tribel_signs/business_tribe.png'),
+          tribalSign: Image.asset(cBussinessTribeSign),
         ),
         TribeTile(
           letterCallback: () {},
           tribalName: 'Pacemakers',
-          tribalSign: Image.asset(
-              'assets/images/authorization_screen/tribel_signs/business_tribe.png'),
+          tribalSign: Image.asset(cBussinessTribeSign),
         ),
         TribeTile(
           letterCallback: () {},
           tribalName: 'Pacemakers',
-          tribalSign: Image.asset(
-              'assets/images/authorization_screen/tribel_signs/business_tribe.png'),
+          tribalSign: Image.asset(cBussinessTribeSign),
         ),
       ],
       title: const SizedBox.shrink(),

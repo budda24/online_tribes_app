@@ -35,39 +35,38 @@ class Alerts {
     required this.title,
     required this.content,
   });
-  final Function onConfirm;
-  final String title;
-  final String content;
+  final Function? onConfirm;
+  final String? title;
+  final String? content;
 
-  showConfirmDialog() {
-    Widget confirmBtn() {
-      return ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(AppColors.errorRedColor)),
-          onPressed: () {
-            onConfirm();
-          },
-          child: const Text("Confirm"));
-    }
+  Widget confirmBtn() {
+    return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(AppColors.errorRedColor)),
+        onPressed: () {
+          onConfirm!();
+        },
+        child: const Text("Confirm"));
+  }
 
-    Widget cancelBtn() {
-      return ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(AppColors.actionColor)),
-          onPressed: () {
-            Get.back();
-          },
-          child: const Text("Cancel"));
-    }
+  Widget cancelBtn() {
+    return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(AppColors.actionColor)),
+        onPressed: () {
+          Get.back();
+        },
+        child: const Text("Cancel"));
+  }
 
-    Get.defaultDialog(
-      title: title,
+  showConfirmDialog() async {
+    await Get.defaultDialog(
+      title: title!,
       titleStyle: tribalFontLableRed,
-      /* middleText: "You content goes here...", */
       content: Text(
-        content,
+        content!,
         style: plainTextStyle,
         textAlign: TextAlign.center,
       ),
@@ -76,6 +75,58 @@ class Alerts {
       confirm: confirmBtn(),
       cancel: cancelBtn(),
     );
+  }
+
+  Alerts.textInput({
+    required this.onConfirm,
+    required this.title,
+    required this.content,
+    required this.textFieldController,
+    required this.savigInput,
+  });
+  TextEditingController? textFieldController;
+  Function? savigInput;
+
+  showInputDialog() async {
+    await Get.defaultDialog(
+        backgroundColor: AppColors.whiteColor,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: textFieldController,
+              keyboardType: TextInputType.text,
+              maxLines: 1,
+              decoration: InputDecoration(
+                  labelText: 'Type Name',
+                  hintMaxLines: 1,
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: AppColors.actionColor, width: 4.0))),
+            ),
+            const SizedBox(
+              height: 30.0,
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColors.actionColor)),
+              onPressed: () {
+                if (textFieldController!.text.isNotEmpty) {
+                  savigInput!();
+                  Get.back();
+                } else {
+                  Get.showSnackbar(customSnackbar("Enter type name"));
+                }
+              },
+              child: const Text(
+                'ADD TRIBE TYPE',
+                style: TextStyle(color: Colors.white, fontSize: 16.0),
+              ),
+            )
+          ],
+        ),
+        radius: 10.0);
   }
 }
 

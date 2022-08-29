@@ -45,7 +45,8 @@ class UserDB {
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
         userId: json["userId"],
-        createdAt: json["created_at"],
+        //TODO fieldvalue is not a timestamp
+        /* createdAt: json["created_at"] as FieldValue, */
         email: json["email"],
         name: json["name"],
         requestedTribe: json["requested_tribe"],
