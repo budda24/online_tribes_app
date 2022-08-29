@@ -9,6 +9,7 @@ import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../../helpers/widgets/online_tribes/profile/tribal_tile.dart';
+import '../../../routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
@@ -27,13 +28,12 @@ class ProfileMyTribeView extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            // Get.toNamed(Routes.TRIBE_REGISTRATION);
-            Get.to(InviteNewTribeMember());
+            Get.toNamed(Routes.TRIBE_REGISTRATION);
+            //Get.to(InviteNewTribeMember());
           },
           child: Image.asset('assets/images/profile/create-tribe.png'),
         ),
       ]),
-      /* videoController: null, */
       fields: [
         SearchBar(
             textEditingController: profileController.searchController,
@@ -72,7 +72,7 @@ class ProfileMyTribeView extends StatelessWidget {
         ),
       ],
       title: const SizedBox.shrink(),
-      /* profileVideoSrc: '', */
+
       profileImage: Image.network(profileController.profilePhotoUrl),
     );
   }

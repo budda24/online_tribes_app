@@ -47,6 +47,7 @@ class TribeProfileView extends GetView<TribeProfileController> {
                   ),
                   InkWell(
                     onTap: () {
+                      //TODO LOGOUT
                       /* profileController.logout(); */
                     },
                     child: Icon(
@@ -69,7 +70,7 @@ class TribeProfileView extends GetView<TribeProfileController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "available time",
+                    " time",
                     style: tribalFontLableRed,
                   ),
                   Text(
@@ -77,7 +78,7 @@ class TribeProfileView extends GetView<TribeProfileController> {
                     style: tribalFontLableRed,
                   ),
                   Text(
-                    "available time",
+                    " time",
                     style: tribalFontLableRed,
                   ),
                 ],

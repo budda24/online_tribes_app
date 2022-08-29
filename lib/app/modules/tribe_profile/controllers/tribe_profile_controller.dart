@@ -29,7 +29,9 @@ class TribeProfileController extends GetxController {
   String profilePhotoUrl = '';
   String profileVideoSrc = '';
 
-  Future<void> getTribe() async {}
+  Future<void> getTribe() async {
+    /* e3ff0450-2793-11ed-a3d8-53a1dab41225 */
+  }
 
   void assignProfileInfo() async {}
 
