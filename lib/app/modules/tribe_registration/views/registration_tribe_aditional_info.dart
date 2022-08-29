@@ -6,6 +6,7 @@ import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_application_1/app/helpers/theme/ui_helpers.dart';
 import 'package:flutter_application_1/app/helpers/widgets/online_tribes/registration/registration_template.dart';
+import 'package:flutter_application_1/app/modules/tribe_registration/controllers/tribe_registration_controller.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,6 +18,9 @@ import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
 import '../controllers/tribe_registration_controller.dart';
 import 'registration_tribe_upload_video_view.dart';
+
+
+
 
 class RegistrationTribeAditionalInfo extends GetView {
   final globalController = Get.find<GlobalController>();

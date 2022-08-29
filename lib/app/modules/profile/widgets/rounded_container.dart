@@ -30,12 +30,13 @@ class RoundedContainer extends StatelessWidget {
           shape: NeumorphicShape.convex,
           lightSource: LightSource.topLeft,
           intensity: 60,
+
           /* shadowDarkColor: AppColors.darkGreyColor, */
           color: AppColors.whiteColor,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
         ),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 30),
           width: 0.8.sw,
           height: height.h,
           decoration: const BoxDecoration(

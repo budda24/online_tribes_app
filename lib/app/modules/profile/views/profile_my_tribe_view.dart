@@ -1,5 +1,5 @@
 //Package imports:
-import 'package:flutter_application_1/app/routes/app_pages.dart';
+import 'package:flutter_application_1/app/modules/tribe_registration/views/invite_new_tribe_member.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
 
@@ -27,14 +27,19 @@ class ProfileMyTribeView extends StatelessWidget {
         ),
         InkWell(
           onTap: () {
-            Get.toNamed(Routes.TRIBE_REGISTRATION);
+            // Get.toNamed(Routes.TRIBE_REGISTRATION);
+            Get.to(InviteNewTribeMember());
           },
           child: Image.asset('assets/images/profile/create-tribe.png'),
         ),
       ]),
       videoController: null,
       fields: [
-        SearchBar(searchCalback: () {}, controller: profileController),
+        SearchBar(
+            textEditingController: profileController.searchController,
+            hintText: 'search',
+            searchCalback: () {},
+            controller: profileController),
         TribeTile(
           tribalSign: Image.asset(cMotheringTribeSign),
           tribalName: 'Mothering',

@@ -9,6 +9,8 @@ import '../../../routes/app_pages.dart';
 import '../../tribe_registration/widgets/background.dart';
 
 class TribeRegistrationChoice extends StatelessWidget {
+  const TribeRegistrationChoice({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

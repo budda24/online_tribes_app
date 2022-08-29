@@ -3,13 +3,14 @@
 import 'dart:async';
 import 'dart:io' as io;
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/camera_controller.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/tribe_db_services.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 import 'package:flutter_application_1/infrastructure/native_functions/time_converting_services.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
@@ -21,6 +22,7 @@ import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/models/tribal_type.dart';
 import '../../../../infrastructure/fb_services/models/tribe_model.dart';
+import '../../../../infrastructure/fb_services/models/user_model.dart' as user;
 import '../../../helpers/theme/main_constants.dart';
 
 class TribeRegistrationController extends GetxController {
@@ -40,6 +42,7 @@ class TribeRegistrationController extends GetxController {
   io.File? customTribalSign;
 
   TribeDBServices tribeDBServices = TribeDBServices();
+  UserDBServices userDBServices = UserDBServices();
 
   String chosenTribaType = "";
   List<String> tribalTypes = <String>[];
@@ -223,11 +226,116 @@ class TribeRegistrationController extends GetxController {
   }
 
   assignigTriberers() {}
-  //TODO assign triberers to a tribe
+/////////////////////////
+  ///
+  ///
+  TextEditingController searchTextEditingController = TextEditingController();
+  List<user.UserDB> usersList = [];
+  List<user.UserDB> temporaryUsersList = [];
+  List<user.UserDB> invitedUsersList = [];
+
+  final ScrollController scrollController = ScrollController();
+  final usersSnapshot = <DocumentSnapshot>[];
+  int limit = 6;
+  bool hasMore = true;
+  bool isFetchingUsers = false;
+  String alreadySearched = '';
+
+  Future<void> fetchNextUsers() async {
+    if (isFetchingUsers) return;
+    isFetchingUsers = true;
+    var snapshot = await UserDBServices().fetchLimitedUsers(
+        limit: limit,
+        startAfter: usersSnapshot.isNotEmpty ? usersSnapshot.last : null);
+
+    usersSnapshot.addAll(snapshot.docs);
+    if (snapshot.docs.length < limit) hasMore = false;
+
+    final newUsers = List<user.UserDB>.from(
+        snapshot.docs.map((e) => user.UserDB.fromJson(e.data())).toList());
+
+    usersList.addAll(newUsers);
+
+    update();
+
+    isFetchingUsers = false;
+  }
+
+  updateInvidedUsersList(user.UserDB user) {
+    if (invitedUsersList.length == 5 || user.isInvited == false) {
+      invitedUsersList.removeWhere((e) => e.phoneNumber == user.phoneNumber);
+      return;
+    } else {
+      invitedUsersList.add(user);
+    }
+  }
+
+  void scrollListener() {
+    if (scrollController.offset >= scrollController.position.maxScrollExtent &&
+        !scrollController.position.outOfRange) {
+      if (hasMore) {
+        fetchNextUsers();
+      }
+    }
+  }
+
+  rebuildWidget() {
+    update();
+  }
+
+  Future<void> searchByEmailOrPhone() async {
+    if (searchTextEditingController.text.isEmpty ||
+        alreadySearched == searchTextEditingController.text) {
+      return;
+    }
+
+    alreadySearched = searchTextEditingController.text;
+
+    if (searchTextEditingController.text.characters.contains('@')) {
+      var user = await UserDBServices()
+          .feachUserByEmail(email: searchTextEditingController.text);
+      if (user.isNotEmpty) {
+        if (temporaryUsersList.isEmpty) temporaryUsersList = usersList;
+        usersList = user;
+        update();
+      }
+      return;
+    } else {
+      var user = await userDBServices.feachUserByPhoneNumber(
+          phoneNumber: searchTextEditingController.text);
+      if (user.isNotEmpty) {
+        if (temporaryUsersList.isEmpty) temporaryUsersList = usersList;
+        usersList = user;
+        print(usersList.length);
+        update();
+      }
+      return;
+    }
+  }
+
+  showAllUsersAgain() async {
+    if (temporaryUsersList.isEmpty) return;
+
+    usersList.clear();
+    update();
+    await Future.delayed(const Duration(milliseconds: 500));
+    usersList.addAll(temporaryUsersList);
+    temporaryUsersList.clear();
+    update();
+  }
+
   @override
   void onInit() async {
     tribalTypes = await featchTribalTypes().then((value) => value);
     chosenTribaType = tribalTypes.toList()[0];
+    scrollController.addListener(scrollListener);
+    await fetchNextUsers();
+
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    scrollController.dispose();
   }
 }
