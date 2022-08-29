@@ -15,21 +15,23 @@ class ProfileTemplate extends StatelessWidget {
     Key? key,
     required this.fields,
     required this.title,
-    required this.profileVideoSrc,
+    /* required this.profileVideoSrc, */
     required this.profileImage,
-    this.videoController,
+    this.videoPlayer,
+    /* this.videoController, */
     this.rigtTopPositionad,
     this.button,
   }) : super(key: key);
 
-  final VideoViewerController? videoController;
+  /* final VideoViewerController? videoController; */
 
   final Widget title;
-  final String? profileVideoSrc;
+  /* final String? profileVideoSrc; */
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
   Column? rigtTopPositionad;
+  Widget? videoPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -43,29 +45,13 @@ class ProfileTemplate extends StatelessWidget {
           ),
           BacgroundRoundedContainer.profile(
             height: 530,
-              child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
                 child: Column(
                   children: [
                     verticalSpaceLarge,
-                    GetBuilder<ProfileController>(
-                      builder: (builderController) =>
-                          builderController.profileVideo != ''
-                              ? videoController != null
-                                  ? CustomVideoPlayer.network(
-                                      videoSrc: profileVideoSrc!,
-                                      videoController: videoController!)
-                                  : const SizedBox.shrink()
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    spinkit,
-                                    const SizedBox(height: 20),
-                                    const Text('Loading'),
-                                  ],
-                                ),
-                    ),
+                    videoPlayer ?? const SizedBox.shrink(),
                     ...fields,
                     button != null
                         ? verticalSpaceLarge

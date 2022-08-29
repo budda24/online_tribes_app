@@ -48,8 +48,8 @@ class Auth {
           Get.offAllNamed(Routes.REGISTRATION);
         } else {
           _globalController.hideLoading();
-
-          await Get.offAllNamed(Routes.PROFILE);
+//TODO GO TO USER PROFILE
+          await Get.toNamed(Routes.PROFILE);
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {

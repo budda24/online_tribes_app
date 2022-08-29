@@ -33,7 +33,7 @@ class ProfileMyTribeView extends StatelessWidget {
           child: Image.asset('assets/images/profile/create-tribe.png'),
         ),
       ]),
-      videoController: null,
+      /* videoController: null, */
       fields: [
         SearchBar(
             textEditingController: profileController.searchController,
@@ -72,7 +72,7 @@ class ProfileMyTribeView extends StatelessWidget {
         ),
       ],
       title: const SizedBox.shrink(),
-      profileVideoSrc: '',
+      /* profileVideoSrc: '', */
       profileImage: Image.network(profileController.profilePhotoUrl),
     );
   }

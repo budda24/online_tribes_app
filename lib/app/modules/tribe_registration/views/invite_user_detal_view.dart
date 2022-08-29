@@ -10,12 +10,13 @@ import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../user_profile/widgets/rounded_expanded_container.dart';
 import '../../user_profile/widgets/rounded_container.dart';
+import '../../user_profile/widgets/video_player.dart';
 
 
 class InviteUserDetailView extends StatelessWidget {
   InviteUserDetailView({Key? key}) : super(key: key);
 
- late var user =  Get.arguments;
+ late var user =  Get.arguments as UserDB;
   VideoViewerController? videoController = VideoViewerController();
 
 
@@ -31,8 +32,25 @@ class InviteUserDetailView extends StatelessWidget {
             child: ProfileTemplate(
               profileImage: Image.network(user.profilePhoto!.downloadUrl),
               title: const SizedBox.shrink(),
+              videoPlayer:GetBuilder(
+                      builder: (builderController) =>
+                          user.introVideo!.downloadUrl != ''
+                              ? videoController != null
+                                  ? CustomVideoPlayer.network(
+                                      videoSrc: user.introVideo!.downloadUrl,
+                                      videoController: videoController!)
+                                  : const SizedBox.shrink()
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    spinkit,
+                                    const SizedBox(height: 20),
+                                    const Text('Loading'),
+                                  ],
+                                ),
+                    ), /* ,
                videoController: videoController!,
-              profileVideoSrc: user.introVideo!.downloadUrl,
+              profileVideoSrc: user.introVideo!.downloadUrl, */
               fields: [
                 verticalSpaceSmall,
                 RoundedExpandedContainer(

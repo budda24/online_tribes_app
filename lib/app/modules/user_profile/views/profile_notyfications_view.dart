@@ -22,7 +22,7 @@ class ProfileNotyficationsView extends GetView {
       body: ProfileTemplate(
         fields: [NotificationList()],
         title: const SizedBox.shrink(),
-        profileVideoSrc: '',
+       /*  profileVideoSrc: '', */
         profileImage: Image.network(profileController.profilePhotoUrl),
       ),
     );

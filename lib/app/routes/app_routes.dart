@@ -9,7 +9,7 @@ abstract class Routes {
   static const WALKTHROUGH = _Paths.WALKTHROUGH;
   static const PROFILE = _Paths.PROFILE;
   static const TRIBE_REGISTRATION = _Paths.TRIBE_REGISTRATION;
-
+  static const TRIBE_PROFILE = _Paths.TRIBE_PROFILE;
 }
 
 abstract class _Paths {
@@ -20,6 +20,5 @@ abstract class _Paths {
   static const WALKTHROUGH = '/walkthrough';
   static const PROFILE = '/profile';
   static const TRIBE_REGISTRATION = '/tribe_registration';
-
-
+  static const TRIBE_PROFILE = '/tribe-profile';
 }

@@ -12,6 +12,7 @@ import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../controllers/profile_controller.dart';
 import '../widgets/rounded_container.dart';
 import '../widgets/rounded_expanded_container.dart';
+import '../widgets/video_player.dart';
 
 class ProfileInfoView extends StatelessWidget {
   ProfileInfoView({Key? key}) : super(key: key);
@@ -26,6 +27,23 @@ class ProfileInfoView extends StatelessWidget {
       },
       child: GetBuilder<ProfileController>(builder: (getController) {
         return ProfileTemplate(
+          videoPlayer: GetBuilder<ProfileController>(
+                      builder: (builderController) =>
+                          builderController.profileVideo != ''
+                              ? builderController.videoController != null
+                                  ? CustomVideoPlayer.network(
+                                      videoSrc: getController.profileVideo,
+                                      videoController: builderController.videoController!)
+                                  : const SizedBox.shrink()
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    spinkit,
+                                    const SizedBox(height: 20),
+                                    const Text('Loading'),
+                                  ],
+                                ),
+                    ),
           profileImage: Image.network(getController.profilePhotoUrl),
           rigtTopPositionad:
               Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
@@ -45,9 +63,9 @@ class ProfileInfoView extends StatelessWidget {
               ),
             ),
           ]),
-          videoController: getController.videoController!,
+          /* videoController: getController.videoController!, */
           title: const SizedBox.shrink(),
-          profileVideoSrc: getController.profileVideo,
+          /* profileVideoSrc: getController.profileVideo, */
           fields: [
             verticalSpaceSmall,
             Text(
