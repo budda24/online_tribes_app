@@ -196,12 +196,20 @@ class TribeRegistrationController extends GetxController {
   updateInvidedUsersList(user.UserDB user) {
     if (invitedUsersList.length == 5 || user.isInvited == false) {
       invitedUsersList.removeWhere((e) => e.phoneNumber == user.phoneNumber);
- print(invitedUsersList.length);
+      print(invitedUsersList.length);
       return;
     } else {
       invitedUsersList.add(user);
     }
     print(invitedUsersList.length);
+  }
+
+  Future<void> sendInviteNotyficationToUsers() async {
+    for (var i = 0; i < invitedUsersList.length; i++) {
+      print(invitedUsersList[i].userId);
+      await UserDBServices().handleUserInvitation(
+          invitedUserID: invitedUsersList[i].userId, senderID: currentUser.uid);
+    }
   }
 
   void scrollListener() {

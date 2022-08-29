@@ -18,7 +18,8 @@ class ProfileTemplate extends StatelessWidget {
     required this.profileVideoSrc,
     required this.profileImage,
     this.videoController,
-    this.rigtTopPositionad,
+    this.rigtTopPositioned,
+    this.leftTopPositioned,
     this.button,
   }) : super(key: key);
 
@@ -29,7 +30,8 @@ class ProfileTemplate extends StatelessWidget {
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
-  Column? rigtTopPositionad;
+  Column? rigtTopPositioned;
+  Column? leftTopPositioned;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +45,9 @@ class ProfileTemplate extends StatelessWidget {
           ),
           BacgroundRoundedContainer.profile(
             height: 530,
-              child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
                 child: Column(
                   children: [
                     verticalSpaceLarge,
@@ -90,11 +92,19 @@ class ProfileTemplate extends StatelessWidget {
             ),
           ),
           Positioned.fill(
-            top: 50,
-            right: 10,
+            top: 70,
+            right: 15,
             child: Align(
               alignment: Alignment.topRight,
-              child: rigtTopPositionad,
+              child: rigtTopPositioned,
+            ),
+          ),
+          Positioned.fill(
+            top: 70,
+            left: 15,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: leftTopPositioned,
             ),
           ),
         ],

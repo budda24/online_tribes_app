@@ -1,4 +1,5 @@
 // Package imports:
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -17,18 +18,20 @@ class UserDBServices {
     }
   }
 
+  Future<void> updateUser(UserDB user) async {
+    await _db.collection('USERS').doc(user.userId).update(user.toJson());
+  }
+
+  //TODO remove + 0 from id - done only for createFewUsers loop purpose
   Future<UserDB?> feachUser(String userId) async {
-    var snapshot = await _db.collection('USERS').doc(userId).get();
+    var snapshot =
+        await _db.collection('USERS').doc(userId + 0.toString()).get();
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();
       user = UserDB.fromJson(userDoc!);
     }
     return user;
-  }
-
-  Future<void> updateUser(UserDB user) async {
-    await _db.collection('USERS').doc(user.userId).update(user.toJson());
   }
 
   Future<void> deleteUser(String userId) async {
@@ -43,8 +46,6 @@ class UserDBServices {
           .orderBy('created_at')
           .limit(limit)
           .get();
-      // var userList = List<UserDB>.from(
-      //     snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList());
 
       return snapshot;
     } else {
@@ -55,8 +56,6 @@ class UserDBServices {
           .startAfterDocument(startAfter)
           .get();
 
-      // var userList = List<UserDB>.from(
-      //     snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList());
       return snapshot;
     }
   }
@@ -91,15 +90,39 @@ class UserDBServices {
         user.email = (user.email ?? '') + i.toString();
         print(user.email);
         user.phoneNumber = (user.phoneNumber ?? '') + i.toString();
+        user.userId = user.userId + i.toString();
         print(user.phoneNumber);
         await _db
             .collection('USERS')
-            .doc(user.userId + i.toString())
+            .doc(user.userId /* + i.toString() */)
             .set(user.toJson());
       }
-      await _db.collection('USERS').doc(user.userId).set(user.toJson());
+      /*  await _db.collection('USERS').doc(user.userId).set(user.toJson()); */
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar("Account can't be created because $e"));
     }
+  }
+
+  Future<void> handleUserInvitation(
+      {required String invitedUserID, required String senderID}) async {
+    UserDB? invitedUser = await feachUser(invitedUserID);
+
+    List<ProfileNotification> userNotyfication =
+        invitedUser!.profileNotification!;
+
+    if (userNotyfication.any((element) => element.tribeId == 'TR$senderID')) {
+      userNotyfication
+          .removeWhere((element) => element.tribeId == 'TR$senderID');
+    } else {
+      userNotyfication.add(ProfileNotification(
+          createdAt: DateTime.now(), tribeId: 'TR$senderID', type: 'invited'));
+    }
+
+    invitedUser.profileNotification = userNotyfication;
+
+    await _db
+        .collection('USERS')
+        .doc(invitedUserID)
+        .update(invitedUser.toJson());
   }
 }

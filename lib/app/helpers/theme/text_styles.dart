@@ -53,6 +53,13 @@ TextStyle buttonLable = GoogleFonts.lato(
         fontSize: 20.0.sp,
         fontWeight: FontWeight.w900));
 
+
+TextStyle iconTextStyle = GoogleFonts.lato(
+    textStyle: TextStyle(
+        color: AppColors.whiteColor,
+        fontSize: 14.0.sp,
+        fontWeight: FontWeight.w900));
+
 TextStyle headingBlackStyle = TextStyle(
     fontFamily: 'Montserrat', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
@@ -97,7 +104,7 @@ TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
   color: AppColors.greyColor,
   fontSize: 14.sp,
   fontFamily: montserrat,
-  
+
 );
 
 TextStyle smallBold = TextStyle(
