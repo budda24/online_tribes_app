@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 
-import '../../../../modules/profile/widgets/rounded_container.dart';
+import '../../../../modules/user_profile/widgets/rounded_container.dart';
 import '../../../theme/main_constants.dart';
 
 class TribeTile extends StatelessWidget {

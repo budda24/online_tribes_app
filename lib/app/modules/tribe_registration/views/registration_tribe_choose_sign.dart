@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/widgets/online_tribes/general/main_button.dart';
 import '../../../helpers/theme/main_constants.dart';
-import '../../profile/widgets/bacground_rounded_container.dart';
+import '../../user_profile/widgets/bacground_rounded_container.dart';
 import '../controllers/tribe_registration_controller.dart';
 import '../widgets/tribal_sign_picker.dart';
 import '../widgets/tribe_sign_with_pointer.dart';

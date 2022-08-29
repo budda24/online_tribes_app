@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../controllers/camera_controller.dart';
 import '../../../../controllers/global_controler.dart';
-import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
+import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/registration/controllers/registration_controller.dart';
 import '../../../../modules/registration/widgets/neumorphic_circle_background.dart';
 import '../../../theme/app_colors.dart';

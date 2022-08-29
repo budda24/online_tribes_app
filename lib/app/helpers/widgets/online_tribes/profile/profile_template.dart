@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
+import 'package:flutter_application_1/app/modules/user_profile/controllers/profile_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:video_viewer/domain/bloc/controller.dart';
 
-import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
-import '../../../../modules/profile/widgets/video_player.dart';
+import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
+import '../../../../modules/user_profile/widgets/video_player.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/ui_helpers.dart';
 import '../../../theme/main_constants.dart';
