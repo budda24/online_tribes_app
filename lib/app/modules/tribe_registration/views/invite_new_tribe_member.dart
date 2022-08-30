@@ -1,12 +1,12 @@
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
 import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
-import 'package:flutter_application_1/app/helpers/widgets/online_tribes/general/main_constants.dart';
 import 'package:flutter_application_1/app/modules/tribe_registration/controllers/tribe_registration_controller.dart';
 import 'package:flutter_application_1/app/modules/tribe_registration/widgets/invite_user_tile.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 
 class InviteNewTribeMember extends StatelessWidget {

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 // Project imports:
 import '../../../controllers/global_controler.dart';
 
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../routes/app_pages.dart';
 import '../../authorization/controllers/login_controller.dart';
 import '../controllers/home_controller.dart';

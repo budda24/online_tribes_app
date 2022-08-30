@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 
 import '../../../../controllers/camera_controller.dart';
 import '../../../../controllers/global_controler.dart';
-import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
+import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
 import '../../../../modules/registration/controllers/registration_controller.dart';
 import '../../../../modules/registration/widgets/neumorphic_circle_background.dart';
 import '../../../theme/app_colors.dart';
 import '../general/main_button.dart';
-import '../general/main_constants.dart';
+import '../../../theme/main_constants.dart';
 import 'custom_photo_picker.dart';
 
 class RegistrationTemplate extends StatelessWidget {
@@ -41,7 +41,7 @@ class RegistrationTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(imagepath);
+
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(

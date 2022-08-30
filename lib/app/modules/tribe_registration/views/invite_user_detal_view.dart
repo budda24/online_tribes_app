@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 import 'package:video_viewer/video_viewer.dart';
 
 import '../../../helpers/theme/app_colors.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
-import '../../profile/widgets/rounded_container.dart';
-import '../../profile/widgets/rounded_expanded_container.dart';
+import '../../user_profile/widgets/rounded_expanded_container.dart';
+import '../../user_profile/widgets/rounded_container.dart';
+
 
 class InviteUserDetailView extends StatelessWidget {
   InviteUserDetailView({Key? key}) : super(key: key);

@@ -13,7 +13,7 @@ import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/general/main_button.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
 import '../../registration/widgets/custom_pin_put.dart';
 import '../controllers/login_controller.dart';

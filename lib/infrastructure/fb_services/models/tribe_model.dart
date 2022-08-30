@@ -10,45 +10,54 @@ TribeDb welcomeFromJson(String str) => TribeDb.fromJson(json.decode(str));
 String welcomeToJson(TribeDb data) => json.encode(data.toJson());
 
 class TribeDb {
-  TribeDb(
-      {required this.tribeId,
-      this.tribalName,
-      this.tribalSign,
-      this.tribalIntroVideo,
-      this.description,
-      this.weeklySuggestedTime,
-      this.triberer,
-      this.type});
+  TribeDb({
+    required this.tribeId,
+    this.tribalName,
+    this.customTribalSign,
+    this.tribalIntroVideo,
+    this.description,
+    this.availableTime,
+    this.triberer,
+    this.type,
+    this.createdAt,
+    this.localTribalSign,
+  });
 
   String tribeId;
+  FieldValue? createdAt;
   String? tribalName;
-  UploadedFile? tribalSign;
+  UploadedFile? customTribalSign;
+  String? localTribalSign;
   UploadedFile? tribalIntroVideo;
   String? description;
   String? type;
-  WeeklySuggestedTime? weeklySuggestedTime;
+  AvailableTime? availableTime;
   List<Triberer>? triberer;
 
   factory TribeDb.fromJson(Map<String, dynamic> json) => TribeDb(
         tribeId: json["tribe_id"],
+        createdAt: json["createdAt"],
         tribalName: json["tribal_name"],
-        tribalSign: json["tribal_sign"],
+        customTribalSign: json["tribal_sign"],
+        localTribalSign: json["localTribalSign"],
         tribalIntroVideo: json["tribal_intro_video"],
         description: json["description"],
         type: json["type"],
-        weeklySuggestedTime: json["weekly_suggested_time"],
+        availableTime: json["availableTime"],
         triberer: List<Triberer>.from(
             json["triberer"].map((x) => Triberer.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "tribe_id": tribeId,
+        "createdAt": createdAt,
         "tribal_name": tribalName,
-        "tribal_sign": tribalSign,
-        "tribal_intro_video": tribalIntroVideo,
+        "tribal_sign": customTribalSign?.toJson(),
+        "localTribalSign": localTribalSign,
+        "tribal_intro_video": tribalIntroVideo?.toJson(),
         "description": description,
         "type": type,
-        "weekly_suggested_time": weeklySuggestedTime,
+        "availableTime": availableTime?.toJson(),
         "triberer": triberer?.map((x) => x.toJson()).toList(),
       };
 }
@@ -73,8 +82,8 @@ class UploadedFile {
       };
 }
 
-class WeeklySuggestedTime {
-  WeeklySuggestedTime({
+class AvailableTime {
+  AvailableTime({
     required this.startZero,
     required this.endZero,
     required this.timeZone,
@@ -88,8 +97,7 @@ class WeeklySuggestedTime {
   int start;
   int end;
 
-  factory WeeklySuggestedTime.fromJson(Map<String, dynamic> json) =>
-      WeeklySuggestedTime(
+  factory AvailableTime.fromJson(Map<String, dynamic> json) => AvailableTime(
         startZero: json["start_zero"],
         endZero: json["end_zero"],
         timeZone: json["time_zone"],

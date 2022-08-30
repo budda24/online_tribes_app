@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 // Project imports:
 import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/registration/custom_photo_picker.dart';
 import '../../registration/widgets/neumorphic_circle_background.dart';
 import '../controllers/tribe_registration_controller.dart';
@@ -14,8 +14,6 @@ import '../controllers/tribe_registration_controller.dart';
 class TribalSignPicker extends StatelessWidget {
   final tribeRegistrationController = Get.find<TribeRegistrationController>();
   final cameraController = Get.find<CameraController>();
-
-  TribalSignPicker();
 
   @override
   Widget build(BuildContext context) {
@@ -28,9 +26,9 @@ class TribalSignPicker extends StatelessWidget {
               builder: (BuildContext context) {
                 return CustomPhotoPicker();
               });
-          tribeRegistrationController.uploadedTribalSign =
+          tribeRegistrationController.customTribalSign =
               cameraController.pickedPhoto;
-          tribeRegistrationController.chosenTribalSign = null;
+          tribeRegistrationController.localTribalSignPath = null;
           tribeRegistrationController.choosenSignIndex!.value = -1;
           tribeRegistrationController.update();
         },
@@ -41,7 +39,7 @@ class TribalSignPicker extends StatelessWidget {
               builder: (controller) => SizedBox(
                 height: 110.h,
                 width: 80.w,
-                child: tribeRegistrationController.uploadedTribalSign != null
+                child: tribeRegistrationController.customTribalSign != null
                     ? Stack(
                         children: [
                           SizedBox(
@@ -51,7 +49,7 @@ class TribalSignPicker extends StatelessWidget {
                               radius: 30,
                               backgroundImage: Image.file(
                                       tribeRegistrationController
-                                          .uploadedTribalSign!)
+                                          .customTribalSign!)
                                   .image,
                             ),
                           ),

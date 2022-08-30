@@ -20,19 +20,21 @@ class RegistrationTribeDescription extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    print('RegistrationTribeDescription');
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: RegistrationTemplate(
-        imagepath:tribeRegistrationController.chosenTribalSign,
+        imagepath: tribeRegistrationController.localTribalSignPath,
         topElementsMargin: 100,
-        buttonCallBack: () {
-          Get.to(RegistrationTribeAditionalInfo());
+        buttonCallBack: () async {
+          if (await tribeRegistrationController.validateInput(
+              inputType: 'Description',
+              value: tribeRegistrationController.textDescritionController.text,
+              lenght: 1500)) {
+            Get.to(RegistrationTribeAditionalInfo());
+          }
         },
         centerWidget: CustomTextField(
-          controller: tribeRegistrationController.descritionController,
-          validate: (value) =>
-              controller.validateUser(value: value, lenght: 1500),
+          controller: tribeRegistrationController.textDescritionController,
           hintText: 'Describe purpous of your Tribe',
           maxline: 12,
           minLine: 8,

@@ -1,8 +1,9 @@
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
+import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../general/main_constants.dart';
+import '../../../theme/main_constants.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField(
@@ -39,19 +40,19 @@ class CustomTextField extends StatelessWidget {
       style: NeumorphicStyle(
 
         shadowLightColorEmboss: AppColors.primaryColor,
-        /* shadowLightColor: AppColors.darkGreyColor, */
+
         depth: -5,
         shape: NeumorphicShape.convex,
         lightSource: LightSource.topLeft,
         intensity: 60,
-        /* shadowDarkColor: AppColors.darkGreyColor, */
+
         color: AppColors.whiteColor,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
       ),
       child: Container(
         height: height.h,
         width: width.w,
-        padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+        padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 10.w),
         margin: EdgeInsets.only(
           left: 20.w,
           right: 20.w,

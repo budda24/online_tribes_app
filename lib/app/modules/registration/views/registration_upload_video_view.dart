@@ -12,9 +12,10 @@ import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
+import '../../../helpers/widgets/online_tribes/registration/uploading_video.dart';
 import '../controllers/registration_controller.dart';
 
 class RegistrationUploadVideoView extends GetView {
@@ -22,14 +23,27 @@ class RegistrationUploadVideoView extends GetView {
 
   final cameraController = Get.find<CameraController>();
   final globalController = Get.find<GlobalController>();
-  final registrationController = Get.find<RegistrationController>();
+  /* final registrationController = Get.find<RegistrationController>(); */
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kMainColor,
       body: GetBuilder<RegistrationController>(
-        builder: (builderController) => RegistrationTemplate(
+          builder: (builderController) => UploadingVideoView(
+              saveData: builderController.saveNewUser,
+              /* profileImage: cameraController.pickedPhoto, */
+              progress: builderController.progress,
+              isVideoChosen: builderController.isVideoChosen,
+              availableTimeButton: () async {
+                builderController.availableTime =
+                    await TimeCovertingServices()
+                        .getCustomTimeRangePicker(context);
+              },
+              saveFunction: builderController.saveNewUser,
+              switchIsVideoChosen: builderController.switchIsVideoCosen)
+
+          /* RegistrationTemplate(
           showButton: builderController.progress != 0.0 ? false : true,
           topElementsMargin: 50,
           centerWidget: Column(
@@ -159,8 +173,8 @@ class RegistrationUploadVideoView extends GetView {
                   customSnackbar('Please add Your introduction video'));
             }
           },
-        ),
-      ),
+        ), */
+          ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../modules/profile/widgets/rounded_container.dart';
+import '../../../../modules/user_profile/widgets/rounded_container.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/text_styles.dart';
 

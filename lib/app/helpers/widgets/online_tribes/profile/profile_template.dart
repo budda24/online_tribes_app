@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/profile/controllers/profile_controller.dart';
+import 'package:flutter_application_1/app/modules/user_profile/controllers/profile_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:video_viewer/domain/bloc/controller.dart';
 
-import '../../../../modules/profile/widgets/bacground_rounded_container.dart';
-import '../../../../modules/profile/widgets/video_player.dart';
+import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
+import '../../../../modules/user_profile/widgets/video_player.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/ui_helpers.dart';
-import '../general/main_constants.dart';
+import '../../../theme/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
   ProfileTemplate({
@@ -18,9 +18,10 @@ class ProfileTemplate extends StatelessWidget {
     required this.profileVideoSrc,
     required this.profileImage,
     this.videoController,
-    this.rigtTopPositioned,
-    this.leftTopPositioned,
+    this.rigtTopIconColumn,
+    this.leftTopIconColumn,
     this.button,
+    this.isEditingMode,
   }) : super(key: key);
 
   final VideoViewerController? videoController;
@@ -30,8 +31,9 @@ class ProfileTemplate extends StatelessWidget {
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
-  Column? rigtTopPositioned;
-  Column? leftTopPositioned;
+  Column? rigtTopIconColumn;
+  Column? leftTopIconColumn;
+  bool? isEditingMode;
 
   @override
   Widget build(BuildContext context) {
@@ -78,25 +80,27 @@ class ProfileTemplate extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            left: 125,
-            top: 70,
-            child: CircleAvatar(
-              radius: 70,
-              backgroundColor: AppColors.primaryColor,
-              child: CircleAvatar(
-                backgroundImage: profileImage.image,
-                radius: 65,
-                backgroundColor: AppColors.greyColor,
-              ),
-            ),
-          ),
+          isEditingMode != null && isEditingMode ==  true
+              ? const SizedBox.shrink()
+              : Positioned(
+                  left: 125,
+                  top: 70,
+                  child: CircleAvatar(
+                    radius: 70,
+                    backgroundColor: AppColors.primaryColor,
+                    child: CircleAvatar(
+                      backgroundImage: profileImage.image,
+                      radius: 65,
+                      backgroundColor: AppColors.greyColor,
+                    ),
+                  ),
+                ),
           Positioned.fill(
             top: 70,
             right: 15,
             child: Align(
               alignment: Alignment.topRight,
-              child: rigtTopPositioned,
+              child: rigtTopIconColumn,
             ),
           ),
           Positioned.fill(
@@ -104,7 +108,7 @@ class ProfileTemplate extends StatelessWidget {
             left: 15,
             child: Align(
               alignment: Alignment.topLeft,
-              child: leftTopPositioned,
+              child: leftTopIconColumn,
             ),
           ),
         ],

@@ -28,8 +28,6 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
         CustomTextField(
           textInputAction: TextInputAction.next,
           controller: controller.lifeMottoController,
-          validate: (value) =>
-              controller.validateUser(value: value, lenght: 200),
           hintText: 'The Life Motto',
           maxline: 6,
           minLine: 1,
@@ -67,7 +65,7 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
       ]),
       formKey: _formKey,
       buttonCallBack: () {
-        controller.closeKeyboard();
+        globalController.unFocuseNode();
         if (_formKey.currentState!.validate()) {
           /* Get.to(() => ProfileView()); */
           Get.to(RegistrationUploadVideoView());

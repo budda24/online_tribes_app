@@ -1,7 +1,6 @@
 //Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/helpers/theme/app_colors.dart';
-import 'package:flutter_application_1/app/modules/registration/controllers/registration_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -12,7 +11,7 @@ import '../../../controllers/camera_controller.dart';
 import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
-import '../../../helpers/widgets/online_tribes/general/main_constants.dart';
+import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
@@ -24,7 +23,7 @@ class ProfileInfoView extends StatelessWidget {
   ProfileInfoView({Key? key}) : super(key: key);
 
   final profileController = Get.find<ProfileController>();
-  final registrationController = Get.put(RegistrationController());
+
   final cameraController = Get.find<CameraController>();
 
   @override
@@ -35,15 +34,14 @@ class ProfileInfoView extends StatelessWidget {
       },
       child: GetBuilder<ProfileController>(builder: (getController) {
         return ProfileTemplate(
+          isEditingMode: profileController.isEditingMode,
           profileImage: Image.network(getController.profilePhotoUrl),
-          leftTopPositioned: profileController.isEditingMode
+          leftTopIconColumn: profileController.isEditingMode
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                       InkWell(
-                        onTap: () async {
-                          await registrationController.saveNewUser();
-                        },
+                        onTap: () async {},
                         child: Icon(
                           Icons.save,
                           size: 35,
@@ -51,7 +49,7 @@ class ProfileInfoView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'save changes',
+                        'save',
                         style: iconTextStyle,
                       ),
                     ])
@@ -75,7 +73,7 @@ class ProfileInfoView extends StatelessWidget {
                         style: iconTextStyle,
                       ),
                     ]),
-          rigtTopPositioned: profileController.isEditingMode
+          rigtTopIconColumn: profileController.isEditingMode
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -91,7 +89,7 @@ class ProfileInfoView extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'cancel changes',
+                        'cancel',
                         style: iconTextStyle,
                       ),
                     ])
@@ -123,8 +121,8 @@ class ProfileInfoView extends StatelessWidget {
               ? [
                   Column(
                     children: [
-                      registrationController.isVideoChosen &&
-                              registrationController.progress == 0.0
+                      /* profileController.isVideoChosen && */
+                      profileController.progress == 0.0
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -141,7 +139,7 @@ class ProfileInfoView extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
                       verticalSpaceSmall,
-                      registrationController.progress == 0.0
+                      profileController.progress == 0.0
                           ? const SizedBox.shrink()
                           : Container(
                               height: 300,
@@ -152,8 +150,7 @@ class ProfileInfoView extends StatelessWidget {
                                   CircularPercentIndicator(
                                     radius: 100.w,
                                     lineWidth: 20.w,
-                                    percent:
-                                        registrationController.progress / 100,
+                                    percent: profileController.progress / 100,
                                     backgroundColor: AppColors.primaryColor,
                                     circularStrokeCap: CircularStrokeCap.round,
                                     linearGradient: LinearGradient(colors: [
@@ -169,7 +166,7 @@ class ProfileInfoView extends StatelessWidget {
                                       'assets/images/authorization_screen/logo/50x50.png',
                                     ),
                                     center: Text(
-                                      '${registrationController.progress} %',
+                                      '${profileController.progress} %',
                                       style: headingBoldStyle,
                                     ),
                                   ),
@@ -177,7 +174,7 @@ class ProfileInfoView extends StatelessWidget {
                               ),
                             ),
                       verticalSpaceTiny,
-                      registrationController.progress == 0.0
+                      profileController.progress == 0.0
                           ? Container(
                               child: Column(
                                 children: [
@@ -195,8 +192,8 @@ class ProfileInfoView extends StatelessWidget {
                                               .getVideoCamera();
                                           if (cameraController.pickedVideo !=
                                               null) {
-                                            registrationController
-                                                .switchIsVideoCosen();
+                                            /* profileController
+                                                .switchIsVideoCosen(); */
                                           }
                                         },
                                         child: Container(
@@ -215,8 +212,8 @@ class ProfileInfoView extends StatelessWidget {
                                               type: PickedType.video);
                                           if (cameraController.pickedVideo !=
                                               null) {
-                                            registrationController
-                                                .switchIsVideoCosen();
+                                            /* profileController
+                                                .switchIsVideoCosen(); */
                                           }
                                         },
                                         child: Container(
@@ -238,7 +235,7 @@ class ProfileInfoView extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   AvailableTimeButton(onPressed: () async {
-                                    registrationController.availableTime =
+                                    profileController.availableTime =
                                         await TimeCovertingServices()
                                             .getCustomTimeRangePicker(context);
                                   })

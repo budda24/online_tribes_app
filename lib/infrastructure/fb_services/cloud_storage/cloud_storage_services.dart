@@ -1,24 +1,20 @@
 // Package imports:
 import 'dart:io' as io;
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../models/user_model.dart';
-
-class UserCloudStorageServices {
-  UserCloudStorageServices();
+class CloudStorageServices {
+  CloudStorageServices();
 
   static final storage = FirebaseStorage.instance;
 
-  UploadTask uploadFile({
-    required io.File imageToUpload,
-    required String fileName,
-    required String userId,
-    required String path,
-    required String folder
-  }) {
+  UploadTask uploadFile(
+      {required io.File imageToUpload,
+      required String fileName,
+      required String userId,
+      required String path,
+      required String folder}) {
     final Reference ref = storage.ref('$folder/$userId/$path').child(fileName);
 
     return ref.putFile(imageToUpload);

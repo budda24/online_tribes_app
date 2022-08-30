@@ -6,12 +6,14 @@ import 'package:flutter_application_1/app/controllers/global_controler.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 import 'package:video_viewer/video_viewer.dart';
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
-import '../../../../infrastructure/fb_services/cloud_storage/user_cloud_storage_services.dart';
+import '../../../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
+import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/camera_controller.dart';
 import '../widgets/noticification_tile_accepted.dart';
 import '../widgets/noticification_tile_invited.dart';
@@ -33,7 +35,7 @@ class ProfileController extends GetxController {
 
   var userAuthenticationServieces = Auth();
   var userDbServieces = UserDBServices();
-  var userStorageServieces = UserCloudStorageServices();
+  var userStorageServieces = CloudStorageServices();
 
   RxInt actualIndex = 0.obs;
 
@@ -42,6 +44,9 @@ class ProfileController extends GetxController {
   String profileVideo = '';
   bool isShrinkWrap = true;
   bool isEditingMode = false;
+  TimeRange? availableTime;
+
+  double progress = 0.0;
 
   @override
   void onInit() async {
@@ -66,15 +71,96 @@ class ProfileController extends GetxController {
     //TODO download and store the file localy not working with emulators
     /* profileVideo = await UserCloudStorageServices.downloadFileFromURL(
         userDb!.introVideoUrl!); */
-    profileVideo = userDB!.introVideo!.downloadUrl;
-    profilePhotoUrl = userDB!.profilePhoto!.downloadUrl;
 
     update();
   }
 
-  double progress = 0.0;
+  Future<UploadedFile> getRef(Reference ref) async {
+    var url = await ref.getDownloadURL();
+    var metaDataRef = await ref.getMetadata();
 
-  Future<UploadTask> uploadFile(
+    var metaData = Metadata(
+        bucket: metaDataRef.bucket,
+        name: metaDataRef.name,
+        size: metaDataRef.size!,
+        fullPath: metaDataRef.fullPath,
+        contentType: metaDataRef.contentType!,
+        timeCreated: metaDataRef.timeCreated,
+        contentEncoding: metaDataRef.contentEncoding);
+
+    return UploadedFile(downloadUrl: url, metaData: metaData);
+  }
+
+  listenToProgress(TaskSnapshot event) {
+    if (event.state == TaskState.running) {
+      progress =
+          ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
+                  100)
+              .roundToDouble();
+      update();
+    }
+  }
+
+  Future uploadFile({
+    required String fileName,
+    required String directory,
+    required io.File profileFile,
+    required Future Function(Reference ref) getRefrence,
+    bool recordingTheProgress = false,
+  }) async {
+    //TODO cloud function to resize photo to secure the end point
+    final storage = CloudStorageServices();
+    String userId = auth.currentUser!.uid;
+    storage
+        .uploadFile(
+            folder: "Users",
+            path: directory,
+            userId: userId,
+            imageToUpload: profileFile,
+            fileName: '$fileName${extension(profileFile.path)}')
+        .snapshotEvents
+        .listen((event) async {
+      if (recordingTheProgress) {
+        listenToProgress(event);
+      }
+      if (event.state == TaskState.success) {
+        await getRef(event.ref);
+      }
+    });
+  }
+
+  AvailableTime createAvailableTime() {
+    var timeZone = DateTime.now().timeZoneName;
+    var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
+    return AvailableTime(
+        endZero: TimeCovertingServices.CountOffsetHour(
+            hour: availableTime!.endTime.hour, offset: timeZoneOffset),
+        startZero: TimeCovertingServices.CountOffsetHour(
+            hour: availableTime!.startTime.hour, offset: timeZoneOffset),
+        timeZone: timeZone,
+        start: availableTime!.startTime.hour,
+        end: availableTime!.endTime.hour);
+  }
+
+  Future<void> updateUser() async {
+
+    await uploadFile(
+        getRefrence: (ref) async {
+          if (userDB!.introVideo != await getRef(ref)) {
+            userDB!.introVideo = await getRef(ref);
+          } else {
+            return;
+          }
+        },
+        recordingTheProgress: true,
+        fileName: 'profileVideo',
+        directory: 'profile',
+        profileFile: cameraController.pickedVideo!);
+
+
+  }
+
+  /*  Future<UploadTask> uploadFile(
       {required String fileName,
       required String directory,
       required io.File profileFile}) {
@@ -91,9 +177,9 @@ class ProfileController extends GetxController {
           imageToUpload: profileFile,
           fileName: '$fileName${extension(profileFile.path)}'),
     );
-  }
+  } */
 
-  Future<void> updateUser() async {
+  /*  Future<void> updateUser() async {
     await uploadFile(
             fileName: 'profileImage',
             directory: 'profile',
@@ -147,7 +233,7 @@ class ProfileController extends GetxController {
         },
       ),
     );
-  }
+  } */
 
   List<Widget> get notificationWidgets {
     List<Widget> notificationWidget = [];
