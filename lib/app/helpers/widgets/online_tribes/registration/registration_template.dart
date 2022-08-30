@@ -36,7 +36,6 @@ class RegistrationTemplate extends StatelessWidget {
   final String? title;
   final double topElementsMargin;
   final bool showButton;
-  /*  final File? image; */
   final String? imagepath;
 
   @override

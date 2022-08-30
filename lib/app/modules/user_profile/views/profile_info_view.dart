@@ -13,11 +13,12 @@ import '../../../helpers/theme/text_styles.dart';
 import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
-import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
+import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
 import '../controllers/profile_controller.dart';
 import '../widgets/rounded_container.dart';
 import '../widgets/rounded_expanded_container.dart';
+import '../widgets/video_player.dart';
 
 class ProfileInfoView extends StatelessWidget {
   ProfileInfoView({Key? key}) : super(key: key);
@@ -41,7 +42,9 @@ class ProfileInfoView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                       InkWell(
-                        onTap: () async {},
+                        onTap: () async {
+                          await profileController.updateUser();
+                        },
                         child: Icon(
                           Icons.save,
                           size: 35,
@@ -80,7 +83,7 @@ class ProfileInfoView extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           profileController.isEditingMode = false;
-                          profileController.rebuild();
+                          profileController.cancelUserChanges();
                         },
                         child: Icon(
                           Icons.cancel,
@@ -98,6 +101,7 @@ class ProfileInfoView extends StatelessWidget {
                   children: [
                       InkWell(
                         onTap: () {
+                          profileController.saveUserBeforeChanges();
                           profileController.isEditingMode = true;
                           profileController.rebuild();
                         },
@@ -112,17 +116,13 @@ class ProfileInfoView extends StatelessWidget {
                         style: iconTextStyle,
                       ),
                     ]),
-          videoController: profileController.isEditingMode
-              ? null
-              : getController.videoController!,
           title: const SizedBox.shrink(),
-          profileVideoSrc: getController.profileVideo,
           fields: profileController.isEditingMode
               ? [
                   Column(
                     children: [
-                      /* profileController.isVideoChosen && */
-                      profileController.progress == 0.0
+                      cameraController.pickedVideo != null &&
+                              profileController.progress == 0.0
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -248,6 +248,7 @@ class ProfileInfoView extends StatelessWidget {
                   verticalSpaceSmall,
                   CustomTextField(
                     textInputAction: TextInputAction.next,
+                    tribesLable: 'Life motto',
                     controller: profileController.lifeMottoController,
                     /*  validate: (value) =>
               controller.validateUser(value: value, lenght: 200), */
@@ -259,6 +260,7 @@ class ProfileInfoView extends StatelessWidget {
                   ),
                   verticalSpaceSmall,
                   CustomTextField(
+                    tribesLable: 'Description',
                     controller: profileController.describtionController,
                     hintText: 'Describe yourself',
                     maxline: 12,
@@ -268,6 +270,7 @@ class ProfileInfoView extends StatelessWidget {
                   ),
                   verticalSpaceSmall,
                   CustomTextField(
+                    tribesLable: 'Hobby',
                     controller: profileController.hobby1Controller,
                     /*  validate: (value) =>
               controller.validateUser(value: value, lenght: 50), */
@@ -280,6 +283,7 @@ class ProfileInfoView extends StatelessWidget {
                   ),
                   verticalSpaceSmall,
                   CustomTextField(
+                    tribesLable: 'Hobby',
                     controller: profileController.hobby2Controller,
                     /*  validate: (value) =>
               controller.validateUser(value: value, lenght: 50), */
@@ -364,6 +368,26 @@ class ProfileInfoView extends StatelessWidget {
                         lableStyle: tribalFontLableRed,
                       )),
                 ],
+          videoPlayer: !profileController.isEditingMode
+              ? GetBuilder<ProfileController>(
+                  builder: (builderController) =>
+                      builderController.profileVideoUrl != ''
+                          ? builderController.videoController != null
+                              ? CustomVideoPlayer.network(
+                                  videoSrc: getController.profileVideoUrl,
+                                  videoController:
+                                      builderController.videoController!)
+                              : const SizedBox.shrink()
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                spinkit,
+                                const SizedBox(height: 20),
+                                const Text('Loading'),
+                              ],
+                            ),
+                )
+              : const SizedBox.shrink(),
         );
       }),
     );

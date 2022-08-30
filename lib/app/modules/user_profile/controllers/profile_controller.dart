@@ -40,8 +40,10 @@ class ProfileController extends GetxController {
   RxInt actualIndex = 0.obs;
 
   UserDB? userDB;
+  UserDB? tmpUserDB;
+
   String profilePhotoUrl = '';
-  String profileVideo = '';
+  String profileVideoUrl = '';
   bool isShrinkWrap = true;
   bool isEditingMode = false;
   TimeRange? availableTime;
@@ -60,7 +62,7 @@ class ProfileController extends GetxController {
   }
 
   void assignProfileInfo() async {
-    profileVideo = userDB?.introVideo!.downloadUrl ?? '';
+    profileVideoUrl = userDB?.introVideo!.downloadUrl ?? '';
     profilePhotoUrl = userDB!.profilePhoto!.downloadUrl;
     describtionController.text = userDB?.description ?? '';
     lifeMottoController.text = userDB?.lifeMotto ?? '';
@@ -73,6 +75,13 @@ class ProfileController extends GetxController {
         userDb!.introVideoUrl!); */
 
     update();
+  }
+
+  void assignUpdatedUserInfo() async {
+    userDB?.description = describtionController.text;
+    userDB?.lifeMotto = lifeMottoController.text;
+    userDB?.hobbies?.hobby = hobby1Controller.text;
+    userDB?.hobbies?.hobby1 = hobby2Controller.text;
   }
 
   Future<UploadedFile> getRef(Reference ref) async {
@@ -129,6 +138,16 @@ class ProfileController extends GetxController {
     });
   }
 
+  saveUserBeforeChanges() {
+    tmpUserDB = userDB;
+  }
+
+  cancelUserChanges() {
+    userDB = tmpUserDB;
+    assignProfileInfo();
+    update();
+  }
+
   AvailableTime createAvailableTime() {
     var timeZone = DateTime.now().timeZoneName;
     var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
@@ -143,21 +162,28 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUser() async {
-
-    await uploadFile(
-        getRefrence: (ref) async {
-          if (userDB!.introVideo != await getRef(ref)) {
+    if (cameraController.pickedVideo != null) {
+      await uploadFile(
+          recordingTheProgress: true,
+          getRefrence: (ref) async {
             userDB!.introVideo = await getRef(ref);
-          } else {
-            return;
-          }
-        },
-        recordingTheProgress: true,
-        fileName: 'profileVideo',
-        directory: 'profile',
-        profileFile: cameraController.pickedVideo!);
+          },
+          fileName: 'profileVideo',
+          directory: 'profile',
+          profileFile: cameraController.pickedVideo!);
+    }
 
+    if (availableTime != null) {
+      userDB!.availableTime = createAvailableTime();
+    }
 
+    assignUpdatedUserInfo();
+
+    await userDbServieces.createUser(userDB!);
+
+    isEditingMode = false;
+
+    update();
   }
 
   /*  Future<UploadTask> uploadFile(

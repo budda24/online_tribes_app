@@ -27,7 +27,7 @@ import '../../../helpers/theme/main_constants.dart';
 
 class TribeRegistrationController extends GetxController {
   TextEditingController textNameController = TextEditingController();
-  TextEditingController textPurpousController = TextEditingController();
+  TextEditingController textTriberersTypeController = TextEditingController();
   TextEditingController textDescritionController = TextEditingController();
 
   TextEditingController textInputDialogControler = TextEditingController();
@@ -50,6 +50,7 @@ class TribeRegistrationController extends GetxController {
   addTypeName() async {
     if (!tribalTypes.contains(textInputDialogControler.text.capitalize)) {
       tribalTypes.add(textInputDialogControler.text.capitalize!);
+
       tribeDBServices
           .updateListTribalTypes(TribalType(types: tribalTypes.toList()));
     } else {
@@ -73,60 +74,6 @@ class TribeRegistrationController extends GetxController {
 
   var tribeDB = TribeDb(tribeId: const Uuid().v1());
 
-  Future<UploadedFile> getRef(Reference ref) async {
-    var url = await ref.getDownloadURL();
-    var metaDataRef = await ref.getMetadata();
-
-    var metaData = Metadata(
-        bucket: metaDataRef.bucket,
-        name: metaDataRef.name,
-        size: metaDataRef.size!,
-        fullPath: metaDataRef.fullPath,
-        contentType: metaDataRef.contentType!,
-        timeCreated: metaDataRef.timeCreated,
-        contentEncoding: metaDataRef.contentEncoding);
-
-    return UploadedFile(downloadUrl: url, metaData: metaData);
-  }
-
-  listenToProgress(TaskSnapshot event) {
-    if (event.state == TaskState.running) {
-      progress =
-          ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
-                  100)
-              .roundToDouble();
-      update();
-    }
-  }
-
-  Future uploadFile({
-    required String fileName,
-    required String directory,
-    required io.File profileFile,
-    required Future Function(Reference ref) getRefrence,
-    bool recordingTheProgress = false,
-  }) async {
-    //TODO cloud function to resize photo to secure the end point
-    final storage = CloudStorageServices();
-    String userId = auth.currentUser!.uid;
-    storage
-        .uploadFile(
-            folder: "Tribes",
-            path: directory,
-            userId: userId,
-            imageToUpload: profileFile,
-            fileName: '$fileName${extension(profileFile.path)}')
-        .snapshotEvents
-        .listen((event) async {
-      if (recordingTheProgress) {
-        listenToProgress(event);
-      }
-      if (event.state == TaskState.success) {
-        await getRef(event.ref);
-      }
-    });
-  }
-
   AvailableTime createAvailableTime() {
     var timeZone = DateTime.now().timeZoneName;
     var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
@@ -143,6 +90,7 @@ class TribeRegistrationController extends GetxController {
   assignTribeDb() {
     tribeDB.description = textDescritionController.text;
     tribeDB.tribalName = textNameController.text;
+    tribeDB.triberersType = textTriberersTypeController.text;
     tribeDB.availableTime = createAvailableTime();
     tribeDB.type = chosenTribaType;
   }
@@ -154,41 +102,6 @@ class TribeRegistrationController extends GetxController {
     } else {
       Get.showSnackbar(customSnackbar('Available time not chosen'));
       return false;
-    }
-  }
-
-  var videoUploaded = false.obs;
-  double progress = 0.0;
-
-  Future<void> saveNewTribe() async {
-    if (isTimeChosen()) {
-      assignTribeDb();
-
-      if (customTribalSign != null) {
-        await uploadFile(
-            getRefrence: (ref) async {
-              tribeDB.customTribalSign = await getRef(ref);
-            },
-            fileName: 'tribeImage',
-            directory: 'profile',
-            profileFile: customTribalSign!);
-      } else {
-        tribeDB.localTribalSign = localTribalSignPath;
-      }
-      await uploadFile(
-              recordingTheProgress: true,
-              getRefrence: (ref) async {
-                tribeDB.tribalIntroVideo = await getRef(ref);
-              },
-              fileName: 'tribalVideo',
-              directory: 'profile',
-              profileFile: cameraController.pickedVideo!)
-          .then((value) async {
-        await tribeDBServices.createTribe(tribeDB);
-      });
-      /* await globalController.saveRegistrationState(); */
-      //TODO SAVE registration state
-
     }
   }
 
@@ -223,6 +136,100 @@ class TribeRegistrationController extends GetxController {
       }
     }
     return typesList;
+  }
+
+  var videoUploaded = false.obs;
+  double progress = 0.0;
+
+  Future<UploadedFile> getRef(Reference ref) async {
+    var url = await ref.getDownloadURL();
+    var metaDataRef = await ref.getMetadata();
+
+    var metaData = Metadata(
+        bucket: metaDataRef.bucket,
+        name: metaDataRef.name,
+        size: metaDataRef.size!,
+        fullPath: metaDataRef.fullPath,
+        contentType: metaDataRef.contentType!,
+        timeCreated: metaDataRef.timeCreated,
+        contentEncoding: metaDataRef.contentEncoding);
+
+    return UploadedFile(downloadUrl: url, metaData: metaData);
+  }
+
+  listenToProgress(TaskSnapshot event) {
+    if (event.state == TaskState.running) {
+      progress =
+          ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
+                  100)
+              .roundToDouble();
+      update();
+    }
+  }
+
+  Future uploadFile({
+    required String fileName,
+    required String directory,
+    required io.File profileFile,
+    required Future Function(Reference) getRefrence,
+    Future Function(TribeDb)? functionAfterUploaded,
+    bool recordingTheProgress = false,
+  }) async {
+    //TODO cloud function to resize photo to secure the end point
+    final storage = CloudStorageServices();
+    String userId = auth.currentUser!.uid;
+    return storage
+        .uploadFile(
+            folder: "Tribes",
+            path: directory,
+            userId: userId,
+            imageToUpload: profileFile,
+            fileName: '$fileName${extension(profileFile.path)}')
+        .snapshotEvents
+        .listen((event) async {
+      if (recordingTheProgress) {
+        listenToProgress(event);
+      }
+      if (event.state == TaskState.success) {
+        var ref = event.ref;
+        await getRefrence(ref);
+        if (functionAfterUploaded != null) {
+          await functionAfterUploaded(tribeDB);
+        }
+      }
+    });
+  }
+
+  Future<void> saveNewTribe() async {
+    if (isTimeChosen()) {
+      assignTribeDb();
+
+      if (customTribalSign != null) {
+        await uploadFile(
+            getRefrence: (ref) async {
+              print('get ref custom tribal sign');
+              tribeDB.customTribalSign = await getRef(ref);
+            },
+            fileName: 'tribeImage',
+            directory: 'profile',
+            profileFile: customTribalSign!);
+      } else {
+        tribeDB.localTribalSign = localTribalSignPath;
+      }
+      await uploadFile(
+              functionAfterUploaded: tribeDBServices.createTribe,
+              recordingTheProgress: true,
+              getRefrence: (ref) async {
+                tribeDB.tribalIntroVideo = await getRef(ref);
+              },
+              fileName: 'tribalVideo',
+              directory: 'profile',
+              profileFile: cameraController.pickedVideo!)
+          .then((value) async {});
+      /* await globalController.saveRegistrationState(); */
+      //TODO SAVE registration state
+
+    }
   }
 
   assignigTriberers() {}

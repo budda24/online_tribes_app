@@ -15,12 +15,9 @@ import 'package:video_viewer/video_viewer.dart';
 // Project imports:
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
+import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../controllers/tribe_registration_controller.dart';
 import 'registration_tribe_upload_video_view.dart';
-
-
-
 
 class RegistrationTribeAditionalInfo extends GetView {
   final globalController = Get.find<GlobalController>();
@@ -40,8 +37,9 @@ class RegistrationTribeAditionalInfo extends GetView {
                   inputType: 'Tribal name',
                   lenght: 100) &&
               await tribeRegistrationController.validateInput(
-                  inputType: 'Tribal purpous',
-                  value: tribeRegistrationController.textPurpousController.text,
+                  inputType: 'Triberers type',
+                  value: tribeRegistrationController
+                      .textTriberersTypeController.text,
                   lenght: 200)) {
             Get.to(RegistrationTribeUploadVideoView());
           }
@@ -66,7 +64,6 @@ class RegistrationTribeAditionalInfo extends GetView {
                       },
                       items: getBuilderController.tribalTypes.map(
                         (item) {
-
                           return DropdownMenuItem<String>(
                             alignment: AlignmentDirectional.center,
                             value: item,
@@ -119,9 +116,10 @@ class RegistrationTribeAditionalInfo extends GetView {
             verticalSpaceMedium,
             CustomTextField(
               textInputAction: TextInputAction.next,
-              controller: tribeRegistrationController.textPurpousController,
-              hintText: 'Tribe purpous',
-              maxline: 2,
+              controller:
+                  tribeRegistrationController.textTriberersTypeController,
+              hintText: 'Triberers Type',
+              maxline: 4,
               minLine: 1,
               height: 130.h,
               width: 500.w,

@@ -15,25 +15,30 @@ class ProfileTemplate extends StatelessWidget {
     Key? key,
     required this.fields,
     required this.title,
-    required this.profileVideoSrc,
+    /* required this.profileVideoSrc, */
     required this.profileImage,
-    this.videoController,
+
     this.rigtTopIconColumn,
     this.leftTopIconColumn,
+    this.videoPlayer,
+    /* this.videoController, */
+
     this.button,
     this.isEditingMode,
   }) : super(key: key);
 
-  final VideoViewerController? videoController;
+  /* final VideoViewerController? videoController; */
 
   final Widget title;
-  final String? profileVideoSrc;
+  /* final String? profileVideoSrc; */
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
   Column? rigtTopIconColumn;
   Column? leftTopIconColumn;
   bool? isEditingMode;
+
+  Widget? videoPlayer;
 
   @override
   Widget build(BuildContext context) {
@@ -53,23 +58,7 @@ class ProfileTemplate extends StatelessWidget {
                 child: Column(
                   children: [
                     verticalSpaceLarge,
-                    GetBuilder<ProfileController>(
-                      builder: (builderController) =>
-                          builderController.profileVideo != ''
-                              ? videoController != null
-                                  ? CustomVideoPlayer.network(
-                                      videoSrc: profileVideoSrc!,
-                                      videoController: videoController!)
-                                  : const SizedBox.shrink()
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    spinkit,
-                                    const SizedBox(height: 20),
-                                    const Text('Loading'),
-                                  ],
-                                ),
-                    ),
+                    videoPlayer ?? const SizedBox.shrink(),
                     ...fields,
                     button != null
                         ? verticalSpaceLarge

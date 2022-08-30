@@ -18,6 +18,7 @@ class TribeDb {
     this.description,
     this.availableTime,
     this.triberer,
+    this.triberersType,
     this.type,
     this.createdAt,
     this.localTribalSign,
@@ -30,32 +31,40 @@ class TribeDb {
   String? localTribalSign;
   UploadedFile? tribalIntroVideo;
   String? description;
+  String? triberersType;
   String? type;
   AvailableTime? availableTime;
   List<Triberer>? triberer;
 
   factory TribeDb.fromJson(Map<String, dynamic> json) => TribeDb(
         tribeId: json["tribe_id"],
-        createdAt: json["createdAt"],
+        /* createdAt: json["createdAt"], */
         tribalName: json["tribal_name"],
-        customTribalSign: json["tribal_sign"],
+        customTribalSign:json["custom_tribal_sign"] == null ?null :UploadedFile.fromJson(json["custom_tribal_sign"]),
         localTribalSign: json["localTribalSign"],
-        tribalIntroVideo: json["tribal_intro_video"],
+        tribalIntroVideo: UploadedFile.fromJson(json["tribal_intro_video"]),
         description: json["description"],
+        triberersType:json["triberers_type"],
         type: json["type"],
-        availableTime: json["availableTime"],
-        triberer: List<Triberer>.from(
-            json["triberer"].map((x) => Triberer.fromJson(x))),
+        availableTime: AvailableTime.fromJson(json["availableTime"]),
+        triberer: json["triberer"] == null
+            ? null
+            : (json["triberer"] as List<dynamic>)
+                .map((x) => Triberer.fromJson(x))
+                .toList(),
+
+
       );
 
   Map<String, dynamic> toJson() => {
         "tribe_id": tribeId,
         "createdAt": createdAt,
         "tribal_name": tribalName,
-        "tribal_sign": customTribalSign?.toJson(),
+        "custom_tribal_sign": customTribalSign?.toJson(),
         "localTribalSign": localTribalSign,
         "tribal_intro_video": tribalIntroVideo?.toJson(),
         "description": description,
+        "triberers_type": triberersType,
         "type": type,
         "availableTime": availableTime?.toJson(),
         "triberer": triberer?.map((x) => x.toJson()).toList(),

@@ -11,7 +11,6 @@ UserDB welcomeFromJson(String str) => UserDB.fromJson(json.decode(str));
 String welcomeToJson(UserDB data) => json.encode(data.toJson());
 
 class UserDB {
-
   UserDB({
     required this.userId,
     required this.isInvited,
@@ -29,7 +28,7 @@ class UserDB {
     this.attendedTribe,
     this.profileNotification,
   });
-  bool isInvited =  false;
+  bool isInvited;
   String userId;
   FieldValue? createdAt;
   String? email;
@@ -49,7 +48,7 @@ class UserDB {
         userId: json["userId"],
         //TODO fieldvalue is not a timestamp
         /* createdAt: json["created_at"] as FieldValue, */
-        isInvited: json["is_invited"],
+        isInvited: json["is_invited"] ?? false,
         email: json["email"],
         phoneNumber: json["phone_number"],
         name: json["name"],

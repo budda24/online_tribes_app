@@ -47,10 +47,13 @@ class RoundedContainer extends StatelessWidget {
       lable == null
           ? const SizedBox.shrink()
           : Positioned.fill(
-            top: -15,
+              top: -15,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: TextContainerLable(text: lable!,lableStyle: tribalFontLable,),
+                child: TextContainerLable(
+                  text: lable!,
+                  lableStyle: tribalFontLable,
+                ),
               ),
             )
     ]);

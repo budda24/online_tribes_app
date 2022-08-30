@@ -8,7 +8,7 @@ import 'package:video_viewer/video_viewer.dart';
 // Project imports:
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
+import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../controllers/tribe_registration_controller.dart';
 import 'registration_tribe_aditional_info.dart';

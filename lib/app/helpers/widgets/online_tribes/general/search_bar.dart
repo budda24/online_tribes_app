@@ -25,7 +25,7 @@ class SearchBar extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 230.w,
+          width: 205.w,
           child: RoundedContainer(
             height: 30.h.toInt(),
             child: Padding(
