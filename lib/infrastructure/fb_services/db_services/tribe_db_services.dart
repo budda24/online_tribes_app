@@ -10,6 +10,7 @@ import '../../../app/helpers/theme/alert_styles.dart';
 class TribeDBServices {
   final _db = FirebaseFirestore.instance;
   Future<void> createTribe(TribeDb tribe) async {
+    print('create a tribe');
     try {
       tribe.createdAt = FieldValue.serverTimestamp();
       await _db.collection('TRIBES').doc(tribe.tribeId).set(tribe.toJson());
@@ -18,12 +19,13 @@ class TribeDBServices {
     }
   }
 
-  Future<TribeDb?> feachUser(String tribeId) async {
+  Future<TribeDb?> feachTribe(String tribeId) async {
     var snapshot = await _db.collection('TRIBES').doc(tribeId).get();
     TribeDb? tribe;
     if (snapshot.exists) {
-      var userDoc = snapshot.data();
-      tribe = TribeDb.fromJson(userDoc!);
+      var tribeDoc = snapshot.data();
+      print(tribeDoc);
+      tribe = TribeDb.fromJson(tribeDoc!);
     }
     return tribe;
   }
@@ -45,7 +47,6 @@ class TribeDBServices {
   }
 
   Future<void> updateListTribalTypes(TribalType type) async {
-    
     await _db.collection('TRIBES').doc('tribalTypes').set(type.toJson());
   }
 }

@@ -27,7 +27,7 @@ import '../../../helpers/theme/main_constants.dart';
 
 class TribeRegistrationController extends GetxController {
   TextEditingController textNameController = TextEditingController();
-  TextEditingController textPurpousController = TextEditingController();
+  TextEditingController textTriberersTypeController = TextEditingController();
   TextEditingController textDescritionController = TextEditingController();
 
   TextEditingController textInputDialogControler = TextEditingController();
@@ -50,6 +50,7 @@ class TribeRegistrationController extends GetxController {
   addTypeName() async {
     if (!tribalTypes.contains(textInputDialogControler.text.capitalize)) {
       tribalTypes.add(textInputDialogControler.text.capitalize!);
+
       tribeDBServices
           .updateListTribalTypes(TribalType(types: tribalTypes.toList()));
     } else {
@@ -89,6 +90,7 @@ class TribeRegistrationController extends GetxController {
   assignTribeDb() {
     tribeDB.description = textDescritionController.text;
     tribeDB.tribalName = textNameController.text;
+    tribeDB.triberersType = textTriberersTypeController.text;
     tribeDB.availableTime = createAvailableTime();
     tribeDB.type = chosenTribaType;
   }
@@ -205,6 +207,7 @@ class TribeRegistrationController extends GetxController {
       if (customTribalSign != null) {
         await uploadFile(
             getRefrence: (ref) async {
+              print('get ref custom tribal sign');
               tribeDB.customTribalSign = await getRef(ref);
             },
             fileName: 'tribeImage',

@@ -57,7 +57,7 @@ class TribeRegistrationChoice extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Get.offAllNamed(Routes.PROFILE);
+                      Get.offAllNamed(Routes.USER_PROFILE);
                     },
                     child: Row(
                       children: [
