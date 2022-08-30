@@ -49,7 +49,7 @@ class Auth {
         } else {
           _globalController.hideLoading();
 //TODO GO TO USER PROFILE
-          await Get.toNamed(Routes.PROFILE);
+          await Get.toNamed(Routes.TRIBE_PROFILE);
         }
       } on FirebaseAuthException catch (error) {
         if (error.code == 'account-exists-with-different-credential') {
@@ -132,7 +132,7 @@ class Auth {
         //TODO otherwise go to profile
         _globalController.hideLoading();
 
-        Get.offAllNamed(Routes.PROFILE);
+        Get.offAllNamed(Routes.USER_PROFILE);
       }
     } on FirebaseAuthException catch (error) {
       _globalController.hideLoading();

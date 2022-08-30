@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/user_profile/controllers/profile_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:video_viewer/domain/bloc/controller.dart';
 
 import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
-import '../../../../modules/user_profile/widgets/video_player.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/ui_helpers.dart';
-import '../../../theme/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
   ProfileTemplate({
     Key? key,
     required this.fields,
-    required this.title,
+    this.title,
     /* required this.profileVideoSrc, */
     required this.profileImage,
     this.videoPlayer,
@@ -25,7 +20,7 @@ class ProfileTemplate extends StatelessWidget {
 
   /* final VideoViewerController? videoController; */
 
-  final Widget title;
+  final Widget? title;
   /* final String? profileVideoSrc; */
   final List<Widget> fields;
   Image profileImage;
@@ -62,19 +57,37 @@ class ProfileTemplate extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            left: 125,
-            top: 70,
-            child: CircleAvatar(
-              radius: 70,
-              backgroundColor: AppColors.primaryColor,
-              child: CircleAvatar(
-                backgroundImage: profileImage.image,
-                radius: 65,
-                backgroundColor: AppColors.greyColor,
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  verticalSpaceMedium,
+                  CircleAvatar(
+                    radius: 70,
+                    backgroundColor: AppColors.primaryColor,
+                    child: CircleAvatar(
+                      backgroundImage: profileImage.image,
+                      radius: 65,
+                      backgroundColor: AppColors.greyColor,
+                    ),
+                  ),
+                  title == null ? const SizedBox.shrink() : title!,
+                ],
               ),
             ),
           ),
+          /* Positioned(
+            left: 125,
+            top: 215,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ,
+              ],
+            ),
+          ), */
           Positioned.fill(
             top: 50,
             right: 10,

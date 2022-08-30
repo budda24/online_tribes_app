@@ -55,7 +55,7 @@ class AppPages {
       binding: WalkthroughBinding(),
     ),
     GetPage(
-      name: _Paths.PROFILE,
+      name: _Paths.USER_PROFILE,
       page: () => ProfileHomeView(),
       binding: ProfileBinding(),
     ),
