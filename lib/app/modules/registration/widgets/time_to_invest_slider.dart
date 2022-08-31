@@ -47,7 +47,7 @@ class TimeToInvestSlider extends StatelessWidget {
             sliderValue.value = value;
           },
           style: SliderStyle(
-            border: NeumorphicBorder(color: AppColors.whiteColor, width: 1),
+            border: NeumorphicBorder(color: AppColors.white, width: 1),
             accent: AppColors.actionColor,
             variant: AppColors.primaryColor,
           ),

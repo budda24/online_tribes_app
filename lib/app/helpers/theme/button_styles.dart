@@ -55,7 +55,7 @@ TextButtonThemeData whiteButtonStyle = TextButtonThemeData(
     minimumSize: MaterialStateProperty.all<Size>(
       const Size(180, 45),
     ),
-    backgroundColor: MaterialStateProperty.all<Color?>(AppColors.whiteColor),
+    backgroundColor: MaterialStateProperty.all<Color?>(AppColors.white),
     foregroundColor: MaterialStateProperty.all<Color?>(AppColors.blackColor),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
@@ -74,7 +74,7 @@ TextButtonThemeData whiteButtonStyleTwo = TextButtonThemeData(
     minimumSize: MaterialStateProperty.all<Size>(
       const Size(73, 25),
     ),
-    backgroundColor: MaterialStateProperty.all<Color?>(AppColors.whiteColor),
+    backgroundColor: MaterialStateProperty.all<Color?>(AppColors.white),
     foregroundColor: MaterialStateProperty.all<Color?>(AppColors.primaryColor),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
@@ -93,11 +93,11 @@ TextButtonThemeData transparentButtonStyle = TextButtonThemeData(
     minimumSize: MaterialStateProperty.all<Size>(
       const Size(180, 45),
     ),
-    backgroundColor: MaterialStateProperty.all<Color?>(AppColors.whiteColor),
+    backgroundColor: MaterialStateProperty.all<Color?>(AppColors.white),
     shape: MaterialStateProperty.all<OutlinedBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(3),
-        side: BorderSide(color: AppColors.whiteColor),
+        side: BorderSide(color: AppColors.white),
       ),
     ),
   ),

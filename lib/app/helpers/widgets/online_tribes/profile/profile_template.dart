@@ -6,27 +6,31 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/ui_helpers.dart';
 
 class ProfileTemplate extends StatelessWidget {
-  ProfileTemplate({
-    Key? key,
-    required this.fields,
-    this.title,
-    required this.profileImage,
-    this.rigtTopIconColumn,
-    this.leftTopIconColumn,
-    this.videoPlayer,
-    this.button,
-    this.isEditingMode,
-  }) : super(key: key);
+  ProfileTemplate(
+      {Key? key,
+      required this.fields,
+      this.title,
+      required this.profileImage,
+      this.rigtTopIconColumn,
+      this.leftTopIconColumn,
+      this.videoPlayer,
+      this.button,
+      this.isEditingMode,
+      this.swichTabs,
+      this.containerPadding =
+          const PaddingParameters(horizontal: 50, vertical: 10)})
+      : super(key: key);
 
-  final Widget? title;
-  final List<Widget> fields;
-  Image profileImage;
   Widget? button;
-  Column? rigtTopIconColumn;
-  Column? leftTopIconColumn;
+  final List<Widget> fields;
   bool? isEditingMode;
-
+  Column? leftTopIconColumn;
+  Image profileImage;
+  Column? rigtTopIconColumn;
+  final Widget? swichTabs;
+  final Widget? title;
   Widget? videoPlayer;
+  PaddingParameters containerPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +46,9 @@ class ProfileTemplate extends StatelessWidget {
             height: 530,
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
+                padding: EdgeInsets.symmetric(
+                    horizontal: containerPadding.horizontal.w,
+                    vertical: containerPadding.vertical.h),
                 child: Column(
                   children: [
                     verticalSpaceLarge,
@@ -80,6 +86,10 @@ class ProfileTemplate extends StatelessWidget {
                     ),
                   ),
                 ),
+          Positioned(
+            top: 222.h,
+            child: swichTabs ?? const SizedBox.shrink(),
+          ),
           Positioned.fill(
             top: 70,
             right: 15,
@@ -100,4 +110,10 @@ class ProfileTemplate extends StatelessWidget {
       ),
     );
   }
+}
+
+class PaddingParameters {
+  const PaddingParameters({required this.horizontal, required this.vertical});
+  final double horizontal;
+  final double vertical;
 }

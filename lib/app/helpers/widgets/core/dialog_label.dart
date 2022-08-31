@@ -42,7 +42,7 @@ class DialogButtonWhiteLabel extends Text {
           style: TextStyle(
             fontFamily: poppins,
             fontSize: 14.sp,
-            color: AppColors.whiteColor,
+            color: AppColors.white,
             fontFeatures: const [FontFeature.proportionalFigures()],
           ),
         );

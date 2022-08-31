@@ -45,7 +45,7 @@ class TribeSignWithPointer extends StatelessWidget {
                     tribeRegistrationController.choosenSignIndex!.value == index
                         ? NeumorphicCircleBackground(
                             child: CircleAvatar(
-                              backgroundColor: AppColors.whiteColor,
+                              backgroundColor: AppColors.white,
                               radius: 15,
                               child: CircleAvatar(
                                 backgroundColor: AppColors.actionColor,

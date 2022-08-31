@@ -33,7 +33,7 @@ class RoundedInputContainer extends StatelessWidget {
         lightSource: LightSource.topLeft,
         intensity: 60,
         /* shadowDarkColor: AppColors.darkGreyColor, */
-        color: AppColors.whiteColor,
+        color: AppColors.white,
         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20.r)),
       ),
       child: Container(

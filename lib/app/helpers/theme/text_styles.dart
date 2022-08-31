@@ -36,7 +36,7 @@ TextStyle tribalFontLable = TextStyle(
     fontSize: 30.0.sp,
     fontWeight: FontWeight.bold);
 TextStyle tribalFontLableWhite = TextStyle(
-    color: AppColors.whiteColor,
+    color: AppColors.white,
     fontFamily: 'TribalDecorate',
     fontSize: 30.0.sp,
     fontWeight: FontWeight.bold);
@@ -49,10 +49,9 @@ TextStyle tribalFontLableRed = TextStyle(
 
 TextStyle buttonLable = GoogleFonts.lato(
     textStyle: TextStyle(
-        color: AppColors.whiteColor,
+        color: AppColors.white,
         fontSize: 20.0.sp,
         fontWeight: FontWeight.w900));
-
 
 TextStyle iconTextStyle = GoogleFonts.lato(
     textStyle: TextStyle(
@@ -60,14 +59,15 @@ TextStyle iconTextStyle = GoogleFonts.lato(
         fontSize: 14.0.sp,
         fontWeight: FontWeight.w900));
 
-
-
 TextStyle headingBlackStyle = TextStyle(
-    fontFamily: 'Montserrat', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
+    color: AppColors.blackColor,
+    fontFamily: 'Montserrat',
+    fontSize: 30.0.sp,
+    fontWeight: FontWeight.bold);
 
 TextStyle headingWhiteStyle = TextStyle(
   fontFamily: 'Montserrat',
-  color: AppColors.whiteColor,
+  color: AppColors.white,
   fontWeight: FontWeight.bold,
   fontSize: 30.0.sp,
 );
@@ -79,7 +79,7 @@ TextStyle headingBoldStyle = TextStyle(
     fontFamily: montserrat, fontSize: 20.0.sp, fontWeight: FontWeight.bold);
 
 TextStyle tribalNameStyle = TextStyle(
-    fontFamily: 'Futura Bk BT', fontSize: 30.0.sp, color: AppColors.whiteColor);
+    fontFamily: 'Futura Bk BT', fontSize: 30.0.sp, color: AppColors.white);
 
 TextStyle plainTextStyle = TextStyle(
   fontSize: 18.0.sp,
@@ -100,22 +100,21 @@ TextStyle popUpMessageStyle = TextStyle(
 TextStyle outlineInputTextFormFieldLabelStyle = TextStyle(
   fontFamily: futuraBkBT,
   fontSize: 30.0.sp,
-  color: AppColors.whiteColor,
+  color: AppColors.white,
 );
 TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
   color: AppColors.greyColor,
   fontSize: 14.sp,
   fontFamily: montserrat,
-
 );
 // text style
 TextStyle kName = TextStyle(
     fontFamily: 'Futura Bk BT',
     fontSize: 30.0,
     fontWeight: FontWeight.bold,
-    color: AppColors.whiteColor);
+    color: AppColors.white);
 
-   TextStyle kHintStyle = GoogleFonts.lato(
+TextStyle kHintStyle = GoogleFonts.lato(
     textStyle: TextStyle(
         color: AppColors.blackColor,
         fontSize: 20.0.sp,
@@ -125,7 +124,7 @@ TextStyle kHintStyleWhite = TextStyle(
   fontSize: 20.0,
   fontFamily: 'Poppins',
   fontWeight: FontWeight.bold,
-  color: AppColors.whiteColor,
+  color: AppColors.white,
 );
 TextStyle kMontserratBold = const TextStyle(
   fontSize: 18,
@@ -143,19 +142,25 @@ TextStyle smallBold = TextStyle(
   fontFamily: montserrat,
   fontWeight: FontWeight.bold,
 );
-TextStyle smallBoldGrey = TextStyle(
-    fontSize: 18.sp,
-    fontFamily: montserrat,
-    fontWeight: FontWeight.bold,
-    color: AppColors.greyColor);
+
 TextStyle smallTextStyle = TextStyle(
     fontFamily: poppins, fontSize: 13.0.sp, fontWeight: FontWeight.w300);
 TextStyle longTextStyle = TextStyle(
   fontFamily: poppins,
   fontSize: 22.0.sp,
 );
-TextStyle boldSmallTextStyle = TextStyle(
+TextStyle textSActionColorSmall = TextStyle(
     color: AppColors.actionColor,
+    fontFamily: poppins,
+    fontSize: 13.0.sp,
+    fontWeight: FontWeight.bold);
+TextStyle textSBlackColorSmall = TextStyle(
+    color: AppColors.blackColor,
+    fontFamily: poppins,
+    fontSize: 13.0.sp,
+    fontWeight: FontWeight.bold);
+TextStyle textSWhiteColorSmall = TextStyle(
+    color: AppColors.white,
     fontFamily: poppins,
     fontSize: 13.0.sp,
     fontWeight: FontWeight.bold);
@@ -164,8 +169,22 @@ TextStyle lableWhite = TextStyle(
   fontFamily: regular,
   fontWeight: FontWeight.bold,
   fontSize: 30.0.sp,
-  color: AppColors.whiteColor,
+  color: AppColors.white,
 );
+
+class TextSizing extends Text {
+  const TextSizing(this.text, {Key? key, required this.size}) : super(text);
+  final String text;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(color: AppColors.blackColor, fontSize: size),
+    );
+  }
+}
 
 class TextContainerLable extends StatelessWidget {
   const TextContainerLable(

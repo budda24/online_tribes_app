@@ -29,7 +29,7 @@ class RoundedContainer extends StatelessWidget {
           shape: NeumorphicShape.convex,
           lightSource: LightSource.topLeft,
           intensity: 60,
-          color: AppColors.whiteColor,
+          color: AppColors.white,
           boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
         ),
         child: Container(

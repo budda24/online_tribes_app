@@ -93,7 +93,7 @@ class LoginView extends GetView<LoginController> {
                                                 .isVeryficationScreen.value
                                             ? 'Verify SMS'
                                             : 'Login \n Register',
-                                        textColor: AppColors.whiteColor,
+                                        textColor: AppColors.white,
                                         onPress: () async {
                                           _formKey.currentState!.save();
                                           if (!controller

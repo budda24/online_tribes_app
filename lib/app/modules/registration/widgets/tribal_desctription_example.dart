@@ -53,7 +53,7 @@ class DescriptionExamplePage extends StatelessWidget {
                 height: 435.h,
                 screanHeight: boxConstrains.maxHeight,
                 screanWidth: boxConstrains.maxWidth,
-                bcColor: AppColors.whiteColor,
+                bcColor: AppColors.white,
                 child: SingleChildScrollView(
                   child: Text(
                     description,

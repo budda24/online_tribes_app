@@ -56,7 +56,7 @@ class MainCirclePhoto extends StatelessWidget {
         color: Colors.grey,
         border: Border.all(
           width: 3.0,
-          color: AppColors.whiteColor,
+          color: AppColors.white,
         ),
         shape: BoxShape.circle,
         image: DecorationImage(

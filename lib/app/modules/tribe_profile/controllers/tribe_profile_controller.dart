@@ -8,6 +8,11 @@ import '../../../../infrastructure/fb_services/cloud_storage/cloud_storage_servi
 import '../../../../infrastructure/fb_services/db_services/tribe_db_services.dart';
 import '../../../controllers/global_controler.dart';
 
+enum TribeProfileSection {
+  triberers,
+  info,
+}
+
 class TribeProfileController extends GetxController with StateMixin<TribeDb> {
   var globalController = Get.find<GlobalController>();
 
@@ -31,11 +36,14 @@ class TribeProfileController extends GetxController with StateMixin<TribeDb> {
     update();
   }
 
-  VideoViewerController videoController = VideoViewerController();
-  ifPlayFullScren() {
-
-
+  TribeProfileSection selectedSection = TribeProfileSection.info;
+  void switchSections(int index) {
+    selectedSection = TribeProfileSection.values[index];
+    update();
   }
+
+  VideoViewerController videoController = VideoViewerController();
+  ifPlayFullScren() {}
 
   logout() async {}
 

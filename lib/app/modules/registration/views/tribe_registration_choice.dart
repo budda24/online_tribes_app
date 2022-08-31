@@ -27,7 +27,7 @@ class TribeRegistrationChoice extends StatelessWidget {
               Text(
                 'A NEW WILLAGE AWAITS YOU',
                 style: TextStyle(
-                  color: AppColors.whiteColor,
+                  color: AppColors.white,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.bold,
                 ),
@@ -43,7 +43,7 @@ class TribeRegistrationChoice extends StatelessWidget {
                       Get.toNamed(Routes.TRIBE_REGISTRATION);
                     },
                     minWidth: 117.w,
-                    color: AppColors.whiteColor,
+                    color: AppColors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.r),
                     ),
@@ -64,13 +64,13 @@ class TribeRegistrationChoice extends StatelessWidget {
                         Text(
                           'My profile',
                           style: TextStyle(
-                              color: AppColors.whiteColor,
+                              color: AppColors.white,
                               fontSize: 18.sp,
                               fontWeight: FontWeight.bold),
                         ),
                         Icon(
                           Icons.arrow_forward_ios,
-                          color: AppColors.whiteColor,
+                          color: AppColors.white,
                         )
                       ],
                     ),

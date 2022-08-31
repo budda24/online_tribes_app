@@ -82,7 +82,7 @@ class RegistrationTribeAditionalInfo extends GetView {
                   right: -5,
                   child: IconButton(
                     icon: CircleAvatar(
-                        backgroundColor: AppColors.whiteColor,
+                        backgroundColor: AppColors.white,
                         child: Icon(
                           Icons.add,
                           color: AppColors.actionColor,
@@ -173,8 +173,8 @@ class SelectButton extends StatelessWidget {
           Icons.arrow_forward_ios_outlined,
         ),
         iconSize: 14,
-        iconEnabledColor: AppColors.whiteColor,
-        iconDisabledColor: AppColors.whiteColor,
+        iconEnabledColor: AppColors.white,
+        iconDisabledColor: AppColors.white,
         buttonHeight: 50,
         buttonWidth: 0.70.sw,
         buttonPadding: const EdgeInsets.only(left: 14, right: 14),
@@ -189,7 +189,7 @@ class SelectButton extends StatelessWidget {
         itemHeight: 40,
         dropdownMaxHeight: 300,
         alignment: AlignmentDirectional.topCenter,
-        barrierColor: AppColors.whiteColor,
+        barrierColor: AppColors.white,
         dropdownWidth: 0.72.sw,
         dropdownPadding: null,
         dropdownDecoration: BoxDecoration(

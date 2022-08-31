@@ -40,7 +40,6 @@ class RegistrationTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: globalController.unFocuseNode,
       child: Scaffold(
@@ -95,7 +94,7 @@ class RegistrationTemplate extends StatelessWidget {
                                       child: Icon(
                                         Icons.add_a_photo_rounded,
                                         size: 40,
-                                        color: AppColors.whiteColor,
+                                        color: AppColors.white,
                                       ),
                                     ),
                                   ),
@@ -109,11 +108,11 @@ class RegistrationTemplate extends StatelessWidget {
                                   },
                                 )
                               : CircleAvatar(
-                                  backgroundImage:
-                                  imagepath == null
-                                      ?Image.file(cameraController.pickedPhoto!)
+                                  backgroundImage: imagepath == null
+                                      ? Image.file(
+                                              cameraController.pickedPhoto!)
                                           .image
-                                          :Image.asset(imagepath!).image,
+                                      : Image.asset(imagepath!).image,
                                   radius: 65,
                                   backgroundColor: AppColors.greyColor,
                                 ),

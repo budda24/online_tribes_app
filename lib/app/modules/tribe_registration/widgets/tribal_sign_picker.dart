@@ -58,7 +58,7 @@ class TribalSignPicker extends StatelessWidget {
                               right: 0,
                               child: NeumorphicCircleBackground(
                                 child: CircleAvatar(
-                                  backgroundColor: AppColors.whiteColor,
+                                  backgroundColor: AppColors.white,
                                   radius: 15,
                                   child: CircleAvatar(
                                     backgroundColor: AppColors.actionColor,

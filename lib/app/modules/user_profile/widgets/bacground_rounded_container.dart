@@ -23,7 +23,7 @@ class BacgroundRoundedContainer extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30.r), topRight: Radius.circular(30.r)),
-          color: AppColors.whiteColor,
+          color: AppColors.white,
         ),
         width: double.infinity,
         height: height,

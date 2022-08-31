@@ -55,7 +55,7 @@ class CustomPinPut extends StatelessWidget {
     width: 65,
     height: 65,
     textStyle: TextStyle(
-        fontSize: 24, color: AppColors.whiteColor, fontWeight: FontWeight.bold),
+        fontSize: 24, color: AppColors.white, fontWeight: FontWeight.bold),
     decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: FractionalOffset.topCenter,
