@@ -115,7 +115,10 @@ class _RoundedExpandedContainerState extends State<RoundedExpandedContainer>
               top: -5,
               child: Align(
                 alignment: Alignment.topCenter,
-                child: TextContainerLable(text: widget.lable!, lableStyle: tribalFontLable,),
+                child: TextContainerLable(
+                  text: widget.lable!,
+                  lableStyle: tribalFontLable,
+                ),
               ),
             )
     ]);

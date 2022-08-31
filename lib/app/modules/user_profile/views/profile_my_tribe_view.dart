@@ -20,7 +20,7 @@ class ProfileMyTribeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfileTemplate(
-      rigtTopPositionad:
+      rigtTopIconColumn:
           Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         Text(
           'Create a Tribe',

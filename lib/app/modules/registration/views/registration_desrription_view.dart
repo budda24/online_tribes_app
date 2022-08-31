@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 // Project imports:
 import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
-import '../../../helpers/widgets/online_tribes/registration/form_field.dart';
+import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../controllers/registration_controller.dart';
 import 'registration_aditional_info_view.dart';

@@ -1,5 +1,7 @@
 import 'package:flutter_application_1/app/modules/tribe_registration/controllers/tribe_registration_controller.dart';
 import 'package:flutter_application_1/app/modules/tribe_registration/views/invite_user_detal_view.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/models/user_model.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -42,10 +44,9 @@ class InviteUserTile extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 37,
-                      backgroundColor:
-                           user.isInvited == false
-                              ? AppColors.whiteColor
-                              : AppColors.primaryColor,
+                      backgroundColor: user.isInvited == false
+                          ? AppColors.whiteColor
+                          : AppColors.primaryColor,
                       child: CircleAvatar(
                         backgroundImage:
                             NetworkImage(user.profilePhoto!.downloadUrl),
@@ -65,8 +66,7 @@ class InviteUserTile extends StatelessWidget {
                     MaterialButton(
                       height: 24,
                       minWidth: 110,
-                      onPressed: () {
-                        print(user.isInvited);
+                      onPressed: () async {
                         if (builderController.invitedUsersList.length == 5) {
                           user.isInvited = false;
                         } else {
@@ -75,22 +75,22 @@ class InviteUserTile extends StatelessWidget {
 
                         builderController.rebuildWidget();
                         builderController.updateInvidedUsersList(user);
+                        await UserDBServices().handleUserInvitation(
+                            invitedUserID: user.userId,
+                            senderID: currentUser.uid);
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      color:   user.isInvited == false 
+                      color: user.isInvited == false
                           ? AppColors.actionColor
                           : AppColors.primaryColor,
                       child: Text(
-                         user.isInvited == false
-                            ? 'Invite'
-                            : 'Invited',
+                        user.isInvited == false ? 'Invite' : 'Invited',
                         style: TextStyle(
-                          color:
-                             user.isInvited == false
-                                  ? AppColors.whiteColor
-                                  : AppColors.blackColor,
+                          color: user.isInvited == false
+                              ? AppColors.whiteColor
+                              : AppColors.blackColor,
                           fontSize: 16,
                         ),
                       ),

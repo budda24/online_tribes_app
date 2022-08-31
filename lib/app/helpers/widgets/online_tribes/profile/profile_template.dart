@@ -10,22 +10,22 @@ class ProfileTemplate extends StatelessWidget {
     Key? key,
     required this.fields,
     this.title,
-    /* required this.profileVideoSrc, */
     required this.profileImage,
+    this.rigtTopIconColumn,
+    this.leftTopIconColumn,
     this.videoPlayer,
-    /* this.videoController, */
-    this.rigtTopPositionad,
     this.button,
+    this.isEditingMode,
   }) : super(key: key);
 
-  /* final VideoViewerController? videoController; */
-
   final Widget? title;
-  /* final String? profileVideoSrc; */
   final List<Widget> fields;
   Image profileImage;
   Widget? button;
-  Column? rigtTopPositionad;
+  Column? rigtTopIconColumn;
+  Column? leftTopIconColumn;
+  bool? isEditingMode;
+
   Widget? videoPlayer;
 
   @override
@@ -57,43 +57,43 @@ class ProfileTemplate extends StatelessWidget {
               ),
             ),
           ),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  verticalSpaceMedium,
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundColor: AppColors.primaryColor,
-                    child: CircleAvatar(
-                      backgroundImage: profileImage.image,
-                      radius: 65,
-                      backgroundColor: AppColors.greyColor,
+          isEditingMode != null && isEditingMode == true
+              ? const SizedBox.shrink()
+              : Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        verticalSpaceMedium,
+                        CircleAvatar(
+                          radius: 70,
+                          backgroundColor: AppColors.primaryColor,
+                          child: CircleAvatar(
+                            backgroundImage: profileImage.image,
+                            radius: 65,
+                            backgroundColor: AppColors.greyColor,
+                          ),
+                        ),
+                        title == null ? const SizedBox.shrink() : title!,
+                      ],
                     ),
                   ),
-                  title == null ? const SizedBox.shrink() : title!,
-                ],
-              ),
-            ),
-          ),
-          /* Positioned(
-            left: 125,
-            top: 215,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ,
-              ],
-            ),
-          ), */
+                ),
           Positioned.fill(
-            top: 50,
-            right: 10,
+            top: 70,
+            right: 15,
             child: Align(
               alignment: Alignment.topRight,
-              child: rigtTopPositionad,
+              child: rigtTopIconColumn,
+            ),
+          ),
+          Positioned.fill(
+            top: 70,
+            left: 15,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: leftTopIconColumn,
             ),
           ),
         ],

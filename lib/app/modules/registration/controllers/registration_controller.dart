@@ -128,11 +128,14 @@ class RegistrationController extends GetxController {
                 end: availableTime!.endTime.hour);
             userDB.email = currentUser.email;
             userDB.phoneNumber = currentUser.phoneNumber;
+            userDB.profileNotification = <ProfileNotification>[];
 
             await globalController.saveRegistrationState();
             globalController.hideLoading();
 
-            await UserDBServices().createFewUser(userDB);
+
+
+                 await UserDBServices().createFewUser(userDB);
             videoUploaded.value = true;
             Get.to(const TribeRegistrationChoice());
           }

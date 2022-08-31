@@ -47,6 +47,7 @@ class InviteNewTribeMember extends StatelessWidget {
                           child: InkWell(
                             onTap: () async {
                               await builderController.showAllUsersAgain();
+                             await builderController.sendInviteNotyficationToUsers();
                             },
                             child: Container(
                               width: 70.h,
@@ -144,37 +145,3 @@ class InviteNewTribeMember extends StatelessWidget {
     );
   }
 }
-// GetBuilder<TribeRegistrationController>(
-//                     builder: (builderController) {
-//                       return builderController.usersList.isEmpty
-//                           ? spinkit
-//                           : GridView.builder(
-//                               controller: builderController.scrollController,
-//                               physics: const ScrollPhysics(),
-//                               itemCount: tribeRegistrationController.isLoading
-//                                   ? tribeRegistrationController
-//                                           .currentItemLength.value +
-//                                       1
-//                                   : tribeRegistrationController
-//                                       .currentItemLength.value,
-//                               gridDelegate:
-//                                   const SliverGridDelegateWithFixedCrossAxisCount(
-//                                       mainAxisExtent: 180,
-//                                       crossAxisCount: 2,
-//                                       childAspectRatio: 2 / 3,
-//                                       crossAxisSpacing: 20,
-//                                       mainAxisSpacing: 0),
-//                               itemBuilder: ((context, index) {
-//                                 if (builderController.currentItemLength.value ==
-//                                     index) {
-//                                   return Center(child: spinkit);
-//                                 }
-
-//                                 return InviteUserTile(
-//                                   user: tribeRegistrationController
-//                                       .usersList[index],
-//                                 );
-//                               }),
-//                             );
-//                     },
-//                   ),

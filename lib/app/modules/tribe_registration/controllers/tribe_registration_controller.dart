@@ -277,6 +277,14 @@ class TribeRegistrationController extends GetxController {
     }
   }
 
+  Future<void> sendInviteNotyficationToUsers() async {
+    for (var i = 0; i < invitedUsersList.length; i++) {
+      print(invitedUsersList[i].userId);
+      await UserDBServices().handleUserInvitation(
+          invitedUserID: invitedUsersList[i].userId, senderID: currentUser.uid);
+    }
+  }
+
   void scrollListener() {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
@@ -313,7 +321,7 @@ class TribeRegistrationController extends GetxController {
       if (user.isNotEmpty) {
         if (temporaryUsersList.isEmpty) temporaryUsersList = usersList;
         usersList = user;
-        print(usersList.length);
+      
         update();
       }
       return;

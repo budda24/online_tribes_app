@@ -53,6 +53,15 @@ TextStyle buttonLable = GoogleFonts.lato(
         fontSize: 20.0.sp,
         fontWeight: FontWeight.w900));
 
+
+TextStyle iconTextStyle = GoogleFonts.lato(
+    textStyle: TextStyle(
+        color: AppColors.blackColor,
+        fontSize: 14.0.sp,
+        fontWeight: FontWeight.w900));
+
+
+
 TextStyle headingBlackStyle = TextStyle(
     fontFamily: 'Montserrat', fontSize: 30.0.sp, fontWeight: FontWeight.bold);
 
@@ -97,7 +106,7 @@ TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
   color: AppColors.greyColor,
   fontSize: 14.sp,
   fontFamily: montserrat,
-  
+
 );
 // text style
 TextStyle kName = TextStyle(
@@ -106,12 +115,12 @@ TextStyle kName = TextStyle(
     fontWeight: FontWeight.bold,
     color: AppColors.whiteColor);
 
-TextStyle kHintStyle = TextStyle(
-  fontSize: 20.0,
-  fontFamily: 'Poppins',
-  fontWeight: FontWeight.bold,
-  color: AppColors.blackColor,
-);
+   TextStyle kHintStyle = GoogleFonts.lato(
+    textStyle: TextStyle(
+        color: AppColors.blackColor,
+        fontSize: 20.0.sp,
+        fontWeight: FontWeight.w900));
+
 TextStyle kHintStyleWhite = TextStyle(
   fontSize: 20.0,
   fontFamily: 'Poppins',
