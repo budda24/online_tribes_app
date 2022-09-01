@@ -79,7 +79,7 @@ class RegistrationController extends GetxController {
                   timeCreated: metaDataRef.timeCreated,
                   contentEncoding: metaDataRef.contentEncoding);
 
-              userDB.profilePhoto =
+              userDB.profilePhotoRef =
                   UploadedFile(downloadUrl: url, metaData: metaData);
             }));
 
@@ -133,9 +133,7 @@ class RegistrationController extends GetxController {
             await globalController.saveRegistrationState();
             globalController.hideLoading();
 
-
-
-                 await UserDBServices().createFewUser(userDB);
+            await UserDBServices().createFewUser(userDB);
             videoUploaded.value = true;
             Get.to(const TribeRegistrationChoice());
           }

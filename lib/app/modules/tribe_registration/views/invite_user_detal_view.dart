@@ -12,43 +12,42 @@ import '../../user_profile/widgets/rounded_expanded_container.dart';
 import '../../user_profile/widgets/rounded_container.dart';
 import '../../user_profile/widgets/video_player.dart';
 
-
 class InviteUserDetailView extends StatelessWidget {
   InviteUserDetailView({Key? key}) : super(key: key);
 
- late var user =  Get.arguments as UserDB;
+  late var user = Get.arguments as UserDB;
   VideoViewerController? videoController = VideoViewerController();
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       backgroundColor: AppColors.primaryColor,
+      backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         child: GestureDetector(
             onTap: () {
               videoController?.showAndHideOverlay(false);
             },
             child: ProfileTemplate(
-              profileImage: Image.network(user.profilePhoto!.downloadUrl),
+              profileImage: Image.network(user.profilePhotoRef!.downloadUrl),
               title: const SizedBox.shrink(),
-              videoPlayer:GetBuilder(
-                      builder: (builderController) =>
-                          user.introVideo!.downloadUrl != ''
-                              ? videoController != null
-                                  ? CustomVideoPlayer.network(
-                                      videoSrc: user.introVideo!.downloadUrl,
-                                      videoController: videoController!)
-                                  : const SizedBox.shrink()
-                              : Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    spinkit,
-                                    const SizedBox(height: 20),
-                                    const Text('Loading'),
-                                  ],
-                                ),
-                    ), /* ,
+              videoPlayer: GetBuilder(
+                builder: (builderController) =>
+                    user.introVideo!.downloadUrl != ''
+                        ? videoController != null
+                            ? CustomVideoPlayer.network(
+                                videoSrc: user.introVideo!.downloadUrl,
+                                videoController: videoController!)
+                            : const SizedBox.shrink()
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              spinkit,
+                              const SizedBox(height: 20),
+                              const Text('Loading'),
+                            ],
+                          ),
+              ),
+              /* ,
                videoController: videoController!,
               profileVideoSrc: user.introVideo!.downloadUrl, */
               fields: [

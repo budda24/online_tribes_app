@@ -101,9 +101,8 @@ class ProfileInfoView extends StatelessWidget {
                   children: [
                       InkWell(
                         onTap: () {
-                          profileController.saveUserBeforeChanges();
                           profileController.isEditingMode = true;
-                          profileController.rebuild();
+                          profileController.saveUserLocally();
                         },
                         child: Icon(
                           Icons.edit,
@@ -121,128 +120,55 @@ class ProfileInfoView extends StatelessWidget {
               ? [
                   Column(
                     children: [
-                      cameraController.pickedVideo != null &&
-                              profileController.progress == 0.0
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.check_rounded,
-                                  color: AppColors.actionColor,
-                                  size: 30.sp,
-                                ),
-                                Text(
-                                  'Video is chosen',
-                                  style: greenActionTitle,
-                                ),
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                      verticalSpaceSmall,
-                      profileController.progress == 0.0
-                          ? const SizedBox.shrink()
-                          : Container(
-                              height: 300,
-                              margin: const EdgeInsets.only(top: 70),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CircularPercentIndicator(
-                                    radius: 100.w,
-                                    lineWidth: 20.w,
-                                    percent: profileController.progress / 100,
-                                    backgroundColor: AppColors.primaryColor,
-                                    circularStrokeCap: CircularStrokeCap.round,
-                                    linearGradient: LinearGradient(colors: [
-                                      AppColors.primaryColor,
-                                      AppColors.actionColor,
-                                    ]),
-                                    rotateLinearGradient: true,
-                                    animation: true,
-                                    animateFromLastPercent: true,
-                                    animationDuration: 2000,
-                                    curve: Curves.bounceIn,
-                                    widgetIndicator: Image.asset(
-                                      'assets/images/authorization_screen/logo/50x50.png',
-                                    ),
-                                    center: Text(
-                                      '${profileController.progress} %',
-                                      style: headingBoldStyle,
-                                    ),
-                                  ),
-                                ],
+                      Text(
+                        cameraController.pickedPhoto != null
+                            ? 'You changed your profile picture'
+                            : 'Change profile picture',
+                        style: cameraController.pickedPhoto != null
+                            ? greenActionTitle
+                            : greenTitle,
+                        textAlign: TextAlign.center,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              await cameraController.getImageCamera();
+                              if (cameraController.pickedPhoto != null) {
+                                /* profileController
+                                              .switchIsVideoCosen(); */
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 25),
+                              height: 100,
+                              width: 100,
+                              child: Image.asset(
+                                'assets/images/authorization_screen/add_photo.png',
                               ),
                             ),
-                      verticalSpaceTiny,
-                      profileController.progress == 0.0
-                          ? Container(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Change introduction video',
-                                    style: greenTitle,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () async {
-                                          await cameraController
-                                              .getVideoCamera();
-                                          if (cameraController.pickedVideo !=
-                                              null) {
-                                            /* profileController
-                                                .switchIsVideoCosen(); */
-                                          }
-                                        },
-                                        child: Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 25),
-                                          height: 100,
-                                          width: 100,
-                                          child: Image.asset(
-                                            'assets/images/authorization_screen/add_photo.png',
-                                          ),
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          await cameraController.getFileGallery(
-                                              type: PickedType.video);
-                                          if (cameraController.pickedVideo !=
-                                              null) {
-                                            /* profileController
-                                                .switchIsVideoCosen(); */
-                                          }
-                                        },
-                                        child: Container(
-                                          margin:
-                                              const EdgeInsets.only(top: 25),
-                                          height: 100,
-                                          width: 100,
-                                          child: Image.asset(
-                                            'assets/images/authorization_screen/upload_video.png',
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  verticalSpaceMedium,
-                                  Text(
-                                    'Change available time for meeting',
-                                    style: greenTitle,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  AvailableTimeButton(onPressed: () async {
-                                    profileController.availableTime =
-                                        await TimeCovertingServices()
-                                            .getCustomTimeRangePicker(context);
-                                  })
-                                ],
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              await cameraController.getFileGallery(
+                                  type: PickedType.photo);
+                              if (cameraController.pickedPhoto != null) {
+                                /* profileController
+                                              .switchIsVideoCosen(); */
+                              }
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 25),
+                              height: 100,
+                              width: 100,
+                              child: Image.asset(
+                                'assets/images/authorization_screen/upload_video.png',
                               ),
-                            )
-                          : const SizedBox.shrink()
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   verticalSpaceSmall,
@@ -293,6 +219,120 @@ class ProfileInfoView extends StatelessWidget {
                     minLine: 1,
                     height: 50.h,
                     width: 500.w,
+                  ),
+                  Column(
+                    children: [
+                      verticalSpaceSmall,
+                      profileController.progress == 0.0
+                          ? const SizedBox.shrink()
+                          : Container(
+                              height: 300,
+                              margin: const EdgeInsets.only(top: 70),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularPercentIndicator(
+                                    radius: 100.w,
+                                    lineWidth: 20.w,
+                                    percent: profileController.progress / 100,
+                                    backgroundColor: AppColors.primaryColor,
+                                    circularStrokeCap: CircularStrokeCap.round,
+                                    linearGradient: LinearGradient(colors: [
+                                      AppColors.primaryColor,
+                                      AppColors.actionColor,
+                                    ]),
+                                    rotateLinearGradient: true,
+                                    animation: true,
+                                    animateFromLastPercent: true,
+                                    animationDuration: 2000,
+                                    curve: Curves.bounceIn,
+                                    widgetIndicator: Image.asset(
+                                      'assets/images/authorization_screen/logo/50x50.png',
+                                    ),
+                                    center: Text(
+                                      '${profileController.progress} %',
+                                      style: headingBoldStyle,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                      verticalSpaceTiny,
+                      
+                      profileController.progress == 0.0
+                          ? Column(
+                              children: [
+                                Text(
+                                  cameraController.pickedVideo != null
+                                      ? ' You changed your introduction video'
+                                      : 'Change introduction video',
+                                  style: cameraController.pickedVideo != null
+                                      ? greenActionTitle
+                                      : greenTitle,
+                                  textAlign: TextAlign.center,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await cameraController.getVideoCamera();
+                                        if (cameraController.pickedVideo !=
+                                            null) {
+                                          /* profileController
+                                            .switchIsVideoCosen(); */
+                                        }
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 25),
+                                        height: 100,
+                                        width: 100,
+                                        child: Image.asset(
+                                          'assets/images/authorization_screen/add_photo.png',
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await cameraController.getFileGallery(
+                                            type: PickedType.video);
+                                        if (cameraController.pickedVideo !=
+                                            null) {
+                                          /* profileController
+                                            .switchIsVideoCosen(); */
+                                        }
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.only(top: 25),
+                                        height: 100,
+                                        width: 100,
+                                        child: Image.asset(
+                                          'assets/images/authorization_screen/upload_video.png',
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          : const SizedBox.shrink(),
+                      verticalSpaceMedium,
+                      Text(
+                        profileController.availableTime != null
+                            ? 'You have changed your availability time'
+                            : 'Change available time for meeting',
+                        style: profileController.availableTime != null
+                            ? greenActionTitle
+                            : greenTitle,
+                        textAlign: TextAlign.center,
+                      ),
+                      AvailableTimeButton(onPressed: () async {
+                        profileController.availableTime =
+                            await TimeCovertingServices()
+                                .getCustomTimeRangePicker(context);
+                      })
+                    ],
                   ),
                 ]
               : [

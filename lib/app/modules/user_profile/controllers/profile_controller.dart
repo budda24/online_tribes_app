@@ -58,12 +58,13 @@ class ProfileController extends GetxController {
 
   Future<void> getUser() async {
     userDB = await userDbServieces.feachUser(auth.currentUser!.uid);
+    print('user start :${userDB!.profilePhotoRef!.downloadUrl}');
     assignProfileInfo();
   }
 
   void assignProfileInfo() async {
     profileVideoUrl = userDB?.introVideo!.downloadUrl ?? '';
-    profilePhotoUrl = userDB!.profilePhoto!.downloadUrl;
+    profilePhotoUrl = userDB!.profilePhotoRef!.downloadUrl;
     describtionController.text = userDB?.description ?? '';
     lifeMottoController.text = userDB?.lifeMotto ?? '';
     hobby1Controller.text = userDB?.hobbies?.hobby ?? '';
@@ -138,8 +139,9 @@ class ProfileController extends GetxController {
     });
   }
 
-  saveUserBeforeChanges() {
+  saveUserLocally() {
     tmpUserDB = userDB;
+    update();
   }
 
   cancelUserChanges() {
@@ -162,8 +164,23 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUser() async {
+    if (cameraController.pickedPhoto != null) {
+      await uploadFile(
+
+          recordingTheProgress: true,
+          
+          getRefrence: (ref) async {
+            userDB!.profilePhotoRef = await getRef(ref);
+          },
+          fileName: 'profileImage',
+          directory: 'profile',
+          profileFile: cameraController.pickedPhoto!);
+    }
+
     if (cameraController.pickedVideo != null) {
       await uploadFile(
+
+
           recordingTheProgress: true,
           getRefrence: (ref) async {
             userDB!.introVideo = await getRef(ref);
@@ -338,9 +355,5 @@ class ProfileController extends GetxController {
 
   List<ProfileNotification>? get _profileNotyfication {
     return userDB?.profileNotification;
-  }
-
-  rebuild() {
-    update();
   }
 }

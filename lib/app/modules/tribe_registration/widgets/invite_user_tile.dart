@@ -49,7 +49,7 @@ class InviteUserTile extends StatelessWidget {
                           : AppColors.primaryColor,
                       child: CircleAvatar(
                         backgroundImage:
-                            NetworkImage(user.profilePhoto!.downloadUrl),
+                            NetworkImage(user.profilePhotoRef!.downloadUrl),
                         radius: 35,
                         backgroundColor: AppColors.greyColor,
                       ),

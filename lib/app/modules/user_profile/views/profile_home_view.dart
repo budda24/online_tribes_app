@@ -26,6 +26,7 @@ class ProfileHomeView extends GetView {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
+      resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.primaryColor,
           bottomNavigationBar:
               CustomNavigationBar(actualIndex: profileController.actualIndex),
