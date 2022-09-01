@@ -39,11 +39,11 @@ class ProfileRegistrationController extends GetxController {
   bool isVideoChosen = false;
 
   bool validateAditionalInfo() {
-    if (! globalController.validateInput(
+    if (!globalController.validateInput(
             inputType: 'hobby', value: hobby2Controller.text, lenght: 50) ||
-       ! globalController.validateInput(
+        !globalController.validateInput(
             inputType: 'hobby', value: hobby1Controller.text, lenght: 50) ||
-       ! globalController.validateInput(
+        !globalController.validateInput(
             inputType: 'life motto',
             value: lifeMottoController.text,
             lenght: 150)) {
@@ -101,42 +101,43 @@ class ProfileRegistrationController extends GetxController {
         profileFile: cameraController.pickedPhoto!);
 
     await registrationController.uploadFile(
-        getRefrence: (ref) async {
-          userDB.introVideo = await registrationController.getRef(ref);
-        },
-        listenToProgress: (event) async {
-          if (event.state == TaskState.running) {
-            progress = ((event.bytesTransferred.toDouble() /
-                        event.totalBytes.toDouble()) *
-                    100)
-                .roundToDouble();
+      fileName: 'profileVideo',
+      directory: 'profile',
+      profileFile: cameraController.pickedVideo!,
+      getRefrence: (ref) async {
+        userDB.introVideo = await registrationController.getRef(ref);
+      },
+      listenToProgress: (event) async {
+        if (event.state == TaskState.running) {
+          progress = ((event.bytesTransferred.toDouble() /
+                      event.totalBytes.toDouble()) *
+                  100)
+              .roundToDouble();
 
-            update();
-          }
-          if (event.state == TaskState.success) {
-            await globalController.saveRegistrationState();
-            globalController.hideLoading();
-
-            await UserDBServices().createNewUser(userDB);
-            videoUploaded.value = true;
-            Get.to(const TribeRegistrationChoice());
-          }
-        },
-        functionAfterUploaded: () async {
-          assigningUser();
+          update();
+        }
+        if (event.state == TaskState.success) {
           await globalController.saveRegistrationState();
-
           globalController.hideLoading();
 
-          await UserDBServices().createNewUser(userDB);
-
+          /* await UserDBServices().createNewUser(userDB); */
           videoUploaded.value = true;
-
           Get.to(const TribeRegistrationChoice());
-        },
-        fileName: 'profileVideo',
-        directory: 'profile',
-        profileFile: cameraController.pickedVideo!);
+        }
+      },
+      functionAfterUploaded: () async {
+        assigningUser();
+        await globalController.saveRegistrationState();
+
+        globalController.hideLoading();
+
+        await UserDBServices().createNewUser(userDB);
+
+        videoUploaded.value = true;
+
+        Get.to(const TribeRegistrationChoice());
+      },
+    );
   }
 
   /* closeKeyboard() {

@@ -6,23 +6,23 @@ import 'dart:io' as io;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/app/controllers/camera_controller.dart';
-import 'package:flutter_application_1/app/controllers/global_controler.dart';
-import 'package:flutter_application_1/app/helpers/theme/alert_styles.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/db_services/tribe_db_services.dart';
-import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
-import 'package:flutter_application_1/infrastructure/native_functions/time_converting_services.dart';
+
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 import 'package:uuid/uuid.dart';
 
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
-import '../../../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
+import '../../../../infrastructure/fb_services/db_services/tribe_db_services.dart';
+import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/tribal_type.dart';
 import '../../../../infrastructure/fb_services/models/tribe_model.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart' as user;
+import '../../../../infrastructure/native_functions/time_converting_services.dart';
+import '../../../controllers/camera_controller.dart';
+import '../../../controllers/global_controler.dart';
+import '../../../controllers/registration_controller.dart';
+import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/main_constants.dart';
 
 class TribeRegistrationController extends GetxController {
@@ -34,6 +34,7 @@ class TribeRegistrationController extends GetxController {
 
   var globalController = Get.find<GlobalController>();
   var cameraController = Get.find<CameraController>();
+  var registrationController = Get.put(RegistrationController());
 
   RxInt? choosenSignIndex = (-1).obs;
   RxBool isSignChosen = false.obs;
@@ -96,21 +97,11 @@ class TribeRegistrationController extends GetxController {
   }
 
   TimeRange? availableTime;
-  bool isTimeChosen() {
-    if (availableTime != null) {
-      return true;
-    } else {
-      Get.showSnackbar(customSnackbar('Available time not chosen'));
-      return false;
-    }
-  }
 
   void switchIsVideoChosen() {
     isVideoChosen = !isVideoChosen;
     update();
   }
-
-
 
   Future<List<String>> featchTribalTypes() async {
     var tribalTypes = await tribeDBServices.fechListTribalTypes();
@@ -123,25 +114,7 @@ class TribeRegistrationController extends GetxController {
     return typesList;
   }
 
-  var videoUploaded = false.obs;
   double progress = 0.0;
-
-  Future<UploadedFile> getRef(Reference ref) async {
-    var url = await ref.getDownloadURL();
-    var metaDataRef = await ref.getMetadata();
-
-    var metaData = Metadata(
-        bucket: metaDataRef.bucket,
-        name: metaDataRef.name,
-        size: metaDataRef.size!,
-        fullPath: metaDataRef.fullPath,
-        contentType: metaDataRef.contentType!,
-        timeCreated: metaDataRef.timeCreated,
-        contentEncoding: metaDataRef.contentEncoding);
-
-    return UploadedFile(downloadUrl: url, metaData: metaData);
-  }
-
   listenToProgress(TaskSnapshot event) {
     if (event.state == TaskState.running) {
       progress =
@@ -152,48 +125,14 @@ class TribeRegistrationController extends GetxController {
     }
   }
 
-  Future uploadFile({
-    required String fileName,
-    required String directory,
-    required io.File profileFile,
-    required Future Function(Reference) getRefrence,
-    Future Function(TribeDb)? functionAfterUploaded,
-    bool recordingTheProgress = false,
-  }) async {
-    //TODO cloud function to resize photo to secure the end point
-    final storage = CloudStorageServices();
-    String userId = auth.currentUser!.uid;
-    return storage
-        .uploadFile(
-            folder: "Tribes",
-            path: directory,
-            userId: userId,
-            imageToUpload: profileFile,
-            fileName: '$fileName${extension(profileFile.path)}')
-        .snapshotEvents
-        .listen((event) async {
-      if (recordingTheProgress) {
-        listenToProgress(event);
-      }
-      if (event.state == TaskState.success) {
-        var ref = event.ref;
-        await getRefrence(ref);
-        if (functionAfterUploaded != null) {
-          await functionAfterUploaded(tribeDB);
-        }
-      }
-    });
-  }
-
   Future<void> saveNewTribe() async {
-    if (isTimeChosen()) {
+    if (registrationController.isTimeChosen(availableTime)) {
       assignTribeDb();
-
       if (customTribalSign != null) {
-        await uploadFile(
+        await registrationController.uploadFile(
             getRefrence: (ref) async {
-              print('get ref custom tribal sign');
-              tribeDB.customTribalSign = await getRef(ref);
+              tribeDB.customTribalSign =
+                  await registrationController.getRef(ref);
             },
             fileName: 'tribeImage',
             directory: 'profile',
@@ -201,26 +140,32 @@ class TribeRegistrationController extends GetxController {
       } else {
         tribeDB.localTribalSign = localTribalSignPath;
       }
-      await uploadFile(
-              functionAfterUploaded: tribeDBServices.createTribe,
-              recordingTheProgress: true,
-              getRefrence: (ref) async {
-                tribeDB.tribalIntroVideo = await getRef(ref);
-              },
-              fileName: 'tribalVideo',
-              directory: 'profile',
-              profileFile: cameraController.pickedVideo!)
-          .then((value) async {});
-      /* await globalController.saveRegistrationState(); */
-      //TODO SAVE registration state
+      await registrationController.uploadFile(
+        functionAfterUploaded: () async {
+         await tribeDBServices.createTribe(tribeDB);
+        },
+        fileName: 'tribalVideo',
+        directory: 'profile',
+        profileFile: cameraController.pickedVideo!,
+        listenToProgress: (event) async {
+          if (event.state == TaskState.running) {
+            progress = ((event.bytesTransferred.toDouble() /
+                        event.totalBytes.toDouble()) *
+                    100)
+                .roundToDouble();
 
+            update();
+          }
+        },
+        getRefrence: (ref) async {
+          tribeDB.tribalIntroVideo = await registrationController.getRef(ref);
+        },
+      );
     }
   }
 
   assignigTriberers() {}
-/////////////////////////
-  ///
-  ///
+
   TextEditingController searchTextEditingController = TextEditingController();
   List<user.UserDB> usersList = [];
   List<user.UserDB> temporaryUsersList = [];
@@ -283,6 +228,8 @@ class TribeRegistrationController extends GetxController {
     update();
   }
 
+  //TODO refactor the searchByEmailOrPhone nested if's
+
   Future<void> searchByEmailOrPhone() async {
     if (searchTextEditingController.text.isEmpty ||
         alreadySearched == searchTextEditingController.text) {
@@ -326,9 +273,10 @@ class TribeRegistrationController extends GetxController {
 
   @override
   void onInit() async {
-    tribalTypes = await featchTribalTypes().then((value) => value);
+    tribalTypes = await featchTribalTypes();
     chosenTribaType = tribalTypes.toList()[0];
     scrollController.addListener(scrollListener);
+    //TODO name of te func ??
     await fetchNextUsers();
 
     super.onInit();

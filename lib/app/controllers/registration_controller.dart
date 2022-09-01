@@ -3,13 +3,16 @@ import 'dart:io' as io;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'package:time_range_picker/time_range_picker.dart';
 
 import '../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
-import '../../infrastructure/fb_services/models/user_model.dart';
+import 'global_controler.dart';
 
 class RegistrationController extends GetxController {
-    Future<UploadedFile> getRef(Reference ref) async {
+  var globalController = Get.find<GlobalController>();
+
+  Future<UploadedFile> getRef(Reference ref) async {
     var url = await ref.getDownloadURL();
     var metaDataRef = await ref.getMetadata();
     var metaData = Metadata(
@@ -54,5 +57,14 @@ class RegistrationController extends GetxController {
         }
       }
     });
+  }
+
+  bool isTimeChosen(TimeRange? availableTime) {
+    if (availableTime != null) {
+      return true;
+    } else {
+      globalController.showErrror('Available time not chosen');
+      return false;
+    }
   }
 }

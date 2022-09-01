@@ -39,8 +39,6 @@ class RegistrationAditionalView extends GetView<ProfileRegistrationController> {
         ),
         CustomTextField(
           controller: controller.hobby1Controller,
-          /* validate: (value) =>
-              controller.validateUser(value: value, lenght: 50), */
           textInputAction: TextInputAction.next,
           hintText: 'Hobby 1',
           maxline: 1,
@@ -53,9 +51,6 @@ class RegistrationAditionalView extends GetView<ProfileRegistrationController> {
         ),
         CustomTextField(
           controller: controller.hobby2Controller,
-
-          /* validate: (value) =>
-              controller.validateUser(value: value, lenght: 50), */
           textInputAction: TextInputAction.next,
           hintText: 'Hobby 2',
           maxline: 1,
@@ -68,7 +63,6 @@ class RegistrationAditionalView extends GetView<ProfileRegistrationController> {
       buttonCallBack: () {
         globalController.unFocuseNode();
         if (controller.validateAditionalInfo()) {
-          print(controller.validateAditionalInfo());
           /* Get.to(() => ProfileView()); */
           Get.to(RegistrationUploadVideoView());
         }
