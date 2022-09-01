@@ -30,14 +30,18 @@ class GlobalController extends GetxController {
     isLoadingVisible.value = false;
   }
 
-  String? validateInputs({required String value, required int lenght}) {
+  bool validateInput(
+      {required String value, required int lenght, required inputType}) {
     if (value.isEmpty) {
-      return 'write some text';
+      showErrror('You have to put something in $inputType !!!');
+      return false;
     }
     if (value.length > lenght) {
-      return 'Max message lenght = ${lenght.toString()} char';
+      showErrror(
+          'in $inputType Max message lenght = ${lenght.toString()} char');
+      return false;
     }
-    return null;
+    return true;
   }
 
   showErrror(String message) {

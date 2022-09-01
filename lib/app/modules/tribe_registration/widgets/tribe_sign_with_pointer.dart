@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 // Project imports:
 import '../../../helpers/theme/app_colors.dart';
-import '../../registration/widgets/neumorphic_circle_background.dart';
+import '../../profile_registration/widgets/neumorphic_circle_background.dart';
 import '../controllers/tribe_registration_controller.dart';
 
 class TribeSignWithPointer extends StatelessWidget {
@@ -45,7 +45,7 @@ class TribeSignWithPointer extends StatelessWidget {
                     tribeRegistrationController.choosenSignIndex!.value == index
                         ? NeumorphicCircleBackground(
                             child: CircleAvatar(
-                              backgroundColor: AppColors.whiteColor,
+                              backgroundColor: AppColors.white,
                               radius: 15,
                               child: CircleAvatar(
                                 backgroundColor: AppColors.actionColor,

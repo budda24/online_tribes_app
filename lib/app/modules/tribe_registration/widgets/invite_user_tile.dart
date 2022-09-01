@@ -25,8 +25,8 @@ class InviteUserTile extends StatelessWidget {
             style: NeumorphicStyle(
               color: user.isInvited == false
                   ? AppColors.primaryColor
-                  : AppColors.whiteColor,
-              shadowLightColorEmboss: AppColors.whiteColor,
+                  : AppColors.white,
+              shadowLightColorEmboss: AppColors.white,
               depth: -4,
               intensity: 5,
               oppositeShadowLightSource: true,
@@ -45,7 +45,7 @@ class InviteUserTile extends StatelessWidget {
                     CircleAvatar(
                       radius: 37,
                       backgroundColor: user.isInvited == false
-                          ? AppColors.whiteColor
+                          ? AppColors.white
                           : AppColors.primaryColor,
                       child: CircleAvatar(
                         backgroundImage:
@@ -89,7 +89,7 @@ class InviteUserTile extends StatelessWidget {
                         user.isInvited == false ? 'Invite' : 'Invited',
                         style: TextStyle(
                           color: user.isInvited == false
-                              ? AppColors.whiteColor
+                              ? AppColors.white
                               : AppColors.blackColor,
                           fontSize: 16,
                         ),

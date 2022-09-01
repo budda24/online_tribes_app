@@ -1,44 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/app/modules/user_profile/controllers/profile_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:video_viewer/domain/bloc/controller.dart';
 
 import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
-import '../../../../modules/user_profile/widgets/video_player.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/ui_helpers.dart';
-import '../../../theme/main_constants.dart';
 
 class ProfileTemplate extends StatelessWidget {
-  ProfileTemplate({
-    Key? key,
-    required this.fields,
-    required this.title,
-    /* required this.profileVideoSrc, */
-    required this.profileImage,
+  ProfileTemplate(
+      {Key? key,
+      required this.fields,
+      this.title,
+      required this.profileImage,
+      this.rigtTopIconColumn,
+      this.leftTopIconColumn,
+      this.videoPlayer,
+      this.button,
+      this.isEditingMode,
+      this.swichTabs,
+      this.containerPadding =
+          const PaddingParameters(horizontal: 50, vertical: 10)})
+      : super(key: key);
 
-    this.rigtTopIconColumn,
-    this.leftTopIconColumn,
-    this.videoPlayer,
-    /* this.videoController, */
-
-    this.button,
-    this.isEditingMode,
-  }) : super(key: key);
-
-  /* final VideoViewerController? videoController; */
-
-  final Widget title;
-  /* final String? profileVideoSrc; */
-  final List<Widget> fields;
-  Image profileImage;
   Widget? button;
-  Column? rigtTopIconColumn;
-  Column? leftTopIconColumn;
+  final List<Widget> fields;
   bool? isEditingMode;
-
+  Column? leftTopIconColumn;
+  Image profileImage;
+  Column? rigtTopIconColumn;
+  final Widget? swichTabs;
+  final Widget? title;
   Widget? videoPlayer;
+  PaddingParameters containerPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +46,9 @@ class ProfileTemplate extends StatelessWidget {
             height: 530,
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.w, vertical: 10),
+                padding: EdgeInsets.symmetric(
+                    horizontal: containerPadding.horizontal.w,
+                    vertical: containerPadding.vertical.h),
                 child: Column(
                   children: [
                     verticalSpaceLarge,
@@ -69,21 +63,33 @@ class ProfileTemplate extends StatelessWidget {
               ),
             ),
           ),
-          isEditingMode != null && isEditingMode ==  true
+          isEditingMode != null && isEditingMode == true
               ? const SizedBox.shrink()
-              : Positioned(
-                  left: 125,
-                  top: 70,
-                  child: CircleAvatar(
-                    radius: 70,
-                    backgroundColor: AppColors.primaryColor,
-                    child: CircleAvatar(
-                      backgroundImage: profileImage.image,
-                      radius: 65,
-                      backgroundColor: AppColors.greyColor,
+              : Positioned.fill(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        verticalSpaceMedium,
+                        CircleAvatar(
+                          radius: 70,
+                          backgroundColor: AppColors.primaryColor,
+                          child: CircleAvatar(
+                            backgroundImage: profileImage.image,
+                            radius: 65,
+                            backgroundColor: AppColors.greyColor,
+                          ),
+                        ),
+                        title == null ? const SizedBox.shrink() : title!,
+                      ],
                     ),
                   ),
                 ),
+          Positioned(
+            top: 222.h,
+            child: swichTabs ?? const SizedBox.shrink(),
+          ),
           Positioned.fill(
             top: 70,
             right: 15,
@@ -104,4 +110,10 @@ class ProfileTemplate extends StatelessWidget {
       ),
     );
   }
+}
+
+class PaddingParameters {
+  const PaddingParameters({required this.horizontal, required this.vertical});
+  final double horizontal;
+  final double vertical;
 }

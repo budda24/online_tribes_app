@@ -89,7 +89,7 @@ class Alerts {
 
   showInputDialog() async {
     await Get.defaultDialog(
-        backgroundColor: AppColors.whiteColor,
+        backgroundColor: AppColors.white,
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

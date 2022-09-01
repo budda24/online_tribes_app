@@ -4,10 +4,10 @@ import '../modules/authorization/bindings/login_binding.dart';
 import '../modules/authorization/views/login_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/registration/bindings/registration_binding.dart';
-import '../modules/registration/views/registration_desrription_view.dart';
-/* import '../modules/tribe_profile/bindings/tribe_profile_binding.dart';
-import '../modules/tribe_profile/views/tribe_profile_view.dart'; */
+import '../modules/profile_registration/bindings/profile_registration_binding.dart';
+import '../modules/profile_registration/views/registration_desrription_view.dart';
+import '../modules/tribe_profile/bindings/tribe_profile_binding.dart';
+import '../modules/tribe_profile/views/tribe_profile_view.dart';
 import '../modules/tribe_registration/bindings/tribe_registration_binding.dart';
 import '../modules/tribe_registration/views/registration_tribe_choose_sign.dart';
 import '../modules/user_profile/bindings/profile_binding.dart';
@@ -64,10 +64,10 @@ class AppPages {
       page: () => RegistrationTribeChooseSign(),
       binding: TribeRegistrationBinding(),
     ),
-   /*  GetPage(
+    GetPage(
       name: _Paths.TRIBE_PROFILE,
       page: () => TribeProfileView(),
       binding: TribeProfileBinding(),
-    ), */
+    ),
   ];
 }

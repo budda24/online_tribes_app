@@ -71,7 +71,7 @@ class WalkthroughView extends GetView<WalkthroughController> {
                                 onPress: controller.onTap,
                                 title: 'Continue',
                                 backgroundColour: AppColors.blueColor,
-                                textColor: AppColors.whiteColor,
+                                textColor: AppColors.white,
                               ),
                             ),
 

@@ -21,19 +21,19 @@ class AppColors {
 
   static Color primaryColor = const Color(0xff8FFCBB);
   static Color actionColor = const Color(0xff20A857);
-  static Color transparent =  Colors.transparent;
+  static Color transparent = Colors.transparent;
 
   static Color textFieldFill = const Color(0xffCBFAE2);
   static Color primaryColorWithOpacity40 = const Color(0xffD2FEE4);
   static Color googleColor = const Color(0xffDF4A32);
   static Color facebookColor = const Color(0xff39579A);
-  static Color whiteColor = Colors.white;
-  static Color blueColor = Color(0xff82ACEA);
+  static Color white = Colors.white;
+  static Color blueColor = const Color(0xff82ACEA);
   static Color blackColor = Colors.black;
-  static Color greyColor = Color(0xff707070);
-  static Color darkGreyColor = Color(0xff808080);
-  static Color darkOrangeColor = Color(0xffE5A238);
-  static Color errorRedColor = Color(0xffCD5D7D);
+  static Color greyColor = const Color(0xff707070);
+  static Color darkGreyColor = const Color(0xff808080);
+  static Color darkOrangeColor = const Color(0xffE5A238);
+  static Color errorRedColor = const Color(0xffCD5D7D);
 
   /*  static Color? accentColor = const Color(0xFF312951);
   static Color? buttonColor = const Color(0xFF592AAE);

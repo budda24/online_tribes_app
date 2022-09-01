@@ -34,7 +34,6 @@ class CustomVideoPlayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('link: $videoSrc :  type: $type');
-
     return VideoViewer(
   
         enableVerticalSwapingGesture: false,

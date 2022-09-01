@@ -15,7 +15,7 @@ import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/general/main_button.dart';
 import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
-import '../../registration/widgets/custom_pin_put.dart';
+import '../../profile_registration/widgets/custom_pin_put.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -93,7 +93,7 @@ class LoginView extends GetView<LoginController> {
                                                 .isVeryficationScreen.value
                                             ? 'Verify SMS'
                                             : 'Login \n Register',
-                                        textColor: AppColors.whiteColor,
+                                        textColor: AppColors.white,
                                         onPress: () async {
                                           _formKey.currentState!.save();
                                           if (!controller

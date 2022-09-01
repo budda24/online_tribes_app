@@ -3,8 +3,6 @@ import 'package:flutter_application_1/app/helpers/theme/text_styles.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
-
 class CustomTextField extends StatelessWidget {
   CustomTextField({
     Key? key,
@@ -47,7 +45,7 @@ class CustomTextField extends StatelessWidget {
             shape: NeumorphicShape.convex,
             lightSource: LightSource.topLeft,
             intensity: 60,
-            color: AppColors.whiteColor,
+            color: AppColors.white,
             boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(40)),
           ),
           child: Container(
@@ -82,18 +80,18 @@ class CustomTextField extends StatelessWidget {
             ),
           ),
         ),
-         tribesLable == null
-          ? const SizedBox.shrink()
-          : Positioned.fill(
-              top: -15,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: TextContainerLable(
-                  text: tribesLable!,
-                  lableStyle: tribalFontLable,
+        tribesLable == null
+            ? const SizedBox.shrink()
+            : Positioned.fill(
+                top: -15,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: TextContainerLable(
+                    text: tribesLable!,
+                    lableStyle: tribalFontLable,
+                  ),
                 ),
-              ),
-            )
+              )
       ],
     );
   }

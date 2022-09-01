@@ -5,6 +5,8 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../cloud_storage/cloud_storage_services.dart';
+
 TribeDb welcomeFromJson(String str) => TribeDb.fromJson(json.decode(str));
 
 String welcomeToJson(TribeDb data) => json.encode(data.toJson());
@@ -70,27 +72,6 @@ class TribeDb {
         "triberer": triberer?.map((x) => x.toJson()).toList(),
       };
 }
-
-class UploadedFile {
-  UploadedFile({
-    required this.downloadUrl,
-    required this.metaData,
-  });
-
-  String downloadUrl;
-  Metadata metaData;
-
-  factory UploadedFile.fromJson(Map<String, dynamic> json) => UploadedFile(
-        downloadUrl: json["downloadUrl"],
-        metaData: Metadata.fromJson(json["metaData"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "downloadUrl": downloadUrl,
-        "metaData": metaData.toJson(),
-      };
-}
-
 class AvailableTime {
   AvailableTime({
     required this.startZero,
@@ -120,46 +101,6 @@ class AvailableTime {
         "time_zone": timeZone,
         "start": start,
         "end": end,
-      };
-}
-
-class Metadata {
-  Metadata({
-    required this.bucket,
-    required this.name,
-    required this.size,
-    required this.fullPath,
-    required this.contentType,
-    required this.timeCreated,
-    required this.contentEncoding,
-  });
-
-  final String? bucket;
-  final String fullPath;
-  final int size;
-  final DateTime? timeCreated;
-  final String contentType;
-  final String? contentEncoding;
-  final String name;
-
-  factory Metadata.fromJson(Map<String, dynamic> json) => Metadata(
-        bucket: json["bucket"],
-        fullPath: json["fullPath"],
-        size: json["size"],
-        timeCreated: ((json["timeCreated"]) as Timestamp).toDate(),
-        contentType: json["contentType"],
-        contentEncoding: json["contentEncoding"],
-        name: json["name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "bucket": bucket,
-        "fullPath": fullPath,
-        "size": size,
-        "timeCreated": timeCreated,
-        "contentType": contentType,
-        "contentEncoding": contentEncoding,
-        "name": name,
       };
 }
 
