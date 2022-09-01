@@ -26,7 +26,7 @@ class RegistrationTribeDescription extends GetView {
         imagepath: tribeRegistrationController.localTribalSignPath,
         topElementsMargin: 100,
         buttonCallBack: () async {
-          if (await tribeRegistrationController.validateInput(
+          if (globalController.validateInput(
               inputType: 'Description',
               value: tribeRegistrationController.textDescritionController.text,
               lenght: 1500)) {

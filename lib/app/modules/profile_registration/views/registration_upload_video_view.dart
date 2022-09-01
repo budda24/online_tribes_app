@@ -1,22 +1,14 @@
 // Package imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 // Project imports:
 import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
-import '../../../helpers/theme/alert_styles.dart';
-import '../../../helpers/theme/app_colors.dart';
-import '../../../helpers/theme/text_styles.dart';
-import '../../../helpers/theme/ui_helpers.dart';
 import '../../../helpers/theme/main_constants.dart';
-import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
-import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
 import '../../../helpers/widgets/online_tribes/registration/uploading_video.dart';
-import '../controllers/registration_controller.dart';
+import '../controllers/profile_registration_controller.dart';
 
 class RegistrationUploadVideoView extends GetView {
   RegistrationUploadVideoView({Key? key}) : super(key: key);
@@ -29,19 +21,18 @@ class RegistrationUploadVideoView extends GetView {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kMainColor,
-      body: GetBuilder<RegistrationController>(
+      body: GetBuilder<ProfileRegistrationController>(
           builder: (builderController) => UploadingVideoView(
               saveData: builderController.saveNewUser,
               /* profileImage: cameraController.pickedPhoto, */
               progress: builderController.progress,
               isVideoChosen: builderController.isVideoChosen,
               availableTimeButton: () async {
-                builderController.availableTime =
-                    await TimeCovertingServices()
-                        .getCustomTimeRangePicker(context);
+                builderController.availableTime = await TimeCovertingServices()
+                    .getCustomTimeRangePicker(context);
               },
               saveFunction: builderController.saveNewUser,
-              switchIsVideoChosen: builderController.switchIsVideoCosen)
+              switchIsVideoChosen: builderController.switchIsVideoChosen)
 
           /* RegistrationTemplate(
           showButton: builderController.progress != 0.0 ? false : true,

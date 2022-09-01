@@ -10,7 +10,7 @@ import '../../../app/helpers/theme/alert_styles.dart';
 class TribeDBServices {
   final _db = FirebaseFirestore.instance;
   Future<void> createTribe(TribeDb tribe) async {
-    print('create a tribe');
+    
     try {
       tribe.createdAt = FieldValue.serverTimestamp();
       await _db.collection('TRIBES').doc(tribe.tribeId).set(tribe.toJson());

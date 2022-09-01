@@ -32,11 +32,11 @@ class RegistrationTribeAditionalInfo extends GetView {
         imagepath: tribeRegistrationController.localTribalSignPath,
         topElementsMargin: 100,
         buttonCallBack: () async {
-          if (await tribeRegistrationController.validateInput(
+          if (globalController.validateInput(
                   value: tribeRegistrationController.textNameController.text,
                   inputType: 'Tribal name',
                   lenght: 100) &&
-              await tribeRegistrationController.validateInput(
+              globalController.validateInput(
                   inputType: 'Triberers type',
                   value: tribeRegistrationController
                       .textTriberersTypeController.text,

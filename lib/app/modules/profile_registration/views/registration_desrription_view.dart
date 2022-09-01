@@ -8,14 +8,15 @@ import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
-import '../controllers/registration_controller.dart';
+import '../controllers/profile_registration_controller.dart';
 import 'registration_aditional_info_view.dart';
 
-class RegistrationDescriptionView extends GetView<RegistrationController> {
+class RegistrationDescriptionView
+    extends GetView<ProfileRegistrationController> {
   final _formKey = GlobalKey<FormState>();
 
   @override
-  final controller = Get.put(RegistrationController());
+  final controller = Get.put(ProfileRegistrationController());
   final cameraController = Get.put(CameraController());
   final globalController = Get.find<GlobalController>();
 
@@ -36,8 +37,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
       topElementsMargin: 100,
       centerWidget: CustomTextField(
         controller: controller.describtionController,
-        validate: (value) =>
-            controller.validateUser(value: value, lenght: 1500),
+        /* validate: (value) =>
+            controller.validateUser(value: value, lenght: 1500), */
         hintText: 'Describe yourself',
         maxline: 12,
         minLine: 8,
@@ -48,8 +49,8 @@ class RegistrationDescriptionView extends GetView<RegistrationController> {
       buttonCallBack: () {
         /* Get.to(TribeRegistrationChoice()); */
 
-        if (controller.checkIfPhotoUpload() &&
-            _formKey.currentState!.validate()) {
+        if (controller.checkIfPhotoChosen() &&
+            _formKey.currentState!.validate() && globalController.validateInput(value: controller.describtionController.text, lenght: 1500, inputType: 'description')) {
           /* Get.to(() => ProfileView()); */
 
           Get.to(() => RegistrationAditionalView());

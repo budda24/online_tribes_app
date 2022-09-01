@@ -110,22 +110,7 @@ class TribeRegistrationController extends GetxController {
     update();
   }
 
-  Future<bool> validateInput(
-      {required String value, required int lenght, required inputType}) async {
-    if (value.isEmpty) {
-      globalController
-          .showErrror('You have to put something in $inputType !!!');
 
-      return false;
-    }
-    if (value.length > lenght) {
-      globalController.showErrror(
-          'in $inputType Max message lenght = ${lenght.toString()} char');
-
-      return false;
-    }
-    return true;
-  }
 
   Future<List<String>> featchTribalTypes() async {
     var tribalTypes = await tribeDBServices.fechListTribalTypes();
@@ -321,7 +306,7 @@ class TribeRegistrationController extends GetxController {
       if (user.isNotEmpty) {
         if (temporaryUsersList.isEmpty) temporaryUsersList = usersList;
         usersList = user;
-      
+
         update();
       }
       return;

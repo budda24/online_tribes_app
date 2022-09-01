@@ -8,10 +8,10 @@ import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
-import '../controllers/registration_controller.dart';
+import '../controllers/profile_registration_controller.dart';
 import 'registration_upload_video_view.dart';
 
-class RegistrationAditionalView extends GetView<RegistrationController> {
+class RegistrationAditionalView extends GetView<ProfileRegistrationController> {
   final _formKey = GlobalKey<FormState>();
 
   final globalController = Get.find<GlobalController>();
@@ -39,8 +39,8 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
         ),
         CustomTextField(
           controller: controller.hobby1Controller,
-          validate: (value) =>
-              controller.validateUser(value: value, lenght: 50),
+          /* validate: (value) =>
+              controller.validateUser(value: value, lenght: 50), */
           textInputAction: TextInputAction.next,
           hintText: 'Hobby 1',
           maxline: 1,
@@ -53,8 +53,9 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
         ),
         CustomTextField(
           controller: controller.hobby2Controller,
-          validate: (value) =>
-              controller.validateUser(value: value, lenght: 50),
+
+          /* validate: (value) =>
+              controller.validateUser(value: value, lenght: 50), */
           textInputAction: TextInputAction.next,
           hintText: 'Hobby 2',
           maxline: 1,
@@ -66,7 +67,8 @@ class RegistrationAditionalView extends GetView<RegistrationController> {
       formKey: _formKey,
       buttonCallBack: () {
         globalController.unFocuseNode();
-        if (_formKey.currentState!.validate()) {
+        if (controller.validateAditionalInfo()) {
+          print(controller.validateAditionalInfo());
           /* Get.to(() => ProfileView()); */
           Get.to(RegistrationUploadVideoView());
         }

@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import '../../../../controllers/camera_controller.dart';
 import '../../../../controllers/global_controler.dart';
 import '../../../../modules/user_profile/widgets/bacground_rounded_container.dart';
-import '../../../../modules/registration/controllers/registration_controller.dart';
-import '../../../../modules/registration/widgets/neumorphic_circle_background.dart';
+import '../../../../modules/profile_registration/controllers/profile_registration_controller.dart';
+import '../../../../modules/profile_registration/widgets/neumorphic_circle_background.dart';
 import '../../../theme/app_colors.dart';
 import '../general/main_button.dart';
 import '../../../theme/main_constants.dart';
@@ -27,7 +27,7 @@ class RegistrationTemplate extends StatelessWidget {
   final GlobalKey<FormState>? formKey;
 
   @override
-  final registrationController = Get.put(RegistrationController());
+  final registrationController = Get.put(ProfileRegistrationController());
   final cameraController = Get.put(CameraController());
   final globalController = Get.find<GlobalController>();
 

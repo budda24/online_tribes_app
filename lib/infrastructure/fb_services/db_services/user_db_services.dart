@@ -24,8 +24,9 @@ class UserDBServices {
 
   //TODO remove + 0 from id - done only for createFewUsers loop purpose
   Future<UserDB?> feachUser(String userId) async {
+    print(userId);
     var snapshot =
-        await _db.collection('USERS').doc(userId + 0.toString()).get();
+        await _db.collection('USERS').doc(userId).get();
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();
@@ -83,20 +84,17 @@ class UserDBServices {
     return user;
   }
 
-  Future<void> createFewUser(UserDB user) async {
+  Future<void> createNewUser(UserDB user) async {
     try {
       user.createdAt = FieldValue.serverTimestamp();
-      for (var i = 0; i < 20; i++) {
+      /* for (var i = 0; i < 20; i++) {
         user.email = (user.email ?? '') + i.toString();
         print(user.email);
         user.phoneNumber = (user.phoneNumber ?? '') + i.toString();
         user.userId = user.userId + i.toString();
-        print(user.phoneNumber);
-        await _db
-            .collection('USERS')
-            .doc(user.userId /* + i.toString() */)
-            .set(user.toJson());
-      }
+        print(user.phoneNumber); }*/
+      await _db.collection('USERS').doc(user.userId).set(user.toJson());
+
       /*  await _db.collection('USERS').doc(user.userId).set(user.toJson()); */
     } on FirebaseException catch (e) {
       Get.showSnackbar(customSnackbar("Account can't be created because $e"));
