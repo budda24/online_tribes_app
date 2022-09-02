@@ -22,7 +22,7 @@ class UserDB {
     this.name,
     this.requestedTribe,
     this.description,
-    this.introVideo,
+    this.introVideoRef,
     this.lifeMotto,
     this.profilePhotoRef,
     this.hobbies,
@@ -38,7 +38,7 @@ class UserDB {
   String? name;
   String? requestedTribe;
   String? description;
-  UploadedFile? introVideo;
+  UploadedFile? introVideoRef;
   String? lifeMotto;
   UploadedFile? profilePhotoRef;
   Hobbies? hobbies;
@@ -56,7 +56,7 @@ class UserDB {
         name: json["name"],
         requestedTribe: json["requested_tribe"],
         description: json["description"],
-        introVideo: UploadedFile.fromJson(json["intro_video_url"]),
+        introVideoRef: UploadedFile.fromJson(json["intro_video_url"]),
         lifeMotto: json["life_motto"],
         profilePhotoRef: UploadedFile.fromJson(json["profile_photo"]),
         hobbies: Hobbies.fromJson(json["hobbies"]),
@@ -78,7 +78,7 @@ class UserDB {
         "name": name,
         "requested_tribe": requestedTribe,
         "description": description,
-        "intro_video_url": introVideo!.toJson(),
+        "intro_video_url": introVideoRef!.toJson(),
         "life_motto": lifeMotto,
         "profile_photo": profilePhotoRef!.toJson(),
         "hobbies": hobbies?.toJson(),
@@ -129,8 +129,6 @@ class Hobbies {
       };
 }
 
-
-
 class AvailableTime {
   AvailableTime({
     required this.startZero,
@@ -162,8 +160,6 @@ class AvailableTime {
         "end": end,
       };
 }
-
-
 
 class ProfileNotification {
   ProfileNotification({

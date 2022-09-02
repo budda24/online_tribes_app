@@ -29,14 +29,19 @@ class ProfileInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //http://10.0.2.2:9199/v0/b/online-tribes-6a28c.appspot.com/o/Tribes%2FY6lAqmSv89qvQGXAVtssZbTjG91t%2Fprofile%2FprofileImage.jpg?alt=media&token=8287c351-a05d-4a66-8428-a899d7bdada4
+
     return GestureDetector(
       onTap: () {
         profileController.videoController?.showAndHideOverlay(false);
       },
       child: GetBuilder<ProfileController>(builder: (getController) {
+        print(
+        'photo view url: ${profileController.userDB!.profilePhotoRef!.downloadUrl}');
         return ProfileTemplate(
           isEditingMode: profileController.isEditingMode,
-          profileImage: Image.network(getController.profilePhotoUrl),
+          profileImage:
+              Image.network(getController.userDB!.profilePhotoRef!.downloadUrl),
           leftTopIconColumn: profileController.isEditingMode
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,8 +67,6 @@ class ProfileInfoView extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           /* profileController.logout(); */
-                          print(profileController
-                              .userDB!.availableTime!.timeZone);
                         },
                         child: Icon(
                           Icons.logout,
@@ -101,8 +104,8 @@ class ProfileInfoView extends StatelessWidget {
                   children: [
                       InkWell(
                         onTap: () {
-                          profileController.isEditingMode = true;
-                          profileController.saveUserLocally();
+                          profileController.prepareEditingMode();
+                          cameraController.clearPickedPhotoAndVideo();
                         },
                         child: Icon(
                           Icons.edit,
@@ -120,14 +123,18 @@ class ProfileInfoView extends StatelessWidget {
               ? [
                   Column(
                     children: [
-                      Text(
-                        cameraController.pickedPhoto != null
-                            ? 'You changed your profile picture'
-                            : 'Change profile picture',
-                        style: cameraController.pickedPhoto != null
-                            ? greenActionTitle
-                            : greenTitle,
-                        textAlign: TextAlign.center,
+                      GetBuilder<CameraController>(
+                        builder: (_) {
+                          return Text(
+                            cameraController.pickedPhoto != null
+                                ? 'Changed profile picture'
+                                : 'Change profile picture',
+                            style: cameraController.pickedPhoto != null
+                                ? greenActionTitle
+                                : greenTitle,
+                            textAlign: TextAlign.center,
+                          );
+                        },
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -258,18 +265,22 @@ class ProfileInfoView extends StatelessWidget {
                               ),
                             ),
                       verticalSpaceTiny,
-                      
                       profileController.progress == 0.0
                           ? Column(
                               children: [
-                                Text(
-                                  cameraController.pickedVideo != null
-                                      ? ' You changed your introduction video'
-                                      : 'Change introduction video',
-                                  style: cameraController.pickedVideo != null
-                                      ? greenActionTitle
-                                      : greenTitle,
-                                  textAlign: TextAlign.center,
+                                GetBuilder<CameraController>(
+                                  builder: (_) {
+                                    return Text(
+                                      cameraController.pickedVideo != null
+                                          ? ' Changed introduction video'
+                                          : 'Change introduction video',
+                                      style:
+                                          cameraController.pickedVideo != null
+                                              ? greenActionTitle
+                                              : greenTitle,
+                                      textAlign: TextAlign.center,
+                                    );
+                                  },
                                 ),
                                 Row(
                                   mainAxisAlignment:
@@ -318,19 +329,24 @@ class ProfileInfoView extends StatelessWidget {
                             )
                           : const SizedBox.shrink(),
                       verticalSpaceMedium,
-                      Text(
-                        profileController.availableTime != null
-                            ? 'You have changed your availability time'
-                            : 'Change available time for meeting',
-                        style: profileController.availableTime != null
-                            ? greenActionTitle
-                            : greenTitle,
-                        textAlign: TextAlign.center,
+                      GetBuilder<ProfileController>(
+                        builder: (_) {
+                          return Text(
+                            profileController.availableTime != null
+                                ? ' Changed availability time'
+                                : 'Change available time for meeting',
+                            style: profileController.availableTime != null
+                                ? greenActionTitle
+                                : greenTitle,
+                            textAlign: TextAlign.center,
+                          );
+                        },
                       ),
                       AvailableTimeButton(onPressed: () async {
                         profileController.availableTime =
                             await TimeCovertingServices()
                                 .getCustomTimeRangePicker(context);
+                        profileController.update();
                       })
                     ],
                   ),
@@ -411,10 +427,11 @@ class ProfileInfoView extends StatelessWidget {
           videoPlayer: !profileController.isEditingMode
               ? GetBuilder<ProfileController>(
                   builder: (builderController) =>
-                      builderController.profileVideoUrl != ''
+                      builderController.userDB!.introVideoRef!.downloadUrl != ''
                           ? builderController.videoController != null
                               ? CustomVideoPlayer.network(
-                                  videoSrc: getController.profileVideoUrl,
+                                  videoSrc: builderController
+                                      .userDB!.introVideoRef!.downloadUrl,
                                   videoController:
                                       builderController.videoController!)
                               : const SizedBox.shrink()

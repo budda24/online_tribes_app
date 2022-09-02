@@ -33,13 +33,12 @@ class CustomVideoPlayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('link: $videoSrc :  type: $type');
+    print('videoViewer init>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+
     return VideoViewer(
-  
         enableVerticalSwapingGesture: false,
         enableHorizontalSwapingGesture: false,
         style: VideoViewerStyle(
-
           progressBarStyle: ProgressBarStyle(
               backgroundColor: AppColors.actionColor,
               bar: BarStyle.progress(

@@ -9,6 +9,7 @@ import '../models/user_model.dart';
 
 class UserDBServices {
   final _db = FirebaseFirestore.instance;
+
   Future<void> createUser(UserDB user) async {
     try {
       user.createdAt = FieldValue.serverTimestamp();
@@ -19,14 +20,17 @@ class UserDBServices {
   }
 
   Future<void> updateUser(UserDB user) async {
-    await _db.collection('USERS').doc(user.userId).update(user.toJson());
+    try{
+ await _db.collection('USERS').doc(user.userId).update(user.toJson());
+    }on FirebaseException catch (e) {
+      Get.showSnackbar(customSnackbar("User can't be updated because $e"));
+    }
+
   }
 
   //TODO remove + 0 from id - done only for createFewUsers loop purpose
   Future<UserDB?> feachUser(String userId) async {
-    print(userId);
-    var snapshot =
-        await _db.collection('USERS').doc(userId).get();
+    var snapshot = await _db.collection('USERS').doc(userId).get();
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();

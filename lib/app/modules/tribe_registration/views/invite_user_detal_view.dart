@@ -32,10 +32,10 @@ class InviteUserDetailView extends StatelessWidget {
               title: const SizedBox.shrink(),
               videoPlayer: GetBuilder(
                 builder: (builderController) =>
-                    user.introVideo!.downloadUrl != ''
+                    user.introVideoRef!.downloadUrl != ''
                         ? videoController != null
                             ? CustomVideoPlayer.network(
-                                videoSrc: user.introVideo!.downloadUrl,
+                                videoSrc: user.introVideoRef!.downloadUrl,
                                 videoController: videoController!)
                             : const SizedBox.shrink()
                         : Column(

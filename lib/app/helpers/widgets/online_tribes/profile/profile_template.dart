@@ -66,6 +66,7 @@ class ProfileTemplate extends StatelessWidget {
           isEditingMode != null && isEditingMode == true
               ? const SizedBox.shrink()
               : Positioned.fill(
+                top: 50,
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(

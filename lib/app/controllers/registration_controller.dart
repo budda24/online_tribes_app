@@ -7,6 +7,8 @@ import 'package:time_range_picker/time_range_picker.dart';
 
 import '../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
+import '../../infrastructure/fb_services/models/tribe_model.dart';
+import '../../infrastructure/native_functions/time_converting_services.dart';
 import 'global_controler.dart';
 
 class RegistrationController extends GetxController {
@@ -67,4 +69,7 @@ class RegistrationController extends GetxController {
       return false;
     }
   }
+
+
+
 }
