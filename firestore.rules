@@ -6,3 +6,12 @@ service cloud.firestore {
     }
   }
 }
+
+ service firebase.storage {
+   match /v0/b/online-tribes-6a28c.appspot.com/o {
+    match /{allPaths=**} {
+     allow read: if true;
+     allow write: if true;
+    }
+  }
+}

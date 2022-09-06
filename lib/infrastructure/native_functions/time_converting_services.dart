@@ -38,4 +38,5 @@ class TimeCovertingServices {
         timeTextStyle: tribalFontLable,
         activeTimeTextStyle: tribalFontLableWhite);
   }
+  
 }

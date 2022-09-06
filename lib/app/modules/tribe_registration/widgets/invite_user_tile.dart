@@ -26,7 +26,7 @@ class InviteUserTile extends StatelessWidget {
       shadowDarkColor: AppColors.darkGreyColor,
       boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(30)),
     );
-    
+
     return InkWell(
       onTap: () {
         Get.to(InviteUserDetailView(), arguments: user);
@@ -49,7 +49,7 @@ class InviteUserTile extends StatelessWidget {
                           : AppColors.primaryColor,
                       child: CircleAvatar(
                         backgroundImage:
-                            NetworkImage(user.profilePhoto!.downloadUrl),
+                            NetworkImage(user.profilePhotoRef!.downloadUrl),
                         radius: 35.r,
                         backgroundColor: AppColors.greyColor,
                       ),

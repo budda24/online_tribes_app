@@ -1,11 +1,9 @@
 //Package imports:
-import 'dart:io' as io;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/app/controllers/global_controler.dart';
+import 'package:flutter_application_1/app/controllers/registration_controller.dart';
 import 'package:flutter_application_1/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 import 'package:video_viewer/video_viewer.dart';
 // Project imports:
@@ -22,6 +20,7 @@ import '../widgets/noticification_tile_rejected.dart';
 class ProfileController extends GetxController {
   var globalController = Get.find<GlobalController>();
   final cameraController = Get.put(CameraController());
+  final registrationController = Get.put(RegistrationController());
 
   final TextEditingController describtionController = TextEditingController();
   final TextEditingController hobby1Controller = TextEditingController();
@@ -40,21 +39,16 @@ class ProfileController extends GetxController {
   RxInt actualIndex = 0.obs;
 
   UserDB? userDB;
-  UserDB? tmpUserDB;
+  UserDB? previousUserDB;
 
-  String profilePhotoUrl = '';
-  String profileVideoUrl = '';
+  // String profilePhotoUrl = '';
+  // String profileVideoUrl = '';
   bool isShrinkWrap = true;
   bool isEditingMode = false;
   TimeRange? availableTime;
+  bool isPhotoAndVideoBoutchUpdated = false;
 
   double progress = 0.0;
-
-  @override
-  void onInit() async {
-    await getUser();
-    super.onInit();
-  }
 
   Future<void> getUser() async {
     userDB = await userDbServieces.fetchUser(auth.currentUser!.uid);
@@ -62,12 +56,11 @@ class ProfileController extends GetxController {
   }
 
   void assignProfileInfo() async {
-    profileVideoUrl = userDB?.introVideo!.downloadUrl ?? '';
-    profilePhotoUrl = userDB!.profilePhoto!.downloadUrl;
     describtionController.text = userDB?.description ?? '';
     lifeMottoController.text = userDB?.lifeMotto ?? '';
     hobby1Controller.text = userDB?.hobbies?.hobby ?? '';
     hobby2Controller.text = userDB?.hobbies?.hobby1 ?? '';
+    videoController = VideoViewerController();
     //TODO DISPLAY THE CONVERTER TIME/* timeToInvestController.text = userDb?.timeToInvest.toString() ?? ''; */
 
     //TODO download and store the file localy not working with emulators
@@ -84,67 +77,77 @@ class ProfileController extends GetxController {
     userDB?.hobbies?.hobby1 = hobby2Controller.text;
   }
 
-  Future<UploadedFile> getRef(Reference ref) async {
-    var url = await ref.getDownloadURL();
-    var metaDataRef = await ref.getMetadata();
+  // Future<UploadedFile> getRef(Reference ref) async {
+  //   var url = await ref.getDownloadURL();
+  //   var metaDataRef = await ref.getMetadata();
 
-    var metaData = Metadata(
-        bucket: metaDataRef.bucket,
-        name: metaDataRef.name,
-        size: metaDataRef.size!,
-        fullPath: metaDataRef.fullPath,
-        contentType: metaDataRef.contentType!,
-        timeCreated: metaDataRef.timeCreated,
-        contentEncoding: metaDataRef.contentEncoding);
+  //   var metaData = Metadata(
+  //       bucket: metaDataRef.bucket,
+  //       name: metaDataRef.name,
+  //       size: metaDataRef.size!,
+  //       fullPath: metaDataRef.fullPath,
+  //       contentType: metaDataRef.contentType!,
+  //       timeCreated: metaDataRef.timeCreated,
+  //       contentEncoding: metaDataRef.contentEncoding);
 
-    return UploadedFile(downloadUrl: url, metaData: metaData);
+  //   return UploadedFile(downloadUrl: url, metaData: metaData);
+  // }
+
+  // listenToProgress(TaskSnapshot event) {
+  //   if (event.state == TaskState.running) {
+  //     progress =
+  //         ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
+  //                 100)
+  //             .roundToDouble();
+  //     update();
+  //   }
+  // }
+
+  // Future uploadFile({
+  //   required String fileName,
+  //   required String directory,
+  //   required io.File profileFile,
+  //   required Future Function(Reference ref) getRefrence,
+  //   bool recordingTheProgress = false,
+  // }) async {
+  //   //TODO cloud function to resize photo to secure the end point
+  //   final storage = CloudStorageServices();
+  //   String userId = auth.currentUser!.uid;
+  //   storage
+  //       .uploadFile(
+  //           folder: "Users",
+  //           path: directory,
+  //           userId: userId,
+  //           imageToUpload: profileFile,
+  //           fileName: '$fileName${extension(profileFile.path)}')
+  //       .snapshotEvents
+  //       .listen((event) async {
+  //     if (recordingTheProgress) {
+  //       listenToProgress(event);
+  //     }
+  //     if (event.state == TaskState.success) {
+  //       await getRef(event.ref);
+  //     }
+  //   });
+  // }
+
+  prepareEditingMode() {
+    saveUserLocally();
+
+    isEditingMode = true;
+    availableTime = null;
+    /* isPhotoAndVideoBoutchUpdated = false; */
+    update();
   }
 
-  listenToProgress(TaskSnapshot event) {
-    if (event.state == TaskState.running) {
-      progress =
-          ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
-                  100)
-              .roundToDouble();
-      update();
-    }
-  }
-
-  Future uploadFile({
-    required String fileName,
-    required String directory,
-    required io.File profileFile,
-    required Future Function(Reference ref) getRefrence,
-    bool recordingTheProgress = false,
-  }) async {
-    //TODO cloud function to resize photo to secure the end point
-    final storage = CloudStorageServices();
-    String userId = auth.currentUser!.uid;
-    storage
-        .uploadFile(
-            folder: "Users",
-            path: directory,
-            userId: userId,
-            imageToUpload: profileFile,
-            fileName: '$fileName${extension(profileFile.path)}')
-        .snapshotEvents
-        .listen((event) async {
-      if (recordingTheProgress) {
-        listenToProgress(event);
-      }
-      if (event.state == TaskState.success) {
-        await getRef(event.ref);
-      }
-    });
-  }
-
-  saveUserBeforeChanges() {
-    tmpUserDB = userDB;
+  saveUserLocally() {
+    previousUserDB = userDB;
   }
 
   cancelUserChanges() {
-    userDB = tmpUserDB;
+    userDB = previousUserDB;
     assignProfileInfo();
+
     update();
   }
 
@@ -162,104 +165,58 @@ class ProfileController extends GetxController {
   }
 
   Future<void> updateUser() async {
-    if (cameraController.pickedVideo != null) {
-      await uploadFile(
-          recordingTheProgress: true,
-          getRefrence: (ref) async {
-            userDB!.introVideo = await getRef(ref);
-          },
-          fileName: 'profileVideo',
-          directory: 'profile',
-          profileFile: cameraController.pickedVideo!);
-    }
+    assignUpdatedUserInfo();
+    /*   print('before:${userDB!.profilePhotoRef!.downloadUrl}'); */
 
     if (availableTime != null) {
       userDB!.availableTime = createAvailableTime();
     }
 
-    assignUpdatedUserInfo();
+    if (cameraController.pickedPhoto != null) {
+      await registrationController.uploadFile(
+        getRefrence: (ref) async {
+          userDB!.profilePhotoRef = await registrationController.getRef(ref);
+          /*   print('after:${userDB!.profilePhotoRef!.downloadUrl}'); */
+        },
+        fileName: 'profileImage',
+        directory: 'profile',
+        profileFile: cameraController.pickedPhoto!,
+        functionAfterUploaded: () async {
+          if (!isVideoAndPhotoChosen()) {
+            await userDbServieces.updateUser(userDB!);
+            update();
+          }
+        },
+      );
+    }
 
-    await userDbServieces.createUser(userDB!);
+    if (cameraController.pickedVideo != null) {
+      await registrationController.uploadFile(
+        getRefrence: (ref) async {
+          userDB!.introVideoRef = await registrationController.getRef(ref);
+        },
+        fileName: 'profileVideo',
+        directory: 'profile',
+        profileFile: cameraController.pickedVideo!,
+        functionAfterUploaded: () async {
+          await userDbServieces.updateUser(userDB!);
+          registrationController.update();
+        },
+      );
+    }
 
     isEditingMode = false;
 
-    update();
+    assignProfileInfo();
   }
 
-  /*  Future<UploadTask> uploadFile(
-      {required String fileName,
-      required String directory,
-      required io.File profileFile}) {
-    //TODO cloud function to resize photo to secure the end point
-    final storage = UserCloudStorageServices();
-
-    String userId = auth.currentUser!.uid;
-
-    return Future.value(
-      storage.uploadFile(
-          folder: "Users",
-          path: directory,
-          userId: userId,
-          imageToUpload: profileFile,
-          fileName: '$fileName${extension(profileFile.path)}'),
-    );
-  } */
-
-  /*  Future<void> updateUser() async {
-    await uploadFile(
-            fileName: 'profileImage',
-            directory: 'profile',
-            profileFile: cameraController.pickedPhoto!)
-        .then((taskSnapshot) => taskSnapshot.then((upladTask) async {
-              var url = await upladTask.ref.getDownloadURL();
-              var metaDataRef = await upladTask.ref.getMetadata();
-              var metaData = Metadata(
-                  bucket: metaDataRef.bucket,
-                  name: metaDataRef.name,
-                  size: metaDataRef.size!,
-                  fullPath: metaDataRef.fullPath,
-                  contentType: metaDataRef.contentType!,
-                  timeCreated: metaDataRef.timeCreated,
-                  contentEncoding: metaDataRef.contentEncoding);
-
-              userDB!.profilePhoto =
-                  UploadedFile(downloadUrl: url, metaData: metaData);
-            }));
-
-    await uploadFile(
-            fileName: 'profileVideo',
-            directory: 'profile',
-            profileFile: cameraController.pickedVideo!)
-        .then(
-      (uploadTask) => uploadTask.snapshotEvents.listen(
-        (event) async {
-          if (event.state == TaskState.running) {
-            progress = ((event.bytesTransferred.toDouble() /
-                        event.totalBytes.toDouble()) *
-                    100)
-                .roundToDouble();
-
-            update();
-          }
-          if (event.state == TaskState.success) {
-            var url = await event.ref.getDownloadURL();
-            var metaDataRef = await event.ref.getMetadata();
-            var metaData = Metadata(
-                bucket: metaDataRef.bucket,
-                name: metaDataRef.name,
-                size: metaDataRef.size!,
-                fullPath: metaDataRef.fullPath,
-                contentType: metaDataRef.contentType!,
-                timeCreated: metaDataRef.timeCreated,
-                contentEncoding: metaDataRef.contentEncoding);
-
-            userDB!.introVideo =
-                UploadedFile(downloadUrl: url, metaData: metaData);
-          }
-        },
-      ),
-    );
-  } */
+  bool isVideoAndPhotoChosen() {
+    if (cameraController.pickedPhoto != null &&
+        cameraController.pickedVideo != null) {
+      return true;
+    }
+    return false;
+  }
 
   List<Widget> get notificationWidgets {
     List<Widget> notificationWidget = [];
@@ -340,7 +297,9 @@ class ProfileController extends GetxController {
     return userDB?.profileNotification;
   }
 
-  rebuild() {
-    update();
+  @override
+  void onInit() async {
+    await getUser();
+    super.onInit();
   }
 }

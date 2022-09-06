@@ -73,7 +73,7 @@ class ProfileMyTribeView extends StatelessWidget {
       ],
       title: const SizedBox.shrink(),
 
-      profileImage: Image.network(profileController.profilePhotoUrl),
+      profileImage: Image.network(profileController.userDB!.profilePhotoRef!.downloadUrl),
     );
   }
 }

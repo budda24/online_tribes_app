@@ -95,7 +95,7 @@ class ProfileRegistrationController extends GetxController {
       globalController.showloading();
       await registrationController.uploadFile(
           getRefrence: (ref) async {
-            userDB.profilePhoto = await registrationController.getRef(ref);
+            userDB.profilePhotoRef = await registrationController.getRef(ref);
           },
           fileName: 'profileImage',
           directory: 'profile',
@@ -106,7 +106,7 @@ class ProfileRegistrationController extends GetxController {
         directory: 'profile',
         profileFile: cameraController.pickedVideo!,
         getRefrence: (ref) async {
-          userDB.introVideo = await registrationController.getRef(ref);
+          userDB.introVideoRef = await registrationController.getRef(ref);
         },
         listenToProgress: (event) async {
           if (event.state == TaskState.running) {

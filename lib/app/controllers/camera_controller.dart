@@ -15,6 +15,11 @@ class CameraController extends GetxController {
 
   PickedType pickedType = PickedType.photo;
 
+  clearPickedPhotoAndVideo() {
+    pickedPhoto = null;
+    pickedVideo = null;
+  }
+
   Future<void> getFileGallery({required PickedType type}) async {
     XFile? tmpFilePath;
     switch (type) {
@@ -49,7 +54,6 @@ class CameraController extends GetxController {
   }
 
   Future<void> getVideoCamera() async {
-
     final tmpImagePath = await _picker.pickVideo(
       source: ImageSource.camera,
       preferredCameraDevice: CameraDevice.front,
