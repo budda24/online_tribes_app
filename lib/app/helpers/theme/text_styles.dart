@@ -151,17 +151,17 @@ TextStyle longTextStyle = TextStyle(
 );
 TextStyle textSActionColorSmall = TextStyle(
     color: AppColors.actionColor,
-    fontFamily: poppins,
+    fontFamily: leelawadee,
     fontSize: 13.0.sp,
     fontWeight: FontWeight.bold);
 TextStyle textSBlackColorSmall = TextStyle(
     color: AppColors.blackColor,
-    fontFamily: poppins,
+    fontFamily: leelawadee,
     fontSize: 13.0.sp,
     fontWeight: FontWeight.bold);
 TextStyle textSWhiteColorSmall = TextStyle(
     color: AppColors.white,
-    fontFamily: poppins,
+    fontFamily: leelawadee,
     fontSize: 13.0.sp,
     fontWeight: FontWeight.bold);
 

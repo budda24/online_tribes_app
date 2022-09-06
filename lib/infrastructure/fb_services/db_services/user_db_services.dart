@@ -23,10 +23,8 @@ class UserDBServices {
   }
 
   //TODO remove + 0 from id - done only for createFewUsers loop purpose
-  Future<UserDB?> feachUser(String userId) async {
-    print(userId);
-    var snapshot =
-        await _db.collection('USERS').doc(userId).get();
+  Future<UserDB?> fetchUser(String userId) async {
+    var snapshot = await _db.collection('USERS').doc(userId).get();
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();
@@ -39,16 +37,24 @@ class UserDBServices {
     await _db.collection('USERS').doc(userId).delete();
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> fetchLimitedUsers(
-      {required int limit, DocumentSnapshot? startAfter}) async {
-    if (startAfter == null) {
-      var snapshot = await _db
-          .collection('USERS')
-          .orderBy('created_at')
-          .limit(limit)
-          .get();
+  List<UserDB> snapshotToUserList(
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> snapshots) {
+    return List.from(snapshots.map((e) => UserDB.fromJson(e.data())));
+  }
 
-      return snapshot;
+  Future<List<UserDB>> fetchUsersFromDB(
+      {required int limit /* , DocumentSnapshot? startAfter */}) async {
+    var snapshot = await _db
+        .collection('USERS')
+        .orderBy('created_at', descending: true)
+        .limit(limit)
+        .get();
+
+    return snapshotToUserList(snapshot.docs);
+
+    /* return UserDB.fromJson(snapshot.docs); */
+
+    /*    return snapshot;
     } else {
       var snapshot = await _db
           .collection('USERS')
@@ -58,10 +64,10 @@ class UserDBServices {
           .get();
 
       return snapshot;
-    }
+    }*/
   }
 
-  Future<List<UserDB>> feachUserByEmail({required String email}) async {
+  Future<List<UserDB>> fetchUserByEmail({required String email}) async {
     var snapshot =
         await _db.collection('USERS').where('email', isEqualTo: email).get();
 
@@ -71,49 +77,53 @@ class UserDBServices {
     return user;
   }
 
-  Future<List<UserDB>> feachUserByPhoneNumber(
+  Future<List<UserDB>> fetchUserByPhoneNumber(
       {required String phoneNumber}) async {
     var snapshot = await _db
         .collection('USERS')
         .where('phone_number', isEqualTo: phoneNumber)
         .get();
 
-    var user =
-        List<UserDB>.from(snapshot.docs.map((e) => UserDB.fromJson(e.data())))
-            .toList();
-    return user;
+    return List<UserDB>.from(
+        snapshot.docs.map((e) => UserDB.fromJson(e.data()))).toList();
   }
 
-  Future<void> createNewUser(UserDB user) async {
-    try {
-      user.createdAt = FieldValue.serverTimestamp();
-      /* for (var i = 0; i < 20; i++) {
-        user.email = (user.email ?? '') + i.toString();
-        print(user.email);
-        user.phoneNumber = (user.phoneNumber ?? '') + i.toString();
-        user.userId = user.userId + i.toString();
-        print(user.phoneNumber); }*/
-      await _db.collection('USERS').doc(user.userId).set(user.toJson());
+  Future<bool> sendInvitationToUser({
+    required String invitedUserID,
+    required String tribeId,
+  }) async {
+    //TODO CLOUD FUNCTION
+    UserDB? invitedUser = await fetchUser(invitedUserID);
+    if (invitedUser != null) {
+      invitedUser.profileNotification!.add(ProfileNotification(
+          createdAt: DateTime.now(), tribeId: tribeId, type: 'invited'));
 
-      /*  await _db.collection('USERS').doc(user.userId).set(user.toJson()); */
-    } on FirebaseException catch (e) {
-      Get.showSnackbar(customSnackbar("Account can't be created because $e"));
+      await updateUser(invitedUser);
+
+      return true;
     }
+    return false;
   }
 
-  Future<void> handleUserInvitation(
-      {required String invitedUserID, required String senderID}) async {
-    UserDB? invitedUser = await feachUser(invitedUserID);
+  Future<bool> deleteInvitationUser(
+      {required String invitedUserID, required String tribeId}) async {
+    UserDB? invitedUser = await fetchUser(invitedUserID);
+    if (invitedUser != null) {
+      invitedUser.profileNotification!.removeWhere(
+        (element) => element.tribeId == tribeId,
+      );
 
-    List<ProfileNotification> userNotyfication =
-        invitedUser!.profileNotification!;
+      await updateUser(invitedUser);
 
-    if (userNotyfication.any((element) => element.tribeId == 'TR$senderID')) {
-      userNotyfication
-          .removeWhere((element) => element.tribeId == 'TR$senderID');
+      return true;
+    }
+    return false;
+  }
+  /* if (userNotyfication.any((element) => element.tribeId == tribeId)) {
+      userNotyfication.removeWhere((element) => element.tribeId == tribeId);
     } else {
       userNotyfication.add(ProfileNotification(
-          createdAt: DateTime.now(), tribeId: 'TR$senderID', type: 'invited'));
+          createdAt: DateTime.now(), tribeId: tribeId, type: 'invited'));
     }
 
     invitedUser.profileNotification = userNotyfication;
@@ -122,5 +132,26 @@ class UserDBServices {
         .collection('USERS')
         .doc(invitedUserID)
         .update(invitedUser.toJson());
+  } */
+
+  Future<void> create20Users(UserDB user) async {
+    try {
+      user.createdAt = FieldValue.serverTimestamp();
+      for (var i = 0; i < 20; i++) {
+        user.email = (user.email ?? '') + i.toString();
+
+        user.phoneNumber = (user.phoneNumber ?? '') + i.toString();
+        user.userId = user.userId + i.toString();
+        user.email = user.email! + i.toString();
+        await _db
+            .collection('USERS')
+            .doc(user.userId + i.toString())
+            .set(user.toJson());
+      }
+
+      /*  await _db.collection('USERS').doc(user.userId).set(user.toJson()); */
+    } on FirebaseException catch (e) {
+      Get.showSnackbar(customSnackbar("Account can't be created because $e"));
+    }
   }
 }

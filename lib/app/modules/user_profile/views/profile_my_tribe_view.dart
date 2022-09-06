@@ -39,7 +39,7 @@ class ProfileMyTribeView extends StatelessWidget {
             textEditingController: profileController.searchController,
             hintText: 'search',
             searchCalback: () {},
-            controller: profileController),
+            /* controller: profileController */),
         TribeTile(
           tribalSign: Image.asset(cMotheringTribeSign),
           tribalName: 'Mothering',

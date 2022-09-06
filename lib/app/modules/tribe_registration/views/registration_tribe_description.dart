@@ -11,6 +11,7 @@ import '../../../helpers/theme/app_colors.dart';
 import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../controllers/tribe_registration_controller.dart';
+import 'invite_new_tribe_member.dart';
 import 'registration_tribe_aditional_info.dart';
 
 class RegistrationTribeDescription extends GetView {
@@ -30,7 +31,8 @@ class RegistrationTribeDescription extends GetView {
               inputType: 'Description',
               value: tribeRegistrationController.textDescritionController.text,
               lenght: 1500)) {
-            Get.to(RegistrationTribeAditionalInfo());
+                
+             Get.to(RegistrationTribeAditionalInfo());
           }
         },
         centerWidget: CustomTextField(

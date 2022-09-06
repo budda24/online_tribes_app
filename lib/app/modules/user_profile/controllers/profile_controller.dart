@@ -57,7 +57,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> getUser() async {
-    userDB = await userDbServieces.feachUser(auth.currentUser!.uid);
+    userDB = await userDbServieces.fetchUser(auth.currentUser!.uid);
     assignProfileInfo();
   }
 

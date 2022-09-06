@@ -15,7 +15,7 @@ String welcomeToJson(UserDB data) => json.encode(data.toJson());
 class UserDB {
   UserDB({
     required this.userId,
-    required this.isInvited,
+    this.isInvited = false,
     this.createdAt,
     this.email,
     this.phoneNumber,
@@ -50,7 +50,7 @@ class UserDB {
         userId: json["userId"],
         //TODO fieldvalue is not a timestamp
         /* createdAt: json["created_at"] as FieldValue, */
-        isInvited: json["is_invited"] ?? false,
+        /* isInvited: json["is_invited"] ?? false, */
         email: json["email"],
         phoneNumber: json["phone_number"],
         name: json["name"],
@@ -71,7 +71,7 @@ class UserDB {
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
-        "is_invited": isInvited,
+        /* "is_invited": isInvited, */
         "created_at": createdAt,
         "email": email,
         "phone_number": phoneNumber,
@@ -129,8 +129,6 @@ class Hobbies {
       };
 }
 
-
-
 class AvailableTime {
   AvailableTime({
     required this.startZero,
@@ -162,8 +160,6 @@ class AvailableTime {
         "end": end,
       };
 }
-
-
 
 class ProfileNotification {
   ProfileNotification({

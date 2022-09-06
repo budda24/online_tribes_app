@@ -144,17 +144,6 @@ class TribeProfileView extends GetView<TribeProfileController> {
                                     ]),
                               ),
                             ),
-                            Positioned(
-                                right: 0,
-                                /* top:5, */
-                                child: Container(
-                                  child:TextSizing('give Name', size: 18),
-                                  height: 25,
-                                  width: 80,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      color: AppColors.actionColor),
-                                ))
                           ],
                         ),
                       ],
@@ -162,6 +151,38 @@ class TribeProfileView extends GetView<TribeProfileController> {
                   ],
           );
         }));
+  }
+}
+
+class GiveNameButton extends StatelessWidget {
+  const GiveNameButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Neumorphic(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      style: NeumorphicStyle(
+        shadowDarkColor: AppColors.blackColor,
+        shadowLightColorEmboss: AppColors.primaryColor,
+        depth: 3,
+        shape: NeumorphicShape.convex,
+        lightSource: LightSource.topLeft,
+        intensity: 60,
+        color: AppColors.white,
+        boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(20)),
+      ),
+      child: Container(
+        alignment: Alignment.center,
+        height: 25,
+        width: 80,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: AppColors.actionColor),
+        child: Text('Give Name', style: textSWhiteColorSmall),
+      ),
+    );
   }
 }
 
@@ -183,7 +204,7 @@ class TribeProfileTabs extends StatelessWidget {
       width: 90.w,
       borderRadius: 25.r,
       selectedIndex: currantSectionIndex,
-      selectedTextStyle: textSWhiteColorSmall,
+      selectedTextStyle: textSActionColorSmall,
       unSelectedTextStyle: textSBlackColorSmall,
       labels: const ['Triberers', 'Info'],
       selectedLabelIndex: switchSection,

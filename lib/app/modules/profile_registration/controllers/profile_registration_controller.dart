@@ -91,53 +91,56 @@ class ProfileRegistrationController extends GetxController {
   double progress = 0.0;
 
   Future<void> saveNewUser() async {
-    globalController.showloading();
-    await registrationController.uploadFile(
-        getRefrence: (ref) async {
-          userDB.profilePhoto = await registrationController.getRef(ref);
-        },
-        fileName: 'profileImage',
+    if (registrationController.isTimeChosen(availableTime)) {
+      globalController.showloading();
+      await registrationController.uploadFile(
+          getRefrence: (ref) async {
+            userDB.profilePhoto = await registrationController.getRef(ref);
+          },
+          fileName: 'profileImage',
+          directory: 'profile',
+          profileFile: cameraController.pickedPhoto!);
+
+      await registrationController.uploadFile(
+        fileName: 'profileVideo',
         directory: 'profile',
-        profileFile: cameraController.pickedPhoto!);
+        profileFile: cameraController.pickedVideo!,
+        getRefrence: (ref) async {
+          userDB.introVideo = await registrationController.getRef(ref);
+        },
+        listenToProgress: (event) async {
+          if (event.state == TaskState.running) {
+            progress = ((event.bytesTransferred.toDouble() /
+                        event.totalBytes.toDouble()) *
+                    100)
+                .roundToDouble();
 
-    await registrationController.uploadFile(
-      fileName: 'profileVideo',
-      directory: 'profile',
-      profileFile: cameraController.pickedVideo!,
-      getRefrence: (ref) async {
-        userDB.introVideo = await registrationController.getRef(ref);
-      },
-      listenToProgress: (event) async {
-        if (event.state == TaskState.running) {
-          progress = ((event.bytesTransferred.toDouble() /
-                      event.totalBytes.toDouble()) *
-                  100)
-              .roundToDouble();
+            update();
+          }
+          if (event.state == TaskState.success) {
+            await globalController.saveRegistrationState();
+            globalController.hideLoading();
 
-          update();
-        }
-        if (event.state == TaskState.success) {
+            /* await UserDBServices().createNewUser(userDB); */
+            videoUploaded.value = true;
+            Get.to(const TribeRegistrationChoice());
+          }
+        },
+        functionAfterUploaded: () async {
+          assigningUser();
           await globalController.saveRegistrationState();
+
           globalController.hideLoading();
 
-          /* await UserDBServices().createNewUser(userDB); */
+          //TODO feach 20 Users
+          await UserDBServices().create20Users(userDB);
+
           videoUploaded.value = true;
+
           Get.to(const TribeRegistrationChoice());
-        }
-      },
-      functionAfterUploaded: () async {
-        assigningUser();
-        await globalController.saveRegistrationState();
-
-        globalController.hideLoading();
-
-        await UserDBServices().createNewUser(userDB);
-
-        videoUploaded.value = true;
-
-        Get.to(const TribeRegistrationChoice());
-      },
-    );
+        },
+      );
+    }
   }
 
   /* closeKeyboard() {

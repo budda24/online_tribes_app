@@ -15,13 +15,11 @@ class RegistrationTribeUploadVideoView extends GetView {
   @override
   Widget build(BuildContext context) {
     tribeRegistrationController.progress = 0.0;
-    print(tribeRegistrationController.progress);
     return Scaffold(
         backgroundColor: AppColors.primaryColor,
         body: GetBuilder<TribeRegistrationController>(
           builder: (builderControler) => UploadingVideoView(
               imagePath: builderControler.localTribalSignPath,
-              saveData: tribeRegistrationController.saveNewTribe,
               progress: tribeRegistrationController.progress,
               isVideoChosen: tribeRegistrationController.isVideoChosen,
               availableTimeButton: () async {

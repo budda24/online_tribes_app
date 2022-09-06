@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../../../controllers/camera_controller.dart';
+import '../../../../modules/tribe_registration/views/invite_new_tribe_member.dart';
 import '../../../theme/alert_styles.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/text_styles.dart';
@@ -15,7 +16,6 @@ import 'time_range_button.dart';
 class UploadingVideoView extends StatelessWidget {
   UploadingVideoView({
     Key? key,
-    required this.saveData,
     required this.progress,
     required this.isVideoChosen,
     required this.availableTimeButton,
@@ -23,8 +23,6 @@ class UploadingVideoView extends StatelessWidget {
     required this.switchIsVideoChosen,
     this.imagePath,
   }) : super(key: key);
-
-  final VoidCallback saveData;
 
   final double progress;
   final bool isVideoChosen;
@@ -157,7 +155,6 @@ class UploadingVideoView extends StatelessWidget {
       ),
       buttonCallBack: () async {
         globalController.unFocuseNode();
-
         if (isVideoChosen) {
           await saveFunction();
         } else {

@@ -1,6 +1,5 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../../../modules/user_profile/widgets/rounded_container.dart';
 import '../../../theme/app_colors.dart';
@@ -9,15 +8,14 @@ import '../../../theme/text_styles.dart';
 class SearchBar extends StatelessWidget {
   const SearchBar(
       {Key? key,
-      required this.controller,
       required this.searchCalback,
       required this.hintText,
-      required this.textEditingController })
+      required this.textEditingController})
       : super(key: key);
 
   final String hintText;
   final VoidCallback searchCalback;
-  final GetxController controller;
+
   final TextEditingController textEditingController;
 
   @override
@@ -55,9 +53,8 @@ class SearchBar extends StatelessWidget {
             oppositeShadowLightSource: true,
           ),
           child: InkWell(
-            onTap:
-              searchCalback,
-              //TODO add search logic
+            onTap: searchCalback,
+            //TODO add search logic
 
             child: Container(
               width: 49.h,

@@ -3,16 +3,15 @@
 import 'dart:async';
 import 'dart:io' as io;
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/auth/auth_services.dart';
 
 import 'package:get/get.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 import 'package:uuid/uuid.dart';
 
 // Project imports:
-import '../../../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../../../infrastructure/fb_services/db_services/tribe_db_services.dart';
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/tribal_type.dart';
@@ -24,6 +23,7 @@ import '../../../controllers/global_controler.dart';
 import '../../../controllers/registration_controller.dart';
 import '../../../helpers/theme/alert_styles.dart';
 import '../../../helpers/theme/main_constants.dart';
+import '../views/invite_new_tribe_member.dart';
 
 class TribeRegistrationController extends GetxController {
   TextEditingController textNameController = TextEditingController();
@@ -126,7 +126,9 @@ class TribeRegistrationController extends GetxController {
   }
 
   Future<void> saveNewTribe() async {
-    if (registrationController.isTimeChosen(availableTime)) {
+    if (!registrationController.isTimeChosen(availableTime)) {
+      return;
+    } else {
       assignTribeDb();
       if (customTribalSign != null) {
         await registrationController.uploadFile(
@@ -142,7 +144,7 @@ class TribeRegistrationController extends GetxController {
       }
       await registrationController.uploadFile(
         functionAfterUploaded: () async {
-         await tribeDBServices.createTribe(tribeDB);
+          await tribeDBServices.createTribe(tribeDB);
         },
         fileName: 'tribalVideo',
         directory: 'profile',
@@ -161,76 +163,119 @@ class TribeRegistrationController extends GetxController {
           tribeDB.tribalIntroVideo = await registrationController.getRef(ref);
         },
       );
+      Get.to(InviteTribeMember());
     }
   }
 
   assignigTriberers() {}
 
-  TextEditingController searchTextEditingController = TextEditingController();
-  List<user.UserDB> usersList = [];
-  List<user.UserDB> temporaryUsersList = [];
-  List<user.UserDB> invitedUsersList = [];
-
   final ScrollController scrollController = ScrollController();
-  final usersSnapshot = <DocumentSnapshot>[];
+
   int limit = 6;
-  bool hasMore = true;
-  bool isFetchingUsers = false;
+  bool moreUserExist = true;
   String alreadySearched = '';
+  TextEditingController searchTextEditingController = TextEditingController();
+  List<user.UserDB> displayedUsersList = [];
+  List<user.UserDB> invitedUserList = [];
 
-  Future<void> fetchNextUsers() async {
-    if (isFetchingUsers) return;
-    isFetchingUsers = true;
-    var snapshot = await UserDBServices().fetchLimitedUsers(
-        limit: limit,
-        startAfter: usersSnapshot.isNotEmpty ? usersSnapshot.last : null);
-
-    usersSnapshot.addAll(snapshot.docs);
-    if (snapshot.docs.length < limit) hasMore = false;
-
-    final newUsers = List<user.UserDB>.from(
-        snapshot.docs.map((e) => user.UserDB.fromJson(e.data())).toList());
-
-    usersList.addAll(newUsers);
-
-    update();
-
-    isFetchingUsers = false;
-  }
-
-  updateInvidedUsersList(user.UserDB user) {
-    if (invitedUsersList.length == 5 || user.isInvited == false) {
-      invitedUsersList.removeWhere((e) => e.phoneNumber == user.phoneNumber);
-      return;
+  Future<void> fetchUsers() async {
+    var feachedUsers = await userDBServices.fetchUsersFromDB(limit: limit);
+    if (feachedUsers.length == displayedUsersList.length) {
+      moreUserExist = false;
     } else {
-      invitedUsersList.add(user);
+      displayedUsersList = await userDBServices.fetchUsersFromDB(limit: limit);
     }
   }
 
-  Future<void> sendInviteNotyficationToUsers() async {
-    for (var i = 0; i < invitedUsersList.length; i++) {
-      print(invitedUsersList[i].userId);
-      await UserDBServices().handleUserInvitation(
-          invitedUserID: invitedUsersList[i].userId, senderID: currentUser.uid);
+  removeUserInvitationFromList(user.UserDB user) {
+    invitedUserList.removeWhere((invitedUser) {
+      if (invitedUser.phoneNumber == user.phoneNumber) {
+        invitedUser.isInvited = false;
+        return true;
+      }
+      return false;
+    });
+  }
+
+  addUserInvitationToList(user.UserDB user) {
+    user.isInvited = true;
+    invitedUserList.add(user);
+  }
+
+  Future<bool> removeInvitationFromDb({
+    required user.UserDB user,
+    required String tribeId,
+  }) async {
+    if (await userDBServices.deleteInvitationUser(
+      invitedUserID: user.userId,
+      tribeId: tribeId,
+    )) {
+      return true;
     }
+    return false;
+  }
+
+  Future<bool> addInvitationToDb({
+    required user.UserDB userToHandle,
+    required String tribeId,
+  }) async {
+    if (await userDBServices.sendInvitationToUser(
+        invitedUserID: userToHandle.userId, tribeId: tribeId)) {
+      invitedUserList.add(userToHandle);
+      return true;
+    }
+    return false;
+  }
+
+  final maxInvitation = 5;
+  bool isMaxInvitation() {
+    if (invitedUserList.length == maxInvitation) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> updateInvitationUsersList(
+      user.UserDB userToHandle, String invitationTribeId) async {
+    //TODO DB invitation??
+    if (isMaxInvitation() || userToHandle.isInvited) {
+      removeUserInvitationFromList(userToHandle);
+    } else {
+      addUserInvitationToList(userToHandle);
+    }
+    update();
+  }
+
+  Future<int> sendInviteNotyficationToUsers() async {
+    //TODO counter how many invitation   send
+    var succeedeInvitationCounter = 0;
+    for (var i = 0; i < invitedUserList.length; i++) {
+      if (await userDBServices.sendInvitationToUser(
+          invitedUserID: invitedUserList[i].userId,
+          tribeId: auth.currentUser!.uid)) {
+        succeedeInvitationCounter++;
+      }
+    }
+    return succeedeInvitationCounter;
   }
 
   void scrollListener() {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
-      if (hasMore) {
-        fetchNextUsers();
-      }
+      limit += maxInvitation;
+      fetchUsers();
+      update();
     }
   }
 
-  rebuildWidget() {
+/*   rebuildWidget() {
     update();
-  }
+  } */
 
   //TODO refactor the searchByEmailOrPhone nested if's
 
-  Future<void> searchByEmailOrPhone() async {
+  /* Future<void> searchByEmailOrPhone() async {
     if (searchTextEditingController.text.isEmpty ||
         alreadySearched == searchTextEditingController.text) {
       return;
@@ -238,12 +283,12 @@ class TribeRegistrationController extends GetxController {
 
     alreadySearched = searchTextEditingController.text;
 
-    if (searchTextEditingController.text.characters.contains('@')) {
+    if (GetUtils.isEmail(searchTextEditingController.text)) {
       var user = await UserDBServices()
           .feachUserByEmail(email: searchTextEditingController.text);
       if (user.isNotEmpty) {
-        if (temporaryUsersList.isEmpty) temporaryUsersList = usersList;
-        usersList = user;
+        temporaryUsersList.isEmpty ? displayedUsersList : temporaryUsersList;
+        displayedUsersList = user;
         update();
       }
       return;
@@ -251,8 +296,8 @@ class TribeRegistrationController extends GetxController {
       var user = await userDBServices.feachUserByPhoneNumber(
           phoneNumber: searchTextEditingController.text);
       if (user.isNotEmpty) {
-        if (temporaryUsersList.isEmpty) temporaryUsersList = usersList;
-        usersList = user;
+        if (temporaryUsersList.isEmpty) temporaryUsersList = displayedUsersList;
+        displayedUsersList = user;
 
         update();
       }
@@ -263,13 +308,13 @@ class TribeRegistrationController extends GetxController {
   showAllUsersAgain() async {
     if (temporaryUsersList.isEmpty) return;
 
-    usersList.clear();
+    displayedUsersList.clear();
     update();
     await Future.delayed(const Duration(milliseconds: 500));
-    usersList.addAll(temporaryUsersList);
+    displayedUsersList.addAll(temporaryUsersList);
     temporaryUsersList.clear();
     update();
-  }
+  } */
 
   @override
   void onInit() async {
@@ -277,7 +322,7 @@ class TribeRegistrationController extends GetxController {
     chosenTribaType = tribalTypes.toList()[0];
     scrollController.addListener(scrollListener);
     //TODO name of te func ??
-    await fetchNextUsers();
+    await fetchUsers();
 
     super.onInit();
   }

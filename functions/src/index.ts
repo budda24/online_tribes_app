@@ -72,7 +72,7 @@ const deleteUserData = async (id:string) => {
 exports.resizingVideo = functions.firestore.document("USERS/{userID}").onUpdate(async (snap, context)=>{
   const path = require('path');
   const os = require('os');
-  
+
 
   const data = snap.after.data();
 
@@ -87,5 +87,17 @@ exports.resizingVideo = functions.firestore.document("USERS/{userID}").onUpdate(
 
 }
 )
+
+/* export const sendNotification = functions.https.onRequest(async (req, res)=>{
+  // Grab the text parameter.
+    const original = req.query.notification;
+
+
+    // Push the new message into Firestore using the Firebase Admin SDK.
+    const ref = await admin.firestore().collection("USERS");
+        ref.where("userId").isEqual(original["userId"]);
+    // Send back a message that we've successfully written the message
+    res.json({result: `Message with ID: ${writeResult.id} added.`});
+  }); */
 
 
