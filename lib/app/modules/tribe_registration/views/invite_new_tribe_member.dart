@@ -23,7 +23,7 @@ class InviteTribeMember extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    tribeRegistrationController.limit = 5;
+    tribeRegistrationController.numberOfInitialFetchUsers = 5;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(

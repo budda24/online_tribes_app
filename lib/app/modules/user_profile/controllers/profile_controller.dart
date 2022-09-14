@@ -41,8 +41,6 @@ class ProfileController extends GetxController {
   UserDB? userDB;
   UserDB? previousUserDB;
 
-  // String profilePhotoUrl = '';
-  // String profileVideoUrl = '';
   bool isShrinkWrap = true;
   bool isEditingMode = false;
   TimeRange? availableTime;
@@ -51,6 +49,7 @@ class ProfileController extends GetxController {
   double progress = 0.0;
 
   Future<void> getUser() async {
+    print('featch user');
     userDB = await userDbServieces.fetchUser(auth.currentUser!.uid);
     assignProfileInfo();
   }
@@ -77,66 +76,11 @@ class ProfileController extends GetxController {
     userDB?.hobbies?.hobby1 = hobby2Controller.text;
   }
 
-  // Future<UploadedFile> getRef(Reference ref) async {
-  //   var url = await ref.getDownloadURL();
-  //   var metaDataRef = await ref.getMetadata();
-
-  //   var metaData = Metadata(
-  //       bucket: metaDataRef.bucket,
-  //       name: metaDataRef.name,
-  //       size: metaDataRef.size!,
-  //       fullPath: metaDataRef.fullPath,
-  //       contentType: metaDataRef.contentType!,
-  //       timeCreated: metaDataRef.timeCreated,
-  //       contentEncoding: metaDataRef.contentEncoding);
-
-  //   return UploadedFile(downloadUrl: url, metaData: metaData);
-  // }
-
-  // listenToProgress(TaskSnapshot event) {
-  //   if (event.state == TaskState.running) {
-  //     progress =
-  //         ((event.bytesTransferred.toDouble() / event.totalBytes.toDouble()) *
-  //                 100)
-  //             .roundToDouble();
-  //     update();
-  //   }
-  // }
-
-  // Future uploadFile({
-  //   required String fileName,
-  //   required String directory,
-  //   required io.File profileFile,
-  //   required Future Function(Reference ref) getRefrence,
-  //   bool recordingTheProgress = false,
-  // }) async {
-  //   //TODO cloud function to resize photo to secure the end point
-  //   final storage = CloudStorageServices();
-  //   String userId = auth.currentUser!.uid;
-  //   storage
-  //       .uploadFile(
-  //           folder: "Users",
-  //           path: directory,
-  //           userId: userId,
-  //           imageToUpload: profileFile,
-  //           fileName: '$fileName${extension(profileFile.path)}')
-  //       .snapshotEvents
-  //       .listen((event) async {
-  //     if (recordingTheProgress) {
-  //       listenToProgress(event);
-  //     }
-  //     if (event.state == TaskState.success) {
-  //       await getRef(event.ref);
-  //     }
-  //   });
-  // }
-
   prepareEditingMode() {
     saveUserLocally();
 
     isEditingMode = true;
     availableTime = null;
-    /* isPhotoAndVideoBoutchUpdated = false; */
     update();
   }
 
@@ -221,34 +165,34 @@ class ProfileController extends GetxController {
   List<Widget> get notificationWidgets {
     List<Widget> notificationWidget = [];
 
-    sortProfileNotyficationsByDate();
+    /* sortProfileNotyficationsByDate();
 
     _profileNotyfication?.forEach((element) {
       switch (element.type) {
-        case 'invited':
+        case NotificationType.invited:
           notificationWidget.add(NotificationTileInvited(
             tribeId: element.tribeId,
           ));
           break;
-        case 'accepted':
+        case NotificationType.accepted:
           notificationWidget.add(const NotificationTileAccepted());
           break;
-        case 'rejected':
+        case NotificationType.rejected:
           notificationWidget.add(NotificationTileRejected(
             tribeId: element.tribeId,
           ));
           break;
       }
-    });
+    }); */
     return notificationWidget;
   }
 
-  sortProfileNotyficationsByDate() {
+  /* sortProfileNotyficationsByDate() {
     _profileNotyfication?.sort((a, b) => a.createdAt.compareTo(b.createdAt));
-  }
+  } */
 
   Future<void> deleteNotification(String tribeId) async {
-    List<ProfileNotification> notification = userDB!.profileNotification!;
+    /* List<Notification> notification = userDB!.profileNotification!;
     int deletedItemIndex =
         notification.indexWhere((element) => element.tribeId == tribeId);
 
@@ -258,7 +202,7 @@ class ProfileController extends GetxController {
 
     // await userDbServieces.updateDoc(userDb!);
 
-    update();
+    update(); */
   }
 
   void removeItemAnimation(int index) {
@@ -293,9 +237,9 @@ class ProfileController extends GetxController {
     Get.offAllNamed(Routes.LOGIN);
   }
 
-  List<ProfileNotification>? get _profileNotyfication {
+  /* List<Notification>? get _profileNotyfication {
     return userDB?.profileNotification;
-  }
+  } */
 
   @override
   void onInit() async {

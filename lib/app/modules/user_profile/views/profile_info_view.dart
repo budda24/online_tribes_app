@@ -29,15 +29,11 @@ class ProfileInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //http://10.0.2.2:9199/v0/b/online-tribes-6a28c.appspot.com/o/Tribes%2FY6lAqmSv89qvQGXAVtssZbTjG91t%2Fprofile%2FprofileImage.jpg?alt=media&token=8287c351-a05d-4a66-8428-a899d7bdada4
-
     return GestureDetector(
       onTap: () {
         profileController.videoController?.showAndHideOverlay(false);
       },
       child: GetBuilder<ProfileController>(builder: (getController) {
-        print(
-        'photo view url: ${profileController.userDB!.profilePhotoRef!.downloadUrl}');
         return ProfileTemplate(
           isEditingMode: profileController.isEditingMode,
           profileImage:

@@ -15,6 +15,7 @@ String welcomeToJson(UserDB data) => json.encode(data.toJson());
 class UserDB {
   UserDB({
     required this.userId,
+    required this.profileNotification,
     this.isInvited = false,
     this.createdAt,
     this.email,
@@ -28,11 +29,10 @@ class UserDB {
     this.hobbies,
     this.availableTime,
     this.attendedTribe,
-    this.profileNotification,
   });
   bool isInvited;
   String userId;
-  FieldValue? createdAt;
+  Object? createdAt;
   String? email;
   String? phoneNumber;
   String? name;
@@ -44,34 +44,38 @@ class UserDB {
   Hobbies? hobbies;
   AvailableTime? availableTime;
   AttendedTribe? attendedTribe;
-  List<ProfileNotification>? profileNotification;
+  List<Notification> profileNotification;
+
+  static List<Notification> notyficationFromJson(
+      List<dynamic> notyficationjson) {
+    return (notyficationjson).map((e) => Notification.fromJson(e)).toList();
+  }
+
+  static Map<String, List<Map<String, dynamic>>> notyficationToJson(
+      List<Notification> notyfication) {
+    return {
+      "profile_notification": notyfication.map((e) => e.toJson()).toList()
+    };
+  }
 
   factory UserDB.fromJson(Map<String, dynamic> json) => UserDB(
-        userId: json["userId"],
-        //TODO fieldvalue is not a timestamp
-        /* createdAt: json["created_at"] as FieldValue, */
-        /* isInvited: json["is_invited"] ?? false, */
-        email: json["email"],
-        phoneNumber: json["phone_number"],
-        name: json["name"],
-        requestedTribe: json["requested_tribe"],
-        description: json["description"],
-        introVideoRef: UploadedFile.fromJson(json["intro_video_url"]),
-        lifeMotto: json["life_motto"],
-        profilePhotoRef: UploadedFile.fromJson(json["profile_photo"]),
-        hobbies: Hobbies.fromJson(json["hobbies"]),
-        availableTime: AvailableTime.fromJson(json["available_time"]),
-        /*  attendedTribe: AttendedTribe.fromJson(json["attended_tribe"]), */
-        profileNotification: json["profile_notification"] == null
-            ? null
-            : (json["profile_notification"] as List<dynamic>)
-                .map((e) => ProfileNotification.fromJson(e))
-                .toList(),
-      );
+      userId: json["userId"],
+      //TODO fieldvalue is not a timestamp
+      createdAt: (json["created_at"] as Timestamp).toDate(),
+      email: json["email"],
+      phoneNumber: json["phone_number"],
+      name: json["name"],
+      requestedTribe: json["requested_tribe"],
+      description: json["description"],
+      introVideoRef: UploadedFile.fromJson(json["intro_video_url"]),
+      lifeMotto: json["life_motto"],
+      profilePhotoRef: UploadedFile.fromJson(json["profile_photo"]),
+      hobbies: Hobbies.fromJson(json["hobbies"]),
+      availableTime: AvailableTime.fromJson(json["available_time"]),
+      profileNotification: notyficationFromJson(json["profile_notification"]));
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
-        /* "is_invited": isInvited, */
         "created_at": createdAt,
         "email": email,
         "phone_number": phoneNumber,
@@ -85,7 +89,7 @@ class UserDB {
         "available_time": availableTime?.toJson(),
         "attended_tribe": attendedTribe?.toJson(),
         "profile_notification":
-            profileNotification?.map((x) => x.toJson()).toList(),
+            profileNotification.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -161,27 +165,47 @@ class AvailableTime {
       };
 }
 
-class ProfileNotification {
-  ProfileNotification({
+/* class ProfileNotification {
+  ProfileNotification({this.profileNotification = const <Notification>[]});
+
+  List<Notification> profileNotification;
+
+  /* factory ProfileNotification.fromJson(Map<String, dynamic> json) =>
+      ProfileNotification(
+        profileNotification: (json["profile_notification"] as List<dynamic>)
+            .map((e) => Notification.fromJson(e))
+            .toList(),
+      ); */
+
+  Map<String, dynamic> toJson() => {
+        "profile_notification":
+
+      };
+} */
+
+enum NotificationType { invited, accepted, rejected }
+
+class Notification {
+  Notification({
     required this.type,
     required this.tribeId,
-    required this.createdAt,
+    /* this.createdAt, */
   });
 
-  String type;
+  NotificationType? type;
   String tribeId;
-  DateTime createdAt;
+  /* Object? createdAt; */
 
-  factory ProfileNotification.fromJson(Map<String, dynamic> json) =>
-      ProfileNotification(
-        type: json["type"],
+  factory Notification.fromJson(Map<String, dynamic> json) => Notification(
+        type: NotificationType.values[(json["type"] as int)],
         tribeId: json["tribe_id"],
-        createdAt: ((json["created_at"]) as Timestamp).toDate(),
+        //TODO problem with FieldValue.ServerTomeStamp and transaction
+        /* createdAt: (json["created_at"] as Timestamp).toDate(), */
       );
 
   Map<String, dynamic> toJson() => {
-        "type": type,
+        "type": type!.index,
         "tribe_id": tribeId,
-        "created_at": createdAt,
+        /* "created_at": createdAt, */
       };
 }

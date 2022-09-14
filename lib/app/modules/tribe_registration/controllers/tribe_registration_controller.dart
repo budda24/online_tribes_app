@@ -171,7 +171,7 @@ class TribeRegistrationController extends GetxController {
 
   final ScrollController scrollController = ScrollController();
 
-  int limit = 6;
+  int numberOfInitialFetchUsers = 6;
   bool moreUserExist = true;
   String alreadySearched = '';
   TextEditingController searchTextEditingController = TextEditingController();
@@ -179,11 +179,13 @@ class TribeRegistrationController extends GetxController {
   List<user.UserDB> invitedUserList = [];
 
   Future<void> fetchUsers() async {
-    var feachedUsers = await userDBServices.fetchUsersFromDB(limit: limit);
-    if (feachedUsers.length == displayedUsersList.length) {
+    var fetchedUsers =
+        await userDBServices.fetchUsersFromDB(limit: numberOfInitialFetchUsers);
+    if (fetchedUsers.length == displayedUsersList.length) {
       moreUserExist = false;
     } else {
-      displayedUsersList = await userDBServices.fetchUsersFromDB(limit: limit);
+      displayedUsersList = await userDBServices.fetchUsersFromDB(
+          limit: numberOfInitialFetchUsers);
     }
   }
 
@@ -220,7 +222,7 @@ class TribeRegistrationController extends GetxController {
     required String tribeId,
   }) async {
     if (await userDBServices.sendInvitationToUser(
-        invitedUserID: userToHandle.userId, tribeId: tribeId)) {
+        invitedUserID: userToHandle.userId, senderTribeId: tribeId)) {
       invitedUserList.add(userToHandle);
       return true;
     }
@@ -248,12 +250,11 @@ class TribeRegistrationController extends GetxController {
   }
 
   Future<int> sendInviteNotyficationToUsers() async {
-    //TODO counter how many invitation   send
     var succeedeInvitationCounter = 0;
     for (var i = 0; i < invitedUserList.length; i++) {
       if (await userDBServices.sendInvitationToUser(
           invitedUserID: invitedUserList[i].userId,
-          tribeId: auth.currentUser!.uid)) {
+          senderTribeId: auth.currentUser!.uid)) {
         succeedeInvitationCounter++;
       }
     }
@@ -263,7 +264,7 @@ class TribeRegistrationController extends GetxController {
   void scrollListener() {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
-      limit += maxInvitation;
+      numberOfInitialFetchUsers += maxInvitation;
       fetchUsers();
       update();
     }

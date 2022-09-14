@@ -1,13 +1,14 @@
 // Package imports:
 import 'dart:io' as io;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 import 'package:get/get.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
-import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
 import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/global_controler.dart';
@@ -32,6 +33,7 @@ class ProfileRegistrationController extends GetxController {
   TimeRange? availableTime;
 
   UserDB userDB = UserDB(
+    profileNotification: [],
     userId: currentUser.uid,
     isInvited: false,
   );
@@ -72,6 +74,8 @@ class ProfileRegistrationController extends GetxController {
     userDB.hobbies =
         Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
 
+    userDB.createdAt = FieldValue.serverTimestamp();
+
     var timeZoneOffset = DateTime.now().timeZoneOffset.inHours;
     userDB.availableTime = AvailableTime(
         endZero: TimeCovertingServices.CountOffsetHour(
@@ -84,7 +88,6 @@ class ProfileRegistrationController extends GetxController {
 
     userDB.email = currentUser.email;
     userDB.phoneNumber = currentUser.phoneNumber;
-    userDB.profileNotification = <ProfileNotification>[];
   }
 
   var videoUploaded = false.obs;
@@ -120,8 +123,6 @@ class ProfileRegistrationController extends GetxController {
           if (event.state == TaskState.success) {
             await globalController.saveRegistrationState();
             globalController.hideLoading();
-
-            /* await UserDBServices().createNewUser(userDB); */
             videoUploaded.value = true;
             Get.to(const TribeRegistrationChoice());
           }
@@ -132,8 +133,8 @@ class ProfileRegistrationController extends GetxController {
 
           globalController.hideLoading();
 
-          //TODO feach 20 Users
-          await UserDBServices().create20Users(userDB);
+          await UserDBServices().createManyUsers(userDB, 5);
+          /* await UserDBServices().createUser(userDB); */
 
           videoUploaded.value = true;
 
