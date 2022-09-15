@@ -16,7 +16,6 @@ import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 class InviteTribeMember extends StatelessWidget {
   InviteTribeMember({Key? key}) : super(key: key);
 
-  // var tribeRegistrationController = Get.find<TribeRegistrationController>();
   var tribeRegistrationController = Get.put(TribeRegistrationController());
   var cameraController = Get.find<CameraController>();
   var globalController = Get.find<GlobalController>();
@@ -29,61 +28,64 @@ class InviteTribeMember extends StatelessWidget {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 35),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ProfilePhotoWithName(
-                        localTribalSign:
-                            tribeRegistrationController.tribeDB.localTribalSign,
-                        name: tribeRegistrationController.tribeDB.tribalName,
-                        cameraController: cameraController),
-                  ],
-                ),
-                verticalSpaceMedium,
-                SearchBar(
-                  textEditingController:
-                      tribeRegistrationController.searchTextEditingController,
-                  hintText: 'search by number or email',
-                  searchCalback: () async {
-                    /* await tribeRegistrationController.searchByEmailOrPhone(); */
-                  },
-                ),
-                GetBuilder<TribeRegistrationController>(
-                  builder: (builderController) {
-                    return AnimatedContainer(
-                      duration: const Duration(milliseconds: 600),
-                      height: builderController.isMaxInvitation() ? 440 : 530,
-                      width: 400,
-                      child: builderController.displayedUsersList.isEmpty
-                          ? spinkit
-                          : InviteTriberersGrid(
-                              scrollController:
-                                  builderController.scrollController,
-                              gridTilesList: [
-                                ...builderController.displayedUsersList
-                                    .map((e) => InviteUserTile(user: e))
-                                    .toList(),
-                                builderController.moreUserExist
-                                    ? Center(
-                                        child: SizedBox(
-                                          height: 50.h,
-                                          width: 50.w,
-                                          child: spinkit,
-                                        ),
-                                      )
-                                    : const RowInfoTextContainer(
-                                        text: 'No More Users',
-                                      )
-                              ],
-                            ),
-                    );
-                  },
-                ),
-                GetBuilder<TribeRegistrationController>(
-                    builder: (builderController) {
-                  return builderController.isMaxInvitation()
+            child: GetBuilder<TribeRegistrationController>(
+                builder: (builderController) {
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ProfilePhotoWithName(
+                          localTribalSign: tribeRegistrationController
+                              .tribeDB.localTribalSign,
+                          name: tribeRegistrationController.tribeDB.tribalName,
+                          cameraController: cameraController),
+                    ],
+                  ),
+                  verticalSpaceMedium,
+                  SearchBar(
+                    resetCallback: () async {
+                      await builderController.showAllUsersAgain();
+                    },
+                    textEditingController:
+                        tribeRegistrationController.searchTextEditingController,
+                    hintText: '+48xxx or email',
+                    searchCallback: () async {
+                      await builderController.searchByEmailOrPhone();
+                    },
+                  ),
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 600),
+                    height: builderController.isMaxInvitation() ? 440 : 530,
+                    width: 400,
+                    child: builderController.displayedUsersList.isEmpty &&
+                            !builderController.isSearchingUser
+                        ? spinkit
+                        : InviteTriberersGrid(
+                            scrollController:
+                                builderController.scrollController,
+                            gridTilesList: [
+                              ...builderController.displayedUsersList
+                                  .map((element) =>
+                                      InviteUserTile(user: element))
+                                  .toList(),
+                              builderController.moreUserExist
+                                  ? Center(
+                                      child: SizedBox(
+                                        height: 50.h,
+                                        width: 50.w,
+                                        child: spinkit,
+                                      ),
+                                    )
+                                  : builderController.isSearchingUser
+                                      ? const RedInfoTextContainer(
+                                          text: 'No Users',
+                                        )
+                                      : const SizedBox.shrink()
+                            ],
+                          ),
+                  ),
+                  builderController.isMaxInvitation()
                       ? SlimRoundedButton(
                           onPress: () async {
                             var succeedeInvitation = await builderController
@@ -100,10 +102,10 @@ class InviteTribeMember extends StatelessWidget {
                           title: 'Continue',
                           textColor: kTextColorDarkGrey,
                         )
-                      : const SizedBox.shrink();
-                })
-              ],
-            ),
+                      : const SizedBox.shrink()
+                ],
+              );
+            }),
           ),
         ),
       ),
@@ -111,8 +113,8 @@ class InviteTribeMember extends StatelessWidget {
   }
 }
 
-class RowInfoTextContainer extends StatelessWidget {
-  const RowInfoTextContainer({
+class RedInfoTextContainer extends StatelessWidget {
+  const RedInfoTextContainer({
     required this.text,
     Key? key,
   }) : super(key: key);

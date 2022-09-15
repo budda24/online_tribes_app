@@ -16,27 +16,30 @@ class InviteUserDetailView extends StatelessWidget {
   InviteUserDetailView({Key? key}) : super(key: key);
 
   late var user = Get.arguments as UserDB;
-  VideoViewerController? videoController = VideoViewerController();
+  VideoViewerController videoController = VideoViewerController();
 
   @override
   Widget build(BuildContext context) {
+    print(user.toJson());
+    print(videoController);
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         child: GestureDetector(
             onTap: () {
-              videoController?.showAndHideOverlay(false);
+              videoController.showAndHideOverlay(false);
             },
             child: ProfileTemplate(
               profileImage: Image.network(user.profilePhotoRef!.downloadUrl),
               title: const SizedBox.shrink(),
-              videoPlayer: GetBuilder(
+              //TODOthrows error brcause there is no controller given to the getBuilder
+              /* videoPlayer: GetBuilder(
                 builder: (builderController) =>
                     user.introVideoRef!.downloadUrl != ''
                         ? videoController != null
                             ? CustomVideoPlayer.network(
                                 videoSrc: user.introVideoRef!.downloadUrl,
-                                videoController: videoController!)
+                                videoController: videoController)
                             : const SizedBox.shrink()
                         : Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +49,7 @@ class InviteUserDetailView extends StatelessWidget {
                               const Text('Loading'),
                             ],
                           ),
-              ),
+              ), */
               /* ,
                videoController: videoController!,
               profileVideoSrc: user.introVideo!.downloadUrl, */

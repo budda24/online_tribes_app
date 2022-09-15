@@ -16,7 +16,8 @@ import '../../../../infrastructure/fb_services/db_services/tribe_db_services.dar
 import '../../../../infrastructure/fb_services/db_services/user_db_services.dart';
 import '../../../../infrastructure/fb_services/models/tribal_type.dart';
 import '../../../../infrastructure/fb_services/models/tribe_model.dart';
-import '../../../../infrastructure/fb_services/models/user_model.dart' as user;
+import '../../../../infrastructure/fb_services/models/user_model.dart'
+    as userClass;
 import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
@@ -170,15 +171,13 @@ class TribeRegistrationController extends GetxController {
   assignigTriberers() {}
 
   final ScrollController scrollController = ScrollController();
-
   int numberOfInitialFetchUsers = 6;
   bool moreUserExist = true;
-  String alreadySearched = '';
-  TextEditingController searchTextEditingController = TextEditingController();
-  List<user.UserDB> displayedUsersList = [];
-  List<user.UserDB> invitedUserList = [];
+  List<userClass.UserDB> displayedUsersList = [];
+  List<userClass.UserDB> invitedUserList = [];
 
   Future<void> fetchUsers() async {
+
     var fetchedUsers =
         await userDBServices.fetchUsersFromDB(limit: numberOfInitialFetchUsers);
     if (fetchedUsers.length == displayedUsersList.length) {
@@ -187,9 +186,10 @@ class TribeRegistrationController extends GetxController {
       displayedUsersList = await userDBServices.fetchUsersFromDB(
           limit: numberOfInitialFetchUsers);
     }
+    update();
   }
 
-  removeUserInvitationFromList(user.UserDB user) {
+  removeUserInvitationFromList(userClass.UserDB user) {
     invitedUserList.removeWhere((invitedUser) {
       if (invitedUser.phoneNumber == user.phoneNumber) {
         invitedUser.isInvited = false;
@@ -199,13 +199,13 @@ class TribeRegistrationController extends GetxController {
     });
   }
 
-  addUserInvitationToList(user.UserDB user) {
+  addUserInvitationToList(userClass.UserDB user) {
     user.isInvited = true;
     invitedUserList.add(user);
   }
 
   Future<bool> removeInvitationFromDb({
-    required user.UserDB user,
+    required userClass.UserDB user,
     required String tribeId,
   }) async {
     if (await userDBServices.deleteInvitationUser(
@@ -218,7 +218,7 @@ class TribeRegistrationController extends GetxController {
   }
 
   Future<bool> addInvitationToDb({
-    required user.UserDB userToHandle,
+    required userClass.UserDB userToHandle,
     required String tribeId,
   }) async {
     if (await userDBServices.sendInvitationToUser(
@@ -239,7 +239,7 @@ class TribeRegistrationController extends GetxController {
   }
 
   Future<void> updateInvitationUsersList(
-      user.UserDB userToHandle, String invitationTribeId) async {
+      userClass.UserDB userToHandle, String invitationTribeId) async {
     //TODO DB invitation??
     if (isMaxInvitation() || userToHandle.isInvited) {
       removeUserInvitationFromList(userToHandle);
@@ -270,58 +270,63 @@ class TribeRegistrationController extends GetxController {
     }
   }
 
-/*   rebuildWidget() {
-    update();
-  } */
-
   //TODO refactor the searchByEmailOrPhone nested if's
 
-  /* Future<void> searchByEmailOrPhone() async {
-    if (searchTextEditingController.text.isEmpty ||
-        alreadySearched == searchTextEditingController.text) {
-      return;
+  bool isSearchingUser = false;
+  TextEditingController searchTextEditingController = TextEditingController();
+  Future<List<userClass.UserDB>> getSearchedUser(String searchedBy) async {
+    if (GetUtils.isEmail(searchedBy)) {
+      return await userDBServices.fetchUserByEmail(email: searchedBy);
+    } else if (GetUtils.isPhoneNumber(searchedBy)) {
+      return await userDBServices.fetchUserByPhoneNumber(
+          phoneNumber: searchedBy);
     }
-
-    alreadySearched = searchTextEditingController.text;
-
-    if (GetUtils.isEmail(searchTextEditingController.text)) {
-      var user = await UserDBServices()
-          .feachUserByEmail(email: searchTextEditingController.text);
-      if (user.isNotEmpty) {
-        temporaryUsersList.isEmpty ? displayedUsersList : temporaryUsersList;
-        displayedUsersList = user;
-        update();
-      }
-      return;
-    } else {
-      var user = await userDBServices.feachUserByPhoneNumber(
-          phoneNumber: searchTextEditingController.text);
-      if (user.isNotEmpty) {
-        if (temporaryUsersList.isEmpty) temporaryUsersList = displayedUsersList;
-        displayedUsersList = user;
-
-        update();
-      }
-      return;
-    }
+    return [];
   }
 
-  showAllUsersAgain() async {
-    if (temporaryUsersList.isEmpty) return;
+  _actionNotFoud() {
+    searchTextEditingController.clear();
+    globalController
+        .showErrror("No user found\n Please corect the search try again");
+  }
 
-    displayedUsersList.clear();
+  Future<void> searchByEmailOrPhone() async {
+    displayedUsersList =
+        await getSearchedUser(searchTextEditingController.text);
+    if (displayedUsersList.isEmpty) {
+      _actionNotFoud();
+    }
+    isSearchingUser = true;
+
+
     update();
-    await Future.delayed(const Duration(milliseconds: 500));
-    displayedUsersList.addAll(temporaryUsersList);
-    temporaryUsersList.clear();
+  }
+
+  listenIfSeartchTextEmpty() {
+    print('listen to search');
+    if (searchTextEditingController.text.isNotEmpty) {
+
+    } else {
+
+    }
     update();
-  } */
+  }
+
+  
+
+  Future<void> showAllUsersAgain() async {
+    isSearchingUser = false;
+    await fetchUsers();
+    update();
+  }
 
   @override
   void onInit() async {
     tribalTypes = await featchTribalTypes();
     chosenTribaType = tribalTypes.toList()[0];
+
     scrollController.addListener(scrollListener);
+    searchTextEditingController.addListener(listenIfSeartchTextEmpty);
     //TODO name of te func ??
     await fetchUsers();
 

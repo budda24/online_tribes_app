@@ -69,7 +69,7 @@ const deleteUserData = async (id:string) => {
   return true;
 
 }); */
-exports.resizingVideo = functions.firestore.document("USERS/{userID}").onUpdate(async (snap, context)=>{
+/* exports.resizingVideo = functions.firestore.document("USERS/{userID}").onUpdate(async (snap, context)=>{
   const path = require('path');
   const os = require('os');
 
@@ -86,7 +86,7 @@ exports.resizingVideo = functions.firestore.document("USERS/{userID}").onUpdate(
   console.log('Image downloaded locally to', tempPath);
 
 }
-)
+) */
 
 /* export const sendNotification = functions.https.onRequest(async (req, res)=>{
   // Grab the text parameter.

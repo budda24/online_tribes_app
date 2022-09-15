@@ -33,7 +33,7 @@ class UserDBServices {
     print(userId + 0.toString());
     var snapshot =
         await _db.collection('USERS').doc(userId + 0.toString()).get();
-    print(snapshot.exists);
+    print(userId + 0.toString());
     UserDB? user;
     if (snapshot.exists) {
       var userDoc = snapshot.data();
@@ -66,9 +66,8 @@ class UserDBServices {
     var snapshot =
         await _db.collection('USERS').where('email', isEqualTo: email).get();
 
-    var user =
-        List<UserDB>.from(snapshot.docs.map((e) => UserDB.fromJson(e.data())))
-            .toList();
+    var user = snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList();
+
     return user;
   }
 
@@ -79,8 +78,11 @@ class UserDBServices {
         .where('phone_number', isEqualTo: phoneNumber)
         .get();
 
-    return List<UserDB>.from(
-        snapshot.docs.map((e) => UserDB.fromJson(e.data()))).toList();
+    print('snapshot: ${snapshot.docs}');
+
+    var user = snapshot.docs.map((e) => UserDB.fromJson(e.data())).toList();
+
+    return user;
   }
 
   Future<bool> sendInvitationToUser({

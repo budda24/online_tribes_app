@@ -53,7 +53,7 @@ class RoundedInputContainer extends StatelessWidget {
             enabledBorder: InputBorder.none,
             errorBorder: InputBorder.none,
             disabledBorder: InputBorder.none,
-            hintStyle: kHintStyle,
+            hintStyle: textSHintStyle,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: hintText,
           ),

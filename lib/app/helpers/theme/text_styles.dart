@@ -104,7 +104,7 @@ TextStyle outlineInputTextFormFieldLabelStyle = TextStyle(
 );
 TextStyle outlineInputTextFormFieldHintStyle = TextStyle(
   color: AppColors.greyColor,
-  fontSize: 14.sp,
+  fontSize: 16.sp,
   fontFamily: montserrat,
 );
 // text style
@@ -114,7 +114,7 @@ TextStyle kName = TextStyle(
     fontWeight: FontWeight.bold,
     color: AppColors.white);
 
-TextStyle kHintStyle = GoogleFonts.lato(
+TextStyle textSHintStyle = GoogleFonts.lato(
     textStyle: TextStyle(
         color: AppColors.blackColor,
         fontSize: 20.0.sp,
