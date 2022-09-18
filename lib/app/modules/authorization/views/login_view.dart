@@ -15,7 +15,8 @@ import '../../../helpers/widgets/online_tribes/auth/phone_number_input.dart';
 import '../../../helpers/widgets/online_tribes/general/main_button.dart';
 import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/registration_and_login/bacground_waves_thene.dart';
-import '../../profile_registration/widgets/custom_pin_put.dart';
+
+import '../../user_registration/widgets/custom_pin_put.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -44,7 +45,7 @@ class LoginView extends GetView<LoginController> {
                               Center(
                                 child: Column(
                                   children: [
-                                    verticalSpaceMedium,
+                                    verticalSpace25,
                                     Image.asset(
                                       'assets/images/authorization_screen/logo/xxxhdpi.png',
                                       fit: BoxFit.fill,
@@ -61,7 +62,7 @@ class LoginView extends GetView<LoginController> {
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 41.w),
                                 child: Column(children: [
-                                  verticalSpaceSmall,
+                                  verticalSpace20,
                                   Form(
                                     key: _formKey,
                                     child: PhoneNumberInput(
@@ -71,7 +72,7 @@ class LoginView extends GetView<LoginController> {
                                           .isVeryficationScreen.value,
                                     ),
                                   ),
-                                  verticalSpaceLarge,
+                                  verticalSpace50,
                                   Visibility(
                                       visible:
                                           controller.isVeryficationScreen.value,
@@ -115,7 +116,7 @@ class LoginView extends GetView<LoginController> {
                                             .isVeryficationScreen.value,
                                         child: Column(
                                           children: [
-                                            verticalSpaceMedium,
+                                            verticalSpace25,
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -145,7 +146,7 @@ class LoginView extends GetView<LoginController> {
                                                 )),
                                               ],
                                             ),
-                                            verticalSpaceTiny,
+                                            verticalSpace10,
                                             InkWell(
                                               onTap: () async {
                                                 await controller

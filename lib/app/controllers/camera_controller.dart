@@ -57,7 +57,7 @@ class CameraController extends GetxController {
     final tmpImagePath = await _picker.pickVideo(
       source: ImageSource.camera,
       preferredCameraDevice: CameraDevice.front,
-      maxDuration: const Duration(minutes: 3),
+      /* maxDuration: const Duration(minutes: 3), */
     );
 
     pickedVideo = File(tmpImagePath!.path);

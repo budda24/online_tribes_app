@@ -8,7 +8,7 @@ import '../../../controllers/camera_controller.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/registration/uploading_video.dart';
-import '../controllers/profile_registration_controller.dart';
+import '../controllers/user_registration_controller.dart';
 
 class RegistrationUploadVideoView extends GetView {
   RegistrationUploadVideoView({Key? key}) : super(key: key);
@@ -23,7 +23,6 @@ class RegistrationUploadVideoView extends GetView {
       backgroundColor: kMainColor,
       body: GetBuilder<ProfileRegistrationController>(
         builder: (builderController) => UploadingVideoView(
-          
             progress: builderController.progress,
             isVideoChosen: builderController.isVideoChosen,
             availableTimeButton: () async {

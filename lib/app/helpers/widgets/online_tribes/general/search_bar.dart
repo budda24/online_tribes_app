@@ -49,7 +49,7 @@ class SearchBar extends StatelessWidget {
             ),
           ),
         ),
-        horizontalSpaceTiny,
+        horizontalSpace10,
         Column(
           children: [
             IconRoundedButton(
@@ -59,7 +59,7 @@ class SearchBar extends StatelessWidget {
                 size: 20.h,
               ),
             ),
-            verticalSpaceTiny,
+            verticalSpace10,
             IconRoundedButton(
               calback: resetCallback,
               icon: Icon(

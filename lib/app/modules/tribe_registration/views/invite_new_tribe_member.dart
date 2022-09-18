@@ -42,7 +42,7 @@ class InviteTribeMember extends StatelessWidget {
                           cameraController: cameraController),
                     ],
                   ),
-                  verticalSpaceMedium,
+                  verticalSpace25,
                   SearchBar(
                     resetCallback: () async {
                       await builderController.showAllUsersAgain();

@@ -62,7 +62,7 @@ class TribeProfileView extends GetView<TribeProfileController> {
             ),
             fields: section == TribeProfileSection.info
                 ? [
-                    verticalSpaceSmall,
+                    verticalSpace20,
                     Text(
                       'Availability',
                       style: tribalFontLable,
@@ -104,7 +104,7 @@ class TribeProfileView extends GetView<TribeProfileController> {
                             backgroundColor: AppColors.greyColor,
                           ),
                         ),
-                        horizontalSpaceSmall,
+                        horizontalSpace15,
                         Stack(
                           children: [
                             Neumorphic(

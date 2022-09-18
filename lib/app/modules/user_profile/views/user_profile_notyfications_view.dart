@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../../../controllers/camera_controller.dart';
 import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/user_profile_controller.dart';
 import '../widgets/notification_list.dart';
 
 class ProfileNotyficationsView extends GetView {

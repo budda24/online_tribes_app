@@ -9,7 +9,7 @@ import '../../../helpers/widgets/online_tribes/general/search_bar.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../../helpers/widgets/online_tribes/profile/tribal_tile.dart';
 import '../../../routes/app_pages.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/user_profile_controller.dart';
 
 class ProfileMyTribeView extends StatelessWidget {
   var profileController = Get.find<ProfileController>();
@@ -36,7 +36,7 @@ class ProfileMyTribeView extends StatelessWidget {
       fields: [
         SearchBar(
           resetCallback: () {}, //TODO reset search,
-          textEditingController: profileController.searchController,
+          textEditingController: profileController.textSearchController,
           hintText: 'search',
           searchCallback: () {}, /* controller: profileController */
         ),

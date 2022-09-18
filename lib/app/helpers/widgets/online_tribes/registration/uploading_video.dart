@@ -58,7 +58,7 @@ class UploadingVideoView extends StatelessWidget {
                   ],
                 )
               : const SizedBox.shrink(),
-          verticalSpaceSmall,
+          verticalSpace20,
           progress == 0.0
               ? const SizedBox.shrink()
               : Container(
@@ -93,7 +93,7 @@ class UploadingVideoView extends StatelessWidget {
                     ],
                   ),
                 ),
-          verticalSpaceTiny,
+          verticalSpace10,
           progress == 0.0
               ? Container(
                   child: Column(
@@ -140,7 +140,7 @@ class UploadingVideoView extends StatelessWidget {
                           ),
                         ],
                       ),
-                      verticalSpaceExtraLarge,
+                      verticalSpace65,
                       Text(
                         'Available time for meeting',
                         style: greenTitle,

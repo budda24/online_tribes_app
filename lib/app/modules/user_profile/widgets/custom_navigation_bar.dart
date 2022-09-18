@@ -7,7 +7,7 @@ import 'package:video_viewer/video_viewer.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/theme/app_colors.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/user_profile_controller.dart';
 import 'bottom_nav_bar_item.dart';
 
 class CustomNavigationBar extends StatelessWidget {

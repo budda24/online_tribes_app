@@ -42,13 +42,13 @@ class DescriptionExamplePage extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 20),
                   child: Image.asset(imageAssetPath),
                 ),
-                horizontalSpaceSmall,
+                horizontalSpace15,
                 Text(
                   title,
                   style: kName,
                 ),
               ]),
-              verticalSpaceMedium,
+              verticalSpace25,
               RoundedBacgroundContainer(
                 height: 435.h,
                 screanHeight: boxConstrains.maxHeight,

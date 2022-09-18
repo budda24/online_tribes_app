@@ -22,12 +22,14 @@ class ProfileController extends GetxController {
   final cameraController = Get.put(CameraController());
   final registrationController = Get.put(RegistrationController());
 
-  final TextEditingController describtionController = TextEditingController();
-  final TextEditingController hobby1Controller = TextEditingController();
-  final TextEditingController hobby2Controller = TextEditingController();
-  final TextEditingController lifeMottoController = TextEditingController();
-  final TextEditingController timeToInvestController = TextEditingController();
-  final TextEditingController searchController = TextEditingController();
+  final TextEditingController textDescribtionController =
+      TextEditingController();
+  final TextEditingController textHobbyController = TextEditingController();
+
+  final TextEditingController textLifeMottoController = TextEditingController();
+  final TextEditingController textTimeToInvestController =
+      TextEditingController();
+  final TextEditingController textSearchController = TextEditingController();
   VideoViewerController? videoController = VideoViewerController();
 
   final listKey = GlobalKey<AnimatedListState>();
@@ -55,10 +57,9 @@ class ProfileController extends GetxController {
   }
 
   void assignProfileInfo() async {
-    describtionController.text = userDB?.description ?? '';
-    lifeMottoController.text = userDB?.lifeMotto ?? '';
-    hobby1Controller.text = userDB?.hobbies?.hobby ?? '';
-    hobby2Controller.text = userDB?.hobbies?.hobby1 ?? '';
+    textDescribtionController.text = userDB?.description ?? '';
+    textLifeMottoController.text = userDB?.lifeMotto ?? '';
+    textHobbyController.text = userDB?.hobby ?? '';
     videoController = VideoViewerController();
     //TODO DISPLAY THE CONVERTER TIME/* timeToInvestController.text = userDb?.timeToInvest.toString() ?? ''; */
 
@@ -70,10 +71,9 @@ class ProfileController extends GetxController {
   }
 
   void assignUpdatedUserInfo() async {
-    userDB?.description = describtionController.text;
-    userDB?.lifeMotto = lifeMottoController.text;
-    userDB?.hobbies?.hobby = hobby1Controller.text;
-    userDB?.hobbies?.hobby1 = hobby2Controller.text;
+    userDB?.description = textDescribtionController.text;
+    userDB?.lifeMotto = textLifeMottoController.text;
+    userDB?.hobby = textHobbyController.text;
   }
 
   prepareEditingMode() {

@@ -15,7 +15,7 @@ import '../../../helpers/theme/main_constants.dart';
 import '../../../helpers/widgets/online_tribes/profile/profile_template.dart';
 import '../../../helpers/widgets/online_tribes/registration/custom_text_field.dart';
 import '../../../helpers/widgets/online_tribes/registration/time_range_button.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/user_profile_controller.dart';
 import '../widgets/rounded_container.dart';
 import '../widgets/rounded_expanded_container.dart';
 import '../widgets/video_player.dart';
@@ -174,11 +174,11 @@ class ProfileInfoView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  verticalSpaceSmall,
+                  verticalSpace20,
                   CustomTextField(
                     textInputAction: TextInputAction.next,
                     tribesLable: 'Life motto',
-                    controller: profileController.lifeMottoController,
+                    controller: profileController.textLifeMottoController,
                     /*  validate: (value) =>
               controller.validateUser(value: value, lenght: 200), */
                     hintText: 'The Life Motto',
@@ -187,45 +187,31 @@ class ProfileInfoView extends StatelessWidget {
                     height: 130.h,
                     width: 500.w,
                   ),
-                  verticalSpaceSmall,
+                  verticalSpace20,
                   CustomTextField(
                     tribesLable: 'Description',
-                    controller: profileController.describtionController,
+                    controller: profileController.textDescribtionController,
                     hintText: 'Describe yourself',
                     maxline: 12,
                     minLine: 8,
                     height: 280.h,
                     width: 400.w,
                   ),
-                  verticalSpaceSmall,
+                  verticalSpace20,
                   CustomTextField(
                     tribesLable: 'Hobby',
-                    controller: profileController.hobby1Controller,
-                    /*  validate: (value) =>
-              controller.validateUser(value: value, lenght: 50), */
+                    controller: profileController.textHobbyController,
                     textInputAction: TextInputAction.next,
-                    hintText: 'Hobby 1',
+                    hintText: 'Hobby',
                     maxline: 1,
                     minLine: 1,
                     height: 50.h,
                     width: 500.w,
                   ),
-                  verticalSpaceSmall,
-                  CustomTextField(
-                    tribesLable: 'Hobby',
-                    controller: profileController.hobby2Controller,
-                    /*  validate: (value) =>
-              controller.validateUser(value: value, lenght: 50), */
-                    textInputAction: TextInputAction.next,
-                    hintText: 'Hobby 2',
-                    maxline: 1,
-                    minLine: 1,
-                    height: 50.h,
-                    width: 500.w,
-                  ),
+                  verticalSpace20,
                   Column(
                     children: [
-                      verticalSpaceSmall,
+                      verticalSpace20,
                       profileController.progress == 0.0
                           ? const SizedBox.shrink()
                           : Container(
@@ -260,7 +246,7 @@ class ProfileInfoView extends StatelessWidget {
                                 ],
                               ),
                             ),
-                      verticalSpaceTiny,
+                      verticalSpace10,
                       profileController.progress == 0.0
                           ? Column(
                               children: [
@@ -324,7 +310,7 @@ class ProfileInfoView extends StatelessWidget {
                               ],
                             )
                           : const SizedBox.shrink(),
-                      verticalSpaceMedium,
+                      verticalSpace25,
                       GetBuilder<ProfileController>(
                         builder: (_) {
                           return Text(
@@ -348,7 +334,7 @@ class ProfileInfoView extends StatelessWidget {
                   ),
                 ]
               : [
-                  verticalSpaceSmall,
+                  verticalSpace20,
                   Text(
                     'Availability',
                     style: tribalFontLable,
@@ -378,30 +364,20 @@ class ProfileInfoView extends StatelessWidget {
                     lable: 'Life motto',
                     heightToExpand: 100,
                     containerHeight: 150,
-                    text: getController.lifeMottoController.text,
+                    text: getController.textLifeMottoController.text,
                   ),
                   RoundedExpandedContainer(
                     lable: 'Description',
                     heightToExpand: 200,
                     containerHeight: 150,
-                    text: getController.describtionController.text,
+                    text: getController.textDescribtionController.text,
                   ),
                   RoundedContainer(
                     lable: 'Hobby',
                     height: oneLineContainerHeight,
                     child: Center(
                       child: Text(
-                        profileController.hobby1Controller.text,
-                        style: plainTextStyle,
-                      ),
-                    ),
-                  ),
-                  RoundedContainer(
-                    lable: 'Hobby',
-                    height: oneLineContainerHeight,
-                    child: Center(
-                      child: Text(
-                        profileController.hobby2Controller.text,
+                        profileController.textHobbyController.text,
                         style: plainTextStyle,
                       ),
                     ),

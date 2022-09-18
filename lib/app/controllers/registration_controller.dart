@@ -1,18 +1,24 @@
 import 'dart:io' as io;
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
 import '../../infrastructure/fb_services/auth/auth_services.dart';
 import '../../infrastructure/fb_services/cloud_storage/cloud_storage_services.dart';
+import '../../infrastructure/fb_services/db_services/tribe_db_services.dart';
+import '../../infrastructure/fb_services/models/tribal_type.dart';
 import '../../infrastructure/fb_services/models/tribe_model.dart';
 import '../../infrastructure/native_functions/time_converting_services.dart';
+import '../helpers/theme/alert_styles.dart';
 import 'global_controler.dart';
 
 class RegistrationController extends GetxController {
   var globalController = Get.find<GlobalController>();
+
+  TribeDBServices tribeDBServices = TribeDBServices();
 
   Future<UploadedFile> getRef(Reference ref) async {
     var url = await ref.getDownloadURL();
@@ -70,6 +76,33 @@ class RegistrationController extends GetxController {
     }
   }
 
+  Future<List<String>> featchTribalTypes() async {
+    var tribalTypesSnapshot = await tribeDBServices.fechListTribalTypes();
+    List<String> tribalTypesList = [];
+    if (tribalTypesSnapshot != null) {
+      for (var element in tribalTypesSnapshot.types) {
+        tribalTypesList.add(element);
+      }
+    }
+    return tribalTypesList;
+  }
 
-
+/*  String? addTypeName(List<String> tribalTypes, TextEditingController textInputDialogControler) async {
+    if (!tribalTypes
+        .contains(/* textInputDialogControler.text */ textInputDialogControler.text.capitalize)) {
+      tribalTypes
+          .add(/* textInputDialogControler.text */ textInputDialogControler.text.capitalize!);
+      
+      /* tribeDBServices
+          .updateListTribalTypes(TribalType(types: tribalTypes.toList())); */
+          return textInputDialogControler.text;
+    } else {
+      Get.showSnackbar(customSnackbar('type already exist'));
+      return null;
+    }
+    //TODO chose the added sign
+    /* chosenTribaType = textInputDialogControler.text; */
+    update();
+    textInputDialogControler.clear();
+  } */
 }

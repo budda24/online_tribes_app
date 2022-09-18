@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 // Project imports:
 import '../../../helpers/theme/ui_helpers.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/user_profile_controller.dart';
 import 'rounded_container.dart';
 
 class NotificationTileInvited extends StatelessWidget {
@@ -37,7 +37,7 @@ class NotificationTileInvited extends StatelessWidget {
               const Text('Peacemakers')
             ],
           ),
-          horizontalSpaceMedium,
+          horizontalSpace25,
           Column(
             children: [
               SizedBox(

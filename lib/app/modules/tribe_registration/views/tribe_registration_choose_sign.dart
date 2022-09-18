@@ -14,7 +14,7 @@ import '../../user_profile/widgets/bacground_rounded_container.dart';
 import '../controllers/tribe_registration_controller.dart';
 import '../widgets/tribal_sign_picker.dart';
 import '../widgets/tribe_sign_with_pointer.dart';
-import 'registration_tribe_description.dart';
+import 'tribe_registration_description.dart';
 
 class RegistrationTribeChooseSign extends GetView<TribeRegistrationController> {
   /* final tribeRegistrationController = Get.put(TribeRegistrationController()); */

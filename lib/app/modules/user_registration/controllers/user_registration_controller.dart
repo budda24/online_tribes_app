@@ -3,19 +3,23 @@ import 'dart:io' as io;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/app/modules/user_registration/models/country_model.dart';
 import 'package:flutter_application_1/infrastructure/fb_services/db_services/user_db_services.dart';
 import 'package:get/get.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
 // Project imports:
 import '../../../../infrastructure/fb_services/auth/auth_services.dart';
+import '../../../../infrastructure/fb_services/db_services/tribe_db_services.dart';
+import '../../../../infrastructure/fb_services/models/tribal_type.dart';
 import '../../../../infrastructure/fb_services/models/user_model.dart';
 import '../../../../infrastructure/native_functions/time_converting_services.dart';
 import '../../../controllers/global_controler.dart';
 import '../../../controllers/registration_controller.dart';
+import '../../../helpers/theme/alert_styles.dart';
 import '../../authorization/controllers/login_controller.dart';
 import '../../../controllers/camera_controller.dart';
-import '../views/tribe_registration_choice.dart';
+import '../views/user_tribe_registration_choice.dart';
 
 class ProfileRegistrationController extends GetxController {
   final loginController = Get.put(LoginController());
@@ -23,10 +27,19 @@ class ProfileRegistrationController extends GetxController {
   final cameraController = Get.put(CameraController());
   final registrationController = Get.put(RegistrationController());
 
-  final TextEditingController describtionController = TextEditingController();
-  final TextEditingController lifeMottoController = TextEditingController();
-  final TextEditingController hobby1Controller = TextEditingController();
-  final TextEditingController hobby2Controller = TextEditingController();
+  final TextEditingController textDescribtionController =
+      TextEditingController();
+  final TextEditingController textLifeMottoController = TextEditingController();
+  final TextEditingController textHobbyController = TextEditingController();
+  /* final TextEditingController textAdressController = TextEditingController(); */
+ final TextEditingController textNameController = TextEditingController();
+ 
+ final TextEditingController textCountryController = TextEditingController();
+
+
+
+  TribeDBServices tribeDBServices = TribeDBServices();
+  UserDBServices userDBServices = UserDBServices();
 
   io.File? profilePicture;
 
@@ -42,13 +55,12 @@ class ProfileRegistrationController extends GetxController {
 
   bool validateAditionalInfo() {
     if (!globalController.validateInput(
-            inputType: 'hobby', value: hobby2Controller.text, lenght: 50) ||
-        !globalController.validateInput(
-            inputType: 'hobby', value: hobby1Controller.text, lenght: 50) ||
+            inputType: 'hobby', value: textHobbyController.text, lenght: 50) ||
         !globalController.validateInput(
             inputType: 'life motto',
-            value: lifeMottoController.text,
-            lenght: 150)) {
+            value: textLifeMottoController.text,
+            lenght: 150) ||
+        chosenTribalType == selectLabel) {
       return false;
     } else {
       return true;
@@ -68,11 +80,51 @@ class ProfileRegistrationController extends GetxController {
     update();
   }
 
+  
+  List<Country> getSuggestions(String pattern) {
+    print('getSuggestions');
+    List<Country> allCountries = Country.getAllCountries() ;
+    
+    var suggestionCities = allCountries.where((value) {
+      return value.name.toLowerCase().startsWith(pattern.toLowerCase());
+    }).toList();
+    return suggestionCities;
+  }
+
+  TextEditingController textTriberersTypeController = TextEditingController();
+  TextEditingController textInputDialogControler = TextEditingController();
+
+  List<String> tribalTypes = <String>[];
+
+  String chosenTribalType = "";
+  String? selectLabel;
+
+  addTypeName() async {
+    if (tribalTypes.contains(textInputDialogControler.text.capitalize)) {
+      Get.showSnackbar(customSnackbar('type already exist'));
+    } else {
+      tribalTypes.add(textInputDialogControler.text.capitalize!);
+      chosenTribalType = tribalTypes[tribalTypes.length - 1];
+      await tribeDBServices
+          .updateListTribalTypes(TribalType(types: tribalTypes))
+          .onError((error, stackTrace) {
+        tribalTypes.removeLast();
+        chosenTribalType = tribalTypes[tribalTypes.length - 1];
+      });
+    }
+    //TODO chose the added sign
+    /* chosenTribaType = textInputDialogControler.text; */
+    update();
+    textInputDialogControler.clear();
+  }
+
   void assigningUser() {
-    userDB.description = describtionController.text;
-    userDB.lifeMotto = lifeMottoController.text;
-    userDB.hobbies =
-        Hobbies(hobby: hobby1Controller.text, hobby1: hobby2Controller.text);
+    userDB.description = textDescribtionController.text;
+    userDB.lifeMotto = textLifeMottoController.text;
+    userDB.hobby = textHobbyController.text;
+    userDB.name = textNameController.text;
+    userDB.requestedTribe = chosenTribalType;
+    
 
     userDB.createdAt = FieldValue.serverTimestamp();
 
@@ -142,6 +194,23 @@ class ProfileRegistrationController extends GetxController {
         },
       );
     }
+  }
+
+  @override
+  void onInit() async {
+    print('on init ProfileRegistrationController');
+    tribalTypes =
+        await registrationController.featchTribalTypes().then((value) {
+      selectLabel = value[0];
+      return value;
+    });
+
+    onClose() {
+      print('onClose ProfileRegistrationController');
+    }
+
+    chosenTribalType = selectLabel!;
+    super.onInit();
   }
 
   /* closeKeyboard() {

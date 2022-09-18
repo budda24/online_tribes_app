@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 // Project imports:
 import '../../../controllers/camera_controller.dart';
 import '../../../helpers/theme/app_colors.dart';
-import '../controllers/profile_controller.dart';
+import '../controllers/user_profile_controller.dart';
 import '../widgets/custom_navigation_bar.dart';
-import 'profile_info_view.dart';
-import 'profile_my_tribe_view.dart';
-import 'profile_notyfications_view.dart';
+import 'user_profile_info_view.dart';
+import 'user_profile_my_tribe_view.dart';
+import 'user_profile_notyfications_view.dart';
 
 class ProfileHomeView extends GetView {
   ProfileHomeView({Key? key}) : super(key: key);

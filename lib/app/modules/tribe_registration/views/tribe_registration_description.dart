@@ -12,7 +12,7 @@ import '../../../helpers/widgets/online_tribes/registration/custom_text_field.da
 import '../../../helpers/widgets/online_tribes/registration/registration_template.dart';
 import '../controllers/tribe_registration_controller.dart';
 import 'invite_new_tribe_member.dart';
-import 'registration_tribe_aditional_info.dart';
+import 'tribe_registration_aditional_info.dart';
 
 class RegistrationTribeDescription extends GetView {
   final tribeRegistrationController = Get.put(TribeRegistrationController());

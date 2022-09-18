@@ -38,7 +38,7 @@ class TribeDBServices {
   }
 
   Future<TribalType?> fechListTribalTypes() async {
-    var docSnapshot = await _db.collection('TRIBES').doc('tribalTypes').get();
+    var docSnapshot = await _db.collection('SELECTS').doc('tribalTypes').get();
     if (docSnapshot.exists) {
       return TribalType.fromJson(docSnapshot.data()!);
     }
@@ -46,6 +46,7 @@ class TribeDBServices {
   }
 
   Future<void> updateListTribalTypes(TribalType type) async {
-    await _db.collection('TRIBES').doc('tribalTypes').set(type.toJson());
+    print('adding to firestore $type');
+    await _db.collection('SELECTS').doc('tribalTypes').set(type.toJson());
   }
 }

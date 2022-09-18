@@ -54,9 +54,9 @@ class InviteUserTile extends StatelessWidget {
                         backgroundColor: AppColors.greyColor,
                       ),
                     ),
-                    verticalSpaceTiny,
+                    verticalSpace10,
                     FittedBox(
-                      child: Text(user.hobbies!.hobby, style: kMontserratBold),
+                      child: Text(user.hobby!, style: kMontserratBold),
                     ),
                     const SizedBox(height: 3),
                     MaterialButton(

@@ -46,18 +46,23 @@ class TribeRegistrationController extends GetxController {
   TribeDBServices tribeDBServices = TribeDBServices();
   UserDBServices userDBServices = UserDBServices();
 
-  String chosenTribaType = "";
+  String chosenTribalType = "";
   List<String> tribalTypes = <String>[];
 
   addTypeName() async {
-    if (!tribalTypes.contains(textInputDialogControler.text.capitalize)) {
-      tribalTypes.add(textInputDialogControler.text.capitalize!);
-
-      tribeDBServices
-          .updateListTribalTypes(TribalType(types: tribalTypes.toList()));
-    } else {
+    if (tribalTypes.contains(textInputDialogControler.text.capitalize)) {
       Get.showSnackbar(customSnackbar('type already exist'));
+    } else {
+      tribalTypes.add(textInputDialogControler.text.capitalize!);
+      chosenTribalType = tribalTypes[tribalTypes.length - 1];
+      await tribeDBServices
+          .updateListTribalTypes(TribalType(types: tribalTypes))
+          .onError((error, stackTrace) {
+        tribalTypes.removeLast();
+        chosenTribalType = tribalTypes[tribalTypes.length - 1];
+      });
     }
+    //TODO chose the added sign
     //TODO chose the added sign
     /* chosenTribaType = textInputDialogControler.text; */
     update();
@@ -94,7 +99,7 @@ class TribeRegistrationController extends GetxController {
     tribeDB.tribalName = textNameController.text;
     tribeDB.triberersType = textTriberersTypeController.text;
     tribeDB.availableTime = createAvailableTime();
-    tribeDB.type = chosenTribaType;
+    tribeDB.type = chosenTribalType;
   }
 
   TimeRange? availableTime;
@@ -102,17 +107,6 @@ class TribeRegistrationController extends GetxController {
   void switchIsVideoChosen() {
     isVideoChosen = !isVideoChosen;
     update();
-  }
-
-  Future<List<String>> featchTribalTypes() async {
-    var tribalTypes = await tribeDBServices.fechListTribalTypes();
-    List<String> typesList = [];
-    if (tribalTypes != null) {
-      for (var element in tribalTypes.types) {
-        typesList.add(element);
-      }
-    }
-    return typesList;
   }
 
   double progress = 0.0;
@@ -177,7 +171,6 @@ class TribeRegistrationController extends GetxController {
   List<userClass.UserDB> invitedUserList = [];
 
   Future<void> fetchUsers() async {
-
     var fetchedUsers =
         await userDBServices.fetchUsersFromDB(limit: numberOfInitialFetchUsers);
     if (fetchedUsers.length == displayedUsersList.length) {
@@ -298,21 +291,14 @@ class TribeRegistrationController extends GetxController {
     }
     isSearchingUser = true;
 
-
     update();
   }
 
   listenIfSeartchTextEmpty() {
-    print('listen to search');
     if (searchTextEditingController.text.isNotEmpty) {
-
-    } else {
-
-    }
+    } else {}
     update();
   }
-
-  
 
   Future<void> showAllUsersAgain() async {
     isSearchingUser = false;
@@ -322,9 +308,8 @@ class TribeRegistrationController extends GetxController {
 
   @override
   void onInit() async {
-    tribalTypes = await featchTribalTypes();
-    chosenTribaType = tribalTypes.toList()[0];
-
+    tribalTypes = await registrationController.featchTribalTypes();
+    chosenTribalType = tribalTypes.toList()[0];
     scrollController.addListener(scrollListener);
     searchTextEditingController.addListener(listenIfSeartchTextEmpty);
     //TODO name of te func ??

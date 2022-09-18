@@ -51,12 +51,10 @@ class ProfileTemplate extends StatelessWidget {
                     vertical: containerPadding.vertical.h),
                 child: Column(
                   children: [
-                    verticalSpaceLarge,
+                    verticalSpace50,
                     videoPlayer ?? const SizedBox.shrink(),
                     ...fields,
-                    button != null
-                        ? verticalSpaceLarge
-                        : const SizedBox.shrink(),
+                    button != null ? verticalSpace50 : const SizedBox.shrink(),
                     button ?? const SizedBox.shrink(),
                   ],
                 ),
@@ -66,13 +64,13 @@ class ProfileTemplate extends StatelessWidget {
           isEditingMode != null && isEditingMode == true
               ? const SizedBox.shrink()
               : Positioned.fill(
-                top: 50,
+                  top: 50,
                   child: Align(
                     alignment: Alignment.center,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        verticalSpaceMedium,
+                        verticalSpace25,
                         CircleAvatar(
                           radius: 70,
                           backgroundColor: AppColors.primaryColor,

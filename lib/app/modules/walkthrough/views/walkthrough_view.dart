@@ -52,7 +52,7 @@ class WalkthroughView extends GetView<WalkthroughController> {
                                 ],
                               ),
                             ),
-                            verticalSpaceExtraLarge,
+                            verticalSpace65,
                             Center(
                               child: SizedBox(
                                   height: 68.h,
@@ -61,7 +61,7 @@ class WalkthroughView extends GetView<WalkthroughController> {
                                         '',
                                   )),
                             ),
-                            verticalSpaceExtraLarge,
+                            verticalSpace65,
                             Center(
                               child: /* TextButton(
                               child: Text('Next'),

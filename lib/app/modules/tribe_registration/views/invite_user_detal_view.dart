@@ -54,7 +54,7 @@ class InviteUserDetailView extends StatelessWidget {
                videoController: videoController!,
               profileVideoSrc: user.introVideo!.downloadUrl, */
               fields: [
-                verticalSpaceSmall,
+                verticalSpace20,
                 RoundedExpandedContainer(
                   lable: 'Life motto',
                   heightToExpand: 100,
@@ -72,17 +72,7 @@ class InviteUserDetailView extends StatelessWidget {
                   height: oneLineContainerHeight,
                   child: Center(
                     child: Text(
-                      user.hobbies!.hobby,
-                      style: plainTextStyle,
-                    ),
-                  ),
-                ),
-                RoundedContainer(
-                  lable: 'Hobby',
-                  height: oneLineContainerHeight,
-                  child: Center(
-                    child: Text(
-                      user.hobbies!.hobby1,
+                      user.hobby!,
                       style: plainTextStyle,
                     ),
                   ),
